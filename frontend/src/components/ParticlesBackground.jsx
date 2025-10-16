@@ -35,7 +35,7 @@ export default function ParticlesBackground() {
       }
 
       draw() {
-        ctx.fillStyle = `rgba(26, 156, 210, ${this.opacity})`;
+        ctx.fillStyle = `rgba(51, 204, 255, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
