@@ -35,6 +35,14 @@ function App() {
               }
             />
             <Route
+              path="/gigs-near-me"
+              element={
+                <ProtectedRoute>
+                  <GigsNearMePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/projects/new"
               element={
                 <ProtectedRoute>
