@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { User, Briefcase, MapPin, Phone, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function CreateProfilePage() {
   const [formData, setFormData] = useState({
@@ -36,10 +37,24 @@ export default function CreateProfilePage() {
         createdAt: new Date().toISOString(),
       });
       
-      // Redirect to the original destination
-      navigate(next);
+      // Mark as first-time user for onboarding
+      localStorage.setItem('showOnboarding', 'true');
+      
+      // Show success toast
+      toast.success('Profile created — you\'re all set!', {
+        description: 'Welcome to Hapployed! Let\'s get you started.',
+        duration: 3000,
+      });
+      
+      // Small delay for toast to show, then redirect
+      setTimeout(() => {
+        navigate(next);
+      }, 500);
     } catch (err) {
       setError('Failed to create profile. Please try again.');
+      toast.error('Failed to create profile', {
+        description: 'Please try again or contact support.',
+      });
     } finally {
       setLoading(false);
     }
@@ -50,6 +65,9 @@ export default function CreateProfilePage() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent mx-auto mb-4 flex items-center justify-center">
+            <User className="w-8 h-8 text-white" />
+          </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Complete Your Profile</h1>
           <p className="text-muted-foreground">
             Tell us about yourself to get personalized opportunities

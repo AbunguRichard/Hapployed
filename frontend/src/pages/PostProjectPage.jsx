@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, MapPin, DollarSign, Clock, AlertCircle } from 'lucide-react';
+import { Briefcase, MapPin, DollarSign, Clock, AlertCircle, User } from 'lucide-react';
+import WelcomeOverlay from '../components/WelcomeOverlay';
+import { toast } from 'sonner';
 
 export default function PostProjectPage() {
   const { user } = useAuth();
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -14,6 +17,19 @@ export default function PostProjectPage() {
   });
   const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    // Check if this is the first time after profile creation
+    const shouldShowOnboarding = localStorage.getItem('showOnboarding') === 'true';
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted') === 'true';
+    
+    if (shouldShowOnboarding && !onboardingCompleted) {
+      setTimeout(() => {
+        setShowOnboarding(true);
+        localStorage.removeItem('showOnboarding');
+      }, 500);
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -21,30 +37,54 @@ export default function PostProjectPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Mock submission
     console.log('Project posted:', formData);
+    
+    toast.success('Project posted successfully!', {
+      description: 'We\'re now matching you with qualified candidates.',
+      duration: 3000,
+    });
+    
     setSuccess(true);
     setTimeout(() => setSuccess(false), 3000);
+    
+    // Reset form
+    setFormData({
+      title: '',
+      description: '',
+      location: '',
+      budget: '',
+      duration: '',
+      skills: '',
+    });
   };
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Welcome Overlay */}
+      {showOnboarding && (
+        <WelcomeOverlay 
+          user={user} 
+          onClose={() => setShowOnboarding(false)} 
+        />
+      )}
+
       {/* Header */}
-      <header className="bg-white border-b border-border sticky top-0 z-50">
+      <header className="bg-white border-b border-border sticky top-0 z-40">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <h1 className="text-2xl font-bold text-foreground">Post a Project</h1>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Post a Project</h1>
+              <p className="text-sm text-muted-foreground">Find the perfect talent for your needs</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <User className="w-5 h-5 text-white" />
+            </div>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8 max-w-3xl">
-        {success && (
-          <div className="mb-6 p-4 bg-accent/10 text-accent rounded-lg flex items-center gap-2">
-            <AlertCircle className="w-5 h-5" />
-            <p className="font-semibold">Project posted successfully!</p>
-          </div>
-        )}
-
         <div className="card">
           <h2 className="text-xl font-bold text-foreground mb-6">Project Details</h2>
           
