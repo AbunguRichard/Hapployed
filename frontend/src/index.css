@@ -6,57 +6,57 @@
 
 @layer base {
   :root {
-    /* Cyberpunk Neon Color System - HSL Format */
-    --background: 220 25% 8%;
-    --background-elevated: 220 20% 12%;
-    --foreground: 210 20% 98%;
+    /* Bright Cyberpunk Neon Color System - HSL Format */
+    --background: 220 30% 12%;
+    --background-elevated: 220 28% 16%;
+    --foreground: 0 0% 100%;
     
-    /* Primary: Electric Blue */
-    --primary: 204 100% 55%;
-    --primary-glow: 204 100% 70%;
-    --primary-dark: 204 85% 40%;
+    /* Primary: Bright Electric Blue */
+    --primary: 200 100% 65%;
+    --primary-glow: 200 100% 75%;
+    --primary-dark: 200 90% 50%;
     
-    /* Secondary: Neon Cyan */
-    --secondary: 180 100% 50%;
-    --secondary-glow: 180 100% 65%;
+    /* Secondary: Bright Neon Cyan */
+    --secondary: 180 100% 60%;
+    --secondary-glow: 180 100% 75%;
     
-    /* Accent: Neon Purple */
-    --accent: 270 85% 60%;
-    --accent-glow: 270 85% 75%;
-    --accent-dark: 270 70% 45%;
+    /* Accent: Vibrant Neon Purple/Magenta */
+    --accent: 290 95% 68%;
+    --accent-glow: 290 95% 80%;
+    --accent-dark: 290 85% 55%;
     
     /* Status Colors */
-    --success: 150 80% 50%;
-    --warning: 45 100% 55%;
-    --destructive: 0 85% 60%;
+    --success: 150 90% 60%;
+    --warning: 45 100% 65%;
+    --destructive: 0 90% 65%;
     
     /* Glass Effect Colors */
-    --glass-bg: 220 20% 15%;
-    --glass-border: 210 50% 60%;
-    --glass-shadow: 210 100% 50%;
+    --glass-bg: 220 25% 20%;
+    --glass-border: 200 80% 70%;
+    --glass-shadow: 200 100% 60%;
     
     /* Muted & Subtle */
-    --muted: 220 15% 25%;
-    --muted-foreground: 210 10% 60%;
+    --muted: 220 20% 30%;
+    --muted-foreground: 210 15% 75%;
     
-    --border: 220 20% 25%;
-    --input: 220 20% 20%;
-    --ring: 204 100% 55%;
+    --border: 220 25% 35%;
+    --input: 220 25% 22%;
+    --ring: 200 100% 65%;
     
     --radius: 0.75rem;
     
-    /* Futuristic Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(204 100% 55%) 0%, hsl(180 100% 50%) 50%, hsl(270 85% 60%) 100%);
-    --gradient-secondary: linear-gradient(90deg, hsl(180 100% 50%) 0%, hsl(270 85% 60%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 25% 8%) 0%, hsl(204 50% 15%) 50%, hsl(270 30% 12%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(220 20% 12% / 0.6) 0%, hsl(220 20% 15% / 0.4) 100%);
+    /* Bright Futuristic Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(200 100% 65%) 0%, hsl(180 100% 60%) 50%, hsl(290 95% 68%) 100%);
+    --gradient-secondary: linear-gradient(90deg, hsl(180 100% 60%) 0%, hsl(290 95% 68%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 30% 12%) 0%, hsl(200 60% 18%) 50%, hsl(290 40% 16%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(220 25% 18% / 0.8) 0%, hsl(220 25% 22% / 0.6) 100%);
     
-    /* Glow Shadows */
-    --shadow-glow-primary: 0 0 40px hsl(204 100% 55% / 0.3), 0 0 80px hsl(204 100% 55% / 0.1);
-    --shadow-glow-accent: 0 0 40px hsl(270 85% 60% / 0.3), 0 0 80px hsl(270 85% 60% / 0.1);
-    --shadow-glow-secondary: 0 0 40px hsl(180 100% 50% / 0.3);
-    --shadow-glass: 0 8px 32px 0 hsl(204 100% 50% / 0.1), inset 0 1px 2px 0 hsl(210 50% 60% / 0.1);
-    --shadow-elevated: 0 20px 40px -15px hsl(204 100% 50% / 0.3);
+    /* Bright Glow Shadows */
+    --shadow-glow-primary: 0 0 30px hsl(200 100% 65% / 0.5), 0 0 60px hsl(200 100% 65% / 0.3);
+    --shadow-glow-accent: 0 0 30px hsl(290 95% 68% / 0.5), 0 0 60px hsl(290 95% 68% / 0.3);
+    --shadow-glow-secondary: 0 0 30px hsl(180 100% 60% / 0.5), 0 0 60px hsl(180 100% 60% / 0.3);
+    --shadow-glass: 0 8px 32px 0 hsl(200 100% 60% / 0.2), inset 0 1px 2px 0 hsl(200 80% 70% / 0.2);
+    --shadow-elevated: 0 20px 40px -15px hsl(200 100% 60% / 0.4);
     
     /* Animations */
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
