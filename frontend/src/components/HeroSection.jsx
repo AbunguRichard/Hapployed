@@ -19,10 +19,10 @@ export default function HeroSection() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
                 Welcome back, <span className="gradient-text">Test User!</span>
               </h1>
-              <p className="text-muted-foreground text-sm md:text-base flex items-center gap-2">
+              <div className="text-muted-foreground text-sm md:text-base flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-accent" />
                 Your AI-powered opportunity radar is active
-              </p>
+              </div>
             </div>
           </div>
 
