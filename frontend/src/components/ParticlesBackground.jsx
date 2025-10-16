@@ -65,7 +65,7 @@ export default function ParticlesBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 150) {
-            ctx.strokeStyle = `rgba(26, 156, 210, ${0.2 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(51, 204, 255, ${0.3 * (1 - distance / 150)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particleA.x, particleA.y);
