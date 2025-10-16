@@ -8,6 +8,7 @@ import SignupPage from './pages/SignupPage';
 import CreateProfilePage from './pages/CreateProfilePage';
 import OpportunitiesPage from './pages/OpportunitiesPage';
 import PostProjectPage from './pages/PostProjectPage';
+import GigsNearMePage from './pages/GigsNearMePage';
 import './App.css';
 
 function App() {
