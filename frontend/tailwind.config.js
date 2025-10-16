@@ -67,8 +67,8 @@ module.exports = {
           '50%': { backgroundPosition: '100% 50%' },
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 20px hsl(204 100% 55% / 0.3)' },
-          '50%': { boxShadow: '0 0 40px hsl(204 100% 55% / 0.6), 0 0 80px hsl(204 100% 55% / 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 20px hsl(200 100% 65% / 0.4)' },
+          '50%': { boxShadow: '0 0 40px hsl(200 100% 65% / 0.7), 0 0 80px hsl(200 100% 65% / 0.4)' },
         },
         'float': {
           '0%, 100%': { transform: 'translateY(0px)' },
