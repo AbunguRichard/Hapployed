@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,57 +6,50 @@
 
 @layer base {
   :root {
-    /* Bright Cyberpunk Neon Color System - HSL Format */
-    --background: 220 30% 12%;
-    --background-elevated: 220 28% 16%;
-    --foreground: 0 0% 100%;
+    /* Hapployed Brand Colors - Purple & White */
+    --background: 0 0% 100%;
+    --background-alt: 270 40% 98%;
+    --foreground: 220 20% 20%;
     
-    /* Primary: Bright Electric Blue */
-    --primary: 200 100% 65%;
-    --primary-glow: 200 100% 75%;
-    --primary-dark: 200 90% 50%;
+    /* Primary: Vibrant Purple */
+    --primary: 270 85% 60%;
+    --primary-glow: 270 85% 70%;
+    --primary-dark: 270 75% 50%;
     
-    /* Secondary: Bright Neon Cyan */
-    --secondary: 180 100% 60%;
-    --secondary-glow: 180 100% 75%;
+    /* Secondary: Light Purple */
+    --secondary: 270 50% 90%;
+    --secondary-dark: 270 40% 80%;
     
-    /* Accent: Vibrant Neon Purple/Magenta */
-    --accent: 290 95% 68%;
-    --accent-glow: 290 95% 80%;
-    --accent-dark: 290 85% 55%;
+    /* Accent: Green (from logo) */
+    --accent: 150 80% 50%;
+    --accent-glow: 150 80% 60%;
     
     /* Status Colors */
-    --success: 150 90% 60%;
-    --warning: 45 100% 65%;
-    --destructive: 0 90% 65%;
+    --success: 150 80% 50%;
+    --warning: 45 100% 55%;
+    --destructive: 0 85% 60%;
     
-    /* Glass Effect Colors */
-    --glass-bg: 220 25% 20%;
-    --glass-border: 200 80% 70%;
-    --glass-shadow: 200 100% 60%;
+    /* Neutral */
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 10% 45%;
+    --card-bg: 0 0% 100%;
     
-    /* Muted & Subtle */
-    --muted: 220 20% 30%;
-    --muted-foreground: 210 15% 75%;
-    
-    --border: 220 25% 35%;
-    --input: 220 25% 22%;
-    --ring: 200 100% 65%;
+    --border: 220 15% 90%;
+    --input: 220 15% 95%;
+    --ring: 270 85% 60%;
     
     --radius: 0.75rem;
     
-    /* Bright Futuristic Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(200 100% 65%) 0%, hsl(180 100% 60%) 50%, hsl(290 95% 68%) 100%);
-    --gradient-secondary: linear-gradient(90deg, hsl(180 100% 60%) 0%, hsl(290 95% 68%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 30% 12%) 0%, hsl(200 60% 18%) 50%, hsl(290 40% 16%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(220 25% 18% / 0.8) 0%, hsl(220 25% 22% / 0.6) 100%);
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(270 85% 60%) 0%, hsl(270 75% 50%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(270 85% 60% / 0.8) 0%, hsl(280 75% 50% / 0.6) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(270 50% 95%) 0%, hsl(0 0% 100%) 100%);
     
-    /* Bright Glow Shadows */
-    --shadow-glow-primary: 0 0 30px hsl(200 100% 65% / 0.5), 0 0 60px hsl(200 100% 65% / 0.3);
-    --shadow-glow-accent: 0 0 30px hsl(290 95% 68% / 0.5), 0 0 60px hsl(290 95% 68% / 0.3);
-    --shadow-glow-secondary: 0 0 30px hsl(180 100% 60% / 0.5), 0 0 60px hsl(180 100% 60% / 0.3);
-    --shadow-glass: 0 8px 32px 0 hsl(200 100% 60% / 0.2), inset 0 1px 2px 0 hsl(200 80% 70% / 0.2);
-    --shadow-elevated: 0 20px 40px -15px hsl(200 100% 60% / 0.4);
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 20% 20% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 20% 20% / 0.1), 0 2px 4px -2px hsl(220 20% 20% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 20% 20% / 0.1), 0 4px 6px -4px hsl(220 20% 20% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(220 20% 20% / 0.1), 0 8px 10px -6px hsl(220 20% 20% / 0.1);
     
     /* Animations */
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -72,30 +65,32 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
   }
 }
 
 @layer utilities {
-  /* Glass Effect */
-  .glass {
-    background: hsl(var(--glass-bg) / 0.6);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid hsl(var(--glass-border) / 0.4);
-    box-shadow: var(--shadow-glass);
+  /* Button Styles */
+  .btn-primary {
+    @apply px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg;
   }
   
-  .glass-strong {
-    background: hsl(var(--glass-bg) / 0.8);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    border: 1px solid hsl(var(--glass-border) / 0.5);
-    box-shadow: var(--shadow-glass);
+  .btn-secondary {
+    @apply px-6 py-3 bg-white text-primary border-2 border-primary rounded-xl font-semibold hover:bg-secondary transition-all duration-300;
+  }
+  
+  /* Card Styles */
+  .card {
+    @apply bg-card-bg rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-2;
   }
   
   /* Gradient Text */
@@ -106,104 +101,22 @@
     background-clip: text;
   }
   
-  .gradient-text-secondary {
-    background: var(--gradient-secondary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
   }
   
-  /* Glow Effects */
-  .glow-primary {
-    box-shadow: var(--shadow-glow-primary);
+  .badge-purple {
+    @apply bg-primary text-white;
   }
   
-  .glow-accent {
-    box-shadow: var(--shadow-glow-accent);
+  .badge-green {
+    @apply bg-accent text-white;
   }
   
-  .glow-secondary {
-    box-shadow: var(--shadow-glow-secondary);
-  }
-  
-  /* Animated Gradient Background */
-  .animated-gradient {
-    background: linear-gradient(
-      -45deg,
-      hsl(200 100% 65% / 0.15),
-      hsl(180 100% 60% / 0.15),
-      hsl(290 95% 68% / 0.15),
-      hsl(200 100% 65% / 0.15)
-    );
-    background-size: 400% 400%;
-    animation: gradient-shift 15s ease infinite;
-  }
-  
-  @keyframes gradient-shift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  /* Pulse Animation */
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px hsl(200 100% 65% / 0.4);
-    }
-    50% {
-      box-shadow: 0 0 40px hsl(200 100% 65% / 0.7), 0 0 80px hsl(200 100% 65% / 0.4);
-    }
-  }
-  
-  /* Hover Lift */
-  .hover-lift {
-    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
-  }
-  
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-elevated);
-  }
-  
-  /* Neon Border */
-  .neon-border {
-    border: 1px solid hsl(var(--primary) / 0.6);
-    box-shadow: inset 0 0 15px hsl(var(--primary) / 0.2), 0 0 15px hsl(var(--primary) / 0.4);
-  }
-  
-  .neon-border-accent {
-    border: 1px solid hsl(var(--accent) / 0.6);
-    box-shadow: inset 0 0 15px hsl(var(--accent) / 0.2), 0 0 15px hsl(var(--accent) / 0.4);
-  }
-  
-  /* Scrollbar Styling */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: hsl(var(--muted) / 0.3);
-    border-radius: 4px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.5);
-    border-radius: 4px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary) / 0.7);
+  /* Icon Circle */
+  .icon-circle {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center;
   }
 }
 
