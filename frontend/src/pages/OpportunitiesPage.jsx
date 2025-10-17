@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, MapPin, Sparkles } from 'lucide-react';
+import { Briefcase, MapPin, Sparkles, CheckCircle, Trophy, TrendingUp, DollarSign, Clock, Globe, Zap } from 'lucide-react';
 import WelcomeOverlay from '../components/WelcomeOverlay';
 import DashboardNav from '../components/DashboardNav';
 import { toast } from 'sonner';
+import OpportunityCard from '../components/OpportunityCard';
 
 export default function OpportunitiesPage() {
   const { user } = useAuth();
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [sortBy, setSortBy] = useState('match');
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     // Check if this is the first time after profile creation
