@@ -99,11 +99,6 @@ export default function RotatingHeroMessages() {
               />
             ))}
           </div>
-
-          {/* Keyboard hint */}
-          <p className="text-sm text-muted-foreground mt-6">
-            Use arrow keys to navigate • Space to pause • Hover to pause
-          </p>
         </div>
       </div>
     </section>
