@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the futuristic dashboard design with glassmorphism effects, gradient text, neon borders, particle animations, navigation, hero section, stats grid, skills section, projects section, and responsive design"
+user_problem_statement: "Verify and test the dual onboarding experience implementation on CreateProfilePage.jsx - smart auto-detection for skilled professionals vs general laborers, visual skill selectors with icons, physical availability sections, location-first discovery, and adaptive form flows"
 
 frontend:
   - task: "Futuristic Dashboard Visual Design & Layout"
