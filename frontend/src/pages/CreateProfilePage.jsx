@@ -132,6 +132,123 @@ export default function CreateProfilePage() {
     }));
   };
 
+  // NEW: Fuzzy matching function for skill suggestions
+  const fuzzyMatch = (input, target) => {
+    const inputLower = input.toLowerCase();
+    const targetLower = target.toLowerCase();
+    
+    // Exact match
+    if (targetLower.includes(inputLower)) return 2;
+    
+    // Check if starts with
+    if (targetLower.startsWith(inputLower)) return 1.5;
+    
+    // Levenshtein distance calculation (simplified)
+    let matches = 0;
+    for (let char of inputLower) {
+      if (targetLower.includes(char)) matches++;
+    }
+    return matches / inputLower.length;
+  };
+
+  // NEW: Get skill suggestions based on input
+  const getSkillSuggestions = (input, category) => {
+    if (!input || input.length < 2) {
+      setSkillSuggestions([]);
+      return;
+    }
+
+    const allSkills = category === 'professional' ? professionalSkills : generalSkills;
+    const allKeywords = allSkills.flatMap(skill => 
+      skill.keywords.map(keyword => ({
+        keyword,
+        skill: skill.label,
+        id: skill.id
+      }))
+    );
+
+    const matches = allKeywords
+      .map(item => ({
+        ...item,
+        score: fuzzyMatch(input, item.keyword)
+      }))
+      .filter(item => item.score > 0.5)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+
+    setSkillSuggestions(matches);
+  };
+
+  // NEW: Handle custom skill input change
+  const handleCustomSkillInput = (value, category) => {
+    if (category === 'professional') {
+      setProfessionalSkillInput(value);
+      getSkillSuggestions(value, 'professional');
+    } else {
+      setGeneralSkillInput(value);
+      getSkillSuggestions(value, 'general');
+    }
+  };
+
+  // NEW: Add custom skill
+  const addCustomSkill = (skillName, category) => {
+    if (!skillName.trim()) return;
+
+    const customSkillId = `custom_${category}_${Date.now()}`;
+    const newCustomSkill = {
+      id: customSkillId,
+      label: skillName.trim(),
+      category: category,
+      isCustom: true
+    };
+
+    setFormData(prev => ({
+      ...prev,
+      customSkills: [...prev.customSkills, newCustomSkill],
+      skills: [...prev.skills, customSkillId]
+    }));
+
+    // Set user type if not already set
+    if (!userType) {
+      setUserType(category === 'professional' ? 'professional' : 'general');
+    }
+
+    // Reset input
+    if (category === 'professional') {
+      setProfessionalSkillInput('');
+      setShowProfessionalInput(false);
+    } else {
+      setGeneralSkillInput('');
+      setShowGeneralInput(false);
+    }
+    setSkillSuggestions([]);
+
+    toast.success(`Added "${skillName}" to your skills!`);
+  };
+
+  // NEW: Remove custom skill
+  const removeCustomSkill = (skillId) => {
+    setFormData(prev => ({
+      ...prev,
+      customSkills: prev.customSkills.filter(s => s.id !== skillId),
+      skills: prev.skills.filter(s => s !== skillId)
+    }));
+  };
+
+  // NEW: Handle suggestion click
+  const handleSuggestionClick = (suggestion) => {
+    handleSkillToggle(suggestion.id);
+    setProfessionalSkillInput('');
+    setGeneralSkillInput('');
+    setShowProfessionalInput(false);
+    setShowGeneralInput(false);
+    setSkillSuggestions([]);
+    
+    if (!userType) {
+      setUserType(professionalSkills.find(s => s.id === suggestion.id) ? 'professional' : 'general');
+    }
+  };
+
   const handleNext = () => {
     if (currentStep === 1 && !userType) {
       toast.error('Please select at least one skill to continue');
