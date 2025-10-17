@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, MapPin, User, Sparkles } from 'lucide-react';
+import { Briefcase, MapPin, Sparkles } from 'lucide-react';
 import WelcomeOverlay from '../components/WelcomeOverlay';
+import DashboardNav from '../components/DashboardNav';
 import { toast } from 'sonner';
 
 export default function OpportunitiesPage() {
@@ -55,9 +56,9 @@ export default function OpportunitiesPage() {
     },
   ];
 
-  const handleApply = (oppId) => {
-    toast.success('Application sent!', {
-      description: 'The employer will review your profile and get back to you soon.',
+  const handleApply = (gigId) => {
+    toast.success('Application sent successfully!', {
+      description: 'We\'ll notify you when the client responds.',
     });
   };
 
@@ -71,25 +72,7 @@ export default function OpportunitiesPage() {
         />
       )}
 
-      {/* Header */}
-      <header className="bg-white border-b border-border sticky top-0 z-40">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Discover Opportunities</h1>
-              <p className="text-sm text-muted-foreground">Matched to your skills and location</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden sm:inline">
-                Welcome, <span className="font-semibold text-foreground">{user?.fullName || 'User'}</span>
-              </span>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <User className="w-5 h-5 text-white" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <DashboardNav />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8">

@@ -6,6 +6,7 @@ import {
   AlertTriangle, CheckCircle2, Star, DollarSign, User, Calendar
 } from 'lucide-react';
 import { toast } from 'sonner';
+import DashboardNav from '../components/DashboardNav';
 import MessagingPanel from '../components/MessagingPanel';
 import GigCard from '../components/GigCard';
 import SwipeView from '../components/SwipeView';
@@ -142,34 +143,18 @@ export default function GigsNearMePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-white border-b border-border sticky top-0 z-40">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold gradient-text">Gigs Near Me</h1>
-              <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">{mockGigs.length}</span> new opportunities nearby • 
-                <span className="text-destructive font-semibold">{urgentGigsNearby} URGENT</span>
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => setShowMessaging(!showMessaging)}
-                className="relative p-2 rounded-lg hover:bg-muted transition-colors"
-              >
-                <MessageSquare className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-white text-xs rounded-full flex items-center justify-center">3</span>
-              </button>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <User className="w-5 h-5 text-white" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <DashboardNav />
 
       <main className="container mx-auto px-4 md:px-6 lg:px-8 py-6">
+        {/* Page Header */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold gradient-text mb-2">Gigs Near Me</h1>
+          <p className="text-muted-foreground">
+            <span className="font-semibold text-foreground">{mockGigs.length}</span> new opportunities nearby • 
+            <span className="text-destructive font-semibold"> {urgentGigsNearby} URGENT</span>
+          </p>
+        </div>
+
         {/* Urgent Banner */}
         {showUrgentBanner && urgentGigsNearby > 0 && (
           <div className="mb-6 p-4 bg-accent/10 border-2 border-accent rounded-xl flex items-center justify-between">
@@ -283,9 +268,14 @@ export default function GigsNearMePage() {
             </select>
           </div>
 
-          {/* Apply Button */}
-          <button className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors">
-            Apply
+          {/* Messages Button */}
+          <button 
+            onClick={() => setShowMessaging(!showMessaging)}
+            className="ml-auto relative px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors flex items-center gap-2"
+          >
+            <MessageSquare className="w-5 h-5" />
+            Messages
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-white text-xs rounded-full flex items-center justify-center">3</span>
           </button>
         </div>
 

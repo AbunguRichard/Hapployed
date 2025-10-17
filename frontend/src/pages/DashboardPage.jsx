@@ -2,9 +2,10 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Briefcase, Zap, MapPin, User, Brain, Sparkles, 
-  ChevronRight, TrendingUp, Award, DollarSign, Clock
+  Briefcase, Zap, MapPin, Brain, Sparkles, 
+  ChevronRight, TrendingUp, Award
 } from 'lucide-react';
+import DashboardNav from '../components/DashboardNav';
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -15,9 +16,9 @@ export default function DashboardPage() {
       title: 'Projects',
       description: 'Find remote & hybrid contracts',
       icon: Briefcase,
-      color: 'from-blue-500 to-blue-600',
-      textColor: 'text-blue-500',
-      bgColor: 'bg-blue-500/10',
+      gradient: 'from-blue-500 to-indigo-600',
+      iconBg: 'bg-blue-500/10',
+      iconColor: 'text-blue-600',
       link: '/opportunities',
       action: 'Browse Projects',
     },
@@ -25,9 +26,9 @@ export default function DashboardPage() {
       title: 'Emergency',
       description: 'QuickHire and urgent needs near you',
       icon: Zap,
-      color: 'from-orange-500 to-orange-600',
-      textColor: 'text-orange-500',
-      bgColor: 'bg-orange-500/10',
+      gradient: 'from-orange-500 to-red-600',
+      iconBg: 'bg-orange-500/10',
+      iconColor: 'text-orange-600',
       link: '/gigs-near-me?filter=emergency',
       action: 'View Requests',
     },
@@ -35,9 +36,9 @@ export default function DashboardPage() {
       title: 'Gigs Near Me',
       description: 'Explore short jobs within your area',
       icon: MapPin,
-      color: 'from-teal-500 to-teal-600',
-      textColor: 'text-teal-500',
-      bgColor: 'bg-teal-500/10',
+      gradient: 'from-emerald-500 to-teal-600',
+      iconBg: 'bg-emerald-500/10',
+      iconColor: 'text-emerald-600',
       badge: '3',
       link: '/gigs-near-me',
       action: 'Find Local Gigs',
@@ -75,60 +76,26 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <header className="border-b border-white/10">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo & Nav */}
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-white" />
-                </div>
-              </div>
-              <nav className="hidden md:flex items-center gap-6 text-sm">
-                <button onClick={() => navigate('/dashboard')} className="text-white font-medium">
-                  Home
-                </button>
-                <button onClick={() => navigate('/dashboard')} className="text-purple-400 font-medium">
-                  Dashboard
-                </button>
-                <button onClick={() => navigate('/opportunities')} className="text-slate-400 hover:text-white transition-colors">
-                  Opportunities
-                </button>
-              </nav>
-            </div>
-
-            {/* User Avatar */}
-            <div className="w-12 h-12 rounded-full overflow-hidden">
-              <img 
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=TestUser" 
-                alt="User" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      <DashboardNav />
 
       <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-12">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+            <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 ring-4 ring-purple-200">
               <img 
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=TestUser" 
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.fullName || 'User'}`}
                 alt="User" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-                Welcome back, <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{user?.fullName?.split(' ')[0] || 'User'}!</span>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">
+                Welcome back, <span className="gradient-text">{user?.fullName?.split(' ')[0] || 'User'}!</span>
               </h1>
-              <p className="text-slate-400 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-400" />
+              <p className="text-muted-foreground flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary" />
                 Your AI-powered opportunity radar is live
               </p>
             </div>
@@ -145,30 +112,29 @@ export default function DashboardPage() {
                 onClick={() => navigate(card.link)}
                 className="relative group cursor-pointer"
               >
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300 hover:-translate-y-1">
+                <div className="card hover-lift border-2 border-border hover:border-primary/30 transition-all duration-300">
                   {/* Badge */}
                   {card.badge && (
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
                       {card.badge}
                     </div>
                   )}
 
                   {/* Icon */}
-                  <div className={`w-12 h-12 rounded-xl ${card.bgColor} flex items-center justify-center mb-4`}>
-                    <Icon className={`w-6 h-6 ${card.textColor}`} />
+                  <div className={`w-16 h-16 rounded-2xl ${card.iconBg} flex items-center justify-center mb-4`}>
+                    <Icon className={`w-8 h-8 ${card.iconColor}`} />
                   </div>
 
                   {/* Title */}
-                  <h3 className={`text-xl font-bold mb-2 flex items-center gap-2 ${card.textColor}`}>
-                    <Icon className="w-5 h-5" />
+                  <h3 className={`text-2xl font-bold mb-2 ${card.iconColor}`}>
                     {card.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-slate-400 text-sm mb-4">{card.description}</p>
+                  <p className="text-muted-foreground text-sm mb-6">{card.description}</p>
 
                   {/* Action Button */}
-                  <button className={`w-full px-4 py-3 ${card.bgColor} ${card.textColor} rounded-lg font-semibold hover:opacity-80 transition-all`}>
+                  <button className={`w-full px-4 py-3 bg-gradient-to-r ${card.gradient} text-white rounded-xl font-semibold hover:shadow-lg transition-all`}>
                     {card.action}
                   </button>
                 </div>
@@ -180,68 +146,68 @@ export default function DashboardPage() {
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Behavioral Archetype */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+          <div className="card border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-white">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                <Brain className="w-5 h-5 text-purple-400" />
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Brain className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1">
-                <h3 className="text-sm text-slate-400 mb-1 flex items-center gap-2">
+                <h3 className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
                   <span>🧠</span> Behavioral Archetype
                 </h3>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  <h2 className="text-3xl font-bold gradient-text">
                     Meticulous Planner
                   </h2>
-                  <ChevronRight className="w-5 h-5 text-slate-400" />
+                  <ChevronRight className="w-5 h-5 text-muted-foreground" />
                 </div>
               </div>
             </div>
 
-            <p className="text-slate-400 text-sm mb-4">Learn how to improve</p>
+            <p className="text-muted-foreground text-sm mb-4">Learn how to improve</p>
 
             <div className="flex items-center gap-4">
-              <span className="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg text-sm font-semibold">
+              <span className="px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-semibold">
                 planner
               </span>
-              <p className="text-slate-400 text-sm">
-                AI recommends trending skill: <span className="text-white font-semibold">project management</span>
+              <p className="text-muted-foreground text-sm">
+                AI recommends trending skill: <span className="text-foreground font-semibold">project management</span>
               </p>
             </div>
           </div>
 
           {/* Oracle Insights */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-            <h3 className="text-sm text-slate-400 mb-4 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-purple-400" />
+          <div className="card border-2 border-accent/30 bg-gradient-to-br from-emerald-50 to-white">
+            <h3 className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-accent" />
               Oracle Insights
             </h3>
-            <p className="text-slate-400 text-xs mb-6">AI opportunity predictions</p>
+            <p className="text-muted-foreground text-xs mb-6">AI opportunity predictions</p>
 
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-slate-400">1 Trust Score</span>
+                <span className="text-sm text-muted-foreground">Trust Score</span>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  50 <span className="text-2xl">%</span>
+              <div className="flex items-center gap-6">
+                <div className="text-6xl font-bold gradient-text">
+                  50<span className="text-3xl">%</span>
                 </div>
-                <div className="w-20 h-20 rounded-full border-4 border-purple-500/20 flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8 text-purple-400" />
+                <div className="w-24 h-24 rounded-full border-4 border-accent/30 flex items-center justify-center">
+                  <TrendingUp className="w-10 h-10 text-accent" />
                 </div>
               </div>
-              <p className="text-slate-400 text-xs mt-2">2 verified skills</p>
+              <p className="text-muted-foreground text-xs mt-2">2 verified skills</p>
             </div>
           </div>
         </div>
 
         {/* Live Opportunity Feed */}
-        <div className="bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-white">Your Live Opportunity Feed</h2>
+        <div className="card border-2 border-border">
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+            <h2 className="text-2xl font-bold text-foreground">Your Live Opportunity Feed</h2>
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-slate-400">Sort by:</span>
-              <select className="bg-slate-700/50 text-white px-3 py-1 rounded-lg border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <span className="text-muted-foreground">Sort by:</span>
+              <select className="px-4 py-2 bg-white border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                 <option>Nearest</option>
                 <option>Highest Pay</option>
                 <option>Best Match</option>
@@ -254,29 +220,29 @@ export default function DashboardPage() {
               <div
                 key={opp.id}
                 onClick={() => navigate('/gigs-near-me')}
-                className="bg-slate-700/30 border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all cursor-pointer group"
+                className="bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-border hover:border-primary rounded-2xl p-6 transition-all cursor-pointer group"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                       {opp.title}
                     </h3>
-                    <div className="flex items-center gap-4 text-sm text-slate-400 mb-3">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                       <span>{opp.company}</span>
                       <span>•</span>
                       <span>{opp.type}</span>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-lg font-bold text-teal-400">{opp.pay}</span>
-                      <span className="text-sm text-slate-400">{opp.distance} away</span>
+                      <span className="text-lg font-bold text-accent">{opp.pay}</span>
+                      <span className="text-sm text-muted-foreground">{opp.distance} away</span>
                     </div>
                   </div>
                   {opp.matchScore && (
                     <div className="text-right">
-                      <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                      <div className="text-3xl font-bold gradient-text">
                         {opp.matchScore}%
                       </div>
-                      <div className="text-xs text-slate-400">match</div>
+                      <div className="text-xs text-muted-foreground">match</div>
                     </div>
                   )}
                 </div>
