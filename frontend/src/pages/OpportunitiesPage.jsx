@@ -37,9 +37,13 @@ export default function OpportunitiesPage() {
       company: 'Tech Startup Inc.',
       location: 'Remote',
       type: 'Contract',
+      category: 'tech',
       pay: '$50-80/hr',
       description: 'Looking for an experienced React developer for a 3-month project.',
       matchScore: 95,
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Tech Startup Inc',
+      verified: true,
+      socialProof: '3 Hapployed users hired here',
     },
     {
       id: 2,
@@ -47,9 +51,13 @@ export default function OpportunitiesPage() {
       company: 'Creative Agency',
       location: 'San Francisco, CA',
       type: 'Full-time',
+      category: 'design',
       pay: '$70k-90k/year',
       description: 'Join our creative team to design beautiful user experiences.',
       matchScore: 88,
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Creative Agency',
+      verified: true,
+      socialProof: '5 Hapployed users hired here',
     },
     {
       id: 3,
@@ -57,11 +65,25 @@ export default function OpportunitiesPage() {
       company: 'HomeServices Pro',
       location: 'New York, NY',
       type: 'Emergency Gig',
+      category: 'labor',
       pay: '$100/job',
       description: 'Urgent: Pipe burst, need immediate assistance.',
       matchScore: 75,
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=HomeServices Pro',
+      verified: false,
+      socialProof: null,
     },
   ];
+
+  const sortedOpportunities = [...mockOpportunities].sort((a, b) => {
+    if (sortBy === 'match') return b.matchScore - a.matchScore;
+    if (sortBy === 'pay') {
+      const payA = parseInt(a.pay.replace(/[^0-9]/g, ''));
+      const payB = parseInt(b.pay.replace(/[^0-9]/g, ''));
+      return payB - payA;
+    }
+    return 0;
+  });
 
   const handleApply = (gigId) => {
     toast.success('Application sent successfully!', {
