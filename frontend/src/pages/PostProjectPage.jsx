@@ -81,10 +81,16 @@ export default function PostProjectPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Use custom category if "Other" is selected
+    const finalCategory = formData.category === 'Other' && formData.customCategory 
+      ? formData.customCategory 
+      : formData.category;
+    
     toast.success('Project posted successfully!', {
       description: 'We\'re now matching you with qualified candidates.',
     });
-    console.log('Posted:', { ...formData, mode });
+    console.log('Posted:', { ...formData, category: finalCategory, mode });
   };
 
   const handlePreview = () => {
