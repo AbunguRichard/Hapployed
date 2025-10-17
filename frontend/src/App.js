@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Homepage from './pages/Homepage';
+import WhatWeOfferPage from './pages/WhatWeOfferPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CreateProfilePage from './pages/CreateProfilePage';
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Homepage />} />
+            <Route path="/what-we-offer" element={<WhatWeOfferPage />} />
             <Route path="/auth/login" element={<LoginPage />} />
             <Route path="/auth/signup" element={<SignupPage />} />
             

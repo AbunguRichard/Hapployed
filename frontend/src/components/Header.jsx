@@ -20,11 +20,8 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#offer" className="text-foreground hover:text-primary transition-colors font-medium">
+            <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
               What we offer
-            </a>
-            <Link to="/gigs-near-me" className="text-foreground hover:text-primary transition-colors font-medium">
-              Gigs Near Me
             </Link>
             <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
               Log in
@@ -49,11 +46,8 @@ export default function Header() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-border space-y-4">
-            <a href="#offer" className="block text-foreground hover:text-primary transition-colors font-medium">
+            <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
               What we offer
-            </a>
-            <Link to="/gigs-near-me" className="block text-foreground hover:text-primary transition-colors font-medium">
-              Gigs Near Me
             </Link>
             <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
               Log in
