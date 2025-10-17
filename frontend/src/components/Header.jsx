@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { Menu, X } from 'lucide-react';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, hasProfile, logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
 
   return (
     <header className="bg-white sticky top-0 z-50 shadow-sm">
@@ -30,39 +23,15 @@ export default function Header() {
             <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
               What we offer
             </Link>
-            
-            {isAuthenticated ? (
-              <>
-                <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors font-medium">
-                  Dashboard
-                </Link>
-                <Link to="/gigs-near-me" className="text-foreground hover:text-primary transition-colors font-medium">
-                  Gigs Near Me
-                </Link>
-                <Link to="/projects/new" className="text-foreground hover:text-primary transition-colors font-medium">
-                  Post a Project
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  <LogOut className="w-4 h-4" />
-                  Log out
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
-                  Log in
-                </Link>
-                <button 
-                  onClick={() => navigate('/auth/signup')}
-                  className="btn-primary"
-                >
-                  Sign up
-                </button>
-              </>
-            )}
+            <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
+              Log in
+            </Link>
+            <button 
+              onClick={() => navigate('/auth/signup')}
+              className="btn-primary"
+            >
+              Sign up
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -80,39 +49,15 @@ export default function Header() {
             <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
               What we offer
             </Link>
-            
-            {isAuthenticated ? (
-              <>
-                <Link to="/dashboard" className="block text-foreground hover:text-primary transition-colors font-medium">
-                  Dashboard
-                </Link>
-                <Link to="/gigs-near-me" className="block text-foreground hover:text-primary transition-colors font-medium">
-                  Gigs Near Me
-                </Link>
-                <Link to="/projects/new" className="block text-foreground hover:text-primary transition-colors font-medium">
-                  Post a Project
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium w-full text-left"
-                >
-                  <LogOut className="w-4 h-4" />
-                  Log out
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
-                  Log in
-                </Link>
-                <button 
-                  onClick={() => navigate('/auth/signup')}
-                  className="btn-primary w-full"
-                >
-                  Sign up
-                </button>
-              </>
-            )}
+            <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
+              Log in
+            </Link>
+            <button 
+              onClick={() => navigate('/auth/signup')}
+              className="btn-primary w-full"
+            >
+              Sign up
+            </button>
           </div>
         )}
       </div>
