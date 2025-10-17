@@ -48,6 +48,13 @@ export default function HeroSection() {
             Discover Opportunities
           </button>
           <button 
+            onClick={() => navigate('/gigs-near-me')}
+            className="group px-8 py-4 bg-accent text-white rounded-xl font-semibold text-lg hover:bg-accent-dark transition-all duration-300 shadow-xl hover:shadow-2xl flex items-center justify-center gap-3"
+          >
+            <MapPin className="w-5 h-5" />
+            Gigs Near Me
+          </button>
+          <button 
             onClick={() => navigate('/projects/new')}
             className="group px-8 py-4 bg-white/20 backdrop-blur-sm text-white border-2 border-white/50 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-3"
           >
