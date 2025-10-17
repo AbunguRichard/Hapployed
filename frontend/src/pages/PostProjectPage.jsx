@@ -28,8 +28,10 @@ export default function PostProjectPage() {
     timeWindow: 'today',
     duration: '',
     equipment: [],
+    customEquipment: '',
   });
   const [aiSuggestion, setAiSuggestion] = useState(null);
+  const [showCustomEquipment, setShowCustomEquipment] = useState(false);
 
   // AI Budget Suggestion
   useEffect(() => {
@@ -76,7 +78,6 @@ export default function PostProjectPage() {
         onClick: () => setShowToGo(false),
       },
     });
-    // Navigate or show full form
   };
 
   const handleSubmit = (e) => {
@@ -87,10 +88,15 @@ export default function PostProjectPage() {
       ? formData.customCategory 
       : formData.category;
     
+    // Add custom equipment if provided
+    const finalEquipment = formData.customEquipment
+      ? [...formData.equipment, formData.customEquipment]
+      : formData.equipment;
+    
     toast.success('Project posted successfully!', {
       description: 'We\'re now matching you with qualified candidates.',
     });
-    console.log('Posted:', { ...formData, category: finalCategory, mode });
+    console.log('Posted:', { ...formData, category: finalCategory, equipment: finalEquipment, mode });
   };
 
   const handlePreview = () => {
@@ -100,6 +106,18 @@ export default function PostProjectPage() {
   const handleSaveDraft = () => {
     localStorage.setItem('projectDraft', JSON.stringify({ ...formData, mode }));
     toast.success('Draft saved!');
+  };
+
+  const handleAddCustomEquipment = () => {
+    if (formData.customEquipment.trim()) {
+      setFormData(prev => ({
+        ...prev,
+        equipment: [...prev.equipment, prev.customEquipment],
+        customEquipment: '',
+      }));
+      setShowCustomEquipment(false);
+      toast.success('Custom equipment added!');
+    }
   };
 
   const categories = [
@@ -543,7 +561,7 @@ export default function PostProjectPage() {
                   {/* Equipment/License */}
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Equipment/License Needed</label>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-3">
                       {equipmentOptions.map(equip => (
                         <button
                           key={equip}
@@ -565,7 +583,66 @@ export default function PostProjectPage() {
                           {equip}
                         </button>
                       ))}
+                      
+                      {/* Other Button */}
+                      <button
+                        type="button"
+                        onClick={() => setShowCustomEquipment(!showCustomEquipment)}
+                        className={`px-3 py-2 rounded-lg border transition-all flex items-center gap-1 ${
+                          showCustomEquipment
+                            ? 'border-primary bg-primary/10 text-primary'
+                            : 'border-border text-foreground hover:border-primary'
+                        }`}
+                      >
+                        <Plus className="w-4 h-4" />
+                        Other
+                      </button>
                     </div>
+
+                    {/* Custom Equipment Input */}
+                    {showCustomEquipment && (
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          name="customEquipment"
+                          value={formData.customEquipment}
+                          onChange={handleChange}
+                          className="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          placeholder="Enter custom equipment/license"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleAddCustomEquipment}
+                          className="px-4 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors"
+                        >
+                          Add
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Display Custom Equipment */}
+                    {formData.equipment.filter(e => !equipmentOptions.includes(e)).length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <p className="text-sm text-muted-foreground w-full">Custom equipment:</p>
+                        {formData.equipment.filter(e => !equipmentOptions.includes(e)).map((equip, idx) => (
+                          <span key={idx} className="px-3 py-1 bg-accent/10 text-accent rounded-lg text-sm flex items-center gap-2">
+                            {equip}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setFormData(prev => ({
+                                  ...prev,
+                                  equipment: prev.equipment.filter(e => e !== equip)
+                                }));
+                              }}
+                              className="hover:text-destructive"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </>
               )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User } from 'lucide-react';
+import { User, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
@@ -15,6 +15,7 @@ export default function DashboardNav() {
     { label: 'Dashboard', path: '/dashboard' },
     { label: 'Opportunities', path: '/opportunities' },
     { label: 'Gigs Near Me', path: '/gigs-near-me' },
+    { label: 'Post Project', path: '/projects/new', icon: Plus },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -30,19 +31,23 @@ export default function DashboardNav() {
               <span className="text-xl font-bold text-foreground hidden sm:inline">Hapployed</span>
             </button>
             <nav className="hidden md:flex items-center gap-6 text-sm">
-              {navItems.map((item) => (
-                <button
-                  key={item.path}
-                  onClick={() => navigate(item.path)}
-                  className={`font-medium transition-colors ${
-                    isActive(item.path)
-                      ? 'text-primary'
-                      : 'text-foreground hover:text-primary'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => navigate(item.path)}
+                    className={`font-medium transition-colors flex items-center gap-1 ${
+                      isActive(item.path)
+                        ? 'text-primary'
+                        : 'text-foreground hover:text-primary'
+                    }`}
+                  >
+                    {Icon && <Icon className="w-4 h-4" />}
+                    {item.label}
+                  </button>
+                );
+              })}
             </nav>
           </div>
 
