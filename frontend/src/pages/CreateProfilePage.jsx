@@ -390,6 +390,121 @@ export default function CreateProfilePage() {
                     );
                   })}
                 </div>
+
+                {/* Add My Skill Button for Professional */}
+                {!showProfessionalInput && (
+                  <button
+                    type="button"
+                    onClick={() => setShowProfessionalInput(true)}
+                    className="mt-4 w-full p-3 border-2 border-dashed border-primary/30 rounded-xl text-primary hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 font-semibold"
+                  >
+                    <Plus className="w-5 h-5" />
+                    Add My Skill
+                  </button>
+                )}
+
+                {/* Custom Skill Input for Professional */}
+                {showProfessionalInput && (
+                  <div className="mt-4 space-y-2">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={professionalSkillInput}
+                        onChange={(e) => handleCustomSkillInput(e.target.value, 'professional')}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (skillSuggestions.length > 0) {
+                              handleSuggestionClick(skillSuggestions[0]);
+                            } else {
+                              addCustomSkill(professionalSkillInput, 'professional');
+                            }
+                          } else if (e.key === 'Escape') {
+                            setShowProfessionalInput(false);
+                            setProfessionalSkillInput('');
+                            setSkillSuggestions([]);
+                          }
+                        }}
+                        placeholder="Type your skill... (e.g., Plumbing, Electrical)"
+                        className="w-full px-4 py-3 border-2 border-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        autoFocus
+                      />
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (professionalSkillInput.trim()) {
+                              addCustomSkill(professionalSkillInput, 'professional');
+                            }
+                          }}
+                          className="p-1.5 bg-primary text-white rounded-lg hover:bg-primary/90"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowProfessionalInput(false);
+                            setProfessionalSkillInput('');
+                            setSkillSuggestions([]);
+                          }}
+                          className="p-1.5 bg-muted text-foreground rounded-lg hover:bg-muted/80"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Skill Suggestions */}
+                    {skillSuggestions.length > 0 && (
+                      <div className="bg-white border border-border rounded-lg shadow-lg p-2 space-y-1">
+                        <p className="text-xs text-muted-foreground px-2 py-1">Did you mean...</p>
+                        {skillSuggestions.map((suggestion, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => handleSuggestionClick(suggestion)}
+                            className="w-full text-left px-3 py-2 rounded hover:bg-primary/10 text-sm"
+                          >
+                            <span className="font-semibold text-primary">{suggestion.skill}</span>
+                            <span className="text-muted-foreground text-xs ml-2">({suggestion.keyword})</span>
+                          </button>
+                        ))}
+                        <div className="border-t border-border pt-1 mt-1">
+                          <button
+                            type="button"
+                            onClick={() => addCustomSkill(professionalSkillInput, 'professional')}
+                            className="w-full text-left px-3 py-2 rounded hover:bg-accent/10 text-sm text-accent font-semibold"
+                          >
+                            + Add "{professionalSkillInput}" as new skill
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Display Custom Professional Skills */}
+                {formData.customSkills.filter(s => s.category === 'professional').length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {formData.customSkills.filter(s => s.category === 'professional').map(skill => (
+                      <div
+                        key={skill.id}
+                        className="inline-flex items-center gap-2 px-3 py-2 bg-primary/10 border-2 border-primary rounded-lg"
+                      >
+                        <Tag className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-semibold text-primary">{skill.label}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeCustomSkill(skill.id)}
+                          className="hover:bg-primary/20 rounded p-0.5"
+                        >
+                          <X className="w-3.5 h-3.5 text-primary" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* General Skills */}
