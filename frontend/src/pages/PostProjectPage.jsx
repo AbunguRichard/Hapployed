@@ -16,6 +16,7 @@ export default function PostProjectPage() {
     title: '',
     description: '',
     category: '',
+    customCategory: '',
     amount: '',
     visibility: 'public',
     location: '',
