@@ -323,6 +323,21 @@ export default function PostProjectPage() {
                     <option value="">Select category</option>
                     {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                   </select>
+                  
+                  {/* Custom Category Input */}
+                  {formData.category === 'Other' && (
+                    <div className="mt-3">
+                      <input
+                        type="text"
+                        name="customCategory"
+                        value={formData.customCategory}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="Enter custom category"
+                        required
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div>
