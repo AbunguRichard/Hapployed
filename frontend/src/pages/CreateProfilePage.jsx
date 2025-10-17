@@ -21,6 +21,7 @@ export default function CreateProfilePage() {
     location: '',
     bio: '',
     skills: [],
+    customSkills: [], // NEW: Store custom skills separately
     lookingFor: 'opportunities',
     // Professional fields
     portfolio: '',
@@ -34,6 +35,14 @@ export default function CreateProfilePage() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  
+  // NEW: States for custom skill addition
+  const [showProfessionalInput, setShowProfessionalInput] = useState(false);
+  const [showGeneralInput, setShowGeneralInput] = useState(false);
+  const [professionalSkillInput, setProfessionalSkillInput] = useState('');
+  const [generalSkillInput, setGeneralSkillInput] = useState('');
+  const [skillSuggestions, setSkillSuggestions] = useState([]);
+  
   const { createProfile } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
