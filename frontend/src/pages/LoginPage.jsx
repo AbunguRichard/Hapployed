@@ -46,6 +46,18 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <div className="card">
+          {/* Test Credentials Banner */}
+          <div className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+            <p className="text-sm font-semibold text-primary mb-2">🚀 Quick Demo Access</p>
+            <p className="text-sm text-foreground">
+              <strong>Email:</strong> test@example.com<br />
+              <strong>Password:</strong> password123
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Or sign up with any email to create a new account
+            </p>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="flex items-center gap-2 p-3 bg-destructive/10 text-destructive rounded-lg">
