@@ -62,6 +62,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/settings/:section?"
+              element={
+                <ProtectedRoute>
+                  <SettingsPage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
