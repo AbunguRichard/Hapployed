@@ -541,6 +541,121 @@ export default function CreateProfilePage() {
                     );
                   })}
                 </div>
+
+                {/* Add My Skill Button for General */}
+                {!showGeneralInput && (
+                  <button
+                    type="button"
+                    onClick={() => setShowGeneralInput(true)}
+                    className="mt-4 w-full p-3 border-2 border-dashed border-accent/30 rounded-xl text-accent hover:border-accent hover:bg-accent/5 transition-all flex items-center justify-center gap-2 font-semibold"
+                  >
+                    <Plus className="w-5 h-5" />
+                    Add My Skill
+                  </button>
+                )}
+
+                {/* Custom Skill Input for General */}
+                {showGeneralInput && (
+                  <div className="mt-4 space-y-2">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={generalSkillInput}
+                        onChange={(e) => handleCustomSkillInput(e.target.value, 'general')}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (skillSuggestions.length > 0) {
+                              handleSuggestionClick(skillSuggestions[0]);
+                            } else {
+                              addCustomSkill(generalSkillInput, 'general');
+                            }
+                          } else if (e.key === 'Escape') {
+                            setShowGeneralInput(false);
+                            setGeneralSkillInput('');
+                            setSkillSuggestions([]);
+                          }
+                        }}
+                        placeholder="Type your skill... (e.g., Painting, Carpentry)"
+                        className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                        autoFocus
+                      />
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (generalSkillInput.trim()) {
+                              addCustomSkill(generalSkillInput, 'general');
+                            }
+                          }}
+                          className="p-1.5 bg-accent text-white rounded-lg hover:bg-accent/90"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowGeneralInput(false);
+                            setGeneralSkillInput('');
+                            setSkillSuggestions([]);
+                          }}
+                          className="p-1.5 bg-muted text-foreground rounded-lg hover:bg-muted/80"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Skill Suggestions */}
+                    {skillSuggestions.length > 0 && (
+                      <div className="bg-white border border-border rounded-lg shadow-lg p-2 space-y-1">
+                        <p className="text-xs text-muted-foreground px-2 py-1">Did you mean...</p>
+                        {skillSuggestions.map((suggestion, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => handleSuggestionClick(suggestion)}
+                            className="w-full text-left px-3 py-2 rounded hover:bg-accent/10 text-sm"
+                          >
+                            <span className="font-semibold text-accent">{suggestion.skill}</span>
+                            <span className="text-muted-foreground text-xs ml-2">({suggestion.keyword})</span>
+                          </button>
+                        ))}
+                        <div className="border-t border-border pt-1 mt-1">
+                          <button
+                            type="button"
+                            onClick={() => addCustomSkill(generalSkillInput, 'general')}
+                            className="w-full text-left px-3 py-2 rounded hover:bg-primary/10 text-sm text-primary font-semibold"
+                          >
+                            + Add "{generalSkillInput}" as new skill
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Display Custom General Skills */}
+                {formData.customSkills.filter(s => s.category === 'general').length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {formData.customSkills.filter(s => s.category === 'general').map(skill => (
+                      <div
+                        key={skill.id}
+                        className="inline-flex items-center gap-2 px-3 py-2 bg-accent/10 border-2 border-accent rounded-lg"
+                      >
+                        <Tag className="w-4 h-4 text-accent" />
+                        <span className="text-sm font-semibold text-accent">{skill.label}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeCustomSkill(skill.id)}
+                          className="hover:bg-accent/20 rounded p-0.5"
+                        >
+                          <X className="w-3.5 h-3.5 text-accent" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* AI Detection Message */}
