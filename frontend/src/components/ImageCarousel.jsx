@@ -142,11 +142,6 @@ export default function ImageCarousel({ title, images, accentColor = 'primary', 
           ))}
         </div>
       </div>
-
-      {/* Caption hint */}
-      <p className="text-center text-sm text-muted-foreground mt-4">
-        Swipe or use arrow keys to navigate • {isAutoPlaying ? 'Auto-playing' : 'Paused'}
-      </p>
     </div>
   );
 }
