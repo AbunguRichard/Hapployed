@@ -5,7 +5,7 @@ import {
   User, Briefcase, MapPin, Phone, AlertCircle, Mic, Sparkles,
   TrendingUp, Package, Car, Wrench, Home, Scissors, PawPrint,
   Code, PenTool, Calculator, BookOpen, Megaphone, Camera,
-  CheckCircle2, ChevronRight, Zap, Award, Shield
+  CheckCircle2, ChevronRight, Zap, Award, Shield, Plus, X, Tag
 } from 'lucide-react';
 import { toast } from 'sonner';
 
