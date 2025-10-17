@@ -3,6 +3,8 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
 
+const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,9 +22,6 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      
-      // After login, check if profile exists (handled by ProtectedRoute)
-      // If profile exists, go to 'next', else ProtectedRoute will redirect to create profile
       navigate(next);
     } catch (err) {
       setError('Invalid email or password');
@@ -36,8 +35,8 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-accent-glow" />
+          <Link to="/" className="inline-flex items-center gap-3 mb-4">
+            <img src={LOGO_URL} alt="Hapployed" className="w-12 h-12 object-contain" />
             <span className="text-3xl font-bold text-foreground">Hapployed</span>
           </Link>
           <h1 className="text-2xl font-bold text-foreground mb-2">Welcome back</h1>

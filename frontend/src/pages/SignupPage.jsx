@@ -3,6 +3,8 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, AlertCircle, CheckCircle2 } from 'lucide-react';
 
+const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
+
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,13 +14,12 @@ export default function SignupPage() {
   const { signup } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const next = searchParams.get('next') || '/opportunities';
+  const next = searchParams.get('next') || '/dashboard';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Validation
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -33,8 +34,6 @@ export default function SignupPage() {
 
     try {
       await signup(email, password);
-      
-      // After signup, redirect to create profile
       navigate(`/profile/create?next=${encodeURIComponent(next)}`);
     } catch (err) {
       setError('Failed to create account. Please try again.');
@@ -48,8 +47,8 @@ export default function SignupPage() {
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-accent-glow" />
+          <Link to="/" className="inline-flex items-center gap-3 mb-4">
+            <img src={LOGO_URL} alt="Hapployed" className="w-12 h-12 object-contain" />
             <span className="text-3xl font-bold text-foreground">Hapployed</span>
           </Link>
           <h1 className="text-2xl font-bold text-foreground mb-2">Create your account</h1>
