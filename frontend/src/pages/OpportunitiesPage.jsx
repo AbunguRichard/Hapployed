@@ -24,6 +24,10 @@ export default function OpportunitiesPage() {
         localStorage.removeItem('showOnboarding');
       }, 500);
     }
+
+    // Trigger confetti after page load
+    setTimeout(() => setShowConfetti(true), 300);
+    setTimeout(() => setShowConfetti(false), 3000);
   }, []);
 
   const mockOpportunities = [
