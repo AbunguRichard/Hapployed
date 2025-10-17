@@ -1,28 +1,36 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="bg-white sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-accent-glow" />
             <span className="text-2xl font-bold text-foreground">Hapployed</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <a href="#offer" className="text-foreground hover:text-primary transition-colors font-medium">
               What we offer
             </a>
-            <a href="#login" className="text-foreground hover:text-primary transition-colors font-medium">
+            <Link to="/gigs-near-me" className="text-foreground hover:text-primary transition-colors font-medium">
+              Gigs Near Me
+            </Link>
+            <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
               Log in
-            </a>
-            <button className="btn-primary">
+            </Link>
+            <button 
+              onClick={() => navigate('/auth/signup')}
+              className="btn-primary"
+            >
               Sign up
             </button>
           </nav>
@@ -42,10 +50,16 @@ export default function Header() {
             <a href="#offer" className="block text-foreground hover:text-primary transition-colors font-medium">
               What we offer
             </a>
-            <a href="#login" className="block text-foreground hover:text-primary transition-colors font-medium">
+            <Link to="/gigs-near-me" className="block text-foreground hover:text-primary transition-colors font-medium">
+              Gigs Near Me
+            </Link>
+            <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
               Log in
-            </a>
-            <button className="btn-primary w-full">
+            </Link>
+            <button 
+              onClick={() => navigate('/auth/signup')}
+              className="btn-primary w-full"
+            >
               Sign up
             </button>
           </div>
