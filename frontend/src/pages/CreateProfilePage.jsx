@@ -519,10 +519,10 @@ export default function CreateProfilePage() {
               </div>
 
               <div className="p-4 bg-accent/10 border border-accent/30 rounded-xl">
-                <p className="text-sm text-foreground flex items-center gap-2">
+                <div className="text-sm text-foreground flex items-center gap-2">
                   <Zap className="w-4 h-4 text-accent" />
-                  <strong>Quick tip:</strong> Turn on location to see nearby gigs instantly!
-                </p>
+                  <p><strong>Quick tip:</strong> Turn on location to see nearby gigs instantly!</p>
+                </div>
               </div>
             </div>
           )}
