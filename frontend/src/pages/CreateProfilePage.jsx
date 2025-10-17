@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { User, Briefcase, MapPin, Phone, AlertCircle } from 'lucide-react';
@@ -18,7 +18,7 @@ export default function CreateProfilePage() {
   const { createProfile } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const next = searchParams.get('next') || '/opportunities';
+  const next = searchParams.get('next') || '/dashboard';
 
   const handleChange = (e) => {
     const { name, value } = e.target;

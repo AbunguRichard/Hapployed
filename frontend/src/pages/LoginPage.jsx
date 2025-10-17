@@ -11,7 +11,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const next = searchParams.get('next') || '/opportunities';
+  const next = searchParams.get('next') || '/dashboard';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

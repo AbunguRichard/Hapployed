@@ -6,6 +6,7 @@ import Homepage from './pages/Homepage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CreateProfilePage from './pages/CreateProfilePage';
+import DashboardPage from './pages/DashboardPage';
 import OpportunitiesPage from './pages/OpportunitiesPage';
 import PostProjectPage from './pages/PostProjectPage';
 import GigsNearMePage from './pages/GigsNearMePage';
@@ -26,6 +27,14 @@ function App() {
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
             {/* Protected Routes - Require Auth + Profile */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/opportunities"
               element={
