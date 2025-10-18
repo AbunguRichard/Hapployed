@@ -65,7 +65,11 @@ export default function SettingsPage() {
 
       <DashboardNav />
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 relative z-10">
+        {/* Decorative Background Blobs */}
+        <div className="absolute top-10 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10" />
+        
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link to="/dashboard" className="hover:text-foreground">Dashboard</Link>
