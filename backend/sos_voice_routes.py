@@ -182,12 +182,32 @@ async def tap_for_help(request: SOSRequest):
 @router.post("/voice-command")
 async def process_voice_command(request: VoiceCommandRequest):
     """
-    Voice-Only Mode endpoint - processes voice commands
+    Voice-Only Mode endpoint - processes voice commands with auto-translation
     """
     try:
         session_id = str(uuid.uuid4())
         api_key = os.getenv('EMERGENT_LLM_KEY')
         
+        # Step 1: Detect input language if not provided
+        detected_lang = "en"
+        if request.inputLanguage:
+            detected_lang = request.inputLanguage
+        else:
+            # Auto-detect language
+            lang_detect_result = await detect_language(LanguageDetectRequest(text=request.voiceText))
+            detected_lang = lang_detect_result.get('languageCode', 'en')
+        
+        # Step 2: Translate to English for processing (if not already English)
+        voice_text_en = request.voiceText
+        if detected_lang != 'en':
+            translate_result = await translate_text(TranslateRequest(
+                text=request.voiceText,
+                targetLanguage='en',
+                sourceLanguage=detected_lang
+            ))
+            voice_text_en = translate_result.get('translatedText', request.voiceText)
+        
+        # Step 3: Process command in English
         system_message = """You are a voice assistant for Hapployed. 
         Convert user voice commands into structured actions.
         
@@ -212,10 +232,9 @@ async def process_voice_command(request: VoiceCommandRequest):
             system_message=system_message
         ).with_model("openai", "gpt-5")
         
-        user_message = UserMessage(text=request.voiceText)
+        user_message = UserMessage(text=voice_text_en)
         response = await chat.send_message(user_message)
         
-        import json
         command_data = json.loads(response)
 
 @router.post("/detect-language")
