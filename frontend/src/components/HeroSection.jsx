@@ -7,24 +7,15 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-[600px] md:h-[700px] overflow-hidden">
-      {/* Background Images */}
-      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2">
-        <div 
-          className="relative bg-cover bg-center"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=800&q=80)',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-hero" />
-        </div>
-        <div 
-          className="relative bg-cover bg-center"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80)',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-hero" />
-        </div>
+      {/* Futuristic Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: 'url(https://images.pexels.com/photos/8728386/pexels-photo-8728386.jpeg?auto=compress&cs=tinysrgb&w=1920)',
+        }}
+      >
+        {/* Gradient Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-purple-900/70 to-accent/60" />
       </div>
 
       {/* Content */}
