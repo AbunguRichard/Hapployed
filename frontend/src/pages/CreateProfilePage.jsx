@@ -929,6 +929,7 @@ export default function CreateProfilePage() {
             )}
           </div>
         </form>
+        </div>
 
         {/* Trust Badges */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
