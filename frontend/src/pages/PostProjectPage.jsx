@@ -688,7 +688,8 @@ export default function PostProjectPage() {
                 Verified talent • In-app chat • Pre-funding escrow available
               </p>
             </div>
-          </form>
+            </form>
+          </div>
         )}
       </main>
     </div>
