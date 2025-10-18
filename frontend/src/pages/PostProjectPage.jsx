@@ -187,7 +187,7 @@ export default function PostProjectPage() {
 
         {/* To-Go Banner */}
         {!showToGo && (
-          <div className="mb-6 p-4 bg-accent/10 border border-accent/30 rounded-xl flex items-center justify-between">
+          <div className="mb-6 p-4 bg-accent/10 border border-accent/30 rounded-xl flex items-center justify-between backdrop-blur-sm">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white" />
@@ -208,7 +208,7 @@ export default function PostProjectPage() {
 
         {/* To-Go Mode */}
         {showToGo ? (
-          <div className="card">
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-white/20">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
                 <Zap className="w-5 h-5 text-accent" />
