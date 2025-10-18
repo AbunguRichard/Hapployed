@@ -73,7 +73,7 @@ async def detect_intent(prompt: str, context: dict) -> dict:
             api_key=api_key,
             session_id=session_id,
             system_message=system_message
-        ).with_model("openai", "gpt-4o-mini")
+        ).with_model("openai", "gpt-5")
         
         # Build context message
         context_info = f"User location: {context.get('location', 'unknown')}\n"
@@ -210,7 +210,7 @@ async def process_voice_command(request: VoiceCommandRequest):
             api_key=api_key,
             session_id=session_id,
             system_message=system_message
-        ).with_model("openai", "gpt-4o-mini")
+        ).with_model("openai", "gpt-5")
         
         user_message = UserMessage(text=request.voiceText)
         response = await chat.send_message(user_message)
