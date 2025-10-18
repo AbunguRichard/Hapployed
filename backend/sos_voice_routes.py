@@ -236,6 +236,34 @@ async def process_voice_command(request: VoiceCommandRequest):
         response = await chat.send_message(user_message)
         
         command_data = json.loads(response)
+        
+        # Step 4: Process the action
+        if command_data['action'] == 'search':
+            helpers = find_nearby_helpers(
+                command_data['service'],
+                "nearby",
+                command_data['urgency']
+            )
+            command_data['helpers'] = helpers
+        
+        # Step 5: Translate confirmation back to user's preferred language
+        confirmation_text = command_data['confirmation']
+        if request.preferredLanguage != 'en':
+            translate_result = await translate_text(TranslateRequest(
+                text=confirmation_text,
+                targetLanguage=request.preferredLanguage,
+                sourceLanguage='en'
+            ))
+            command_data['confirmation'] = translate_result.get('translatedText', confirmation_text)
+        
+        # Add detected language info
+        command_data['detectedLanguage'] = detected_lang
+        command_data['preferredLanguage'] = request.preferredLanguage
+        
+        return command_data
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/detect-language")
 async def detect_language(request: LanguageDetectRequest):
