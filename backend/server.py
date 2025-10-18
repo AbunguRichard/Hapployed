@@ -10,6 +10,7 @@ from typing import List
 import uuid
 from datetime import datetime
 from sos_voice_routes import router as sos_router
+from settings_routes import router as settings_router
 
 
 ROOT_DIR = Path(__file__).parent
