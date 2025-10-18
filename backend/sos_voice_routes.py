@@ -217,6 +217,144 @@ async def process_voice_command(request: VoiceCommandRequest):
         
         import json
         command_data = json.loads(response)
+
+@router.post("/detect-language")
+async def detect_language(request: LanguageDetectRequest):
+    """
+    Detect language from text using AI
+    """
+    try:
+        session_id = str(uuid.uuid4())
+        api_key = os.getenv('EMERGENT_LLM_KEY')
+        
+        system_message = """You are a language detection expert.
+        Analyze the given text and detect the language.
+        
+        Respond ONLY in JSON format:
+        {
+            "language": "language_name",
+            "languageCode": "ISO 639-1 code (e.g., en, es, fr, sw, zh)",
+            "confidence": "high/medium/low"
+        }
+        
+        Examples:
+        - "Hello, how are you?" -> {"language": "English", "languageCode": "en", "confidence": "high"}
+        - "Hola, ¿cómo estás?" -> {"language": "Spanish", "languageCode": "es", "confidence": "high"}
+        - "Habari yako?" -> {"language": "Swahili", "languageCode": "sw", "confidence": "high"}
+        """
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=session_id,
+            system_message=system_message
+        ).with_model("openai", "gpt-5")
+        
+        user_message = UserMessage(text=f"Detect language: {request.text}")
+        response = await chat.send_message(user_message)
+        
+        language_data = json.loads(response)
+        return language_data
+        
+    except Exception as e:
+        print(f"Error detecting language: {e}")
+        return {
+            "language": "English",
+            "languageCode": "en",
+            "confidence": "low"
+        }
+
+@router.post("/translate")
+async def translate_text(request: TranslateRequest):
+    """
+    Translate text using AI
+    """
+    try:
+        session_id = str(uuid.uuid4())
+        api_key = os.getenv('EMERGENT_LLM_KEY')
+        
+        source_lang = request.sourceLanguage or "auto-detect"
+        target_lang = request.targetLanguage
+        
+        system_message = f"""You are a professional translator.
+        Translate the given text from {source_lang} to {target_lang}.
+        
+        Respond ONLY in JSON format:
+        {{
+            "translatedText": "the translated text",
+            "sourceLanguage": "detected or provided source language code",
+            "targetLanguage": "{target_lang}"
+        }}
+        
+        Keep the tone and meaning accurate. If the text is already in the target language, return it as is.
+        """
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=session_id,
+            system_message=system_message
+        ).with_model("openai", "gpt-5")
+        
+        user_message = UserMessage(text=f"Translate: {request.text}")
+        response = await chat.send_message(user_message)
+        
+        translation_data = json.loads(response)
+        return translation_data
+        
+    except Exception as e:
+        print(f"Error translating: {e}")
+        return {
+            "translatedText": request.text,
+            "sourceLanguage": "unknown",
+            "targetLanguage": request.targetLanguage
+        }
+
+@router.post("/smart-suggestions")
+async def get_smart_suggestions(request: SmartSuggestionRequest):
+    """
+    Get smart suggestions for partial text input
+    """
+    try:
+        session_id = str(uuid.uuid4())
+        api_key = os.getenv('EMERGENT_LLM_KEY')
+        
+        system_message = """You are a smart autocomplete assistant for Hapployed, a gig marketplace.
+        Given partial text, suggest 3 relevant completions.
+        
+        Context can be: "general", "service_search", "job_posting"
+        
+        Respond ONLY in JSON format:
+        {
+            "suggestions": [
+                "suggestion 1",
+                "suggestion 2", 
+                "suggestion 3"
+            ]
+        }
+        
+        Examples:
+        - "I need a plumb" -> ["I need a plumber", "I need a plumber urgently", "I need a plumbing service"]
+        - "Find someone to" -> ["Find someone to clean my house", "Find someone to move furniture", "Find someone to fix my door"]
+        """
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=session_id,
+            system_message=system_message
+        ).with_model("openai", "gpt-5")
+        
+        context_info = f"Context: {request.context}\nPartial text: {request.partialText}"
+        user_message = UserMessage(text=context_info)
+        response = await chat.send_message(user_message)
+        
+        suggestions_data = json.loads(response)
+        return suggestions_data
+        
+    except Exception as e:
+        print(f"Error getting suggestions: {e}")
+        return {
+            "suggestions": []
+        }
+
         
         # Process the action
         if command_data['action'] == 'search':
