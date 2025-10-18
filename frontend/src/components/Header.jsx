@@ -1,66 +1,95 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Volume2 } from 'lucide-react';
+import VoiceOnlyModeModal from './VoiceOnlyModeModal';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVoiceModeOpen, setIsVoiceModeOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
-    <header className="bg-white sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <img src={LOGO_URL} alt="Hapployed" className="w-10 h-10 object-contain" />
-            <span className="text-2xl font-bold text-foreground">Hapployed</span>
-          </Link>
+    <>
+      <header className="bg-white sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2">
+              <img src={LOGO_URL} alt="Hapployed" className="w-10 h-10 object-contain" />
+              <span className="text-2xl font-bold text-foreground">Hapployed</span>
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
-              What we offer
-            </Link>
-            <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
-              Log in
-            </Link>
-            <button 
-              onClick={() => navigate('/auth/signup')}
-              className="btn-primary"
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              <button
+                onClick={() => setIsVoiceModeOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-accent text-white hover:shadow-lg transition-all font-medium"
+                title="Voice Mode - Talk to Hapployed"
+              >
+                <Volume2 className="w-5 h-5" />
+                <span>Voice Mode</span>
+              </button>
+              <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
+                What we offer
+              </Link>
+              <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
+                Log in
+              </Link>
+              <button 
+                onClick={() => navigate('/auth/signup')}
+                className="btn-primary"
+              >
+                Sign up
+              </button>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-foreground"
             >
-              Sign up
-            </button>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border space-y-4">
-            <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
-              What we offer
-            </Link>
-            <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
-              Log in
-            </Link>
-            <button 
-              onClick={() => navigate('/auth/signup')}
-              className="btn-primary w-full"
-            >
-              Sign up
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
-        )}
-      </div>
-    </header>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="md:hidden py-4 border-t border-border space-y-4">
+              <button
+                onClick={() => {
+                  setIsVoiceModeOpen(true);
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-accent text-white hover:shadow-lg transition-all font-medium w-full justify-center"
+              >
+                <Volume2 className="w-5 h-5" />
+                <span>Voice Mode</span>
+              </button>
+              <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
+                What we offer
+              </Link>
+              <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
+                Log in
+              </Link>
+              <button 
+                onClick={() => navigate('/auth/signup')}
+                className="btn-primary w-full"
+              >
+                Sign up
+              </button>
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* Voice Mode Modal */}
+      <VoiceOnlyModeModal 
+        isOpen={isVoiceModeOpen} 
+        onClose={() => setIsVoiceModeOpen(false)} 
+        user={null} 
+      />
+    </>
   );
 }
