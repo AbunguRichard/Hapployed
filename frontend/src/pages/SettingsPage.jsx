@@ -57,20 +57,10 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative">
-      {/* Subtle Background Texture */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-      }} />
-
+    <div className="min-h-screen bg-white">
       <DashboardNav />
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 relative z-10">
-        {/* Decorative Background Blobs */}
-        <div className="absolute top-10 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10" />
-        
-        {/* Breadcrumbs */}
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link to="/dashboard" className="hover:text-foreground">Dashboard</Link>
           <ChevronRight className="w-4 h-4" />
