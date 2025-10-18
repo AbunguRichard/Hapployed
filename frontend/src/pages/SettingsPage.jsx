@@ -82,9 +82,6 @@ export default function SettingsPage() {
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
-              {/* Decorative Card Background */}
-              <div className="absolute -inset-4 bg-white/40 backdrop-blur-xl rounded-2xl shadow-xl -z-10" />
-              
               {/* Search Box */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
