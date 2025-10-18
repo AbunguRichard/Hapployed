@@ -303,7 +303,7 @@ export default function PostProjectPage() {
           </div>
         ) : (
           /* Full Form */
-          <form onSubmit={handleSubmit} className="card">
+          <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-white/20">
             <div className="space-y-6">
               {/* Title */}
               <div>
