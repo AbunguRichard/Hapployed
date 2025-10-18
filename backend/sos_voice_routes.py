@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import uuid
 import asyncio
+import json
 
 load_dotenv()
 
@@ -20,6 +21,8 @@ class SOSRequest(BaseModel):
 class VoiceCommandRequest(BaseModel):
     voiceText: str
     user_id: str
+    preferredLanguage: str = "en"
+    inputLanguage: str = None
 
 class IntentResponse(BaseModel):
     intent: str
@@ -27,6 +30,18 @@ class IntentResponse(BaseModel):
     urgency: str
     description: str
     nearbyHelpers: list
+
+class LanguageDetectRequest(BaseModel):
+    text: str
+
+class TranslateRequest(BaseModel):
+    text: str
+    targetLanguage: str = "en"
+    sourceLanguage: str = None
+
+class SmartSuggestionRequest(BaseModel):
+    partialText: str
+    context: str = "general"
 
 # Helper function to detect intent using AI
 async def detect_intent(prompt: str, context: dict) -> dict:
