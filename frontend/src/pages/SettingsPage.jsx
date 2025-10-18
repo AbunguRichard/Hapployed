@@ -131,7 +131,7 @@ export default function SettingsPage() {
           <div className="lg:col-span-3">
             {/* Unsaved Changes Warning */}
             {hasUnsavedChanges && (
-              <div className="mb-6 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg flex items-start gap-3">
+              <div className="mb-6 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg flex items-start gap-3 backdrop-blur-sm">
                 <AlertTriangle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-foreground">You have unsaved changes</p>
@@ -141,7 +141,7 @@ export default function SettingsPage() {
             )}
 
             {/* Dynamic Section Content */}
-            <div className="card">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-white/20">
               <CurrentComponent 
                 user={user} 
                 onUnsavedChanges={setHasUnsavedChanges}
