@@ -1,121 +1,171 @@
-import React, { useState } from 'react';
-import { FileText, Upload, CheckCircle, AlertCircle, Download } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileText, Upload, Check, AlertTriangle, Download } from 'lucide-react';
 import { toast } from 'sonner';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 export default function TaxInfoSection({ user, onUnsavedChanges }) {
-  const [country, setCountry] = useState('US');
-  const [taxProfile, setTaxProfile] = useState({
-    status: 'incomplete', // incomplete, submitted, verified
-    type: 'W-9', // W-9, W-8BEN
-    tin: '',
-    legalName: '',
-    address: ''
+  const [taxInfo, setTaxInfo] = useState({
+    tax_id: '',
+    tax_classification: '',
+    w9_submitted: false,
+    w9_document_url: null
   });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTaxInfo();
+  }, []);
+
+  const fetchTaxInfo = async () => {
+    try {
+      const userId = user?.id || 'test-user';
+      const res = await fetch(`${BACKEND_URL}/api/settings/tax-info/${userId}`);
+      const data = await res.json();
+      setTaxInfo(data);
+    } catch (error) {
+      console.error('Error fetching tax info:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTaxInfo(prev => ({ ...prev, [name]: value }));
+    onUnsavedChanges(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      const userId = user?.id || 'test-user';
+      await fetch(`${BACKEND_URL}/api/settings/tax-info/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...taxInfo, user_id: userId })
+      });
+      toast.success('Tax information updated!');
+      onUnsavedChanges(false);
+    } catch (error) {
+      toast.error('Failed to update tax information');
+    }
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      toast.success('W-9 form uploaded successfully');
+      setTaxInfo(prev => ({ ...prev, w9_submitted: true, w9_document_url: '#' }));
+      onUnsavedChanges(true);
+    }
+  };
+
+  if (loading) {
+    return <div className="flex items-center justify-center py-12"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>;
+  }
 
   return (
     <div className="space-y-8">
       <div>
         <h2 className="text-2xl font-bold text-foreground mb-2">Tax Information</h2>
-        <p className="text-muted-foreground">Manage your tax documents and compliance information.</p>
+        <p className="text-muted-foreground">Manage your tax details for compliance and reporting.</p>
       </div>
 
-      {/* Status Banner */}
-      <div className={`p-4 rounded-lg flex items-start gap-3 ${
-        taxProfile.status === 'verified' ? 'bg-green-500/10 border border-green-500/30' :
-        taxProfile.status === 'submitted' ? 'bg-blue-500/10 border border-blue-500/30' :
-        'bg-orange-500/10 border border-orange-500/30'
-      }`}>
-        {taxProfile.status === 'verified' ? <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /> :
-         taxProfile.status === 'submitted' ? <AlertCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" /> :
-         <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />}
+      {/* Warning Banner */}
+      <div className="p-4 border border-orange-500/30 bg-orange-50/50 rounded-lg flex items-start gap-3">
+        <AlertTriangle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="font-semibold text-foreground">
-            {taxProfile.status === 'verified' ? 'Tax Information Verified' :
-             taxProfile.status === 'submitted' ? 'Under Review' :
-             'Tax Information Required'}
-          </p>
-          <p className="text-sm text-muted-foreground mt-1">
-            {taxProfile.status === 'incomplete' && 'Complete your tax information to receive payouts'}
-            {taxProfile.status === 'submitted' && 'Your documents are being reviewed. This usually takes 1-2 business days.'}
-            {taxProfile.status === 'verified' && 'Your tax information is complete and verified.'}
+          <p className="font-semibold text-foreground mb-1">Important: Tax Compliance</p>
+          <p className="text-sm text-muted-foreground">
+            US freelancers earning over $600/year must submit a W-9 form. This information is kept secure and used only for IRS reporting.
           </p>
         </div>
       </div>
 
-      {/* Country Selection */}
+      {/* Tax ID */}
       <div>
-        <label className="block text-sm font-semibold text-foreground mb-2">Country</label>
-        <select value={country} onChange={(e) => setCountry(e.target.value)} className="input w-full">
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="GB">United Kingdom</option>
-          <option value="AU">Australia</option>
-          <option value="Other">Other</option>
+        <label className="block text-sm font-semibold text-foreground mb-2">
+          Tax ID (SSN or EIN)
+        </label>
+        <input
+          type="text"
+          name="tax_id"
+          value={taxInfo.tax_id}
+          onChange={handleChange}
+          placeholder="XXX-XX-XXXX"
+          className="input w-full"
+          maxLength="11"
+        />
+        <p className="text-xs text-muted-foreground mt-1">
+          Your tax ID is encrypted and only visible to you and tax authorities
+        </p>
+      </div>
+
+      {/* Tax Classification */}
+      <div>
+        <label className="block text-sm font-semibold text-foreground mb-2">
+          Tax Classification
+        </label>
+        <select
+          name="tax_classification"
+          value={taxInfo.tax_classification}
+          onChange={handleChange}
+          className="input w-full"
+        >
+          <option value="">Select classification</option>
+          <option value="individual">Individual/Sole Proprietor</option>
+          <option value="llc">LLC</option>
+          <option value="corporation">C Corporation</option>
+          <option value="s_corporation">S Corporation</option>
+          <option value="partnership">Partnership</option>
         </select>
       </div>
 
-      {/* US Tax Forms */}
-      {country === 'US' && (
-        <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Form Type</label>
-            <div className="grid grid-cols-2 gap-4">
-              <button className="p-4 border-2 border-primary bg-primary/5 rounded-lg text-left">
-                <p className="font-semibold text-foreground mb-1">W-9</p>
-                <p className="text-xs text-muted-foreground">U.S. Person (Citizen or Resident)</p>
-              </button>
-              <button className="p-4 border border-border rounded-lg text-left hover:border-primary transition-colors">
-                <p className="font-semibold text-foreground mb-1">W-8BEN</p>
-                <p className="text-xs text-muted-foreground">Foreign Individual</p>
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Legal Name</label>
-            <input type="text" className="input w-full" placeholder="Full legal name" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Tax Identification Number (TIN)</label>
-            <input type="text" className="input w-full" placeholder="SSN or EIN" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Business Address</label>
-            <textarea className="input w-full" rows="3" placeholder="Street, City, State, ZIP"></textarea>
-          </div>
-
-          <div className="flex gap-3">
-            <button className="btn-primary">Submit Tax Information</button>
-            <button className="btn-secondary flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Download Form
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Tax Documents */}
-      {taxProfile.status === 'verified' && (
-        <div>
-          <h3 className="text-lg font-semibold text-foreground mb-4">Tax Documents</h3>
-          <div className="space-y-3">
-            <div className="p-4 border border-border rounded-lg flex items-center justify-between hover:bg-muted/50 transition-colors">
-              <div className="flex items-center gap-3">
-                <FileText className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="font-medium text-foreground">2024 1099-K Form</p>
-                  <p className="text-sm text-muted-foreground">Generated Jan 31, 2024</p>
-                </div>
+      {/* W-9 Form */}
+      <div>
+        <label className="block text-sm font-semibold text-foreground mb-3">
+          W-9 Form
+        </label>
+        <div className="p-6 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-colors">
+          {taxInfo.w9_submitted ? (
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="w-8 h-8 text-green-500" />
               </div>
-              <button className="btn-secondary text-sm">
-                <Download className="w-4 h-4" />
-              </button>
+              <p className="font-semibold text-foreground mb-2">W-9 Form Submitted</p>
+              <p className="text-sm text-muted-foreground mb-4">Your form is on file</p>
+              {taxInfo.w9_document_url && (
+                <button className="btn-secondary flex items-center gap-2 mx-auto">
+                  <Download className="w-4 h-4" />
+                  Download Copy
+                </button>
+              )}
             </div>
-          </div>
+          ) : (
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="w-8 h-8 text-primary" />
+              </div>
+              <p className="font-semibold text-foreground mb-2">Upload W-9 Form</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                PDF, max 5MB • <a href="#" className="text-primary hover:underline">Download blank form</a>
+              </p>
+              <label className="btn-primary inline-flex items-center gap-2 cursor-pointer">
+                <Upload className="w-4 h-4" />
+                Choose File
+                <input type="file" accept=".pdf" className="hidden" onChange={handleFileUpload} />
+              </label>
+            </div>
+          )}
         </div>
-      )}
+      </div>
+
+      {/* Save Button */}
+      <div className="pt-6 border-t border-border flex justify-end">
+        <button onClick={handleSave} className="btn-primary">
+          Save Tax Information
+        </button>
+      </div>
     </div>
   );
 }

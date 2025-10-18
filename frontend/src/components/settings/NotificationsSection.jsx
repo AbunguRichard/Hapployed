@@ -1,138 +1,207 @@
-import React, { useState } from 'react';
-import { Bell, Mail, Smartphone, Monitor, Moon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Bell, Mail, MessageSquare, Smartphone, Check } from 'lucide-react';
 import { toast } from 'sonner';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 export default function NotificationsSection({ user, onUnsavedChanges }) {
-  const [preferences, setPreferences] = useState({
-    newMessage: { push: true, email: true, sms: false, inApp: true },
-    jobPosted: { push: true, email: true, sms: false, inApp: true },
-    applicationUpdate: { push: true, email: true, sms: true, inApp: true },
-    paymentReceived: { push: true, email: true, sms: true, inApp: true },
-    teamInvite: { push: true, email: true, sms: false, inApp: true },
-    weeklyDigest: { push: false, email: true, sms: false, inApp: false }
+  const [settings, setSettings] = useState({
+    email_notifications: true,
+    push_notifications: true,
+    sms_notifications: false,
+    new_gigs: true,
+    messages: true,
+    job_updates: true,
+    marketing: false,
+    weekly_digest: true
   });
+  const [loading, setLoading] = useState(true);
 
-  const [quietHours, setQuietHours] = useState({ start: '22:00', end: '08:00', enabled: true });
+  useEffect(() => {
+    fetchSettings();
+  }, []);
 
-  const events = [
-    { key: 'newMessage', label: 'New Messages', description: 'When someone sends you a message' },
-    { key: 'jobPosted', label: 'New Job Posted', description: 'Matching jobs in your area' },
-    { key: 'applicationUpdate', label: 'Application Updates', description: 'Status changes on your applications' },
-    { key: 'paymentReceived', label: 'Payment Received', description: 'When you receive a payment' },
-    { key: 'teamInvite', label: 'Team Invitations', description: 'When invited to join a team' },
-    { key: 'weeklyDigest', label: 'Weekly Digest', description: 'Summary of activity' }
-  ];
+  const fetchSettings = async () => {
+    try {
+      const userId = user?.id || 'test-user';
+      const res = await fetch(`${BACKEND_URL}/api/settings/notifications/${userId}`);
+      const data = await res.json();
+      setSettings(data);
+    } catch (error) {
+      console.error('Error fetching notification settings:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const togglePreference = (event, channel) => {
-    setPreferences(prev => ({
-      ...prev,
-      [event]: { ...prev[event], [channel]: !prev[event][channel] }
-    }));
+  const handleToggle = async (key) => {
+    const newSettings = { ...settings, [key]: !settings[key] };
+    setSettings(newSettings);
     onUnsavedChanges(true);
   };
 
-  const handleSave = () => {
-    toast.success('Notification preferences saved!');
-    onUnsavedChanges(false);
+  const handleSave = async () => {
+    try {
+      const userId = user?.id || 'test-user';
+      await fetch(`${BACKEND_URL}/api/settings/notifications/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...settings, user_id: userId })
+      });
+      toast.success('Notification settings updated!');
+      onUnsavedChanges(false);
+    } catch (error) {
+      toast.error('Failed to update settings');
+    }
   };
+
+  if (loading) {
+    return <div className="flex items-center justify-center py-12"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>;
+  }
+
+  const ToggleSwitch = ({ checked, onChange }) => (
+    <button
+      onClick={onChange}
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+        checked ? 'bg-primary' : 'bg-gray-300'
+      }`}
+    >
+      <span
+        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+          checked ? 'translate-x-6' : 'translate-x-1'
+        }`}
+      />
+    </button>
+  );
 
   return (
     <div className="space-y-8">
       <div>
         <h2 className="text-2xl font-bold text-foreground mb-2">Notification Settings</h2>
-        <p className="text-muted-foreground">Choose how you want to be notified about activity.</p>
+        <p className="text-muted-foreground">Control how and when you receive notifications.</p>
       </div>
 
-      {/* Quiet Hours */}
-      <div className="p-6 border border-border rounded-lg">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <Moon className="w-5 h-5 text-primary" />
-            <div>
-              <p className="font-semibold text-foreground">Quiet Hours</p>
-              <p className="text-sm text-muted-foreground">Pause notifications during these hours</p>
+      {/* Notification Channels */}
+      <div>
+        <h3 className="font-semibold text-foreground mb-4">Notification Channels</h3>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-4 border border-border rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                <Mail className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">Email Notifications</p>
+                <p className="text-sm text-muted-foreground">Receive updates via email</p>
+              </div>
             </div>
+            <ToggleSwitch
+              checked={settings.email_notifications}
+              onChange={() => handleToggle('email_notifications')}
+            />
           </div>
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" checked={quietHours.enabled} onChange={(e) => setQuietHours({...quietHours, enabled: e.target.checked})} className="sr-only peer" />
-            <div className="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-          </label>
+
+          <div className="flex items-center justify-between p-4 border border-border rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center">
+                <Bell className="w-5 h-5 text-green-500" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">Push Notifications</p>
+                <p className="text-sm text-muted-foreground">Browser and mobile push alerts</p>
+              </div>
+            </div>
+            <ToggleSwitch
+              checked={settings.push_notifications}
+              onChange={() => handleToggle('push_notifications')}
+            />
+          </div>
+
+          <div className="flex items-center justify-between p-4 border border-border rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                <Smartphone className="w-5 h-5 text-purple-500" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">SMS Notifications</p>
+                <p className="text-sm text-muted-foreground">Text message alerts</p>
+              </div>
+            </div>
+            <ToggleSwitch
+              checked={settings.sms_notifications}
+              onChange={() => handleToggle('sms_notifications')}
+            />
+          </div>
         </div>
-        {quietHours.enabled && (
-          <div className="flex gap-4">
-            <div>
-              <label className="block text-xs text-muted-foreground mb-1">Start</label>
-              <input type="time" value={quietHours.start} onChange={(e) => setQuietHours({...quietHours, start: e.target.value})} className="input" />
-            </div>
-            <div>
-              <label className="block text-xs text-muted-foreground mb-1">End</label>
-              <input type="time" value={quietHours.end} onChange={(e) => setQuietHours({...quietHours, end: e.target.value})} className="input" />
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Notification Matrix */}
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-border">
-              <th className="text-left py-3 px-4 font-semibold text-foreground">Event</th>
-              <th className="text-center py-3 px-4">
-                <div className="flex flex-col items-center gap-1">
-                  <Bell className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-xs font-medium">Push</span>
-                </div>
-              </th>
-              <th className="text-center py-3 px-4">
-                <div className="flex flex-col items-center gap-1">
-                  <Mail className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-xs font-medium">Email</span>
-                </div>
-              </th>
-              <th className="text-center py-3 px-4">
-                <div className="flex flex-col items-center gap-1">
-                  <Smartphone className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-xs font-medium">SMS</span>
-                </div>
-              </th>
-              <th className="text-center py-3 px-4">
-                <div className="flex flex-col items-center gap-1">
-                  <Monitor className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-xs font-medium">In-App</span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map(event => (
-              <tr key={event.key} className="border-b border-border hover:bg-muted/50">
-                <td className="py-4 px-4">
-                  <p className="font-medium text-foreground">{event.label}</p>
-                  <p className="text-xs text-muted-foreground">{event.description}</p>
-                </td>
-                <td className="text-center py-4 px-4">
-                  <input type="checkbox" checked={preferences[event.key].push} onChange={() => togglePreference(event.key, 'push')} className="w-4 h-4 text-primary rounded focus:ring-primary" />
-                </td>
-                <td className="text-center py-4 px-4">
-                  <input type="checkbox" checked={preferences[event.key].email} onChange={() => togglePreference(event.key, 'email')} className="w-4 h-4 text-primary rounded focus:ring-primary" />
-                </td>
-                <td className="text-center py-4 px-4">
-                  <input type="checkbox" checked={preferences[event.key].sms} onChange={() => togglePreference(event.key, 'sms')} className="w-4 h-4 text-primary rounded focus:ring-primary" />
-                </td>
-                <td className="text-center py-4 px-4">
-                  <input type="checkbox" checked={preferences[event.key].inApp} onChange={() => togglePreference(event.key, 'inApp')} className="w-4 h-4 text-primary rounded focus:ring-primary" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* What to Notify */}
+      <div>
+        <h3 className="font-semibold text-foreground mb-4">What to Notify</h3>
+        <div className="space-y-3">
+          <NotificationItem
+            label="New Gigs & Opportunities"
+            description="When new gigs matching your profile are posted"
+            checked={settings.new_gigs}
+            onChange={() => handleToggle('new_gigs')}
+          />
+          <NotificationItem
+            label="Messages"
+            description="When you receive new messages"
+            checked={settings.messages}
+            onChange={() => handleToggle('messages')}
+          />
+          <NotificationItem
+            label="Job Updates"
+            description="Status updates on your applications"
+            checked={settings.job_updates}
+            onChange={() => handleToggle('job_updates')}
+          />
+          <NotificationItem
+            label="Marketing & Promotions"
+            description="Special offers and platform updates"
+            checked={settings.marketing}
+            onChange={() => handleToggle('marketing')}
+          />
+          <NotificationItem
+            label="Weekly Digest"
+            description="Summary of your week's activity"
+            checked={settings.weekly_digest}
+            onChange={() => handleToggle('weekly_digest')}
+          />
+        </div>
       </div>
 
       {/* Save Button */}
-      <div className="flex justify-end">
-        <button onClick={handleSave} className="btn-primary">Save Preferences</button>
+      <div className="pt-6 border-t border-border flex justify-end">
+        <button onClick={handleSave} className="btn-primary flex items-center gap-2">
+          <Check className="w-4 h-4" />
+          Save Preferences
+        </button>
       </div>
+    </div>
+  );
+}
+
+function NotificationItem({ label, description, checked, onChange }) {
+  return (
+    <div className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/30 transition-colors">
+      <div>
+        <p className="font-medium text-foreground">{label}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
+      </div>
+      <button
+        onClick={onChange}
+        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+          checked ? 'bg-primary' : 'bg-gray-300'
+        }`}
+      >
+        <span
+          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            checked ? 'translate-x-6' : 'translate-x-1'
+          }`}
+        />
+      </button>
     </div>
   );
 }
