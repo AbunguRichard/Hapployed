@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import Header from '../components/Header';
-import HeroSection from '../components/HeroSection';
+import UnifiedHeroSection from '../components/UnifiedHeroSection';
 import RotatingHeroMessages from '../components/RotatingHeroMessages';
 import HeroCarouselsSection from '../components/HeroCarouselsSection';
 import ServicesSection from '../components/ServicesSection';
@@ -17,7 +17,7 @@ export default function Homepage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <HeroSection />
+      <UnifiedHeroSection />
       <RotatingHeroMessages />
       <HeroCarouselsSection />
       <ServicesSection />
