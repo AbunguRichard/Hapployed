@@ -97,18 +97,34 @@ export default function GigsNearMePage() {
       <DashboardNav />
       
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
-            🔥 Gigs Near You - Act Fast!
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            <strong>{gigs.filter(g => g.urgent).length} urgent gigs</strong> and <strong>{gigs.filter(g => !g.urgent).length} regular gigs</strong> within 5 miles of you.
-          </p>
-        </div>
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-4"></div>
+              <p className="text-lg text-muted-foreground">Loading gigs near you...</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold text-foreground mb-2">
+                🔥 Gigs Near You - Act Fast!
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                {gigs.length > 0 ? (
+                  <>
+                    <strong>{gigs.filter(g => g.urgent).length} urgent gigs</strong> and <strong>{gigs.filter(g => !g.urgent).length} regular gigs</strong> within 5 miles of you.
+                  </>
+                ) : (
+                  'No gigs available at the moment. Check back soon!'
+                )}
+              </p>
+            </div>
 
-        {/* Emergency Alert Banner */}
-        {gigs.some(g => g.badge?.type === 'emergency') && (
+            {/* Emergency Alert Banner */}
+            {gigs.some(g => g.badge?.type === 'emergency') && (
           <div className="mb-6 p-4 bg-red-100 border-2 border-red-300 rounded-xl flex items-center gap-4 animate-pulse">
             <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
               <Zap className="w-6 h-6 text-white" />
