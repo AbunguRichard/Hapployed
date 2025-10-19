@@ -77,12 +77,14 @@ export default function Header() {
               <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
                 Log in
               </Link>
-              <button 
-                onClick={() => navigate('/auth/signup')}
-                className="btn-primary w-full"
-              >
-                Sign up
-              </button>
+              {!isAuthenticated && (
+                <button 
+                  onClick={() => navigate('/auth/signup')}
+                  className="btn-primary w-full"
+                >
+                  Sign up
+                </button>
+              )}
             </div>
           )}
         </div>
