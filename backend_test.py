@@ -254,13 +254,7 @@ class BackendTester:
         
         # Test 2: Join squad
         try:
-            payload = {
-                "squad_id": squad_id,
-                "user_id": TEST_USER_ID,
-                "role": "Lead Plumber"
-            }
-            
-            response = requests.post(f"{BASE_URL}/worker/squad/join", json=payload)
+            response = requests.post(f"{BASE_URL}/worker/squad/join?squad_id={squad_id}&user_id={TEST_USER_ID}&role=Lead Plumber")
             
             if response.status_code == 200:
                 data = response.json()
