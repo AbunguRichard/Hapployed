@@ -12,6 +12,7 @@ import OpportunitiesPage from './pages/OpportunitiesPage';
 import PostProjectPage from './pages/PostProjectPage';
 import GigsNearMePage from './pages/GigsNearMePage';
 import SettingsPage from './pages/SettingsPage';
+import WorkerDashboard from './pages/WorkerDashboard';
 import './App.css';
 
 function App() {
