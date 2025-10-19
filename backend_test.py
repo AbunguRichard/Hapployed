@@ -343,7 +343,9 @@ class BackendTester:
                 "gig_id": TEST_GIG_ID,
                 "user_id": TEST_USER_ID,
                 "coverage_type": "quality_guarantee",
-                "claim_window_hours": 24
+                "status": "active",
+                "claim_window_hours": 24,
+                "expires_at": (datetime.now() + timedelta(hours=24)).isoformat()
             }
             
             response = requests.post(f"{BASE_URL}/worker/insurance/activate", json=payload)
