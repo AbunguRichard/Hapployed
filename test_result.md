@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Implement all 9 Epic Platform Innovations for the Hapployed Worker Dashboard: Available Now Toggle, Gig Gamification, AI Smart Matching, Gig Chain, Gig Squad, Corporate Gig Pass, Gig Forecasting, and Gig Insurance"
+user_problem_statement: "Implement the new unified platform vision for Hapployed: Redesign the Homepage to be role-aware with descriptive buttons (Gigs Near Me, Current Projects, QuickHire) that link to informational pages with beautiful designs and pictures. Hide the signup button for logged-in users."
 
 backend:
   - task: "Worker Features API - Available Now Toggle"
