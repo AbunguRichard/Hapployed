@@ -8,7 +8,7 @@ import json
 import uuid
 from datetime import datetime, timedelta
 
-BASE_URL = "https://voice-job-app.preview.emergentagent.com/api"
+BASE_URL = "https://worker-client-hub.preview.emergentagent.com/api"
 TEST_USER_ID = "worker-john-smith-123"
 TEST_GIG_ID = "plumbing-emergency-456"
 TEST_COMPANY_ID = "acme-corp-789"

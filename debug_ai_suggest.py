@@ -7,7 +7,7 @@ import requests
 import json
 import urllib.parse
 
-BASE_URL = "https://voice-job-app.preview.emergentagent.com/api"
+BASE_URL = "https://worker-client-hub.preview.emergentagent.com/api"
 TEST_USER_ID = "worker-john-smith-123"
 
 def test_ai_suggest_gigs_proper():
