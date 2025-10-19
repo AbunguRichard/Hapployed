@@ -1,120 +1,205 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Briefcase, Zap } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { MapPin, Briefcase, Zap, Users, TrendingUp, Activity } from 'lucide-react';
 
 export default function UnifiedHeroSection() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const canvasRef = useRef(null);
 
-  const heroButtons = [
-    {
-      id: 'gigs-near-me',
-      title: 'Gigs Near Me',
-      description: '🚨 Find emergency work opportunities in your area',
-      icon: MapPin,
-      gradient: 'from-red-500 to-orange-500',
-      path: '/gigs-near-me-info',
-      badge: 'URGENT',
-      badgeColor: 'bg-red-600'
-    },
-    {
-      id: 'current-projects',
-      title: 'Current Projects',
-      description: '📅 Browse professional project-based opportunities',
-      icon: Briefcase,
-      gradient: 'from-blue-500 to-cyan-500',
-      path: '/current-projects-info',
-      badge: 'FLEXIBLE',
-      badgeColor: 'bg-blue-600'
-    },
-    {
-      id: 'quickhire',
-      title: 'QuickHire',
-      description: '⚡ Fast hiring for urgent business needs',
-      icon: Zap,
-      gradient: 'from-purple-500 to-pink-500',
-      path: '/quickhire-info',
-      badge: 'FAST',
-      badgeColor: 'bg-purple-600'
+  // Animated network background
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 100;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 1;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(34, 211, 238, 0.6)';
+        ctx.fill();
+      }
     }
-  ];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((particle, i) => {
+        particle.update();
+        particle.draw();
+
+        // Draw connections
+        particles.slice(i + 1).forEach(otherParticle => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(34, 211, 238, ${0.2 * (1 - distance / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.stroke();
+          }
+        });
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
-    <section className="relative min-h-[600px] flex items-center justify-center py-20 px-4 overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-purple-500/10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjIiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00ek0yMCA0MGMwLTIuMjEgMS43OS00IDQtNHM0IDEuNzkgNCA0LTEuNzkgNC00IDQtNC0xLjc5LTQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
+    <section className="relative min-h-[100vh] flex items-center justify-start py-20 px-4 md:px-8 lg:px-16 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+      {/* Animated Canvas Background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+        style={{ opacity: 0.4 }}
+      />
+
+      {/* Top Badge */}
+      <div className="absolute top-8 left-8 z-20">
+        <div className="flex items-center gap-3 bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/30 rounded-full px-4 py-2">
+          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+          <span className="text-cyan-300 text-sm font-semibold">AI-POWERED NETWORK</span>
+          <span className="text-white text-sm font-medium">Real-time Matching</span>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full">
+      <div className="relative z-10 max-w-7xl w-full">
         {/* Hero Text */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-            Your Unified {isAuthenticated ? 'Command' : 'Work'} Center
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            Get <br />
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 text-transparent bg-clip-text">
+              Hapployed
+            </span>
+            <br />
+            Get Ahead.
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            {isAuthenticated 
-              ? 'Manage everything from one place - emergency gigs, professional projects, and instant hiring'
-              : 'Connect with opportunities that match your skills, schedule, and location'
-            }
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
+            Navigate the future of work with confidence. Discover your next gig, 
+            launch your project, or deploy emergency support—instantly. Our AI 
+            doesn't just connect; it <span className="text-cyan-400 font-semibold">anticipates</span>.
           </p>
         </div>
 
-        {/* Three Descriptive Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {heroButtons.map((button) => {
-            const Icon = button.icon;
-            return (
-              <button
-                key={button.id}
-                onClick={() => navigate(button.path)}
-                className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-border text-left"
-              >
-                {/* Badge */}
-                <div className={`absolute top-4 right-4 ${button.badgeColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
-                  {button.badge}
-                </div>
-
-                {/* Icon */}
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${button.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className="w-8 h-8 text-white" />
-                </div>
-
-                {/* Title */}
-                <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {button.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-muted-foreground leading-relaxed">
-                  {button.description}
-                </p>
-
-                {/* Arrow indicator */}
-                <div className="mt-6 flex items-center text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                  Learn More
-                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </button>
-            );
-          })}
+        {/* Key Metrics */}
+        <div className="flex flex-wrap gap-6 mb-10">
+          <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl px-5 py-3">
+            <Users className="w-6 h-6 text-purple-400" />
+            <div>
+              <div className="text-2xl font-bold text-white">50K+</div>
+              <div className="text-sm text-gray-400">Active Pros</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl px-5 py-3">
+            <TrendingUp className="w-6 h-6 text-orange-400" />
+            <div>
+              <div className="text-2xl font-bold text-white">2,847</div>
+              <div className="text-sm text-gray-400">Live Projects</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl px-5 py-3">
+            <Activity className="w-6 h-6 text-pink-400" />
+            <div>
+              <div className="text-2xl font-bold text-white">98%</div>
+              <div className="text-sm text-gray-400">Match Rate</div>
+            </div>
+          </div>
         </div>
 
-        {/* CTA Section */}
-        {!isAuthenticated && (
-          <div className="mt-16 text-center">
-            <p className="text-muted-foreground mb-4">Ready to get started?</p>
-            <button
-              onClick={() => navigate('/auth/signup')}
-              className="btn-primary text-lg px-8 py-4"
-            >
-              Join Hapployed Today
-            </button>
+        {/* CTA Buttons */}
+        <div className="flex flex-wrap gap-4 mb-8">
+          <button
+            onClick={() => navigate('/opportunities')}
+            className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 shadow-lg shadow-cyan-500/50"
+          >
+            <MapPin className="w-5 h-5" />
+            Discover Opportunities →
+          </button>
+          <button
+            onClick={() => navigate('/post-project')}
+            className="flex items-center gap-2 bg-white hover:bg-gray-100 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+          >
+            <Briefcase className="w-5 h-5" />
+            Post a Project
+          </button>
+          <button
+            onClick={() => navigate('/gigs-near-me')}
+            className="bg-orange-500 hover:bg-orange-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+          >
+            Gigs Near Me
+          </button>
+          <button
+            onClick={() => navigate('/quickhire-info')}
+            className="bg-purple-500 hover:bg-purple-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+          >
+            QuickHire
+          </button>
+          <button
+            onClick={() => navigate('/opportunities')}
+            className="bg-blue-400 hover:bg-blue-300 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+          >
+            Opportunities
+          </button>
+        </div>
+
+        {/* Feature Tags */}
+        <div className="flex flex-wrap gap-3">
+          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+            Smart AI Matching
           </div>
-        )}
+          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+            Instant Deployment
+          </div>
+          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+            Verified Network
+          </div>
+          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+            Real-time Analytics
+          </div>
+        </div>
       </div>
     </section>
   );
