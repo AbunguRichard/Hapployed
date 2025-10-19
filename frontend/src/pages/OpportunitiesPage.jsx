@@ -77,15 +77,31 @@ export default function OpportunitiesPage() {
       <DashboardNav />
       
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
-            🔥 Your Next React Gig is Here!
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            We found <strong>{opportunities.length} perfect matches</strong> for your skills in <strong>React</strong> & <strong>UI/UX Design</strong>.
-          </p>
-        </div>
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-4"></div>
+              <p className="text-lg text-muted-foreground">Loading opportunities...</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold text-foreground mb-2">
+                🔥 Your Next React Gig is Here!
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                {opportunities.length > 0 ? (
+                  <>
+                    We found <strong>{opportunities.length} perfect matches</strong> for your skills in <strong>React</strong> & <strong>UI/UX Design</strong>.
+                  </>
+                ) : (
+                  'No opportunities available at the moment. Check back soon!'
+                )}
+              </p>
+            </div>
 
         {/* Filter & Sort Bar */}
         <div className="mb-6 p-4 bg-white rounded-xl shadow-sm border border-gray-200">
