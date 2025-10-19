@@ -15,10 +15,10 @@ export default function Header() {
   return (
     <>
       <header className="bg-white sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+        <div className="w-full px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2 mr-auto">
               <img src={LOGO_URL} alt="Hapployed" className="w-10 h-10 object-contain" />
               <span className="text-2xl font-bold text-foreground">Hapployed</span>
             </Link>
