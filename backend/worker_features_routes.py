@@ -300,6 +300,9 @@ async def complete_gig_chain(user_id: str, gig_id: str):
         
         await db.gig_chain_bonuses.insert_one(bonus)
         
+        # Remove _id from bonus before returning to avoid ObjectId serialization error
+        bonus.pop('_id', None)
+        
         return {
             "success": True,
             "message": "Gig completed! You have priority access to nearby gigs for 4 hours",
