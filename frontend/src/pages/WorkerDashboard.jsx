@@ -28,15 +28,40 @@ export default function WorkerDashboard() {
   const [availableSquads, setAvailableSquads] = useState([]);
   const [corporatePass, setCorporatePass] = useState(null);
   const [activeInsurance, setActiveInsurance] = useState([]);
-  const [leaderboard, setLeaderboard] = useState([]);
+  const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [stats, setStats] = useState({
     gigsCompleted: 12,
     rating: 4.9,
     earnings: 2450,
-    points: 1250
+    points: 1250,
+    active: 4,
+    completed: 21,
+    trust: 82
   });
 
-  const user = { id: 'test-user', name: 'John Doe', location: 'San Francisco, CA' }; // Replace with actual auth
+  const user = { id: 'test-user', name: 'John Doe', location: 'San Francisco, CA' };
+
+  // Spotlight data for auto-rotating talent/gig suggestions
+  const spotlight = useMemo(() => [
+    { name: 'Kitchen Remodel Project', role: 'Premium Gig', score: 95 },
+    { name: 'Emergency Plumbing Squad', role: 'Team Opportunity', score: 88 },
+    { name: 'Corporate Pass Available', role: 'Subscription Offer', score: 92 }
+  ], []);
+
+  // Notifications data
+  const notifications = useMemo(() => [
+    { id: 1, icon: Sparkles, text: "You've been shortlisted for 'Logo Revamp'" },
+    { id: 2, icon: Zap, text: '3 new QuickHire requests within 5 mi' },
+    { id: 3, icon: DollarSign, text: 'Client paid invoice #1043 — $420' }
+  ], []);
+
+  // Auto-rotate spotlight every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSpotlightIndex((prev) => (prev + 1) % spotlight.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [spotlight.length]);
 
   useEffect(() => {
     fetchWorkerData();
