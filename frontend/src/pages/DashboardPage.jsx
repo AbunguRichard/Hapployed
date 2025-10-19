@@ -6,7 +6,7 @@ import {
   CloudRain, Sun, Wind, Package, Bell, Sparkles, Activity, Radio
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardNav from '../components/DashboardNav';
+import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
