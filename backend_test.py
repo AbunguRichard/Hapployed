@@ -190,12 +190,7 @@ class BackendTester:
         
         # Test 1: Complete gig and activate chain
         try:
-            payload = {
-                "user_id": TEST_USER_ID,
-                "gig_id": TEST_GIG_ID
-            }
-            
-            response = requests.post(f"{BASE_URL}/worker/gig-chain/complete", json=payload)
+            response = requests.post(f"{BASE_URL}/worker/gig-chain/complete?user_id={TEST_USER_ID}&gig_id={TEST_GIG_ID}")
             
             if response.status_code == 200:
                 data = response.json()
