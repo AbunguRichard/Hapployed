@@ -107,7 +107,7 @@ class BackendTester:
         
         # Test 1: Check and award achievements
         try:
-            response = requests.post(f"{BASE_URL}/worker/achievements/check", json={"user_id": TEST_USER_ID})
+            response = requests.post(f"{BASE_URL}/worker/achievements/check?user_id={TEST_USER_ID}")
             
             if response.status_code == 200:
                 data = response.json()
