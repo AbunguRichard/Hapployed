@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify and test the dual onboarding experience implementation on CreateProfilePage.jsx - smart auto-detection for skilled professionals vs general laborers, visual skill selectors with icons, physical availability sections, location-first discovery, and adaptive form flows"
+user_problem_statement: "Implement all 9 Epic Platform Innovations for the Hapployed Worker Dashboard: Available Now Toggle, Gig Gamification, AI Smart Matching, Gig Chain, Gig Squad, Corporate Gig Pass, Gig Forecasting, and Gig Insurance"
 
 frontend:
   - task: "Dual Onboarding - Step 1: Skills Selection with AI Detection"
