@@ -318,11 +318,7 @@ class BackendTester:
         
         # Test 2: Use corporate pass credit
         try:
-            payload = {
-                "pass_id": pass_id
-            }
-            
-            response = requests.post(f"{BASE_URL}/worker/corporate-pass/use", json=payload)
+            response = requests.post(f"{BASE_URL}/worker/corporate-pass/use?pass_id={pass_id}")
             
             if response.status_code == 200:
                 data = response.json()
