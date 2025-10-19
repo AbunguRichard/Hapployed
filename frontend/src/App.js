@@ -16,6 +16,9 @@ import WorkerDashboard from './pages/WorkerDashboard';
 import GigsNearMeInfoPage from './pages/GigsNearMeInfoPage';
 import CurrentProjectsInfoPage from './pages/CurrentProjectsInfoPage';
 import QuickHireInfoPage from './pages/QuickHireInfoPage';
+import DiscoverOpportunitiesInfoPage from './pages/DiscoverOpportunitiesInfoPage';
+import PostProjectInfoPage from './pages/PostProjectInfoPage';
+import OpportunitiesInfoPage from './pages/OpportunitiesInfoPage';
 import './App.css';
 
 function App() {
@@ -31,9 +34,12 @@ function App() {
             <Route path="/auth/signup" element={<SignupPage />} />
             
             {/* Informational Pages - Public */}
+            <Route path="/discover-opportunities-info" element={<DiscoverOpportunitiesInfoPage />} />
+            <Route path="/post-project-info" element={<PostProjectInfoPage />} />
             <Route path="/gigs-near-me-info" element={<GigsNearMeInfoPage />} />
-            <Route path="/current-projects-info" element={<CurrentProjectsInfoPage />} />
             <Route path="/quickhire-info" element={<QuickHireInfoPage />} />
+            <Route path="/opportunities-info" element={<OpportunitiesInfoPage />} />
+            <Route path="/current-projects-info" element={<CurrentProjectsInfoPage />} />
             
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
