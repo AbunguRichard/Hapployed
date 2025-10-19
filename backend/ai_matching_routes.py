@@ -167,7 +167,7 @@ async def suggest_gigs_for_worker(request: SuggestGigsRequest):
         }
 
 @router.post("/forecast-demand")
-async def forecast_gig_demand(location: str, category: str, date: str):
+async def forecast_gig_demand(request: ForecastRequest):
     """AI forecasts demand for specific category/location"""
     try:
         session_id = str(uuid.uuid4())
@@ -195,9 +195,9 @@ async def forecast_gig_demand(location: str, category: str, date: str):
         
         prompt = f"""
         Forecast gig demand for:
-        - Location: {location}
-        - Category: {category}
-        - Date: {date}
+        - Location: {request.location}
+        - Category: {request.category}
+        - Date: {request.date}
         
         Consider weather, local events, historical patterns, and seasonality.
         """
