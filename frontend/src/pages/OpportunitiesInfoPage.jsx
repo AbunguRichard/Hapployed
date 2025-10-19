@@ -4,7 +4,7 @@ import { Briefcase, Calendar, TrendingUp, Users, ArrowRight, CheckCircle } from 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-export default function CurrentProjectsInfoPage() {
+export default function OpportunitiesInfoPage() {
   const navigate = useNavigate();
 
   const features = [
