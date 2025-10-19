@@ -479,13 +479,11 @@ class BackendTester:
         print("\n📈 Testing AI Forecast Demand...")
         
         try:
-            payload = {
-                "location": "San Francisco, CA",
-                "category": "Plumbing",
-                "date": (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
-            }
+            location = "San Francisco, CA"
+            category = "Plumbing"
+            date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
             
-            response = requests.post(f"{BASE_URL}/ai-matching/forecast-demand", json=payload)
+            response = requests.post(f"{BASE_URL}/ai-matching/forecast-demand?location={location}&category={category}&date={date}")
             
             if response.status_code == 200:
                 data = response.json()
