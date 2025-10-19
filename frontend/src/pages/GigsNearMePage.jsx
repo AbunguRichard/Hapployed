@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   MapPin, Zap, Clock, Shield, Heart, MessageCircle, ChevronDown, ChevronUp, 
   Check, Target, Star, DollarSign, Users, AlertCircle, Navigation, Phone, Map
@@ -6,13 +6,33 @@ import {
 import { toast } from 'sonner';
 import DashboardNav from '../components/DashboardNav';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 export default function GigsNearMePage() {
   const [savedGigs, setSavedGigs] = useState([]);
   const [acceptedGigs, setAcceptedGigs] = useState([]);
   const [expandedGigs, setExpandedGigs] = useState([]);
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
+  const [gigs, setGigs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const gigs = [
+  // Fetch gigs from backend
+  useEffect(() => {
+    fetchGigs();
+  }, []);
+
+  const fetchGigs = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/jobs/gigs`);
+      const data = await response.json();
+      setGigs(data.jobs || []);
+    } catch (error) {
+      console.error('Error fetching gigs:', error);
+      toast.error('Failed to load gigs');
+    } finally {
+      setLoading(false);
+    }
+  };
     {
       id: 1,
       title: 'EMERGENCY: Burst Pipe - Need Plumber NOW',
