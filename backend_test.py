@@ -299,7 +299,8 @@ class BackendTester:
                 "credits_per_month": 10,
                 "credits_remaining": 10,
                 "priority_access": True,
-                "active": True
+                "active": True,
+                "renewal_date": (datetime.now() + timedelta(days=30)).isoformat()
             }
             
             response = requests.post(f"{BASE_URL}/worker/corporate-pass/create", json=payload)
