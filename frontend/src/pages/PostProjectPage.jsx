@@ -80,7 +80,7 @@ export default function PostProjectPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Use custom category if "Other" is selected
@@ -93,10 +93,73 @@ export default function PostProjectPage() {
       ? [...formData.equipment, formData.customEquipment]
       : formData.equipment;
     
-    toast.success('Project posted successfully!', {
-      description: 'We\'re now matching you with qualified candidates.',
-    });
-    console.log('Posted:', { ...formData, category: finalCategory, equipment: finalEquipment, mode });
+    // Validation
+    if (!formData.title || !formData.description || !finalCategory) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+    
+    try {
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+      
+      const response = await fetch(`${BACKEND_URL}/api/jobs/post`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          category: finalCategory,
+          equipment: finalEquipment,
+          mode,
+          user_id: user?.id || 'guest-user',
+          user_name: user?.name || 'Guest User'
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        toast.success('Project posted successfully!', {
+          description: mode === 'emergency' 
+            ? 'Your emergency gig is now live on Gigs Near Me!'
+            : 'We\'re now matching you with qualified candidates.',
+        });
+        
+        // Clear form
+        setFormData({
+          title: '',
+          description: '',
+          category: '',
+          customCategory: '',
+          amount: '',
+          visibility: 'public',
+          location: '',
+          workModel: 'remote',
+          startDate: '',
+          endDate: '',
+          interviewRequired: false,
+          radius: '10',
+          timeWindow: 'today',
+          duration: '',
+          equipment: [],
+          customEquipment: '',
+        });
+        
+        // Clear draft
+        localStorage.removeItem('projectDraft');
+        
+        // Redirect to appropriate feed
+        setTimeout(() => {
+          window.location.href = data.feed_type === 'gigs' ? '/gigs-near-me' : '/opportunities';
+        }, 2000);
+      } else {
+        toast.error('Failed to post project');
+      }
+    } catch (error) {
+      console.error('Error posting project:', error);
+      toast.error('Failed to post project. Please try again.');
+    }
   };
 
   const handlePreview = () => {
