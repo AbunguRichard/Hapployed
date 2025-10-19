@@ -505,10 +505,15 @@ export default function GigsNearMePage() {
 
         {/* Load More */}
         <div className="mt-8 text-center">
-          <button className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-all">
-            Load More Gigs Nearby
+          <button 
+            onClick={fetchGigs}
+            className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-all"
+          >
+            Refresh Gigs
           </button>
         </div>
+          </>
+        )}
       </div>
     </div>
   );
