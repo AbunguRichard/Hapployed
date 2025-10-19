@@ -268,10 +268,6 @@ export default function WorkerDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* DEBUG MARKER - REMOVE AFTER VERIFICATION */}
-      <div className="bg-green-500 text-white text-center py-2 font-bold">
-        ✅ NEW FUTURISTIC DASHBOARD LOADED - Version 2.0
-      </div>
       <DashboardNav />
       
       <section className="mx-auto max-w-7xl px-6 py-8">
