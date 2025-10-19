@@ -426,37 +426,41 @@ class BackendTester:
         print("\n💡 Testing AI Suggest Gigs...")
         
         try:
-            payload = {
-                "worker_id": TEST_USER_ID,
-                "worker_profile": {
-                    "skills": ["Plumbing", "HVAC", "Emergency Repair"],
-                    "experience": "5 years",
-                    "preferred_areas": ["San Francisco", "Oakland"],
-                    "rating": 4.8,
-                    "completed_gigs": 127,
-                    "available_now": True
-                },
-                "available_gigs": [
-                    {
-                        "gig_id": "gig-001",
-                        "title": "Kitchen Sink Installation",
-                        "category": "Plumbing",
-                        "location": "San Francisco, CA",
-                        "budget": 200,
-                        "urgent": False
-                    },
-                    {
-                        "gig_id": "gig-002", 
-                        "title": "HVAC System Maintenance",
-                        "category": "HVAC",
-                        "location": "Oakland, CA",
-                        "budget": 300,
-                        "urgent": False
-                    }
-                ]
+            import urllib.parse
+            
+            worker_profile = {
+                "skills": ["Plumbing", "HVAC", "Emergency Repair"],
+                "experience": "5 years",
+                "preferred_areas": ["San Francisco", "Oakland"],
+                "rating": 4.8,
+                "completed_gigs": 127,
+                "available_now": True
             }
             
-            response = requests.post(f"{BASE_URL}/ai-matching/suggest-gigs", json=payload)
+            available_gigs = [
+                {
+                    "gig_id": "gig-001",
+                    "title": "Kitchen Sink Installation",
+                    "category": "Plumbing",
+                    "location": "San Francisco, CA",
+                    "budget": 200,
+                    "urgent": False
+                },
+                {
+                    "gig_id": "gig-002", 
+                    "title": "HVAC System Maintenance",
+                    "category": "HVAC",
+                    "location": "Oakland, CA",
+                    "budget": 300,
+                    "urgent": False
+                }
+            ]
+            
+            # Use query parameters with JSON encoding
+            worker_profile_json = urllib.parse.quote(json.dumps(worker_profile))
+            available_gigs_json = urllib.parse.quote(json.dumps(available_gigs))
+            
+            response = requests.post(f"{BASE_URL}/ai-matching/suggest-gigs?worker_id={TEST_USER_ID}&worker_profile={worker_profile_json}&available_gigs={available_gigs_json}")
             
             if response.status_code == 200:
                 data = response.json()
