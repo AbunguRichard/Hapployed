@@ -212,13 +212,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Worker Features API - Gig Chain"
-    - "AI Matching API - Suggest Gigs"
-  stuck_tasks:
-    - "Worker Features API - Gig Chain"
-    - "AI Matching API - Suggest Gigs"
+    - "Frontend visual testing of new homepage and informational pages"
+  stuck_tasks: []
   test_all: false
-  test_priority: "stuck_first"
+  test_priority: "visual_verification"
 
 agent_communication:
   - agent: "main"
