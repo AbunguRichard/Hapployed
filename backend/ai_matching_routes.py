@@ -105,7 +105,7 @@ async def calculate_ai_match(request: MatchRequest):
         }
 
 @router.post("/suggest-gigs")
-async def suggest_gigs_for_worker(worker_id: str, worker_profile: dict, available_gigs: list):
+async def suggest_gigs_for_worker(request: SuggestGigsRequest):
     """AI suggests best gigs for a worker"""
     try:
         session_id = str(uuid.uuid4())
@@ -142,10 +142,10 @@ async def suggest_gigs_for_worker(worker_id: str, worker_profile: dict, availabl
         
         prompt = f"""
         WORKER PROFILE:
-        {json.dumps(worker_profile, indent=2)}
+        {json.dumps(request.worker_profile, indent=2)}
         
         AVAILABLE GIGS:
-        {json.dumps(available_gigs[:5], indent=2)}  # Top 5 gigs
+        {json.dumps(request.available_gigs[:5], indent=2)}  # Top 5 gigs
         
         Which gigs should this worker apply to and why?
         """
