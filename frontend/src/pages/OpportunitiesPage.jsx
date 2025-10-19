@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, MapPin, Clock, DollarSign, Users, TrendingUp, Filter, MessageCircle, ChevronDown, ChevronUp, Check, Zap, Shield, Target, Briefcase, FileText } from 'lucide-react';
-import DashboardNav from '../components/DashboardNav';
+import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
