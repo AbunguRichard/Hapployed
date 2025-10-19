@@ -267,475 +267,465 @@ export default function WorkerDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <DashboardNav />
       
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2 flex items-center gap-3">
-            Welcome back, {user.name}! 👋
-            <Crown className="w-8 h-8 text-yellow-500" />
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Ready to make money today? You're ranked #12 in your area 🔥
-          </p>
-        </div>
-
-        {/* INNOVATION 1: Available Now Toggle - HERO FEATURE */}
-        <div className="mb-8 p-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl shadow-2xl text-white animate-fade-in">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-3xl font-bold mb-2 flex items-center gap-3">
-                <Zap className={`w-10 h-10 ${availableNow ? 'animate-pulse' : ''}`} />
-                Available Now Status
-              </h2>
-              <p className="text-green-100">
-                {availableNow 
-                  ? '🟢 You\'re visible to recruiters looking for immediate help!' 
-                  : '⚫ Turn on to start receiving instant gig offers'}
-              </p>
-            </div>
+      <section className="mx-auto max-w-7xl px-6 py-8">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          
+          {/* Left Column (2/3 width) */}
+          <div className="space-y-6 lg:col-span-2">
             
-            <button
-              onClick={toggleAvailability}
-              className={`relative w-24 h-12 rounded-full transition-all duration-300 ${
-                availableNow ? 'bg-white' : 'bg-white/30'
-              }`}
-            >
-              <div className={`absolute top-1 left-1 w-10 h-10 rounded-full transition-all duration-300 ${
-                availableNow 
-                  ? 'translate-x-12 bg-green-500' 
-                  : 'translate-x-0 bg-gray-400'
-              } flex items-center justify-center`}>
-                {availableNow ? <Zap className="w-6 h-6 text-white" /> : null}
-              </div>
-            </button>
-          </div>
-
-          {availableNow && (
-            <div className="space-y-4 animate-fade-in-up">
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <label className="block text-sm font-semibold mb-2">
-                  <MapPin className="w-4 h-4 inline mr-2" />
-                  Work Radius: {radius} miles
-                </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="50"
-                  value={radius}
-                  onChange={(e) => updateRadius(parseInt(e.target.value))}
-                  className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-xs mt-1 text-green-100">
-                  <span>1 mi</span>
-                  <span>25 mi</span>
-                  <span>50 mi</span>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">Status Message (Optional)</label>
-                <input
-                  type="text"
-                  value={statusMessage}
-                  onChange={(e) => setStatusMessage(e.target.value)}
-                  placeholder="e.g., Heading to downtown for 2 hours"
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 placeholder-white/50 text-white"
-                />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-600">Gigs Completed</h3>
-              <CheckCircle className="w-6 h-6 text-green-500" />
-            </div>
-            <p className="text-4xl font-black text-foreground">{stats.gigsCompleted}</p>
-            <p className="text-sm text-green-600 mt-2">+3 this week</p>
-          </div>
-
-          <div className="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-600">Average Rating</h3>
-              <Star className="w-6 h-6 text-yellow-500" />
-            </div>
-            <p className="text-4xl font-black text-foreground">{stats.rating}</p>
-            <p className="text-sm text-muted-foreground mt-2">From 12 reviews</p>
-          </div>
-
-          <div className="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-600">Total Earnings</h3>
-              <TrendingUp className="w-6 h-6 text-blue-500" />
-            </div>
-            <p className="text-4xl font-black text-foreground">${stats.earnings}</p>
-            <p className="text-sm text-blue-600 mt-2">+$450 this week</p>
-          </div>
-
-          <div className="p-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-lg text-white hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold">Gamification Points</h3>
-              <Star className="w-6 h-6 animate-pulse" />
-            </div>
-            <p className="text-4xl font-black">{stats.points}</p>
-            <p className="text-sm text-purple-100 mt-2">Rank #12 in area</p>
-          </div>
-        </div>
-
-        {/* INNOVATION 4: Gig Chain Bonus Alert */}
-        {chainBonus && (
-          <div className="mb-8 p-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl shadow-xl text-white animate-pulse-subtle">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <Flame className="w-8 h-8" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-1">🔥 Gig Chain Active!</h3>
-                <p className="text-orange-100">
-                  You have priority access to nearby gigs for the next 4 hours! Apply now for <strong>1.5x bonus pay</strong>.
+            {/* Welcome Section with AI Orb */}
+            <Card className="relative overflow-hidden p-8">
+              <div className="absolute right-8 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-gradient-to-br from-violet-500 via-purple-500 to-pink-500 opacity-80 blur-3xl"></div>
+              
+              <div className="relative z-10">
+                <h1 className="text-4xl font-bold text-white">
+                  Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400">{user.name}</span> 👋
+                </h1>
+                <p className="mt-2 text-lg text-white/70">
+                  Your AI radar located 3 fresh opportunities tailored to you today.
                 </p>
-              </div>
-              <button 
-                onClick={() => window.location.href = '/gigs-near-me'}
-                className="px-6 py-3 bg-white text-orange-600 rounded-xl font-bold hover:bg-orange-50 transition-all flex-shrink-0"
-              >
-                View Priority Gigs
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* INNOVATION 3: AI Smart Matching - AI Suggestions Panel */}
-        <div className="mb-8 p-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl text-white">
-          <div className="flex items-center gap-3 mb-4">
-            <Brain className="w-8 h-8" />
-            <div>
-              <h2 className="text-2xl font-bold">🤖 AI Smart Match Suggestions</h2>
-              <p className="text-blue-100 text-sm">GPT-5 analyzed {aiSuggestions.length} gigs perfect for you</p>
-            </div>
-          </div>
-
-          {aiSuggestions.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {aiSuggestions.slice(0, 2).map((suggestion, idx) => (
-                <div key={idx} className="p-4 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all cursor-pointer">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <Target className="w-5 h-5 text-yellow-300" />
-                      <span className={`text-xs font-bold px-2 py-1 rounded ${
-                        suggestion.priority === 'high' ? 'bg-red-500' : 'bg-orange-500'
-                      }`}>
-                        {suggestion.priority?.toUpperCase()} PRIORITY
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm font-medium mb-2">Gig ID: {suggestion.gig_id}</p>
-                  <p className="text-blue-100 text-sm">{suggestion.reason}</p>
-                  <button className="mt-3 px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-50 transition-all w-full">
-                    View Gig Details →
+                
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button 
+                    onClick={toggleAvailability}
+                    className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20 transition-all"
+                  >
+                    <Radio className={`h-4 w-4 ${availableNow ? 'text-green-400 animate-pulse' : 'text-white/60'}`} />
+                    {availableNow ? 'Live Radar' : 'Go Live'}
+                  </button>
+                  <button className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20 transition-all">
+                    <Activity className="h-4 w-4" />
+                    Growth Pulse
+                  </button>
+                  <button className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20 transition-all">
+                    <Bell className="h-4 w-4" />
+                    Smart Alerts
                   </button>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-8 bg-white/10 backdrop-blur-sm rounded-xl text-center">
-              <Brain className="w-12 h-12 text-blue-200 mx-auto mb-3" />
-              <p className="text-blue-100">Enable "Available Now" to receive AI-powered gig recommendations</p>
-            </div>
-          )}
-        </div>
-
-        {/* INNOVATION 7: Gig Forecasting Widget */}
-        {forecast && (
-          <div className="mb-8 p-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl shadow-xl text-white">
-            <div className="flex items-center gap-3 mb-4">
-              <Calendar className="w-8 h-8" />
-              <div>
-                <h2 className="text-2xl font-bold">📊 AI Demand Forecast</h2>
-                <p className="text-teal-100 text-sm">Next 24 hours in {user.location}</p>
               </div>
-            </div>
+            </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <TrendingUp className="w-5 h-5" />
-                  <span className="font-bold text-lg">Demand Level</span>
-                </div>
-                <p className={`text-3xl font-black ${
-                  forecast.demand_level === 'high' || forecast.demand_level === 'very_high'
-                    ? 'text-yellow-300'
-                    : 'text-white'
-                }`}>
-                  {forecast.demand_level?.toUpperCase() || 'MEDIUM'}
-                </p>
-                <p className="text-xs text-teal-100 mt-1">Confidence: {Math.round((forecast.confidence || 0.75) * 100)}%</p>
-              </div>
-
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <DollarSign className="w-5 h-5" />
-                  <span className="font-bold text-lg">Recommended Rate</span>
-                </div>
-                <p className="text-2xl font-black">{forecast.recommended_rate || '$80-120/hr'}</p>
-                <p className="text-xs text-teal-100 mt-1">Based on market conditions</p>
-              </div>
-
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <Clock className="w-5 h-5" />
-                  <span className="font-bold text-lg">Best Time Slots</span>
-                </div>
-                <div className="space-y-1">
-                  {(forecast.best_time_slots || ['8am-12pm', '1pm-5pm']).map((slot, idx) => (
-                    <div key={idx} className="text-sm bg-white/10 rounded px-2 py-1">
-                      {slot}
+            {/* Available Now Toggle - Collapsible */}
+            {availableNow && (
+              <Card className="p-6 animate-fade-in">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-green-400" />
+                  You're Live & Available
+                </h3>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">
+                      <MapPin className="inline h-4 w-4 mr-1" />
+                      Work Radius: {radius} miles
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="50"
+                      value={radius}
+                      onChange={(e) => updateRadius(parseInt(e.target.value))}
+                      className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                    />
+                    <div className="flex justify-between text-xs mt-1 text-white/50">
+                      <span>1 mi</span>
+                      <span>25 mi</span>
+                      <span>50 mi</span>
                     </div>
-                  ))}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">Status Message (Optional)</label>
+                    <input
+                      type="text"
+                      value={statusMessage}
+                      onChange={(e) => setStatusMessage(e.target.value)}
+                      placeholder="e.g., Heading to downtown for 2 hours"
+                      className="w-full px-4 py-2 rounded-xl bg-white/10 border border-white/20 placeholder-white/40 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
+                    />
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {forecast.factors && forecast.factors.length > 0 && (
-              <div className="mt-4 p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <p className="font-semibold mb-2 flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4" />
-                  Key Factors:
-                </p>
-                <ul className="space-y-1">
-                  {forecast.factors.map((factor, idx) => (
-                    <li key={idx} className="text-sm text-teal-100">• {factor}</li>
-                  ))}
-                </ul>
-              </div>
+              </Card>
             )}
-          </div>
-        )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* INNOVATION 2: Gig Gamification - Achievements */}
-          <div className="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
-                <Award className="w-8 h-8 text-yellow-500" />
-                Your Achievements
-              </h2>
-              <span className="text-sm text-muted-foreground">{achievements.length} earned</span>
+            {/* AI Smart Suggestions */}
+            <div>
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-xl font-semibold text-white">Smart Suggestions</h3>
+                <button className="text-sm text-white/60 hover:text-white transition-colors">Refresh</button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {aiSuggestions.length > 0 ? (
+                  aiSuggestions.slice(0, 3).map((suggestion, idx) => (
+                    <Card key={idx} className="p-4 hover:bg-white/10 transition-all cursor-pointer">
+                      <div className="flex items-start gap-2 mb-2">
+                        <Target className="h-5 w-5 text-violet-400 flex-shrink-0 mt-1" />
+                        <div>
+                          <p className="text-sm font-semibold text-white">{suggestion.gig_id}</p>
+                          <p className="text-xs text-white/60 mt-1">{suggestion.reason}</p>
+                        </div>
+                      </div>
+                    </Card>
+                  ))
+                ) : (
+                  <>
+                    <Card className="p-4 hover:bg-white/10 transition-all cursor-pointer">
+                      <div className="flex items-start gap-2">
+                        <Target className="h-5 w-5 text-violet-400 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-semibold text-white">3 nearby gigs match your skills</p>
+                          <p className="text-xs text-white/60 mt-1">House repair • 2 miles • $45/hr</p>
+                        </div>
+                      </div>
+                    </Card>
+                    
+                    <Card className="p-4 hover:bg-white/10 transition-all cursor-pointer">
+                      <div className="flex items-start gap-2">
+                        <Briefcase className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-semibold text-white">Project invite: Hybrid QA Analyst</p>
+                          <p className="text-xs text-white/60 mt-1">Remote + DC • $60/hr</p>
+                        </div>
+                      </div>
+                    </Card>
+                    
+                    <Card className="p-4 hover:bg-white/10 transition-all cursor-pointer">
+                      <div className="flex items-start gap-2">
+                        <TrendingUp className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-semibold text-white">Demand up 14% for Electricians</p>
+                          <p className="text-xs text-white/60 mt-1">Boost profile for priority rank</p>
+                        </div>
+                      </div>
+                    </Card>
+                  </>
+                )}
+              </div>
             </div>
 
-            {achievements.length > 0 ? (
-              <div className="space-y-3">
-                {achievements.slice(0, 3).map((achievement) => (
-                  <div key={achievement.id} className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-md text-white">
-                    <div className="flex items-center gap-3">
-                      <div className="text-3xl">{achievement.icon}</div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold">{achievement.title}</h3>
-                        <p className="text-purple-100 text-xs">{achievement.description}</p>
-                        <div className="mt-2 flex items-center gap-2 text-xs">
-                          <Target className="w-3 h-3" />
-                          <span>{achievement.progress}/{achievement.target} completed</span>
+            {/* Gig Chain Bonus Alert */}
+            {chainBonus && (
+              <Card className="p-6 bg-gradient-to-r from-orange-500/20 to-red-500/20 border-orange-500/30 animate-pulse-subtle">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Flame className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-1">🔥 Gig Chain Active!</h3>
+                    <p className="text-white/80 text-sm">
+                      You have priority access to nearby gigs for the next 4 hours! Apply now for <strong>1.5x bonus pay</strong>.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => window.location.href = '/gigs-near-me'}
+                    className="px-6 py-3 bg-white text-orange-600 rounded-xl font-bold hover:bg-orange-50 transition-all flex-shrink-0"
+                  >
+                    View Gigs
+                  </button>
+                </div>
+              </Card>
+            )}
+
+            {/* Gigs Heat Map */}
+            <Card className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-emerald-400" />
+                  Gigs Heat Map
+                </h3>
+                <button className="flex items-center gap-1 text-sm text-white/60 hover:text-white">
+                  <Radio className="h-4 w-4" />
+                  Voice Mode
+                </button>
+              </div>
+              
+              <div className="relative h-64 rounded-xl overflow-hidden bg-gradient-to-br from-purple-900/30 via-teal-900/30 to-cyan-900/30 backdrop-blur-sm flex items-center justify-center">
+                <p className="text-white/60 text-sm">Heatmap preview</p>
+              </div>
+              
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex-1">
+                  <label className="block text-xs text-white/60 mb-1">Radius: {radius} mi</label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="50"
+                    value={radius}
+                    onChange={(e) => setRadius(parseInt(e.target.value))}
+                    className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                  />
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    placeholder="Say or type: show electrician gigs near me"
+                    className="w-full px-4 py-2 rounded-xl bg-white/10 border border-white/20 placeholder-white/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+                <button className="px-6 py-2 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition-all">
+                  Search
+                </button>
+              </div>
+            </Card>
+
+            {/* Gig Squad & Corporate Pass */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Gig Squad */}
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Users className="h-5 w-5 text-blue-400" />
+                  Gig Squads
+                </h3>
+                
+                {availableSquads.length > 0 ? (
+                  <div className="space-y-3">
+                    {availableSquads.slice(0, 2).map((squad) => (
+                      <div key={squad.squad_id} className="p-3 border border-white/10 rounded-xl hover:border-blue-500/50 transition-all">
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <p className="text-sm font-semibold text-white">Squad #{squad.squad_id.substring(0, 8)}</p>
+                            <p className="text-xs text-white/50">Gig: {squad.gig_id}</p>
+                          </div>
+                          <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-300 rounded-full">
+                            {squad.status}
+                          </span>
+                        </div>
+                        <button 
+                          onClick={() => joinSquad(squad.squad_id, squad.required_roles?.[0]?.role || 'worker')}
+                          className="w-full py-2 bg-blue-500/20 text-blue-300 rounded-lg text-sm font-semibold hover:bg-blue-500/30 transition-all"
+                        >
+                          Apply to Join
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-white/60">No squads recruiting right now</p>
+                )}
+              </Card>
+
+              {/* Corporate Pass */}
+              <Card className="p-6 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border-yellow-500/20">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Crown className="h-5 w-5 text-yellow-400" />
+                  Corporate Pass
+                </h3>
+                
+                {corporatePass ? (
+                  <div className="space-y-3">
+                    <div className="p-3 bg-white/5 rounded-xl">
+                      <p className="text-sm font-semibold text-white">{corporatePass.plan_type}</p>
+                      <div className="mt-2 grid grid-cols-2 gap-2">
+                        <div>
+                          <p className="text-xs text-white/60">Credits</p>
+                          <p className="text-lg font-bold text-white">{corporatePass.credits_remaining}/{corporatePass.credits_per_month}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-white/60">Priority</p>
+                          <p className="text-lg font-bold text-white">{corporatePass.priority_access ? '✓' : '✗'}</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))}
-                <button className="w-full py-2 text-center text-primary font-semibold hover:bg-gray-50 rounded-lg transition-all">
-                  View All Achievements →
+                ) : (
+                  <button className="w-full py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-xl font-bold hover:brightness-110 transition-all">
+                    Upgrade to Premium
+                  </button>
+                )}
+              </Card>
+            </div>
+          </div>
+
+          {/* Right Column (1/3 width) */}
+          <div className="space-y-6">
+            
+            {/* Role Quick Actions */}
+            <Card className="p-6">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Role</h3>
+                <button className="text-white/60 hover:text-white">
+                  <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
-            ) : (
-              <div className="p-8 bg-gray-50 rounded-xl text-center">
-                <Award className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-600 font-medium mb-1">No achievements yet</p>
-                <p className="text-sm text-gray-500">Complete gigs to unlock badges and bonuses!</p>
+              <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400 mb-4">
+                Talent
+              </p>
+              
+              <div className="grid grid-cols-1 gap-2">
+                <button 
+                  onClick={() => window.location.href = '/opportunities'}
+                  className="p-3 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 text-white text-left hover:brightness-110 transition-all"
+                >
+                  <Briefcase className="h-5 w-5 mb-1" />
+                  <p className="text-sm font-semibold">Projects</p>
+                  <p className="text-xs text-white/70">Browse hybrid & remote</p>
+                </button>
+                
+                <button 
+                  onClick={() => window.location.href = '/gigs-near-me'}
+                  className="p-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white text-left hover:brightness-110 transition-all"
+                >
+                  <Flame className="h-5 w-5 mb-1" />
+                  <p className="text-sm font-semibold">Emergency</p>
+                  <p className="text-xs text-white/70">QuickHire near you</p>
+                </button>
+                
+                <button 
+                  onClick={() => window.location.href = '/gigs-near-me'}
+                  className="p-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-left hover:brightness-110 transition-all"
+                >
+                  <MapPin className="h-5 w-5 mb-1" />
+                  <p className="text-sm font-semibold">Gigs Near Me</p>
+                  <p className="text-xs text-white/70">Explore local jobs</p>
+                </button>
               </div>
-            )}
-          </div>
+            </Card>
 
-          {/* INNOVATION 5: Gig Squad - Team Assembly */}
-          <div className="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
-                <Users className="w-8 h-8 text-blue-500" />
-                Gig Squads Available
-              </h2>
-              <span className="text-sm text-muted-foreground">{availableSquads.length} teams</span>
-            </div>
-
-            {availableSquads.length > 0 ? (
-              <div className="space-y-3">
-                {availableSquads.slice(0, 2).map((squad) => (
-                  <div key={squad.squad_id} className="p-4 border border-gray-200 rounded-xl hover:border-blue-500 transition-all">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="font-bold text-foreground">Squad ID: {squad.squad_id.substring(0, 8)}</h3>
-                        <p className="text-xs text-muted-foreground">Gig: {squad.gig_id}</p>
-                      </div>
-                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">
-                        {squad.status}
-                      </span>
-                    </div>
-                    <div className="mb-3">
-                      <p className="text-xs font-semibold text-gray-600 mb-1">Roles Needed:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {squad.required_roles?.map((role, idx) => (
-                          <span key={idx} className="text-xs px-2 py-1 bg-gray-100 rounded">
-                            {role.role} ({role.count})
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <button 
-                      onClick={() => joinSquad(squad.squad_id, squad.required_roles?.[0]?.role || 'worker')}
-                      className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all text-sm"
-                    >
-                      Apply to Join Squad
-                    </button>
-                  </div>
-                ))}
+            {/* Earnings Pulse */}
+            <Card className="p-6">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Earnings Pulse</h3>
+                <span className="text-sm text-emerald-400 font-semibold">+$510 this week</span>
               </div>
-            ) : (
-              <div className="p-8 bg-gray-50 rounded-xl text-center">
-                <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-600 font-medium mb-1">No squads recruiting</p>
-                <p className="text-sm text-gray-500">Team gigs will appear here when available</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* INNOVATION 6: Corporate Gig Pass */}
-          <div className="p-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl shadow-xl text-white">
-            <div className="flex items-center gap-3 mb-4">
-              <Crown className="w-8 h-8" />
-              <div>
-                <h2 className="text-2xl font-bold">👑 Corporate Gig Pass</h2>
-                <p className="text-yellow-100 text-sm">Premium subscription benefits</p>
-              </div>
-            </div>
-
-            {corporatePass ? (
-              <div className="space-y-4">
-                <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold">{corporatePass.plan_type}</span>
-                    <Gift className="w-5 h-5" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mt-3">
-                    <div>
-                      <p className="text-xs text-yellow-100">Credits Remaining</p>
-                      <p className="text-2xl font-black">{corporatePass.credits_remaining}/{corporatePass.credits_per_month}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-yellow-100">Priority Access</p>
-                      <p className="text-2xl font-black">{corporatePass.priority_access ? '✓' : '✗'}</p>
-                    </div>
-                  </div>
+              
+              <div className="relative h-32 mb-4">
+                <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="earningsGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M 0,80 L 50,60 L 100,70 L 150,40 L 200,50 L 250,30 L 300,20"
+                    fill="none"
+                    stroke="url(#earningsGradient)"
+                    strokeWidth="3"
+                  />
+                  <path
+                    d="M 0,80 L 50,60 L 100,70 L 150,40 L 200,50 L 250,30 L 300,20 L 300,100 L 0,100 Z"
+                    fill="url(#earningsGradient)"
+                    opacity="0.1"
+                  />
+                </svg>
+                <div className="absolute bottom-2 left-0 right-0 flex justify-between text-xs text-white/50">
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                  <span>Sun</span>
                 </div>
-                <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                  <p className="text-sm font-semibold mb-2">🎁 Benefits:</p>
-                  <ul className="space-y-1 text-sm text-yellow-100">
-                    <li>• Priority job matching</li>
-                    <li>• Exclusive corporate gigs</li>
-                    <li>• Higher pay rates</li>
-                    <li>• Guaranteed hours</li>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-3">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <p className="text-xs text-white/60 mb-1">Active</p>
+                  <p className="text-2xl font-bold text-white">{stats.active}</p>
+                </div>
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <p className="text-xs text-white/60 mb-1">Completed</p>
+                  <p className="text-2xl font-bold text-white">{stats.completed}</p>
+                </div>
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <p className="text-xs text-white/60 mb-1">Trust</p>
+                  <p className="text-2xl font-bold text-white">{stats.trust}%</p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Talent Spotlight (Auto-rotating) */}
+            <Card className="p-6">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Talent Spotlight</h3>
+                <span className="text-xs text-white/60">Auto-rotating</span>
+              </div>
+              <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm text-white/60">Suggested for you:</p>
+                <div className="mt-2 flex items-center justify-between">
+                  <div>
+                    <p className="text-base font-semibold text-white">{spotlight[spotlightIndex].name}</p>
+                    <p className="text-sm text-white/70">{spotlight[spotlightIndex].role}</p>
+                  </div>
+                  <span className="rounded-full bg-violet-500/20 px-3 py-1 text-sm font-semibold text-violet-300">
+                    {spotlight[spotlightIndex].score}% match
+                  </span>
+                </div>
+              </div>
+            </Card>
+
+            {/* Notifications */}
+            <Card className="p-6">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Notifications</h3>
+                <button className="text-xs text-white/60 hover:text-white transition-colors">Mark all read</button>
+              </div>
+              <div className="space-y-2">
+                {notifications.map((n) => {
+                  const Icon = n.icon;
+                  return (
+                    <div key={n.id} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 hover:bg-white/10 transition-all">
+                      <Icon className="h-4 w-4 text-violet-300 flex-shrink-0" />
+                      <p className="text-sm text-white">{n.text}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+
+            {/* Weekly Goal */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold text-white">Weekly Goal</h3>
+              <p className="mt-1 text-sm text-white/70">You're 80% toward your target of 10 tasks.</p>
+              <div className="mt-3 h-3 w-full overflow-hidden rounded-full bg-white/10">
+                <div className="h-full w-[80%] bg-gradient-to-r from-violet-500 to-emerald-400 animate-pulse-slow"></div>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <button className="flex-1 rounded-xl bg-violet-600 px-3 py-2 text-sm font-semibold text-white hover:brightness-110 transition-all">
+                  Boost Profile
+                </button>
+                <button className="flex-1 rounded-xl bg-white/10 px-3 py-2 text-sm text-white hover:bg-white/20 transition-all">
+                  Learn Skill
+                </button>
+              </div>
+            </Card>
+
+            {/* Gig Insurance */}
+            <Card className="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/20">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <Shield className="h-5 w-5 text-green-400" />
+                Gig Insurance
+              </h3>
+              
+              <div className="space-y-3">
+                <div className="text-sm text-white/70">
+                  <p className="mb-2">🛡️ Protection coverage:</p>
+                  <ul className="space-y-1 text-xs">
+                    <li>• Quality guarantee (24hr claim)</li>
+                    <li>• Payment protection (up to $500)</li>
+                    <li>• Dispute resolution support</li>
                   </ul>
                 </div>
-              </div>
-            ) : (
-              <div className="p-8 bg-white/10 backdrop-blur-sm rounded-xl text-center">
-                <Crown className="w-12 h-12 text-yellow-200 mx-auto mb-3" />
-                <p className="mb-3">Unlock premium corporate gigs</p>
-                <button className="px-6 py-2 bg-white text-orange-600 rounded-lg font-bold hover:bg-yellow-50 transition-all">
-                  Upgrade to Corporate Pass
+                
+                <button 
+                  onClick={() => activateGigInsurance('demo-gig-123')}
+                  className="w-full py-2 bg-green-500/20 text-green-300 rounded-xl text-sm font-semibold hover:bg-green-500/30 transition-all"
+                >
+                  Activate for Next Gig
                 </button>
               </div>
-            )}
-          </div>
-
-          {/* INNOVATION 8: Gig Insurance */}
-          <div className="p-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-xl text-white">
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="w-8 h-8" />
-              <div>
-                <h2 className="text-2xl font-bold">🛡️ Gig Insurance</h2>
-                <p className="text-green-100 text-sm">Protection for your work</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <p className="font-bold mb-2">Coverage Options:</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 bg-white/10 rounded">
-                    <span className="text-sm">Quality Guarantee</span>
-                    <CheckCircle className="w-4 h-4" />
-                  </div>
-                  <div className="flex items-center justify-between p-2 bg-white/10 rounded">
-                    <span className="text-sm">Payment Protection</span>
-                    <CheckCircle className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl">
-                <p className="text-sm font-semibold mb-2">🔒 What's Covered:</p>
-                <ul className="space-y-1 text-sm text-green-100">
-                  <li>• Dispute resolution support</li>
-                  <li>• Payment guarantee (up to $500)</li>
-                  <li>• 24-hour claim window</li>
-                  <li>• Free for all gigs over $100</li>
-                </ul>
-              </div>
-
-              <button 
-                onClick={() => activateGigInsurance('demo-gig-123')}
-                className="w-full py-3 bg-white text-green-600 rounded-xl font-bold hover:bg-green-50 transition-all"
-              >
-                Activate for Next Gig
-              </button>
-            </div>
+            </Card>
           </div>
         </div>
+      </section>
 
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <button 
-            onClick={() => window.location.href = '/gigs-near-me'}
-            className="p-8 bg-gradient-to-br from-primary to-accent rounded-2xl shadow-lg hover:shadow-2xl transition-all group text-left"
-          >
-            <Zap className="w-12 h-12 text-white mb-4 group-hover:scale-110 transition-transform" />
-            <h3 className="text-2xl font-bold text-white mb-2">Find Gigs</h3>
-            <p className="text-white/80">Browse emergency gigs near you</p>
-          </button>
-
-          <button 
-            onClick={() => window.location.href = '/opportunities'}
-            className="p-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg hover:shadow-2xl transition-all group text-left"
-          >
-            <Target className="w-12 h-12 text-white mb-4 group-hover:scale-110 transition-transform" />
-            <h3 className="text-2xl font-bold text-white mb-2">Browse Projects</h3>
-            <p className="text-white/80">Find longer-term opportunities</p>
-          </button>
-
-          <button 
-            onClick={() => window.location.href = '/projects/new'}
-            className="p-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-lg hover:shadow-2xl transition-all group text-left"
-          >
-            <Briefcase className="w-12 h-12 text-white mb-4 group-hover:scale-110 transition-transform" />
-            <h3 className="text-2xl font-bold text-white mb-2">Post a Gig</h3>
-            <p className="text-white/80">Hire workers for your project</p>
-          </button>
-        </div>
-      </div>
+      <footer className="mx-auto max-w-7xl px-6 pb-10 text-center text-xs text-white/50">
+        Made with <span className="text-fuchsia-300">AI</span> • © Hapployed
+      </footer>
     </div>
   );
 }
