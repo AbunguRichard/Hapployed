@@ -152,21 +152,21 @@ export default function UnifiedHeroSection() {
         {/* CTA Buttons */}
         <div className="flex flex-wrap gap-4 mb-8">
           <button
-            onClick={() => navigate('/opportunities')}
+            onClick={() => navigate('/discover-opportunities-info')}
             className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 shadow-lg shadow-cyan-500/50"
           >
             <MapPin className="w-5 h-5" />
             Discover Opportunities →
           </button>
           <button
-            onClick={() => navigate('/post-project')}
+            onClick={() => navigate('/post-project-info')}
             className="flex items-center gap-2 bg-white hover:bg-gray-100 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
           >
             <Briefcase className="w-5 h-5" />
             Post a Project
           </button>
           <button
-            onClick={() => navigate('/gigs-near-me')}
+            onClick={() => navigate('/gigs-near-me-info')}
             className="bg-orange-500 hover:bg-orange-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
           >
             Gigs Near Me
@@ -178,7 +178,7 @@ export default function UnifiedHeroSection() {
             QuickHire
           </button>
           <button
-            onClick={() => navigate('/opportunities')}
+            onClick={() => navigate('/opportunities-info')}
             className="bg-blue-400 hover:bg-blue-300 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
           >
             Opportunities
