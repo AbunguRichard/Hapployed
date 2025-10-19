@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import Header from '../components/Header';
 import UnifiedHeroSection from '../components/UnifiedHeroSection';
+import RotatingHeroMessages from '../components/RotatingHeroMessages';
+import HeroCarouselsSection from '../components/HeroCarouselsSection';
+import ServicesSection from '../components/ServicesSection';
+import AISection from '../components/AISection';
+import CategoriesSection from '../components/CategoriesSection';
+import StatsSection from '../components/StatsSection';
 import Footer from '../components/Footer';
 import VoiceOnlyModeModal from '../components/VoiceOnlyModeModal';
 
@@ -9,9 +15,15 @@ export default function Homepage() {
   const [isVoiceModeOpen, setIsVoiceModeOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-background">
       <Header />
       <UnifiedHeroSection />
+      <RotatingHeroMessages />
+      <HeroCarouselsSection />
+      <ServicesSection />
+      <AISection />
+      <CategoriesSection />
+      <StatsSection />
       <Footer />
       
       {/* Floating Voice Mode Button */}
