@@ -71,6 +71,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/worker-dashboard"
+              element={
+                <ProtectedRoute>
+                  <WorkerDashboard />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
