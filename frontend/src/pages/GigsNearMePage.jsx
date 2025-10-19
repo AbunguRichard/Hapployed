@@ -4,7 +4,7 @@ import {
   Check, Target, Star, DollarSign, Users, AlertCircle, Navigation, Phone, Map
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardNav from '../components/DashboardNav';
+import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
