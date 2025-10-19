@@ -361,13 +361,8 @@ class BackendTester:
         
         # Test 2: File insurance claim
         try:
-            payload = {
-                "gig_id": TEST_GIG_ID,
-                "user_id": TEST_USER_ID,
-                "reason": "Client refused to pay after completion of emergency plumbing repair"
-            }
-            
-            response = requests.post(f"{BASE_URL}/worker/insurance/claim", json=payload)
+            reason = "Client refused to pay after completion of emergency plumbing repair"
+            response = requests.post(f"{BASE_URL}/worker/insurance/claim?gig_id={TEST_GIG_ID}&user_id={TEST_USER_ID}&reason={reason}")
             
             if response.status_code == 200:
                 data = response.json()
