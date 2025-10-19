@@ -1,0 +1,249 @@
+{
+  "worker_features": {
+    "Available Now Toggle - Set Available": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Status updated: Available Now",
+        "status": {
+          "user_id": "worker-john-smith-123",
+          "available_now": true,
+          "radius_miles": 25,
+          "current_location": null,
+          "status_message": "Available for plumbing emergencies in downtown area",
+          "available_until": "2025-10-19T11:10:17.645748",
+          "last_updated": "2025-10-19T03:10:17.759853"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:17.795317"
+    },
+    "Available Now Toggle - Get Status": {
+      "success": true,
+      "response": {
+        "user_id": "worker-john-smith-123",
+        "available_now": true,
+        "available_until": "2025-10-19T11:10:17.645748",
+        "current_location": null,
+        "last_updated": "2025-10-19T03:10:17.759853",
+        "radius_miles": 25,
+        "status_message": "Available for plumbing emergencies in downtown area"
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:17.837349"
+    },
+    "Available Now Toggle - Get Available Workers": {
+      "success": true,
+      "response": {
+        "workers": [
+          {
+            "user_id": "worker-john-smith-123",
+            "available_now": true,
+            "available_until": "2025-10-19T11:10:17.645748",
+            "current_location": null,
+            "last_updated": "2025-10-19T03:10:17.759853",
+            "radius_miles": 25,
+            "status_message": "Available for plumbing emergencies in downtown area"
+          }
+        ],
+        "count": 1
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:17.881825"
+    },
+    "Gamification - Check Achievements": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:17.924047"
+    },
+    "Gamification - Get Achievements": {
+      "success": true,
+      "response": {
+        "achievements": []
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:17.963290"
+    },
+    "Worker Preferences - Save": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Preferences saved"
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:18.004293"
+    },
+    "Worker Preferences - Get": {
+      "success": true,
+      "response": {
+        "user_id": "worker-john-smith-123",
+        "preferred_job_types": [
+          "Plumbing",
+          "HVAC",
+          "Electrical"
+        ],
+        "preferred_days": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "preferred_areas": [
+          "Downtown",
+          "Midtown",
+          "Financial District"
+        ],
+        "min_budget": 75.0,
+        "max_radius": 30,
+        "commercial_preferred": true,
+        "residential_preferred": true
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:18.082679"
+    },
+    "Gig Chain - Complete Gig": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:18.128136"
+    },
+    "Gig Chain - Get Status": {
+      "success": true,
+      "response": {
+        "active_bonuses": []
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:18.168205"
+    },
+    "Gig Squad - Create": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Squad created! Workers can now apply to join",
+        "squad_id": "b784868d-716c-4f39-92c3-406d72b58075"
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:18.283351"
+    },
+    "Gig Squad - Join": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:18.362487"
+    },
+    "Gig Squad - Get Available": {
+      "success": true,
+      "response": {
+        "squads": [
+          {
+            "squad_id": "b784868d-716c-4f39-92c3-406d72b58075",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [],
+            "status": "assembling",
+            "created_at": "2025-10-19T03:10:18.204205"
+          }
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:18.402605"
+    },
+    "Corporate Pass - Create": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:18.439382"
+    },
+    "Corporate Pass - Use Credit": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:18.481758"
+    },
+    "Gig Insurance - Activate": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:18.518965"
+    },
+    "Gig Insurance - File Claim": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:18.559465"
+    }
+  },
+  "ai_matching": {
+    "AI Calculate Match": {
+      "success": true,
+      "response": {
+        "success": true,
+        "match_data": {
+          "match_score": 85,
+          "confidence": "medium",
+          "strengths": [
+            "Direct skills match: Plumbing and Emergency Repair suited for burst pipe",
+            "Local coverage: Prefers San Francisco",
+            "Immediate and weekend availability aligns with urgent requirement",
+            "Strong track record: 4.8 rating with 127 completed gigs",
+            "Solid experience: 5 years in the trade"
+          ],
+          "concerns": [
+            "License status not specified\u2014verify 'Licensed plumber' requirement before dispatch",
+            "Budget ($150) may be low for emergency call-out in SF; confirm scope, minimums, and parts"
+          ],
+          "recommendation": "Strong match for an urgent burst pipe repair given the worker\u2019s emergency repair skills, immediate availability, weekend coverage, and excellent past performance. Proceed pending verification of plumbing license and alignment on emergency rates/scope.",
+          "key_insights": [
+            "Urgency and weekend requirement are fully met (Available Now and all days preferred)",
+            "High volume of completed gigs with a 4.8 rating suggests reliability under time-sensitive conditions",
+            "Local proximity supports rapid response, minimizing water damage risk"
+          ]
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-19T03:10:34.794200"
+    },
+    "AI Suggest Gigs": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:34.861844"
+    },
+    "AI Forecast Demand": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 422",
+      "timestamp": "2025-10-19T03:10:34.901603"
+    }
+  },
+  "summary": {
+    "passed": 10,
+    "failed": 9,
+    "errors": [
+      "Gamification - Check Achievements: HTTP 422",
+      "Gig Chain - Complete Gig: HTTP 422",
+      "Gig Squad - Join: HTTP 422",
+      "Corporate Pass - Create: HTTP 422",
+      "Corporate Pass - Use Credit: HTTP 422",
+      "Gig Insurance - Activate: HTTP 422",
+      "Gig Insurance - File Claim: HTTP 422",
+      "AI Suggest Gigs: HTTP 422",
+      "AI Forecast Demand: HTTP 422"
+    ]
+  }
+}
