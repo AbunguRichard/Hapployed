@@ -8,10 +8,11 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 router = APIRouter(prefix="/api/jobs", tags=["Jobs"])
 
-# MongoDB connection
+# Import shared MongoDB connection
 MONGO_URL = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
+DB_NAME = os.getenv('DB_NAME', 'test_database')
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.get_database('test_database')
+db = client[DB_NAME]
 jobs_collection = db.jobs
 
 # Models
