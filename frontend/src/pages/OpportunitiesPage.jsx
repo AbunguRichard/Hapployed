@@ -1,12 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, MapPin, Clock, DollarSign, Users, TrendingUp, Filter, MessageCircle, ChevronDown, ChevronUp, Check, Zap, Shield, Target, Briefcase, FileText } from 'lucide-react';
 import DashboardNav from '../components/DashboardNav';
 import { toast } from 'sonner';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 export default function OpportunitiesPage() {
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [expandedJobs, setExpandedJobs] = useState([]);
+  const [opportunities, setOpportunities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch opportunities from backend
+  useEffect(() => {
+    fetchOpportunities();
+  }, []);
+
+  const fetchOpportunities = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/jobs/opportunities`);
+      const data = await response.json();
+      setOpportunities(data.jobs || []);
+    } catch (error) {
+      console.error('Error fetching opportunities:', error);
+      toast.error('Failed to load opportunities');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const opportunities = [
     {
