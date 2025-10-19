@@ -72,6 +72,14 @@ function App() {
               }
             />
             <Route
+              path="/post-project"
+              element={
+                <ProtectedRoute>
+                  <PostProjectPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/settings/:section?"
               element={
                 <ProtectedRoute>
