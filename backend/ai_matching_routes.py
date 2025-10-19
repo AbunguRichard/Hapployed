@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from typing import List
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import os
 import json
@@ -12,6 +13,16 @@ class MatchRequest(BaseModel):
     worker_id: str
     gig_details: dict
     worker_profile: dict
+
+class SuggestGigsRequest(BaseModel):
+    worker_id: str
+    worker_profile: dict
+    available_gigs: List[dict]
+
+class ForecastRequest(BaseModel):
+    location: str
+    category: str
+    date: str
 
 @router.post("/calculate-match")
 async def calculate_ai_match(request: MatchRequest):
