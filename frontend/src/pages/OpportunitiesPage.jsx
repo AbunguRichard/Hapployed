@@ -240,44 +240,50 @@ export default function OpportunitiesPage() {
                   {isExpanded && (
                     <div className="mb-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-4">
                       {/* The Work */}
-                      <div>
-                        <h3 className="font-bold text-foreground mb-2 flex items-center gap-2">
-                          <Briefcase className="w-5 h-5 text-primary" />
-                          The Work:
-                        </h3>
-                        <ul className="space-y-2">
-                          {project.detailedScope.work.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-gray-700">
-                              <span className="text-primary mt-1">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {project.detailedScope?.work && project.detailedScope.work.length > 0 && (
+                        <div>
+                          <h3 className="font-bold text-foreground mb-2 flex items-center gap-2">
+                            <Briefcase className="w-5 h-5 text-primary" />
+                            The Work:
+                          </h3>
+                          <ul className="space-y-2">
+                            {project.detailedScope.work.map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-gray-700">
+                                <span className="text-primary mt-1">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       {/* Deliverables */}
-                      <div>
-                        <h3 className="font-bold text-foreground mb-2 flex items-center gap-2">
-                          <FileText className="w-5 h-5 text-primary" />
-                          Deliverables:
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                          {project.detailedScope.deliverables.map((item, idx) => (
-                            <span key={idx} className="px-3 py-1 bg-white border border-gray-300 rounded-lg text-sm text-gray-700">
-                              ✓ {item}
-                            </span>
-                          ))}
+                      {project.detailedScope?.deliverables && project.detailedScope.deliverables.length > 0 && (
+                        <div>
+                          <h3 className="font-bold text-foreground mb-2 flex items-center gap-2">
+                            <FileText className="w-5 h-5 text-primary" />
+                            Deliverables:
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
+                            {project.detailedScope.deliverables.map((item, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-white border border-gray-300 rounded-lg text-sm text-gray-700">
+                                ✓ {item}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       {/* Team Size */}
-                      <div>
-                        <h3 className="font-bold text-foreground mb-1 flex items-center gap-2">
-                          <Users className="w-5 h-5 text-primary" />
-                          Team:
-                        </h3>
-                        <p className="text-gray-700">{project.detailedScope.teamSize}</p>
-                      </div>
+                      {project.detailedScope?.teamSize && (
+                        <div>
+                          <h3 className="font-bold text-foreground mb-1 flex items-center gap-2">
+                            <Users className="w-5 h-5 text-primary" />
+                            Team:
+                          </h3>
+                          <p className="text-gray-700">{project.detailedScope.teamSize}</p>
+                        </div>
+                      )}
                     </div>
                   )}
 
