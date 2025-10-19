@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Zap, MapPin, Award, TrendingUp, Users, Shield, Clock, Star,
   Target, Gift, Crown, Flame, CheckCircle, Brain, Calendar,
   DollarSign, ChevronRight, AlertCircle, Briefcase, TrendingDown,
-  CloudRain, Sun, Wind, Package, Bell
+  CloudRain, Sun, Wind, Package, Bell, Sparkles, Activity, Radio
 } from 'lucide-react';
 import { toast } from 'sonner';
 import DashboardNav from '../components/DashboardNav';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+
+// Card component with glassmorphic design
+const Card = ({ children, className = '' }) => (
+  <div className={`rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm ${className}`}>
+    {children}
+  </div>
+);
 
 export default function WorkerDashboard() {
   const [availableNow, setAvailableNow] = useState(false);
