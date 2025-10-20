@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Briefcase, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function PostProjectPage() {
@@ -8,6 +8,7 @@ export default function PostProjectPage() {
   const [searchParams] = useSearchParams();
   const initialType = searchParams.get('type') || 'regular';
   
+  const [workType, setWorkType] = useState(null); // 'project' or 'gig'
   const [currentStep, setCurrentStep] = useState(1);
   const [projectData, setProjectData] = useState({
     type: initialType,
