@@ -112,6 +112,22 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/find-work"
+              element={
+                <ProtectedRoute>
+                  <FindWorkPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/apply/:id"
+              element={
+                <ProtectedRoute>
+                  <ApplicationFlowPage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
