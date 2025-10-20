@@ -14,6 +14,7 @@ export default function PostProjectPage() {
     title: '',
     description: '',
     category: '',
+    customCategories: [],
     minBudget: '',
     maxBudget: '',
     budgetType: 'fixed',
@@ -23,6 +24,9 @@ export default function PostProjectPage() {
     location: 'remote',
     specificLocation: ''
   });
+
+  const [customSkillInput, setCustomSkillInput] = useState('');
+  const [customCategoryInput, setCustomCategoryInput] = useState('');
 
   const steps = [
     { id: 1, name: 'Project Details', icon: '📋' },
