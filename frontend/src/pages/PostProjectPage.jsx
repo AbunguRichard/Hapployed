@@ -290,7 +290,7 @@ export default function PostProjectPage() {
               
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Project Type *
+                  {workType === 'gig' ? 'Gig' : 'Project'} Type *
                 </label>
                 <div className="grid grid-cols-2 gap-4">
                   <button
@@ -303,7 +303,7 @@ export default function PostProjectPage() {
                     }`}
                   >
                     <div className="text-2xl mb-2">📅</div>
-                    <div className="font-semibold">Regular Project</div>
+                    <div className="font-semibold">{workType === 'gig' ? 'Regular Gig' : 'Regular Project'}</div>
                     <div className="text-sm text-gray-600">Standard timeline</div>
                   </button>
                   <button
