@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  MapPin, Zap, Clock, Shield, Heart, MessageCircle, ChevronDown, ChevronUp, 
-  Check, Target, Star, DollarSign, Users, AlertCircle, Navigation, Phone, Map
+  MapPin, Clock, Shield, Heart, MessageCircle, Phone, Eye, 
+  Star, DollarSign, Map, Search, Share2, Flag, Ban
 } from 'lucide-react';
 import { toast } from 'sonner';
 import DashboardHeader from '../components/DashboardHeader';
@@ -11,8 +11,11 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 export default function GigsNearMePage() {
   const [savedGigs, setSavedGigs] = useState([]);
   const [acceptedGigs, setAcceptedGigs] = useState([]);
-  const [expandedGigs, setExpandedGigs] = useState([]);
-  const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showUrgentOnly, setShowUrgentOnly] = useState(false);
+  const [showAvailableNow, setShowAvailableNow] = useState(false);
+  const [distanceRadius, setDistanceRadius] = useState('20');
+  const [sortBy, setSortBy] = useState('nearest');
   const [gigs, setGigs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -41,12 +44,6 @@ export default function GigsNearMePage() {
     toast.success(savedGigs.includes(gigId) ? 'Removed from saved' : 'Saved for later');
   };
 
-  const toggleExpand = (gigId) => {
-    setExpandedGigs(prev =>
-      prev.includes(gigId) ? prev.filter(id => id !== gigId) : [...prev, gigId]
-    );
-  };
-
   const handleAccept = (gigId) => {
     setAcceptedGigs(prev => [...prev, gigId]);
     toast.success('Request sent! Client will contact you shortly.', {
@@ -55,7 +52,7 @@ export default function GigsNearMePage() {
   };
 
   const handleCall = (gig) => {
-    toast.info(`Calling ${gig.client.name}...`, {
+    toast.info(`Calling ${gig.client?.name || 'client'}...`, {
       description: 'Feature coming soon!'
     });
   };
@@ -64,454 +61,344 @@ export default function GigsNearMePage() {
     toast.info('Messaging feature coming soon!');
   };
 
-  const handleGetDirections = (gig) => {
-    toast.info(`Getting directions to ${gig.client.location}...`);
+  const handleDirections = (gig) => {
+    toast.info(`Getting directions to ${gig.client?.location || 'location'}...`);
   };
 
   const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
     return (
-      <>
-        {[...Array(fullStars)].map((_, i) => <span key={i}>★</span>)}
-        {hasHalfStar && <span>☆</span>}
-        {[...Array(5 - Math.ceil(rating))].map((_, i) => <span key={`empty-${i}`} className="text-gray-400">☆</span>)}
-      </>
+      <div className="flex items-center gap-0.5 text-yellow-400">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className={`w-4 h-4 ${i < Math.floor(rating) ? 'fill-current' : ''}`}
+          />
+        ))}
+      </div>
     );
   };
 
-  const getMatchColor = (score) => {
-    if (score >= 90) return 'bg-green-500';
-    if (score >= 75) return 'bg-blue-500';
-    return 'bg-gray-500';
-  };
-
-  const getUrgencyColor = (gig) => {
-    if (gig.badge?.type === 'emergency') return 'border-red-400 bg-red-50/50';
-    if (gig.badge?.type === 'urgent') return 'border-orange-400 bg-orange-50/50';
-    return 'border-gray-200';
-  };
+  const urgentGigsCount = gigs.filter(g => g.urgent || g.badge?.type === 'urgent').length;
+  const availableGigsCount = gigs.filter(g => g.availableNow).length;
 
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />
       
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            🔥 Gigs Near You — Act Fast!
+          </h1>
+          <p className="text-gray-600">
+            <strong className="text-red-600">{urgentGigsCount} urgent gigs</strong> and{' '}
+            <strong className="text-green-600">{availableGigsCount} available now</strong> within your area
+          </p>
+        </div>
+
+        {/* Search and Filter Bar */}
+        <div className="mb-6 bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Search Input */}
+            <div className="flex-1 min-w-[300px]">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search by skills, tags, categories..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Urgent Toggle */}
+            <button
+              onClick={() => setShowUrgentOnly(!showUrgentOnly)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                showUrgentOnly
+                  ? 'bg-red-500 text-white'
+                  : 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100'
+              }`}
+            >
+              🚨 Urgent
+            </button>
+
+            {/* Available Now Toggle */}
+            <button
+              onClick={() => setShowAvailableNow(!showAvailableNow)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                showAvailableNow
+                  ? 'bg-green-500 text-white'
+                  : 'bg-green-50 text-green-600 border border-green-200 hover:bg-green-100'
+              }`}
+            >
+              🟢 Available Now
+            </button>
+
+            {/* Distance Radius */}
+            <select
+              value={distanceRadius}
+              onChange={(e) => setDistanceRadius(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+            >
+              <option value="2">Within 2 mi</option>
+              <option value="5">Within 5 mi</option>
+              <option value="10">Within 10 mi</option>
+              <option value="20">Within 20 mi</option>
+            </select>
+
+            {/* Sort By */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+            >
+              <option value="nearest">Nearest first</option>
+              <option value="highest-pay">Highest pay</option>
+              <option value="best-match">Best match</option>
+              <option value="most-urgent">Most urgent</option>
+            </select>
+
+            {/* Map View Button */}
+            <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+              <Map className="w-4 h-4" />
+              Map View
+            </button>
+          </div>
+        </div>
+
         {/* Loading State */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-4"></div>
-              <p className="text-lg text-muted-foreground">Loading gigs near you...</p>
+              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-600 mx-auto mb-4"></div>
+              <p className="text-lg text-gray-600">Loading gigs near you...</p>
             </div>
           </div>
         ) : (
           <>
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-4xl font-bold text-foreground mb-2">
-                🔥 Gigs Near You - Act Fast!
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                {gigs.length > 0 ? (
-                  <>
-                    <strong>{gigs.filter(g => g.urgent).length} urgent gigs</strong> and <strong>{gigs.filter(g => !g.urgent).length} regular gigs</strong> within 5 miles of you.
-                  </>
-                ) : (
-                  'No gigs available at the moment. Check back soon!'
-                )}
-              </p>
-            </div>
+            {/* Gig Cards */}
+            <div className="space-y-4">
+              {gigs.map((gig) => {
+                const isSaved = savedGigs.includes(gig.id);
+                const isAccepted = acceptedGigs.includes(gig.id);
 
-            {/* Emergency Alert Banner */}
-            {gigs.some(g => g.badge?.type === 'emergency') && (
-          <div className="mb-6 p-4 bg-red-100 border-2 border-red-300 rounded-xl flex items-center gap-4 animate-pulse">
-            <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-bold text-red-900 text-lg">🚨 EMERGENCY GIGS AVAILABLE</h3>
-              <p className="text-red-700">Someone needs help RIGHT NOW! Respond within minutes to get hired.</p>
-            </div>
-          </div>
-        )}
-
-        {/* Filter & View Toggle Bar */}
-        <div className="mb-6 p-4 bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="flex flex-wrap items-center gap-3 justify-between">
-            <div className="flex flex-wrap items-center gap-3">
-              <button className="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors font-bold">
-                🚨 Emergency Only
-              </button>
-              
-              <button className="px-4 py-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition-colors font-bold">
-                ⚡ Urgent
-              </button>
-              
-              <button className="px-4 py-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-colors font-medium">
-                🟢 Available Now
-              </button>
-
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
-                <option>Within 5 miles</option>
-                <option>Within 2 miles</option>
-                <option>Within 10 miles</option>
-                <option>Within 20 miles</option>
-              </select>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary font-medium">
-                <option>Nearest first</option>
-                <option>Highest pay</option>
-                <option>Best match</option>
-                <option>Most urgent</option>
-              </select>
-
-              <button 
-                onClick={() => setViewMode(viewMode === 'list' ? 'map' : 'list')}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center gap-2"
-              >
-                <Map className="w-4 h-4" />
-                {viewMode === 'list' ? 'Map View' : 'List View'}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Gig Cards */}
-        <div className="space-y-4">
-          {gigs.map((gig) => {
-            const isSaved = savedGigs.includes(gig.id);
-            const isAccepted = acceptedGigs.includes(gig.id);
-            const isExpanded = expandedGigs.includes(gig.id);
-
-            return (
-              <div
-                key={gig.id}
-                className={`bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 hover:shadow-lg ${getUrgencyColor(gig)}`}
-              >
-                <div className="p-6">
-                  {/* Header with Badges */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3 flex-wrap">
-                        <h2 className="text-2xl font-bold text-foreground">
-                          {gig.title}
-                        </h2>
-                        
-                        {gig.badge && (
-                          <span className={`px-3 py-1 rounded-full text-sm font-bold animate-pulse ${
-                            gig.badge.type === 'emergency' 
-                              ? 'bg-red-500 text-white' 
-                              : 'bg-orange-500 text-white'
-                          }`}>
-                            {gig.badge.text}
-                          </span>
-                        )}
-                        
-                        {gig.client.verified && (
-                          <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-semibold flex items-center gap-1">
-                            <Shield className="w-4 h-4" />
-                            Verified Client
-                          </span>
-                        )}
-
-                        {gig.availableNow && (
-                          <span className="px-3 py-1 bg-green-500 text-white rounded-full text-sm font-bold flex items-center gap-1 animate-pulse">
-                            🟢 AVAILABLE NOW
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Match Score & Location */}
-                      <div className="flex items-center gap-4 mb-3 flex-wrap">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg">
-                          <Target className="w-4 h-4 text-green-600" />
-                          <span className="font-bold text-green-700">{gig.matchScore}% Match</span>
-                          <div className="w-16 h-2 bg-gray-200 rounded-full">
-                            <div 
-                              className={`h-2 rounded-full ${getMatchColor(gig.matchScore)}`}
-                              style={{ width: `${gig.matchScore}%` }}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-lg">
-                          <MapPin className="w-4 h-4 text-blue-600" />
-                          <span className="font-bold text-blue-700">{gig.distance}</span>
-                          <span className="text-blue-600">• {gig.eta} drive</span>
-                        </div>
-
-                        {gig.expiresIn && (
-                          <div className="flex items-center gap-2 px-3 py-1 bg-orange-50 border border-orange-200 rounded-lg">
-                            <Clock className="w-4 h-4 text-orange-600" />
-                            <span className="text-orange-700 font-medium">Expires in {gig.expiresIn}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Save Button */}
-                    <button
-                      onClick={() => toggleSave(gig.id)}
-                      className={`p-2 rounded-full transition-all ${
-                        isSaved 
-                          ? 'bg-red-100 text-red-500' 
-                          : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                      }`}
-                    >
-                      <Heart className={`w-6 h-6 ${isSaved ? 'fill-current' : ''}`} />
-                    </button>
-                  </div>
-
-                  {/* Budget & Timeline */}
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border-2 border-green-200 rounded-lg">
-                      <DollarSign className="w-5 h-5 text-green-600" />
-                      <span className="font-bold text-green-700 text-lg">{gig.budget.amount}</span>
-                      <span className="text-green-600 font-medium">{gig.budget.type}</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 border border-purple-200 rounded-lg">
-                      <Clock className="w-4 h-4 text-purple-600" />
-                      <span className="text-purple-700 font-medium">{gig.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-lg">
-                      <Zap className="w-4 h-4 text-blue-600" />
-                      <span className="text-blue-700 font-medium">Start: {gig.startTime || 'ASAP'}</span>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-gray-700 mb-4 leading-relaxed text-base">
-                    {gig.description}
-                  </p>
-
-                  {/* Expanded Content */}
-                  {isExpanded && (
-                    <div className="mb-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-4">
-                      {/* Requirements */}
-                      <div>
-                        <h3 className="font-bold text-foreground mb-2 flex items-center gap-2">
-                          <Check className="w-5 h-5 text-primary" />
-                          Requirements:
-                        </h3>
-                        <div className="space-y-2">
-                          <div>
-                            <p className="text-sm font-semibold text-gray-600 mb-1">Must Have:</p>
-                            <ul className="space-y-1">
-                              {gig.requirements.mustHave.map((req, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-gray-700">
-                                  <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                                  <span>{req}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold text-gray-600 mb-1">Nice to Have:</p>
-                            <ul className="space-y-1">
-                              {gig.requirements.niceToHave.map((req, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-gray-500">
-                                  <Star className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                                  <span>{req}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Payment Info */}
-                      <div>
-                        <h3 className="font-bold text-foreground mb-2 flex items-center gap-2">
-                          <DollarSign className="w-5 h-5 text-primary" />
-                          Payment:
-                        </h3>
-                        <div className="flex items-center gap-2">
-                          <span className="px-3 py-1 bg-white border border-gray-300 rounded-lg text-sm text-gray-700">
-                            {gig.payment.method}
-                          </span>
-                          {gig.payment.verified && (
-                            <span className="px-3 py-1 bg-green-100 text-green-600 rounded-lg text-sm font-medium flex items-center gap-1">
-                              <Shield className="w-3 h-3" />
-                              Payment Verified
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Client Info */}
-                  <div className="mb-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
-                    <div className="flex items-start gap-4">
+                return (
+                  <div
+                    key={gig.id}
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-start justify-between gap-6">
+                      {/* Left Content */}
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-bold text-foreground">{gig.client.name}</h3>
-                          {gig.client.phoneVerified && (
-                            <span className="px-2 py-0.5 bg-green-500 text-white text-xs rounded-full flex items-center gap-1">
-                              <Phone className="w-3 h-3" />
-                              Verified
+                        {/* Title and Badges */}
+                        <div className="flex items-start gap-3 mb-3">
+                          <h2 className="text-xl font-bold text-gray-900">{gig.title}</h2>
+                          
+                          {gig.badge && (
+                            <span
+                              className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                gig.badge.type === 'urgent'
+                                  ? 'bg-red-500 text-white'
+                                  : gig.badge.type === 'emergency'
+                                  ? 'bg-red-600 text-white animate-pulse'
+                                  : 'bg-orange-500 text-white'
+                              }`}
+                            >
+                              {gig.badge.text || 'Urgent'}
+                            </span>
+                          )}
+
+                          {gig.availableNow && (
+                            <span className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-bold">
+                              Available Now
                             </span>
                           )}
                         </div>
-                        
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="flex items-center gap-1 text-yellow-500 text-base">
-                            {renderStars(gig.client.rating)}
-                            <span className="ml-1 text-gray-700 font-bold text-sm">
-                              {gig.client.rating}/5
+
+                        {/* Payment Info */}
+                        <div className="flex items-center gap-4 mb-3 flex-wrap">
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl font-bold text-gray-900">
+                              {gig.budget?.amount || '$50'}
                             </span>
-                            <span className="text-gray-600 text-sm">
-                              ({gig.client.reviews} reviews)
+                            <span className="px-2 py-1 bg-gray-100 text-gray-700 text-sm rounded">
+                              {gig.budget?.type || 'Fixed'}
                             </span>
+                          </div>
+                          
+                          <div className="flex items-center gap-1 text-gray-600">
+                            <Clock className="w-4 h-4" />
+                            <span className="text-sm">{gig.startTime || 'ASAP'}</span>
                           </div>
                         </div>
-                        
-                        <div className="grid grid-cols-2 gap-2 text-sm">
+
+                        {/* Tags/Skills */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {(gig.skills || []).slice(0, 5).map((skill, idx) => (
+                            <span
+                              key={idx}
+                              className="px-3 py-1 bg-purple-50 text-purple-700 text-sm rounded-lg border border-purple-200"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Poster Info */}
+                        <div className="flex items-center gap-4 mb-4 pb-4 border-b border-gray-200">
                           <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-blue-600" />
-                            <span className="text-gray-700">{gig.client.location}</span>
+                            <span className="font-medium text-gray-900">
+                              {gig.client?.name || 'Guest User'}
+                            </span>
+                            {gig.client?.verified && (
+                              <Shield className="w-4 h-4 text-green-600" />
+                            )}
                           </div>
+                          
+                          <div className="flex items-center gap-1">
+                            {renderStars(gig.client?.rating || 4.5)}
+                            <span className="text-sm text-gray-600 ml-1">
+                              ({gig.client?.reviews || 0})
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-1 text-gray-600 text-sm">
+                            <MapPin className="w-4 h-4" />
+                            <span>{gig.client?.location || 'Unknown'}</span>
+                          </div>
+
+                          <span className="text-sm text-gray-500">
+                            Posted {gig.postedTime || '1h ago'}
+                          </span>
+                        </div>
+
+                        {/* Match and Distance */}
+                        <div className="flex items-center gap-4 text-sm">
                           <div className="flex items-center gap-2">
-                            <Users className="w-4 h-4 text-purple-600" />
-                            <span className="text-gray-700">Hired {gig.client.totalHired}</span>
+                            <span className="font-semibold text-gray-700">Match:</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-yellow-400 to-green-500"
+                                  style={{ width: `${gig.matchScore || 85}%` }}
+                                ></div>
+                              </div>
+                              <span className="font-bold text-gray-900">{gig.matchScore || 85}%</span>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Check className="w-4 h-4 text-green-600" />
-                            <span className="text-gray-700">{gig.client.responseRate} response rate</span>
+
+                          <div className="flex items-center gap-1 text-gray-600">
+                            <MapPin className="w-4 h-4" />
+                            <span className="font-medium">{gig.distance || '2.3 mi'}</span>
+                            <span>• {gig.eta || '10 min'}</span>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-orange-600" />
-                            <span className="text-gray-700">Avg: {gig.client.avgResponseTime}</span>
-                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Actions */}
+                      <div className="flex flex-col gap-2 min-w-[140px]">
+                        {/* Save Button */}
+                        <button
+                          onClick={() => toggleSave(gig.id)}
+                          className={`p-2 rounded-lg transition-colors ${
+                            isSaved
+                              ? 'bg-red-50 text-red-600'
+                              : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                          }`}
+                        >
+                          <Heart className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
+                        </button>
+
+                        {/* Action Buttons */}
+                        <button
+                          onClick={() => handleCall(gig)}
+                          className="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm font-medium"
+                        >
+                          <Phone className="w-4 h-4" />
+                          Call
+                        </button>
+
+                        <button
+                          onClick={handleMessage}
+                          className="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm font-medium"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                          Message
+                        </button>
+
+                        <button
+                          onClick={() => handleDirections(gig)}
+                          className="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm font-medium"
+                        >
+                          <MapPin className="w-4 h-4" />
+                          Directions
+                        </button>
+
+                        {/* Accept Now Button */}
+                        <button
+                          onClick={() => handleAccept(gig.id)}
+                          disabled={isAccepted}
+                          className={`px-4 py-3 rounded-lg font-bold transition-all ${
+                            isAccepted
+                              ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                              : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:shadow-lg'
+                          }`}
+                        >
+                          {isAccepted ? 'Request Sent' : 'Accept Now'}
+                        </button>
+
+                        {/* View More Button */}
+                        <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium flex items-center justify-center gap-2">
+                          <Eye className="w-4 h-4" />
+                          View More
+                        </button>
+
+                        {/* Secondary Actions */}
+                        <div className="flex items-center justify-center gap-2 mt-2">
+                          <button
+                            onClick={() => toast.info('Share ETA feature coming soon')}
+                            className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                            title="Share ETA"
+                          >
+                            <Share2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => toast.info('Report feature coming soon')}
+                            className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                            title="Report"
+                          >
+                            <Flag className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => toast.info('Block feature coming soon')}
+                            className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                            title="Block"
+                          >
+                            <Ban className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {gig.skills.map((skill, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg text-sm font-medium border border-purple-200"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Activity Stats */}
-                  <div className="flex items-center gap-4 mb-4 text-sm py-3 px-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-2 font-medium text-orange-600">
-                      <AlertCircle className="w-4 h-4" />
-                      <span>{gig.accepting} people considering</span>
-                    </div>
-                    {gig.hired > 0 && (
-                      <>
-                        <span className="text-gray-400">•</span>
-                        <div className="flex items-center gap-2 font-medium text-green-600">
-                          <Check className="w-4 h-4" />
-                          <span>{gig.hired} already hired</span>
-                        </div>
-                      </>
-                    )}
-                    <span className="text-gray-400">•</span>
-                    <span className="text-gray-600">Posted {gig.postedTime}</span>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
-                    <button
-                      onClick={() => toggleSave(gig.id)}
-                      className={`flex items-center gap-2 px-4 py-3 rounded-xl font-bold transition-all ${
-                        isSaved
-                          ? 'bg-red-100 text-red-600 border-2 border-red-300'
-                          : 'bg-gray-100 text-gray-700 border-2 border-gray-300 hover:bg-gray-200'
-                      }`}
-                    >
-                      <Heart className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
-                    </button>
-
-                    <button
-                      onClick={() => handleCall(gig)}
-                      className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-green-500 text-green-600 rounded-xl font-bold hover:bg-green-50 transition-all"
-                    >
-                      <Phone className="w-5 h-5" />
-                      Call
-                    </button>
-
-                    <button
-                      onClick={handleMessage}
-                      className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-primary text-primary rounded-xl font-bold hover:bg-primary/5 transition-all"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      Message
-                    </button>
-
-                    <button
-                      onClick={() => handleGetDirections(gig)}
-                      className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-blue-500 text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-all"
-                    >
-                      <Navigation className="w-5 h-5" />
-                      Directions
-                    </button>
-
-                    <button
-                      onClick={() => handleAccept(gig.id)}
-                      disabled={isAccepted}
-                      className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-lg transition-all duration-300 ${
-                        isAccepted
-                          ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:shadow-lg hover:scale-105'
-                      }`}
-                    >
-                      {isAccepted ? (
-                        <>
-                          <Check className="w-5 h-5" />
-                          Request Sent
-                        </>
-                      ) : (
-                        <>
-                          {gig.urgent ? '🚀 Accept Now' : '✓ I\'m Interested'}
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      onClick={() => toggleExpand(gig.id)}
-                      className="flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"
-                    >
-                      {isExpanded ? (
-                        <>
-                          <ChevronUp className="w-5 h-5" />
-                          Less
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown className="w-5 h-5" />
-                          More
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
+            {gigs.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-500 text-lg">No gigs available at the moment.</p>
+                <button
+                  onClick={fetchGigs}
+                  className="mt-4 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Refresh Gigs
+                </button>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Load More */}
-        <div className="mt-8 text-center">
-          <button 
-            onClick={fetchGigs}
-            className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-all"
-          >
-            Refresh Gigs
-          </button>
-        </div>
+            )}
           </>
         )}
       </div>
