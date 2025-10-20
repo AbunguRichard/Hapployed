@@ -38,7 +38,7 @@ export default function DashboardHeader() {
       onClick: () => setIsQuickHireModalOpen(true)
     },
     { 
-      name: 'Gigs Near Me', 
+      name: 'Find Gigs', 
       path: '/gigs-near-me',
       icon: Briefcase,
       iconColor: 'text-red-800'
@@ -50,7 +50,7 @@ export default function DashboardHeader() {
       iconColor: 'text-gray-800'
     },
     { 
-      name: 'Opportunities', 
+      name: 'Find Projects', 
       path: '/opportunities',
       icon: Briefcase,
       iconColor: 'text-green-500',
