@@ -78,7 +78,7 @@ export default function DashboardHeader() {
                 return (
                   <button
                     key={item.path}
-                    onClick={() => navigate(item.path)}
+                    onClick={item.onClick || (() => navigate(item.path))}
                     className="flex flex-col items-center gap-1 group"
                   >
                     <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg hover:scale-110 transition-transform`}>
