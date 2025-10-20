@@ -13,6 +13,7 @@ import PostProjectPage from './pages/PostProjectPage';
 import GigsNearMePage from './pages/GigsNearMePage';
 import SettingsPage from './pages/SettingsPage';
 import WorkerDashboard from './pages/WorkerDashboard';
+import EmergencyGigsPage from './pages/EmergencyGigsPage';
 import GigsNearMeInfoPage from './pages/GigsNearMeInfoPage';
 import CurrentProjectsInfoPage from './pages/CurrentProjectsInfoPage';
 import QuickHireInfoPage from './pages/QuickHireInfoPage';
