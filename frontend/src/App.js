@@ -130,6 +130,22 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/my-jobs"
+              element={
+                <ProtectedRoute>
+                  <MyJobsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/messages"
+              element={
+                <ProtectedRoute>
+                  <MessagesPage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
