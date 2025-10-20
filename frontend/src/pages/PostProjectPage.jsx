@@ -284,7 +284,9 @@ export default function PostProjectPage() {
           {/* Step 1: Project Details */}
           {currentStep === 1 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Project Details</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                {workType === 'gig' ? 'Gig Details' : 'Project Details'}
+              </h2>
               
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
