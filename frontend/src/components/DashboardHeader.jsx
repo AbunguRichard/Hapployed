@@ -25,7 +25,7 @@ export default function DashboardHeader() {
     },
     { 
       name: 'Find Work', 
-      path: '/opportunities',
+      path: '/find-work',
       icon: Search,
       gradient: 'from-purple-500 to-blue-500'
     },
