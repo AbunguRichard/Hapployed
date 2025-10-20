@@ -75,9 +75,8 @@ export default function DashboardHeader() {
       <div className="w-full px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 mr-8">
-            <img src={LOGO_URL} alt="Hapployed" className="w-10 h-10 object-contain" />
-            <span className="text-2xl font-bold text-foreground">Hapployed</span>
+          <Link to="/" className="flex items-center mr-8">
+            <img src={LOGO_URL} alt="Hapployed" className="w-16 h-16 object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
