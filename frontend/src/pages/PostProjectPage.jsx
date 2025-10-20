@@ -324,13 +324,13 @@ export default function PostProjectPage() {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Project Title *
+                  {workType === 'gig' ? 'Gig Title' : 'Project Title'} *
                 </label>
                 <input
                   type="text"
                   value={projectData.title}
                   onChange={(e) => updateField('title', e.target.value)}
-                  placeholder="e.g., Build a React Dashboard"
+                  placeholder={workType === 'gig' ? 'e.g., Need Help Moving Furniture' : 'e.g., Build a React Dashboard'}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
