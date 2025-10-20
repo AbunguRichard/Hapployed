@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, Search, Zap, Briefcase, Gauge, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import QuickHireModal from './QuickHireModal';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
 
@@ -9,6 +10,7 @@ export default function DashboardHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [isQuickHireModalOpen, setIsQuickHireModalOpen] = useState(false);
 
   const isActive = (path) => {
     return location.pathname === path;
