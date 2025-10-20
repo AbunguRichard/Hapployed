@@ -130,11 +130,11 @@ export default function DashboardHeader() {
             {/* Post Project Button */}
             <button
               onClick={() => navigate('/post-project')}
-              className="flex flex-col items-center gap-1 group"
+              className="flex flex-col items-center gap-1 group ml-6"
             >
-              <div className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 hover:border-blue-500 transition-colors">
-                <Plus className="w-5 h-5 text-blue-500" />
-                <span className="text-sm font-medium text-gray-700">Post Project</span>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition-colors shadow-md">
+                <Plus className="w-5 h-5 text-white" />
+                <span className="text-sm font-medium text-white">Post Project</span>
               </div>
             </button>
           </nav>
