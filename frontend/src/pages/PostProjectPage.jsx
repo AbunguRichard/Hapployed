@@ -107,13 +107,120 @@ export default function PostProjectPage() {
   };
 
   const handleSubmit = () => {
-    toast.success('Project posted successfully!', {
-      description: 'Your project is now live and visible to workers'
+    const jobType = workType === 'gig' ? 'gig' : 'project';
+    toast.success(`${workType === 'gig' ? 'Gig' : 'Project'} posted successfully!`, {
+      description: `Your ${jobType} is now live and visible to workers`
     });
     setTimeout(() => {
       navigate('/dashboard');
     }, 2000);
   };
+
+  // If work type is not selected, show selection screen
+  if (!workType) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-white">
+        {/* Header */}
+        <header className="bg-white border-b border-gray-200 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-medium">Back</span>
+            </button>
+          </div>
+        </header>
+
+        {/* Work Type Selection */}
+        <div className="max-w-5xl mx-auto px-4 py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              What kind of work do you need done?
+            </h1>
+            <p className="text-xl text-gray-600">
+              Help us match you with the right professionals.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Professional Project Card */}
+            <button
+              onClick={() => setWorkType('project')}
+              className="group relative bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-purple-500 hover:shadow-2xl transition-all duration-300 text-left"
+            >
+              <div className="absolute top-6 right-6 w-6 h-6 rounded-full border-2 border-gray-300 group-hover:border-purple-500 transition-colors"></div>
+              
+              <div className="mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4">
+                  <Briefcase className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  A Professional Project
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  For complex, skilled work like design, development, marketing, or consulting. Often remote.
+                </p>
+              </div>
+
+              <div className="border-t border-gray-200 pt-4">
+                <p className="text-sm font-semibold text-gray-700 mb-2">Ideal for:</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Web Developers', 'Graphic Designers', 'Consultants', 'Writers'].map((role) => (
+                    <span key={role} className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full font-medium">
+                      {role}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center gap-2 text-purple-600 font-semibold group-hover:gap-4 transition-all">
+                <span>Continue with Project</span>
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </button>
+
+            {/* Local Gig Card */}
+            <button
+              onClick={() => setWorkType('gig')}
+              className="group relative bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-blue-500 hover:shadow-2xl transition-all duration-300 text-left"
+            >
+              <div className="absolute top-6 right-6 w-6 h-6 rounded-full border-2 border-gray-300 group-hover:border-blue-500 transition-colors"></div>
+              
+              <div className="mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-4">
+                  <Wrench className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  A Local Gig / Task
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  For immediate, local help with general labor, repairs, or tasks.
+                </p>
+              </div>
+
+              <div className="border-t border-gray-200 pt-4">
+                <p className="text-sm font-semibold text-gray-700 mb-2">Ideal for:</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Plumbers', 'Cleaners', 'Movers', 'Handymen', 'Event Staff'].map((role) => (
+                    <span key={role} className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full font-medium">
+                      {role}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-4 transition-all">
+                <span>Continue with Gig</span>
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
