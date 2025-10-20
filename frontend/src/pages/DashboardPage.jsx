@@ -721,3 +721,5 @@ export default function WorkerDashboard() {
       </footer>
     </div>
   );
+}
+
