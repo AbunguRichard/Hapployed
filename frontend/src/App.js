@@ -102,6 +102,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/emergency-gigs"
+              element={
+                <ProtectedRoute>
+                  <EmergencyGigsPage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
