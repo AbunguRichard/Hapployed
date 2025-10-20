@@ -255,6 +255,70 @@ export default function PostProjectPage() {
                   <option value="moving">Moving & Delivery</option>
                   <option value="other">Other</option>
                 </select>
+
+                {/* Custom Categories when "Other" is selected */}
+                {projectData.category === 'other' && (
+                  <div className="mt-4 space-y-4">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        Add Custom Categories
+                      </label>
+                      <div className="flex gap-2">
+                        <textarea
+                          value={customCategoryInput}
+                          onChange={(e) => setCustomCategoryInput(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              addCustomCategory();
+                            }
+                          }}
+                          placeholder="Type your custom category and press Enter or click Add"
+                          rows="3"
+                          className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                        />
+                        <button
+                          type="button"
+                          onClick={addCustomCategory}
+                          className="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors self-start"
+                        >
+                          Add
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-600 mt-2">
+                        Press Enter or click "Add" to add each category. You can add as many as you need.
+                      </p>
+                    </div>
+
+                    {/* Display added custom categories */}
+                    {projectData.customCategories.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                          Your Custom Categories ({projectData.customCategories.length})
+                        </h4>
+                        <div className="space-y-2">
+                          {projectData.customCategories.map((category, index) => (
+                            <div
+                              key={index}
+                              className="flex items-start gap-3 bg-white border border-gray-200 rounded-lg p-3"
+                            >
+                              <div className="flex-1 text-gray-900">{category}</div>
+                              <button
+                                type="button"
+                                onClick={() => removeCustomCategory(category)}
+                                className="text-red-500 hover:text-red-700 transition-colors"
+                              >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}
