@@ -30,7 +30,7 @@ export default function PostProjectPage() {
   const [customCategoryInput, setCustomCategoryInput] = useState('');
 
   const steps = [
-    { id: 1, name: 'Project Details', icon: '📋' },
+    { id: 1, name: workType === 'gig' ? 'Gig Details' : 'Project Details', icon: '📋' },
     { id: 2, name: 'Budget & Timeline', icon: '💰' },
     { id: 3, name: 'Skills Required', icon: '🎯' },
     { id: 4, name: 'Review & Post', icon: '✓' }
