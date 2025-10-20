@@ -276,136 +276,198 @@ export default function OpportunitiesPage() {
               </div>
             ) : (
               <div className="space-y-6">
-                {filteredOpportunities.map(opportunity => (
-                  <div key={opportunity.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200">
-                    {/* Card Header */}
-                    <div className="p-6 space-y-4">
-                      {/* Badges */}
-                      <div className="flex justify-between items-start">
-                        <div className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold inline-block">
-                          🎯 AI PERFECT MATCH - {opportunity.match}%
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-500">{opportunity.postedAt}</span>
-                          {opportunity.type === 'urgent' && (
-                            <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                              🚨 URGENT
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Title & Description */}
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">{opportunity.title}</h3>
-                        <p className="text-gray-700 leading-relaxed">{opportunity.description}</p>
-                      </div>
-
-                      {/* Market Intelligence */}
-                      {opportunity.marketIntel && (
-                        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded space-y-2">
-                          <div className="flex items-center gap-2 text-sm text-gray-700">
-                            <TrendingUp className="w-4 h-4 text-blue-600" />
-                            <span>📈 {opportunity.marketIntel.demandTrend}</span>
+                {filteredOpportunities.map(opportunity => {
+                  const isExpanded = expandedCards[opportunity.id];
+                  
+                  return (
+                    <div key={opportunity.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200">
+                      {/* Card Header */}
+                      <div className="p-6 space-y-4">
+                        {/* Badges */}
+                        <div className="flex justify-between items-start">
+                          <div className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold inline-block">
+                            {opportunity.match >= 95 ? '🎯 AI PERFECT MATCH' : '🔥 STRONG MATCH'} - {opportunity.match}%
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-700">
-                            <DollarSign className="w-4 h-4 text-green-600" />
-                            <span>💰 {opportunity.marketIntel.rateInfo}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-500">{opportunity.postedAt}</span>
+                            {opportunity.type === 'urgent' && (
+                              <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                                🚨 URGENT
+                              </span>
+                            )}
                           </div>
                         </div>
-                      )}
 
-                      {/* Client Viability */}
-                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                        <div className="bg-green-500 text-white px-3 py-1 rounded font-bold text-lg">
-                          {opportunity.clientScore}
+                        {/* Title & Description */}
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900 mb-2">{opportunity.title}</h3>
+                          <p className="text-gray-700 leading-relaxed">{opportunity.description}</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-yellow-500">★</span>
-                          <span className="font-bold text-gray-900">{opportunity.clientRating}</span>
-                        </div>
-                        <span className="text-sm text-gray-600">💬 {opportunity.responseRate}% response</span>
-                        {opportunity.paymentRate && (
-                          <span className="text-sm text-gray-600">💰 {opportunity.paymentRate}% paid on time</span>
+
+                        {/* Market Intelligence - Only for featured */}
+                        {opportunity.featured && opportunity.marketIntel && (
+                          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded space-y-2">
+                            <div className="flex items-center gap-2 text-sm text-gray-700">
+                              <TrendingUp className="w-4 h-4 text-blue-600" />
+                              <span>📈 {opportunity.marketIntel.demandTrend}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-700">
+                              <DollarSign className="w-4 h-4 text-green-600" />
+                              <span>💰 {opportunity.marketIntel.rateInfo}</span>
+                            </div>
+                          </div>
                         )}
-                        <button className="ml-auto px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition-colors">
-                          View Details
-                        </button>
+
+                        {/* Client Viability - Different for featured vs non-featured */}
+                        {opportunity.featured ? (
+                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div className="flex items-center gap-4">
+                              <div className="bg-green-500 text-white px-3 py-1 rounded font-bold text-lg">
+                                {opportunity.clientScore}
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-yellow-500">★</span>
+                                <span className="font-bold text-gray-900">{opportunity.clientRating}</span>
+                              </div>
+                              <span className="text-sm text-gray-600">💬 {opportunity.responseRate}% response</span>
+                              {opportunity.paymentRate && (
+                                <span className="text-sm text-gray-600">💰 {opportunity.paymentRate}% paid on time</span>
+                              )}
+                            </div>
+                          </div>
+                        ) : (
+                          /* Non-featured: Show stats differently */
+                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-2">
+                                <span className="text-2xl font-bold text-purple-600">${opportunity.price?.toLocaleString()}</span>
+                                <span className="text-sm text-gray-600">{opportunity.timeline}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <div className="bg-green-500 text-white px-2 py-1 rounded font-bold text-sm">
+                                  {opportunity.clientScore}
+                                </div>
+                                <span className="text-yellow-500">★</span>
+                                <span className="font-bold text-gray-900">{opportunity.clientRating}</span>
+                              </div>
+                              <span className="text-sm text-gray-600">💬 {opportunity.responseRate}%</span>
+                            </div>
+                            <button
+                              onClick={() => toggleExpand(opportunity.id)}
+                              className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition-colors flex items-center gap-2"
+                            >
+                              {isExpanded ? (
+                                <>
+                                  Hide Details
+                                  <ChevronUp className="w-4 h-4" />
+                                </>
+                              ) : (
+                                <>
+                                  View Details
+                                  <ChevronDown className="w-4 h-4" />
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Expanded Details for Non-Featured Cards */}
+                        {!opportunity.featured && isExpanded && (
+                          <div className="space-y-4 pt-4 border-t border-gray-200">
+                            {/* Market Intelligence for expanded */}
+                            {opportunity.marketIntel && (
+                              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded space-y-2">
+                                <div className="flex items-center gap-2 text-sm text-gray-700">
+                                  <TrendingUp className="w-4 h-4 text-blue-600" />
+                                  <span>📈 React demand up 35% this week</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-700">
+                                  <DollarSign className="w-4 h-4 text-green-600" />
+                                  <span>💰 Top performers charge $75-100/hr for this work</span>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Payment Rate Info */}
+                            <div className="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                              💰 96% paid on time • 👥 {opportunity.applicants} applicants
+                            </div>
+
+                            {/* Apply Buttons for Expanded */}
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <button
+                                onClick={() => handleSmartApply(opportunity)}
+                                className="px-4 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors"
+                              >
+                                Apply Now
+                              </button>
+                              <button
+                                onClick={() => handleQuickApply(opportunity)}
+                                className="px-4 py-3 bg-gray-700 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"
+                              >
+                                Quick Apply
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Smart Apply Section - Only for Featured */}
+                        {opportunity.featured && (
+                          <div className="grid md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                            {/* AI-Optimized */}
+                            <div className="space-y-3">
+                              <div className="flex items-start gap-2">
+                                <Sparkles className="w-5 h-5 text-purple-600 mt-1" />
+                                <div>
+                                  <h4 className="font-bold text-gray-900">🚀 AI-Optimized Apply</h4>
+                                  <p className="text-sm text-gray-600">We'll tailor your proposal based on client preferences</p>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => handleSmartApply(opportunity)}
+                                className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors"
+                              >
+                                Apply Smart ({opportunity.aiSuccessRate}% success)
+                              </button>
+                            </div>
+
+                            {/* Quick Apply */}
+                            <div className="space-y-3">
+                              <div className="flex items-start gap-2">
+                                <Zap className="w-5 h-5 text-gray-600 mt-1" />
+                                <div>
+                                  <h4 className="font-bold text-gray-900">⚡ Quick Apply</h4>
+                                  <p className="text-sm text-gray-600">Use your profile template</p>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => handleQuickApply(opportunity)}
+                                className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"
+                              >
+                                Quick Apply ({opportunity.quickSuccessRate}% success)
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Why You're Perfect - Only for Featured */}
+                        {opportunity.featured && opportunity.fitReasons && (
+                          <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                            <h4 className="font-bold text-gray-900 mb-3">💡 Why you're perfect for this:</h4>
+                            <ul className="space-y-2">
+                              {opportunity.fitReasons.map((reason, idx) => (
+                                <li key={idx} className="flex items-start gap-2 text-gray-700">
+                                  <Check className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+                                  <span>{reason}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
-
-                      {/* Smart Apply Options */}
-                      {opportunity.featured && (
-                        <div className="grid md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
-                          {/* AI-Optimized */}
-                          <div className="space-y-3">
-                            <div className="flex items-start gap-2">
-                              <Sparkles className="w-5 h-5 text-purple-600 mt-1" />
-                              <div>
-                                <h4 className="font-bold text-gray-900">🚀 AI-Optimized Apply</h4>
-                                <p className="text-sm text-gray-600">We'll tailor your proposal based on client preferences</p>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => handleSmartApply(opportunity)}
-                              className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors"
-                            >
-                              Apply Smart ({opportunity.aiSuccessRate}% success)
-                            </button>
-                          </div>
-
-                          {/* Quick Apply */}
-                          <div className="space-y-3">
-                            <div className="flex items-start gap-2">
-                              <Zap className="w-5 h-5 text-gray-600 mt-1" />
-                              <div>
-                                <h4 className="font-bold text-gray-900">⚡ Quick Apply</h4>
-                                <p className="text-sm text-gray-600">Use your profile template</p>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => handleQuickApply(opportunity)}
-                              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"
-                            >
-                              Quick Apply ({opportunity.quickSuccessRate}% success)
-                            </button>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Why You're Perfect */}
-                      {opportunity.fitReasons && (
-                        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
-                          <h4 className="font-bold text-gray-900 mb-3">💡 Why you're perfect for this:</h4>
-                          <ul className="space-y-2">
-                            {opportunity.fitReasons.map((reason, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-gray-700">
-                                <Check className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
-                                <span>{reason}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {/* Simple Footer for non-featured */}
-                      {!opportunity.featured && (
-                        <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                          <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <span className="text-2xl font-bold text-purple-600">${opportunity.price?.toLocaleString()}</span>
-                            {opportunity.timeline && <span>⏱️ {opportunity.timeline}</span>}
-                            {opportunity.applicants && <span>👥 {opportunity.applicants} applicants</span>}
-                          </div>
-                          <button
-                            onClick={() => handleQuickApply(opportunity)}
-                            className="px-6 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-                          >
-                            View Details
-                          </button>
-                        </div>
-                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
