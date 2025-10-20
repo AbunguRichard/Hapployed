@@ -34,7 +34,8 @@ export default function DashboardHeader() {
       path: '/quickhire-info',
       icon: Plus,
       gradient: 'from-purple-600 to-blue-500',
-      isButton: true
+      isButton: true,
+      onClick: () => setIsQuickHireModalOpen(true)
     },
     { 
       name: 'Gigs Near Me', 
