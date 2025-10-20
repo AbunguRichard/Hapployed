@@ -336,64 +336,64 @@ export default function OpportunitiesPage() {
                             </div>
                           </div>
                         ) : (
-                          /* Non-featured: Show stats differently */
-                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                            <div className="flex items-center gap-4">
-                              <div className="flex items-center gap-2">
-                                <span className="text-2xl font-bold text-purple-600">${opportunity.price?.toLocaleString()}</span>
-                                <span className="text-sm text-gray-600">{opportunity.timeline}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <div className="bg-green-500 text-white px-2 py-1 rounded font-bold text-sm">
-                                  {opportunity.clientScore}
+                          /* Non-featured: Show stats with View Details button */
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                              <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-2xl font-bold text-purple-600">${opportunity.price?.toLocaleString()}</span>
+                                  <span className="text-sm text-gray-600">{opportunity.timeline}</span>
                                 </div>
-                                <span className="text-yellow-500">★</span>
-                                <span className="font-bold text-gray-900">{opportunity.clientRating}</span>
+                                <div className="flex items-center gap-2">
+                                  <div className="bg-green-500 text-white px-2 py-1 rounded font-bold text-sm">
+                                    {opportunity.clientScore}
+                                  </div>
+                                  <span className="text-yellow-500">★</span>
+                                  <span className="font-bold text-gray-900">{opportunity.clientRating}</span>
+                                </div>
+                                <span className="text-sm text-gray-600">💬 {opportunity.responseRate}%</span>
                               </div>
-                              <span className="text-sm text-gray-600">💬 {opportunity.responseRate}%</span>
+                              <button
+                                onClick={() => toggleExpand(opportunity.id)}
+                                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-colors flex items-center gap-2"
+                              >
+                                {isExpanded ? (
+                                  <>
+                                    Hide Details
+                                    <ChevronUp className="w-4 h-4" />
+                                  </>
+                                ) : (
+                                  <>
+                                    View Details
+                                    <ChevronDown className="w-4 h-4" />
+                                  </>
+                                )}
+                              </button>
                             </div>
-                            <button
-                              onClick={() => toggleExpand(opportunity.id)}
-                              className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition-colors flex items-center gap-2"
-                            >
-                              {isExpanded ? (
-                                <>
-                                  Hide Details
-                                  <ChevronUp className="w-4 h-4" />
-                                </>
-                              ) : (
-                                <>
-                                  View Details
-                                  <ChevronDown className="w-4 h-4" />
-                                </>
-                              )}
-                            </button>
-                          </div>
-                        )}
 
-                        {/* Expanded Details for Non-Featured Cards */}
-                        {!opportunity.featured && isExpanded && (
-                          <div className="space-y-4 pt-4 border-t border-gray-200">
-                            {/* Market Intelligence for expanded */}
-                            {opportunity.marketIntel && (
-                              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded space-y-2">
-                                <div className="flex items-center gap-2 text-sm text-gray-700">
-                                  <TrendingUp className="w-4 h-4 text-blue-600" />
-                                  <span>📈 React demand up 35% this week</span>
+                            {/* Expanded Details for Non-Featured Cards */}
+                            {isExpanded && (
+                              <div className="space-y-4">
+                                {/* Market Intelligence */}
+                                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded space-y-2">
+                                  <div className="flex items-center gap-2 text-sm text-gray-700">
+                                    <TrendingUp className="w-4 h-4 text-blue-600" />
+                                    <span>📈 React demand up 35% this week</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 text-sm text-gray-700">
+                                    <DollarSign className="w-4 h-4 text-green-600" />
+                                    <span>💰 Top performers charge $75-100/hr for this work</span>
+                                  </div>
                                 </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-700">
-                                  <DollarSign className="w-4 h-4 text-green-600" />
-                                  <span>💰 Top performers charge $75-100/hr for this work</span>
+
+                                {/* Payment Rate Info */}
+                                <div className="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                                  💰 96% paid on time • 👥 {opportunity.applicants} applicants
                                 </div>
                               </div>
                             )}
 
-                            {/* Payment Rate Info */}
-                            <div className="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
-                              💰 96% paid on time • 👥 {opportunity.applicants} applicants
-                            </div>
-
-                            {/* Apply Buttons for Expanded */}
+                            {/* Apply Buttons - ALWAYS VISIBLE */}
                             <div className="grid md:grid-cols-2 gap-4">
                               <button
                                 onClick={() => handleSmartApply(opportunity)}
