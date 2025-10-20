@@ -57,6 +57,42 @@ export default function PostProjectPage() {
     }));
   };
 
+  const addCustomSkill = () => {
+    if (customSkillInput.trim() && !projectData.skills.includes(customSkillInput.trim())) {
+      setProjectData(prev => ({
+        ...prev,
+        skills: [...prev.skills, customSkillInput.trim()]
+      }));
+      setCustomSkillInput('');
+      toast.success('Custom skill added!');
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    setProjectData(prev => ({
+      ...prev,
+      skills: prev.skills.filter(s => s !== skillToRemove)
+    }));
+  };
+
+  const addCustomCategory = () => {
+    if (customCategoryInput.trim() && !projectData.customCategories.includes(customCategoryInput.trim())) {
+      setProjectData(prev => ({
+        ...prev,
+        customCategories: [...prev.customCategories, customCategoryInput.trim()]
+      }));
+      setCustomCategoryInput('');
+      toast.success('Custom category added!');
+    }
+  };
+
+  const removeCustomCategory = (categoryToRemove) => {
+    setProjectData(prev => ({
+      ...prev,
+      customCategories: prev.customCategories.filter(c => c !== categoryToRemove)
+    }));
+  };
+
   const nextStep = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
