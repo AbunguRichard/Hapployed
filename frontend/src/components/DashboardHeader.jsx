@@ -140,6 +140,12 @@ export default function DashboardHeader() {
           </div>
         </div>
       </div>
+      
+      {/* Quick Hire Modal */}
+      <QuickHireModal 
+        isOpen={isQuickHireModalOpen} 
+        onClose={() => setIsQuickHireModalOpen(false)} 
+      />
     </header>
   );
 }
