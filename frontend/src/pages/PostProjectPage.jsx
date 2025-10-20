@@ -235,7 +235,9 @@ export default function PostProjectPage() {
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">Back</span>
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Post a Project</h1>
+            <h1 className="text-2xl font-bold text-gray-900">
+              {workType === 'gig' ? 'Post a Gig' : 'Post a Project'}
+            </h1>
             <div className="w-20"></div> {/* Spacer for centering */}
           </div>
 
