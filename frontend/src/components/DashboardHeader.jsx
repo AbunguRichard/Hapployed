@@ -55,6 +55,18 @@ export default function DashboardHeader() {
       icon: Briefcase,
       iconColor: 'text-green-500',
       outlined: true
+    },
+    { 
+      name: 'My Jobs', 
+      path: '/my-jobs',
+      icon: ClipboardList,
+      iconColor: 'text-blue-600'
+    },
+    { 
+      name: 'Messages', 
+      path: '/messages',
+      icon: MessageSquare,
+      iconColor: 'text-purple-600'
     }
   ];
 
