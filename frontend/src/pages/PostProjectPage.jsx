@@ -591,6 +591,23 @@ export default function PostProjectPage() {
                   <p className="text-gray-900">{projectData.description || 'Not specified'}</p>
                 </div>
 
+                {projectData.category && (
+                  <div className="border-b border-gray-200 pb-4">
+                    <h3 className="font-semibold text-gray-700 mb-2">Category</h3>
+                    <p className="text-gray-900 capitalize">{projectData.category.replace('-', ' ')}</p>
+                    {projectData.category === 'other' && projectData.customCategories.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-sm font-semibold text-gray-700 mb-2">Custom Categories:</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          {projectData.customCategories.map((cat, index) => (
+                            <li key={index} className="text-gray-900">{cat}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="border-b border-gray-200 pb-4">
                   <h3 className="font-semibold text-gray-700 mb-2">Budget</h3>
                   <p className="text-gray-900">
