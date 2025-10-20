@@ -782,7 +782,7 @@ export default function PostProjectPage() {
                 onClick={handleSubmit}
                 className="ml-auto px-8 py-3 bg-green-500 text-white rounded-lg font-bold text-lg hover:bg-green-600 transition-colors"
               >
-                Post Project
+                {workType === 'gig' ? 'Post Gig' : 'Post Project'}
               </button>
             )}
           </div>
