@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp, DollarSign, Lightbulb, Trophy, Sparkles, Zap, Check } from 'lucide-react';
+import { TrendingUp, DollarSign, Lightbulb, Trophy, Sparkles, Zap, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
 
@@ -10,6 +10,7 @@ export default function OpportunitiesPage() {
   const navigate = useNavigate();
   const [opportunities, setOpportunities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedCards, setExpandedCards] = useState({});
   
   // Filters
   const [filters, setFilters] = useState({
