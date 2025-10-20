@@ -10,13 +10,6 @@ import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
-// Card component with glassmorphic design
-const Card = ({ children, className = '' }) => (
-  <div className={`rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm ${className}`}>
-    {children}
-  </div>
-);
-
 export default function WorkerDashboard() {
   const [availableNow, setAvailableNow] = useState(false);
   const [radius, setRadius] = useState(10);
