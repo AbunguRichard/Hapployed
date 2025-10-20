@@ -118,6 +118,13 @@ export default function OpportunitiesPage() {
     navigate(`/apply/${opportunity.id}`, { state: { opportunity, mode: 'quick' } });
   };
 
+  const toggleExpand = (id) => {
+    setExpandedCards(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
   const filteredOpportunities = getFilteredOpportunities();
   const perfectMatches = opportunities.filter(o => o.match >= 95).length;
 
