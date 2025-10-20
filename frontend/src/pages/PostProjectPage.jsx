@@ -442,7 +442,7 @@ export default function PostProjectPage() {
                 <label className="block text-sm font-semibold text-gray-900 mb-4">
                   Select skills needed for this project
                 </label>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 mb-4">
                   {availableSkills.map(skill => (
                     <button
                       type="button"
@@ -458,9 +458,66 @@ export default function PostProjectPage() {
                     </button>
                   ))}
                 </div>
-                <p className="mt-4 text-sm text-gray-600">
-                  Selected: {projectData.skills.length} skills
-                </p>
+
+                {/* Add Custom Skill */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Add Custom Skills
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={customSkillInput}
+                      onChange={(e) => setCustomSkillInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addCustomSkill();
+                        }
+                      }}
+                      placeholder="Type a skill and press Enter or click Add"
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                    <button
+                      type="button"
+                      onClick={addCustomSkill}
+                      className="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors"
+                    >
+                      Add
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Can't find the skill you need? Add as many custom skills as you want!
+                  </p>
+                </div>
+
+                {/* Display selected skills with remove option */}
+                {projectData.skills.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                      Selected Skills ({projectData.skills.length})
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {projectData.skills.map(skill => (
+                        <div
+                          key={skill}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full"
+                        >
+                          <span>{skill}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeSkill(skill)}
+                            className="hover:bg-white/20 rounded-full p-1 transition-colors"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div>
