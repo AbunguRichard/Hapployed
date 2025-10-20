@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, DollarSign, Clock, Briefcase, Star, ChevronDown, ChevronUp } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, MessageCircle, Star, Sparkles, Award, Target, Zap } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
 
@@ -14,12 +14,9 @@ export default function OpportunitiesPage() {
   
   // Filters
   const [filters, setFilters] = useState({
-    typeAll: true,
-    typeUrgent: false,
-    typeFixed: false,
-    typeRemote: false,
-    minMatch: 80,
-    maxBudget: 5000
+    matchLevel: 'perfect', // 'perfect', 'good', 'all'
+    maxBudget: 5000,
+    growthType: null // 'portfolio', 'high-paying', 'top-clients'
   });
 
   useEffect(() => {
@@ -32,89 +29,85 @@ export default function OpportunitiesPage() {
       const response = await fetch(`${BACKEND_URL}/api/jobs/opportunities`);
       const data = await response.json();
       
-      // Map backend data to expected format or use mock data
-      const mappedData = (data.jobs || []).map(job => ({
-        id: job.id,
-        type: job.urgency ? 'urgent' : 'project',
-        title: job.title,
-        description: job.description,
-        price: parseInt(job.budget?.amount?.replace(/[^0-9]/g, '') || 2500),
-        priceType: job.budget?.type || 'fixed',
-        match: job.matchScore || 85,
-        location: job.client?.location || 'Remote',
-        isRemote: job.client?.location === 'Remote' || true,
-        postedAt: job.postedTime || '2 hours ago'
-      }));
+      // Use mock data with AI enhancements
+      const mockData = [
+        {
+          id: 1,
+          type: 'urgent',
+          title: 'E-commerce React Dashboard',
+          description: 'Build a responsive React dashboard with analytics components and data visualization. The project requires integration with REST APIs and real-time data updates.',
+          price: 3500,
+          priceType: 'fixed',
+          match: 97,
+          location: 'Remote',
+          isRemote: true,
+          postedAt: '1 hour ago',
+          featured: true,
+          marketIntel: {
+            demandTrend: '📈 React demand up 47% this week',
+            rateInfo: '💰 Top performers charge $85-120/hr for this work'
+          },
+          clientViability: {
+            score: 'A+',
+            rating: 4.8,
+            responseRate: 94,
+            paymentRate: 97
+          },
+          fitReasons: [
+            'Your portfolio shows 3 similar e-commerce projects',
+            'Client specifically wants TypeScript experience',
+            'Budget matches your preferred rate'
+          ],
+          aiApplySuccess: 92,
+          quickApplySuccess: 67,
+          timeline: '2-3 weeks',
+          applicants: 5
+        },
+        {
+          id: 2,
+          type: 'project',
+          title: 'Mobile App UI/UX Redesign',
+          description: 'Complete redesign of a fitness tracking mobile app. Need modern UI/UX with focus on user engagement and retention.',
+          price: 3500,
+          priceType: 'fixed',
+          match: 88,
+          location: 'Remote',
+          isRemote: true,
+          postedAt: '2 hours ago',
+          featured: false,
+          clientViability: {
+            score: 'A',
+            rating: 4.6,
+            responseRate: 89,
+            paymentRate: 95
+          },
+          timeline: '2-3 weeks',
+          applicants: 8
+        },
+        {
+          id: 3,
+          type: 'project',
+          title: 'SaaS Dashboard Development',
+          description: 'Build analytics dashboard for B2B SaaS platform with data visualization and reporting features.',
+          price: 4200,
+          priceType: 'fixed',
+          match: 92,
+          location: 'Remote',
+          isRemote: true,
+          postedAt: '3 hours ago',
+          featured: false,
+          clientViability: {
+            score: 'A+',
+            rating: 4.9,
+            responseRate: 96,
+            paymentRate: 98
+          },
+          timeline: '3-4 weeks',
+          applicants: 12
+        }
+      ];
       
-      // If no data from backend, use mock data
-      if (mappedData.length === 0) {
-        const mockData = [
-          {
-            id: 1,
-            type: 'project',
-            title: 'React Dashboard Development',
-            description: 'Build a responsive React dashboard with analytics components and data visualization. The project requires integration with REST APIs and real-time data updates. We need someone with experience in React Hooks, Context API, and charting libraries like Chart.js or D3.',
-            price: 2500,
-            priceType: 'fixed',
-            match: 92,
-            location: 'Remote',
-            isRemote: true,
-            postedAt: '2 hours ago'
-          },
-          {
-            id: 2,
-            type: 'urgent',
-            title: 'E-commerce Site Bug Fix',
-            description: 'Urgent fix needed for checkout process. Shopping cart items are not persisting after page refresh.',
-            price: 450,
-            priceType: 'fixed',
-            match: 87,
-            location: 'Remote',
-            isRemote: true,
-            postedAt: '30 minutes ago'
-          },
-          {
-            id: 3,
-            type: 'project',
-            title: 'Full-Stack E-commerce Platform',
-            description: 'Build a complete e-commerce solution with React frontend and Node.js backend. The project includes user authentication, product catalog, shopping cart, payment integration (Stripe), order management, and admin dashboard. Expected timeline: 8-10 weeks.',
-            price: 5200,
-            priceType: 'fixed',
-            match: 89,
-            location: 'Remote',
-            isRemote: true,
-            postedAt: '1 day ago'
-          },
-          {
-            id: 4,
-            type: 'project',
-            title: 'UI/UX Redesign for SaaS App',
-            description: 'Need help redesigning and improving the user experience of our SaaS application. The current interface needs modernization and better user flow.',
-            price: 1800,
-            priceType: 'fixed',
-            match: 78,
-            location: 'Remote',
-            isRemote: true,
-            postedAt: '3 hours ago'
-          },
-          {
-            id: 5,
-            type: 'urgent',
-            title: 'Mobile App Performance Fix',
-            description: 'React Native app experiencing severe performance issues on iOS devices. Need immediate optimization.',
-            price: 650,
-            priceType: 'fixed',
-            match: 85,
-            location: 'Remote',
-            isRemote: true,
-            postedAt: '1 hour ago'
-          }
-        ];
-        setOpportunities(mockData);
-      } else {
-        setOpportunities(mappedData);
-      }
-      
+      setOpportunities(mockData);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching opportunities:', error);
@@ -123,250 +116,313 @@ export default function OpportunitiesPage() {
     }
   };
 
-  const toggleFilter = (filterName) => {
-    setFilters(prev => ({
-      ...prev,
-      [filterName]: !prev[filterName]
-    }));
-  };
-
-  const updateSlider = (name, value) => {
-    setFilters(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const resetFilters = () => {
-    setFilters({
-      typeAll: true,
-      typeUrgent: false,
-      typeFixed: false,
-      typeRemote: false,
-      minMatch: 80,
-      maxBudget: 5000
-    });
-  };
-
   const getFilteredOpportunities = () => {
     return opportunities.filter(opp => {
-      // Match score filter
-      if (opp.match < filters.minMatch) return false;
+      // Match level filter
+      if (filters.matchLevel === 'perfect' && opp.match < 95) return false;
+      if (filters.matchLevel === 'good' && opp.match < 80) return false;
       
       // Budget filter
       if (opp.price > filters.maxBudget) return false;
-      
-      // Type filters
-      if (!filters.typeAll) {
-        if (opp.type === 'urgent' && !filters.typeUrgent) return false;
-        if (opp.type === 'project' && !filters.typeFixed) return false;
-        if (!opp.isRemote && filters.typeRemote) return false;
-      }
       
       return true;
     });
   };
 
-  const toggleExpand = (id) => {
-    setExpandedCards(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+  const handleSmartApply = (opportunity) => {
+    toast.success('AI is optimizing your proposal...', {
+      description: `Success rate: ${opportunity.aiApplySuccess}%`
+    });
+    setTimeout(() => {
+      navigate(`/apply/${opportunity.id}`, { state: { opportunity, mode: 'smart' } });
+    }, 1500);
   };
 
-  const handleApply = (opportunity) => {
-    navigate(`/apply/${opportunity.id}`, { state: { opportunity } });
+  const handleQuickApply = (opportunity) => {
+    navigate(`/apply/${opportunity.id}`, { state: { opportunity, mode: 'quick' } });
   };
 
   const filteredOpportunities = getFilteredOpportunities();
+  const perfectMatches = opportunities.filter(o => o.match >= 95).length;
 
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />
       
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-primary to-secondary text-white py-12 px-4">
+      {/* Header with AI Personalization */}
+      <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 text-white py-12 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold mb-3">Your Next Project is Here!</h1>
-          <p className="text-lg opacity-90">
-            We found {filteredOpportunities.length} perfect matches for your skills
-          </p>
+          <h1 className="text-4xl font-bold mb-4 flex items-center gap-3">
+            Your Next Project is Here! 🎯
+          </h1>
+          <div className="space-y-2">
+            <p className="text-xl opacity-95">
+              We found <strong>{filteredOpportunities.length} perfect matches</strong> for your skills in <strong>React</strong> & <strong>UI/UX</strong>
+            </p>
+            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 inline-block">
+              <p className="text-sm flex items-center gap-2">
+                💡 <span>Based on your profile strength, you're likely to win {Math.ceil(perfectMatches * 0.67)} of these</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
+          {/* Advanced Filters Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl p-6 shadow-md sticky top-24">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-bold text-gray-900">Filters</h3>
-                <button
-                  onClick={resetFilters}
-                  className="text-sm text-primary hover:underline"
-                >
-                  Reset
-                </button>
-              </div>
-
-              {/* Job Type */}
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">Job Type</h4>
-                <div className="space-y-3">
+            <div className="bg-white rounded-xl p-6 shadow-md sticky top-24 space-y-6">
+              {/* Smart Match */}
+              <div>
+                <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  🎯 Smart Match
+                </h3>
+                <div className="space-y-2">
                   {[
-                    { key: 'typeAll', label: 'All' },
-                    { key: 'typeUrgent', label: 'Urgent Only' },
-                    { key: 'typeFixed', label: 'Fixed-price' },
-                    { key: 'typeRemote', label: 'Remote-only' }
-                  ].map(filter => (
-                    <label key={filter.key} className="flex items-center gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={filters[filter.key]}
-                        onChange={() => toggleFilter(filter.key)}
-                        className="w-5 h-5 text-primary rounded border-gray-300 focus:ring-primary"
-                      />
-                      <span className="text-gray-700">{filter.label}</span>
-                    </label>
+                    { value: 'perfect', label: 'Perfect Fit (95%+)', count: opportunities.filter(o => o.match >= 95).length },
+                    { value: 'good', label: 'Good Match (80%+)', count: opportunities.filter(o => o.match >= 80).length },
+                    { value: 'all', label: 'All Opportunities', count: opportunities.length }
+                  ].map(option => (
+                    <button
+                      key={option.value}
+                      onClick={() => setFilters(prev => ({ ...prev, matchLevel: option.value }))}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        filters.matchLevel === option.value
+                          ? 'bg-purple-600 text-white font-semibold'
+                          : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <span>{option.label}</span>
+                      <span className="float-right">({option.count})</span>
+                    </button>
                   ))}
                 </div>
               </div>
 
-              {/* Match Score Slider */}
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">Match Score</h4>
+              {/* Budget Intelligence */}
+              <div>
+                <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  💰 Budget Intelligence
+                </h3>
                 <input
                   type="range"
-                  min="0"
-                  max="100"
-                  value={filters.minMatch}
-                  onChange={(e) => updateSlider('minMatch', parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                  min="1000"
+                  max="10000"
+                  step="500"
+                  value={filters.maxBudget}
+                  onChange={(e) => setFilters(prev => ({ ...prev, maxBudget: parseInt(e.target.value) }))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
                 />
-                <div className="text-center mt-2 text-primary font-semibold">
-                  Minimum: {filters.minMatch}%
+                <div className="mt-3 space-y-1 text-sm">
+                  <div className="text-gray-600">Any budget</div>
+                  <div className="text-purple-600 font-semibold">
+                    $2K-5K (Your sweet spot)
+                  </div>
+                  <div className="text-gray-900 font-bold">
+                    Up to: ${filters.maxBudget.toLocaleString()}
+                  </div>
                 </div>
               </div>
 
-              {/* Budget Range Slider */}
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 mb-3">Budget Range</h4>
-                <input
-                  type="range"
-                  min="50"
-                  max="10000"
-                  value={filters.maxBudget}
-                  onChange={(e) => updateSlider('maxBudget', parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
-                />
-                <div className="text-center mt-2 text-primary font-semibold">
-                  Up to: ${filters.maxBudget.toLocaleString()}
+              {/* Growth Potential */}
+              <div>
+                <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  🚀 Growth Potential
+                </h3>
+                <div className="space-y-2">
+                  {[
+                    { value: 'portfolio', label: '📈 Portfolio Builders' },
+                    { value: 'high-paying', label: '💰 High-Paying' },
+                    { value: 'top-clients', label: '🌟 Top Clients' }
+                  ].map(option => (
+                    <button
+                      key={option.value}
+                      onClick={() => setFilters(prev => ({ 
+                        ...prev, 
+                        growthType: prev.growthType === option.value ? null : option.value 
+                      }))}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        filters.growthType === option.value
+                          ? 'bg-blue-100 text-blue-700 font-semibold border-2 border-blue-400'
+                          : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* AI Recommendations */}
+              <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 border border-purple-200">
+                <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                  🤖 AI Suggestions
+                </h4>
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">HOT</span>
+                    <span className="text-sm text-gray-700">React + TypeScript projects paying 30% more</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Opportunities Grid */}
+          {/* Enhanced Project Listings */}
           <div className="lg:col-span-3">
             {loading ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
                 <p className="mt-4 text-gray-600">Loading opportunities...</p>
-              </div>
-            ) : filteredOpportunities.length === 0 ? (
-              <div className="bg-white rounded-xl p-12 text-center shadow-md">
-                <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No opportunities found</h3>
-                <p className="text-gray-600">Try adjusting your filters</p>
               </div>
             ) : (
               <div className="space-y-6">
-                {filteredOpportunities.map(opportunity => {
-                  const isExpanded = expandedCards[opportunity.id];
-                  const isLongDescription = opportunity.description.length > 150;
-                  
-                  return (
-                    <div
-                      key={opportunity.id}
-                      className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all overflow-hidden"
-                    >
-                      {/* Card Header */}
-                      <div className="p-6 border-b border-gray-100 flex justify-between items-start">
+                {filteredOpportunities.map(opportunity => (
+                  <div
+                    key={opportunity.id}
+                    className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all overflow-hidden ${
+                      opportunity.featured ? 'ring-2 ring-purple-400' : ''
+                    }`}
+                  >
+                    {/* Project Header */}
+                    <div className="p-6 border-b border-gray-100">
+                      <div className="flex justify-between items-start mb-4">
                         <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-3">
-                            <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                              opportunity.type === 'urgent' 
-                                ? 'bg-red-100 text-red-600' 
-                                : 'bg-blue-100 text-blue-600'
-                            }`}>
-                              {opportunity.type === 'urgent' ? '🚨 URGENT' : '📅 PROJECT'}
-                            </span>
-                            <span className="text-xs text-gray-500">{opportunity.postedAt}</span>
+                          <div className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold mb-3">
+                            {opportunity.match >= 95 ? '🎯 AI PERFECT MATCH' : '🔥 STRONG MATCH'} - {opportunity.match}%
                           </div>
-                          <h3 className="text-2xl font-bold text-gray-900">{opportunity.title}</h3>
-                        </div>
-                        <div className="text-right ml-4">
-                          <div className="text-2xl font-bold text-primary">${opportunity.price.toLocaleString()}</div>
-                          <div className="text-sm text-gray-600">{opportunity.priceType}</div>
+                          <div className="flex items-center gap-3 text-sm text-gray-600">
+                            <span>{opportunity.postedAt}</span>
+                            {opportunity.type === 'urgent' && (
+                              <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold">
+                                🚨 URGENT
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
 
-                      {/* Card Content */}
-                      <div className="p-6">
-                        <p className={`text-gray-700 leading-relaxed mb-4 ${
-                          !isExpanded && isLongDescription ? 'line-clamp-3' : ''
-                        }`}>
-                          {opportunity.description}
-                        </p>
-                        
-                        {isLongDescription && (
-                          <button
-                            onClick={() => toggleExpand(opportunity.id)}
-                            className="text-primary font-medium text-sm flex items-center gap-1 hover:underline mb-4"
-                          >
-                            {isExpanded ? (
-                              <>
-                                Show less <ChevronUp className="w-4 h-4" />
-                              </>
-                            ) : (
-                              <>
-                                Read more <ChevronDown className="w-4 h-4" />
-                              </>
-                            )}
-                          </button>
-                        )}
+                      <h3 className="text-2xl font-bold text-gray-900 mb-3">{opportunity.title}</h3>
+                      <p className="text-gray-700 leading-relaxed">{opportunity.description}</p>
+                    </div>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <div className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
-                              <span>{opportunity.location}</span>
+                    {/* Market Intelligence */}
+                    {opportunity.marketIntel && (
+                      <div className="px-6 py-4 bg-blue-50 border-l-4 border-blue-500">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-sm">
+                            <TrendingUp className="w-4 h-4 text-blue-600" />
+                            <span className="text-gray-700">{opportunity.marketIntel.demandTrend}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            <DollarSign className="w-4 h-4 text-green-600" />
+                            <span className="text-gray-700">{opportunity.marketIntel.rateInfo}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Client Viability */}
+                    <div className="px-6 py-4 bg-gray-50">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="bg-green-500 text-white px-3 py-1 rounded font-bold">
+                            {opportunity.clientViability.score}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-gray-900">Excellent Client</div>
+                            <div className="flex items-center gap-1 text-yellow-500">
+                              <Star className="w-4 h-4 fill-current" />
+                              <span className="text-gray-700 font-medium">{opportunity.clientViability.rating}</span>
                             </div>
                           </div>
-                          <div className="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">
-                            Match: {opportunity.match}%
+                        </div>
+                        <div className="flex gap-4 text-sm text-gray-600">
+                          <span>💬 {opportunity.clientViability.responseRate}% response</span>
+                          <span>💰 {opportunity.clientViability.paymentRate}% paid on time</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Smart Apply Section */}
+                    {opportunity.featured && (
+                      <div className="p-6 bg-white">
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {/* AI-Optimized Apply */}
+                          <div className="border-2 border-purple-500 rounded-xl p-4 bg-purple-50">
+                            <div className="flex items-start gap-2 mb-3">
+                              <Sparkles className="w-5 h-5 text-purple-600" />
+                              <div>
+                                <h4 className="font-bold text-gray-900">🚀 AI-Optimized Apply</h4>
+                                <p className="text-sm text-gray-600">We'll tailor your proposal based on client preferences</p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleSmartApply(opportunity)}
+                              className="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-bold hover:shadow-lg transition-all"
+                            >
+                              Apply Smart ({opportunity.aiApplySuccess}% success)
+                            </button>
+                          </div>
+
+                          {/* Quick Apply */}
+                          <div className="border-2 border-gray-300 rounded-xl p-4 bg-gray-50">
+                            <div className="flex items-start gap-2 mb-3">
+                              <Zap className="w-5 h-5 text-gray-600" />
+                              <div>
+                                <h4 className="font-bold text-gray-900">⚡ Quick Apply</h4>
+                                <p className="text-sm text-gray-600">Use your profile template</p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleQuickApply(opportunity)}
+                              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg font-bold hover:bg-gray-800 transition-all"
+                            >
+                              Quick Apply ({opportunity.quickApplySuccess}% success)
+                            </button>
                           </div>
                         </div>
                       </div>
+                    )}
 
-                      {/* Card Footer */}
-                      <div className="bg-gray-50 px-6 py-4 flex gap-3">
-                        <button
-                          onClick={() => toast.success('Saved for later')}
-                          className="flex-1 px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => handleApply(opportunity)}
-                          className="flex-1 px-4 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors"
-                        >
-                          Apply Now
-                        </button>
+                    {/* Why You're Perfect */}
+                    {opportunity.fitReasons && (
+                      <div className="px-6 py-4 bg-green-50 border-t border-green-200">
+                        <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                          💡 Why you're perfect for this:
+                        </h4>
+                        <ul className="space-y-2">
+                          {opportunity.fitReasons.map((reason, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-gray-700">
+                              <span className="text-green-600 mt-1">✓</span>
+                              <span>{reason}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
-                  );
-                })}
+                    )}
+
+                    {/* Simple apply for non-featured */}
+                    {!opportunity.featured && (
+                      <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4 text-sm text-gray-600">
+                            <span className="font-bold text-xl text-purple-600">${opportunity.price.toLocaleString()}</span>
+                            <span>⏱️ {opportunity.timeline}</span>
+                            <span>👥 {opportunity.applicants} applicants</span>
+                          </div>
+                          <button
+                            onClick={() => handleQuickApply(opportunity)}
+                            className="px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors"
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
           </div>
