@@ -24,6 +24,12 @@ export default function DashboardHeader() {
       gradient: 'from-orange-400 via-red-400 to-green-400'
     },
     { 
+      name: 'Dashboard', 
+      path: '/dashboard',
+      icon: Gauge,
+      iconColor: 'text-gray-800'
+    },
+    { 
       name: 'Find Work', 
       path: '/find-work',
       icon: Search,
@@ -42,12 +48,6 @@ export default function DashboardHeader() {
       path: '/gigs-near-me',
       icon: Briefcase,
       iconColor: 'text-red-800'
-    },
-    { 
-      name: 'Dashboard', 
-      path: '/dashboard',
-      icon: Gauge,
-      iconColor: 'text-gray-800'
     },
     { 
       name: 'Find Projects', 
