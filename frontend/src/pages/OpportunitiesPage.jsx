@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lightbulb, Trophy, Sparkles, Zap, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
+import { BadgeFilter } from '../components/BadgeDisplay';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
