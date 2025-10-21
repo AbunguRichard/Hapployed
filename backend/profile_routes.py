@@ -19,16 +19,12 @@ class ProfileUpdate(BaseModel):
     bio: Optional[str] = None
 
 @router.put("/profile/update")
-async def update_profile(
-    profile: ProfileUpdate,
-    authorization: Optional[str] = Header(None)
-):
+async def update_profile(profile: ProfileUpdate):
     """
     Update user profile information
     """
     try:
-        # Extract user from token (simplified - in production, verify JWT token)
-        # For now, we'll use email as identifier
+        print(f"Received profile update request: {profile.dict()}")
         
         if not profile.email:
             raise HTTPException(status_code=400, detail="Email is required")
