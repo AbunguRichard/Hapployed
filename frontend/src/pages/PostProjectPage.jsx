@@ -11,7 +11,7 @@ export default function PostProjectPage() {
   
   const [workType, setWorkType] = useState(null); // 'project' or 'gig'
   const [currentStep, setCurrentStep] = useState(1);
-  const [isVoiceModalModal, setIsVoiceModalOpen] = useState(false);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   
   const [projectData, setProjectData] = useState({
     type: initialType,
