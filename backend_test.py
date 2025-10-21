@@ -619,6 +619,155 @@ class BackendTester:
         except Exception as e:
             self.log_result("ai_matching", "AI Voice Parsing - Missing WorkType", False, None, str(e))
     
+    def test_ai_price_estimator(self):
+        """Test AI Price Estimator endpoint"""
+        print("\n💰 Testing AI Price Estimator...")
+        
+        # Test 1: Professional web development project
+        try:
+            payload = {
+                "category": "Web Development",
+                "description": "Build a modern e-commerce website with payment integration",
+                "location": "remote",
+                "urgency": "normal",
+                "workType": "project",
+                "duration": "3 weeks"
+            }
+            
+            response = requests.post(f"{BASE_URL}/estimate-price", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Check for required fields
+                required_fields = ["minPrice", "maxPrice", "suggestedPrice", "explanation", "factors"]
+                
+                if all(field in data for field in required_fields):
+                    # Validate data types and reasonable values
+                    if (isinstance(data.get("minPrice"), int) and 
+                        isinstance(data.get("maxPrice"), int) and
+                        isinstance(data.get("suggestedPrice"), int) and
+                        isinstance(data.get("explanation"), str) and
+                        isinstance(data.get("factors"), dict) and
+                        data.get("minPrice") > 0 and
+                        data.get("maxPrice") >= data.get("minPrice") and
+                        data.get("suggestedPrice") >= data.get("minPrice") and
+                        data.get("suggestedPrice") <= data.get("maxPrice")):
+                        self.log_result("ai_matching", "AI Price Estimator - Web Development Project", True, data)
+                    else:
+                        self.log_result("ai_matching", "AI Price Estimator - Web Development Project", False, data, 
+                                      f"Invalid price data: minPrice={data.get('minPrice')}, maxPrice={data.get('maxPrice')}, suggestedPrice={data.get('suggestedPrice')}")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("ai_matching", "AI Price Estimator - Web Development Project", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("ai_matching", "AI Price Estimator - Web Development Project", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Price Estimator - Web Development Project", False, None, str(e))
+        
+        # Test 2: Urgent local gig
+        try:
+            payload = {
+                "category": "Maintenance & Repairs",
+                "description": "Fix leaking kitchen sink",
+                "location": "on-site",
+                "specificLocation": "Downtown Chicago",
+                "urgency": "urgent",
+                "workType": "gig"
+            }
+            
+            response = requests.post(f"{BASE_URL}/estimate-price", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Check for required fields
+                required_fields = ["minPrice", "maxPrice", "suggestedPrice", "explanation", "factors"]
+                
+                if all(field in data for field in required_fields):
+                    # Validate data types and reasonable values for urgent gig
+                    if (isinstance(data.get("minPrice"), int) and 
+                        isinstance(data.get("maxPrice"), int) and
+                        isinstance(data.get("suggestedPrice"), int) and
+                        isinstance(data.get("explanation"), str) and
+                        isinstance(data.get("factors"), dict) and
+                        data.get("minPrice") > 0 and
+                        data.get("maxPrice") >= data.get("minPrice") and
+                        data.get("suggestedPrice") >= data.get("minPrice") and
+                        data.get("suggestedPrice") <= data.get("maxPrice")):
+                        # Check if urgency is considered (should have higher prices due to urgency)
+                        if "urgent" in data.get("explanation", "").lower() or "emergency" in data.get("explanation", "").lower():
+                            self.log_result("ai_matching", "AI Price Estimator - Urgent Local Gig", True, data)
+                        else:
+                            self.log_result("ai_matching", "AI Price Estimator - Urgent Local Gig", True, data, 
+                                          "Minor: Urgency not explicitly mentioned in explanation")
+                    else:
+                        self.log_result("ai_matching", "AI Price Estimator - Urgent Local Gig", False, data, 
+                                      f"Invalid price data: minPrice={data.get('minPrice')}, maxPrice={data.get('maxPrice')}, suggestedPrice={data.get('suggestedPrice')}")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("ai_matching", "AI Price Estimator - Urgent Local Gig", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("ai_matching", "AI Price Estimator - Urgent Local Gig", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Price Estimator - Urgent Local Gig", False, None, str(e))
+        
+        # Test 3: Missing category (Other)
+        try:
+            payload = {
+                "category": "Other",
+                "workType": "project"
+            }
+            
+            response = requests.post(f"{BASE_URL}/estimate-price", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Check for required fields
+                required_fields = ["minPrice", "maxPrice", "suggestedPrice", "explanation", "factors"]
+                
+                if all(field in data for field in required_fields):
+                    # Should still provide estimation even for "Other" category
+                    if (isinstance(data.get("minPrice"), int) and 
+                        isinstance(data.get("maxPrice"), int) and
+                        isinstance(data.get("suggestedPrice"), int) and
+                        data.get("minPrice") > 0):
+                        self.log_result("ai_matching", "AI Price Estimator - Other Category", True, data)
+                    else:
+                        self.log_result("ai_matching", "AI Price Estimator - Other Category", False, data, 
+                                      "Invalid price values for Other category")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("ai_matching", "AI Price Estimator - Other Category", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("ai_matching", "AI Price Estimator - Other Category", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Price Estimator - Other Category", False, None, str(e))
+        
+        # Test 4: Error handling - Missing workType
+        try:
+            payload = {
+                "category": "Web Development",
+                "description": "Build a website"
+            }
+            
+            response = requests.post(f"{BASE_URL}/estimate-price", json=payload)
+            
+            # Should return validation error for missing workType
+            if response.status_code in [400, 422]:
+                self.log_result("ai_matching", "AI Price Estimator - Missing WorkType", True, 
+                              {"status_code": response.status_code, "message": "Properly validated missing workType"})
+            else:
+                self.log_result("ai_matching", "AI Price Estimator - Missing WorkType", False, None, 
+                              f"Expected validation error (400/422), got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Price Estimator - Missing WorkType", False, None, str(e))
+    
     def run_all_tests(self):
         """Run all backend tests"""
         print("🚀 Starting Hapployed Worker Dashboard Backend Tests")
