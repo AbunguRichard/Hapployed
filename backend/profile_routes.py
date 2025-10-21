@@ -85,5 +85,8 @@ async def get_profile(email: str):
         user.pop('_id', None)
         return user
         
+    except HTTPException:
+        # Re-raise HTTPExceptions as-is
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
