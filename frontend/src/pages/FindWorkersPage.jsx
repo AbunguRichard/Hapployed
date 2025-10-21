@@ -44,6 +44,8 @@ export default function FindWorkersPage() {
   const [expandedWorker, setExpandedWorker] = useState(null);
   const [shortlistedWorkers, setShortlistedWorkers] = useState([]);
   const [rejectedWorkers, setRejectedWorkers] = useState([]);
+  const [viewMode, setViewMode] = useState('list'); // 'list', 'grid', 'map'
+  const [mapRadius, setMapRadius] = useState(10); // miles
 
   useEffect(() => {
     fetchWorkers();
