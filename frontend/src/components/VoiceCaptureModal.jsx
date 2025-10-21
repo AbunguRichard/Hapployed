@@ -192,15 +192,15 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         {/* Audio Visualization */}
         <div className="relative mb-6">
           <div className="flex items-center justify-center gap-1 h-20">
-            {[...Array(20)].map((_, i) => {
+            {[...Array(15)].map((_, i) => {
               const height = isListening 
-                ? Math.max(20, Math.random() * audioLevel * 100 + 20) 
-                : 20;
+                ? Math.max(12, Math.random() * audioLevel * 60 + 12) 
+                : 12;
               
               return (
                 <div
                   key={i}
-                  className={`w-2 rounded-full transition-all duration-150 ${
+                  className={`w-1.5 rounded-full transition-all duration-150 ${
                     isListening ? 'bg-gradient-to-t from-purple-500 to-pink-500' : 'bg-gray-300'
                   }`}
                   style={{
