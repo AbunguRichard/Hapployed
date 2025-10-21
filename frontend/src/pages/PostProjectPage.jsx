@@ -734,6 +734,85 @@ export default function PostProjectPage() {
                 </div>
               </div>
 
+              {/* AI Price Estimator */}
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-sm font-bold text-gray-900 mb-1 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-purple-600" />
+                      Instant AI Price Estimator
+                    </h3>
+                    <p className="text-xs text-gray-600 mb-3">
+                      Fair pay for every gig. AI suggests pricing based on skill, distance, urgency & market trends.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleEstimatePrice}
+                      disabled={isEstimatingPrice || !projectData.category}
+                      className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      {isEstimatingPrice ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          Analyzing...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4" />
+                          Get AI Price Estimate
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Price Estimate Results */}
+                {priceEstimate && (
+                  <div className="mt-4 p-4 bg-white rounded-lg border border-purple-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <div className="text-xs text-gray-600 mb-1">AI Suggested Range</div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          ${priceEstimate.minPrice} - ${priceEstimate.maxPrice}
+                        </div>
+                        <div className="text-sm text-gray-700 mt-1">
+                          Recommended: <span className="font-semibold text-green-600">${priceEstimate.suggestedPrice}</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={applyPriceEstimate}
+                        className="px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-all"
+                      >
+                        Apply Range
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-600 leading-relaxed">{priceEstimate.explanation}</p>
+                    
+                    {/* Price Factors */}
+                    {priceEstimate.factors && (
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs font-semibold text-gray-700 mb-2">Price Factors:</div>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          {Object.entries(priceEstimate.factors).map(([key, value]) => (
+                            <div key={key} className="flex items-center gap-2">
+                              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                              <span className="text-gray-600 capitalize">{key.replace('_', ' ')}: {value}%</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {!projectData.category && (
+                  <p className="mt-3 text-xs text-amber-600">
+                    ℹ️ Please fill in Project Details (Step 1) before getting a price estimate
+                  </p>
+                )}
+              </div>
+
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   Project Timeline *
