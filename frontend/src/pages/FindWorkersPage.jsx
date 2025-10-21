@@ -1024,8 +1024,26 @@ export default function FindWorkersPage() {
                               </div>
                             </div>
 
-                            {/* Quick Action in Expanded View */}
-                            <div className="mt-6 flex gap-3">
+                            {/* Quick Action Icons - Shortlist/Reject */}
+                            <div className="mt-6 flex items-center justify-center gap-4">
+                              <button
+                                onClick={() => handleReject(worker)}
+                                className="w-16 h-16 rounded-full bg-red-100 hover:bg-red-200 flex items-center justify-center transition-all hover:scale-110 group/reject"
+                                title="Reject"
+                              >
+                                <X className="w-8 h-8 text-red-600 group-hover/reject:scale-110 transition-transform" />
+                              </button>
+                              <button
+                                onClick={() => handleShortlist(worker)}
+                                className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 flex items-center justify-center transition-all hover:scale-110 shadow-lg group/love"
+                                title="Add to Shortlist"
+                              >
+                                <Heart className="w-10 h-10 text-white fill-white group-hover/love:scale-110 transition-transform" />
+                              </button>
+                            </div>
+
+                            {/* Quick Action Buttons */}
+                            <div className="mt-4 flex gap-3">
                               <button
                                 onClick={() => handleHireWorker(worker)}
                                 className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
