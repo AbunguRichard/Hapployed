@@ -244,8 +244,10 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
                 e.g., "I need a plumber tomorrow at 5 PM"
               </p>
             </>
+          ) : transcript ? (
+            <span className="text-sm font-semibold text-green-600">✓ Recording complete</span>
           ) : (
-            <span className="text-sm font-semibold text-gray-600">Processing your request...</span>
+            <span className="text-sm font-semibold text-gray-600">Click "Start Recording" to begin</span>
           )}
         </div>
 
