@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle, Briefcase, Wrench, Mic, Edit3, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import VoiceCaptureModal from '../components/VoiceCaptureModal';
 
 export default function PostProjectPage() {
   const navigate = useNavigate();
@@ -10,9 +11,8 @@ export default function PostProjectPage() {
   
   const [workType, setWorkType] = useState(null); // 'project' or 'gig'
   const [currentStep, setCurrentStep] = useState(1);
-  const [isListening, setIsListening] = useState(false);
-  const [voiceText, setVoiceText] = useState('');
-  const recognitionRef = useRef(null);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
+  const [pendingWorkType, setPendingWorkType] = useState(null);
   
   const [projectData, setProjectData] = useState({
     type: initialType,
