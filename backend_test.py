@@ -504,6 +504,121 @@ class BackendTester:
         except Exception as e:
             self.log_result("ai_matching", "AI Forecast Demand", False, None, str(e))
     
+    def test_ai_voice_parsing(self):
+        """Test AI Voice Parsing endpoint"""
+        print("\n🎤 Testing AI Voice Parsing...")
+        
+        # Test 1: Professional project transcript
+        try:
+            payload = {
+                "transcript": "I need a website developer to build a modern e-commerce website for my clothing store. I need it done in 3 weeks and my budget is around $1500.",
+                "workType": "project"
+            }
+            
+            response = requests.post(f"{BASE_URL}/parse-voice-input", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Check for required fields
+                required_fields = ["title", "description", "category", "duration", "location", "specificLocation", 
+                                 "minBudget", "maxBudget", "urgency", "type", "skills"]
+                
+                if all(field in data for field in required_fields):
+                    # Validate specific expectations for project
+                    if (data.get("category") == "Web Development" and 
+                        "3 weeks" in data.get("duration", "") and
+                        isinstance(data.get("skills"), list)):
+                        self.log_result("ai_matching", "AI Voice Parsing - Professional Project", True, data)
+                    else:
+                        self.log_result("ai_matching", "AI Voice Parsing - Professional Project", False, data, 
+                                      f"Expected Web Development category, 3 weeks duration, got: category={data.get('category')}, duration={data.get('duration')}")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("ai_matching", "AI Voice Parsing - Professional Project", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("ai_matching", "AI Voice Parsing - Professional Project", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Voice Parsing - Professional Project", False, None, str(e))
+        
+        # Test 2: Local gig transcript
+        try:
+            payload = {
+                "transcript": "I need a plumber today at 5 PM to fix a leak in my kitchen sink. It's urgent.",
+                "workType": "gig"
+            }
+            
+            response = requests.post(f"{BASE_URL}/parse-voice-input", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Check for required fields
+                required_fields = ["title", "description", "category", "duration", "location", "specificLocation", 
+                                 "minBudget", "maxBudget", "urgency", "type", "skills"]
+                
+                if all(field in data for field in required_fields):
+                    # Validate specific expectations for gig
+                    if (data.get("category") == "Maintenance & Repairs" and 
+                        data.get("urgency") == "urgent" and
+                        data.get("location") == "on-site" and
+                        "kitchen" in data.get("specificLocation", "").lower()):
+                        self.log_result("ai_matching", "AI Voice Parsing - Local Gig", True, data)
+                    else:
+                        self.log_result("ai_matching", "AI Voice Parsing - Local Gig", False, data, 
+                                      f"Expected Maintenance & Repairs category, urgent urgency, on-site location, kitchen in specificLocation. Got: category={data.get('category')}, urgency={data.get('urgency')}, location={data.get('location')}, specificLocation={data.get('specificLocation')}")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("ai_matching", "AI Voice Parsing - Local Gig", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("ai_matching", "AI Voice Parsing - Local Gig", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Voice Parsing - Local Gig", False, None, str(e))
+        
+        # Test 3: Invalid data - Empty transcript
+        try:
+            payload = {
+                "transcript": "",
+                "workType": "project"
+            }
+            
+            response = requests.post(f"{BASE_URL}/parse-voice-input", json=payload)
+            
+            # Should handle empty transcript gracefully
+            if response.status_code in [400, 422, 500]:
+                self.log_result("ai_matching", "AI Voice Parsing - Empty Transcript", True, 
+                              {"status_code": response.status_code, "message": "Properly handled empty transcript"})
+            elif response.status_code == 200:
+                # If it returns 200, check if it provides meaningful error or default response
+                data = response.json()
+                self.log_result("ai_matching", "AI Voice Parsing - Empty Transcript", True, data)
+            else:
+                self.log_result("ai_matching", "AI Voice Parsing - Empty Transcript", False, None, f"Unexpected HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Voice Parsing - Empty Transcript", False, None, str(e))
+        
+        # Test 4: Invalid data - Missing workType
+        try:
+            payload = {
+                "transcript": "I need help with something"
+            }
+            
+            response = requests.post(f"{BASE_URL}/parse-voice-input", json=payload)
+            
+            # Should return validation error for missing workType
+            if response.status_code in [400, 422]:
+                self.log_result("ai_matching", "AI Voice Parsing - Missing WorkType", True, 
+                              {"status_code": response.status_code, "message": "Properly validated missing workType"})
+            else:
+                self.log_result("ai_matching", "AI Voice Parsing - Missing WorkType", False, None, 
+                              f"Expected validation error (400/422), got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("ai_matching", "AI Voice Parsing - Missing WorkType", False, None, str(e))
+    
     def run_all_tests(self):
         """Run all backend tests"""
         print("🚀 Starting Hapployed Worker Dashboard Backend Tests")
