@@ -250,11 +250,32 @@ export default function CreateProfilePage() {
   };
 
   const handleNext = () => {
+    console.log('handleNext called - currentStep:', currentStep, 'userType:', userType);
+    
     if (currentStep === 1 && !userType) {
       toast.error('Please select at least one skill to continue');
       return;
     }
-    setCurrentStep(prev => prev + 1);
+    
+    if (currentStep === 2) {
+      // Validate basic info before moving to step 3
+      if (!formData.fullName.trim()) {
+        toast.error('Please enter your full name');
+        return;
+      }
+      if (!formData.phone.trim()) {
+        toast.error('Please enter your phone number');
+        return;
+      }
+      if (!formData.location.trim()) {
+        toast.error('Please enter your location');
+        return;
+      }
+    }
+    
+    const nextStep = currentStep + 1;
+    console.log('Moving to step:', nextStep);
+    setCurrentStep(nextStep);
   };
 
   const handleSubmit = async (e) => {
