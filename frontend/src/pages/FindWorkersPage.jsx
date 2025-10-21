@@ -86,6 +86,8 @@ export default function FindWorkersPage() {
           location: 'Remote',
           availability: 'Available in 2 days',
           skills: ['Figma', 'Adobe XD', 'User Research', 'Prototyping'],
+          category: 'design',
+          workType: 'projects',
           badges: [
             { badge_type: 'pro-verified', badge_name: 'Pro-Verified' },
             { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
@@ -104,6 +106,9 @@ export default function FindWorkersPage() {
           location: 'New York, NY',
           availability: 'Available Now',
           skills: ['Moving', 'Assembly', 'Heavy Lifting', 'Packing'],
+          category: 'moving',
+          workType: 'gigs',
+          urgency: 'asap',
           badges: [
             { badge_type: 'gov-verified', badge_name: 'Gov-Verified' }
           ],
