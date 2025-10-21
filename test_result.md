@@ -224,10 +224,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Frontend visual testing of new homepage and informational pages"
+    - "AI Voice Parsing API Endpoint"
+    - "VoiceCaptureModal Component - Voice Input Interface"
+    - "PostProjectPage - AI Voice Integration"
   stuck_tasks: []
   test_all: false
-  test_priority: "visual_verification"
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
