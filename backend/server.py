@@ -16,6 +16,7 @@ from worker_features_routes import router as worker_features_router
 from ai_matching_routes import router as ai_matching_router
 from voice_ai_routes import router as voice_ai_router
 from badge_routes import router as badge_router
+from profile_routes import router as profile_router
 
 
 ROOT_DIR = Path(__file__).parent
