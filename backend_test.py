@@ -768,6 +768,113 @@ class BackendTester:
         except Exception as e:
             self.log_result("ai_matching", "AI Price Estimator - Missing WorkType", False, None, str(e))
     
+    def test_profile_endpoints(self):
+        """Test Profile Update and Retrieval endpoints"""
+        print("\n👤 Testing Profile Endpoints...")
+        
+        # Test 1: Update profile with the specific test data
+        try:
+            payload = {
+                "name": "RICHARD Ochieng ABUNGU",
+                "email": "john@example.com",
+                "phone": "+1 (555) 123-4567",
+                "location": "San Francisco, CA",
+                "bio": "Experienced full-stack developer with 5+ years of experience..."
+            }
+            
+            response = requests.put(f"{BASE_URL}/profile/update", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("message") and "successfully" in data.get("message", "").lower() and "user" in data:
+                    user_data = data["user"]
+                    # Verify all fields are properly saved
+                    if (user_data.get("name") == payload["name"] and
+                        user_data.get("email") == payload["email"] and
+                        user_data.get("phone") == payload["phone"] and
+                        user_data.get("location") == payload["location"] and
+                        user_data.get("bio") == payload["bio"]):
+                        self.log_result("worker_features", "Profile Update - PUT /api/profile/update", True, data)
+                    else:
+                        self.log_result("worker_features", "Profile Update - PUT /api/profile/update", False, data, 
+                                      f"Profile data mismatch. Expected: {payload}, Got: {user_data}")
+                else:
+                    self.log_result("worker_features", "Profile Update - PUT /api/profile/update", False, data, 
+                                  "Invalid response format - missing message or user field")
+            else:
+                self.log_result("worker_features", "Profile Update - PUT /api/profile/update", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Profile Update - PUT /api/profile/update", False, None, str(e))
+        
+        # Test 2: Retrieve the saved profile
+        try:
+            response = requests.get(f"{BASE_URL}/profile/john@example.com")
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Verify the profile data matches what we saved
+                expected_data = {
+                    "name": "RICHARD Ochieng ABUNGU",
+                    "email": "john@example.com",
+                    "phone": "+1 (555) 123-4567",
+                    "location": "San Francisco, CA",
+                    "bio": "Experienced full-stack developer with 5+ years of experience..."
+                }
+                
+                if (data.get("name") == expected_data["name"] and
+                    data.get("email") == expected_data["email"] and
+                    data.get("phone") == expected_data["phone"] and
+                    data.get("location") == expected_data["location"] and
+                    data.get("bio") == expected_data["bio"]):
+                    self.log_result("worker_features", "Profile Retrieval - GET /api/profile/{email}", True, data)
+                else:
+                    self.log_result("worker_features", "Profile Retrieval - GET /api/profile/{email}", False, data, 
+                                  f"Retrieved profile data mismatch. Expected: {expected_data}, Got: {data}")
+            else:
+                self.log_result("worker_features", "Profile Retrieval - GET /api/profile/{email}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Profile Retrieval - GET /api/profile/{email}", False, None, str(e))
+        
+        # Test 3: Error handling - Missing email in update
+        try:
+            payload = {
+                "name": "Test User",
+                "phone": "+1 (555) 999-9999"
+                # Missing email field
+            }
+            
+            response = requests.put(f"{BASE_URL}/profile/update", json=payload)
+            
+            # Should return validation error for missing email
+            if response.status_code in [400, 422]:
+                self.log_result("worker_features", "Profile Update - Missing Email Validation", True, 
+                              {"status_code": response.status_code, "message": "Properly validated missing email"})
+            else:
+                self.log_result("worker_features", "Profile Update - Missing Email Validation", False, None, 
+                              f"Expected validation error (400/422), got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Profile Update - Missing Email Validation", False, None, str(e))
+        
+        # Test 4: Error handling - Non-existent profile retrieval
+        try:
+            response = requests.get(f"{BASE_URL}/profile/nonexistent@example.com")
+            
+            # Should return 404 for non-existent profile
+            if response.status_code == 404:
+                self.log_result("worker_features", "Profile Retrieval - Non-existent Profile", True, 
+                              {"status_code": response.status_code, "message": "Properly returned 404 for non-existent profile"})
+            else:
+                self.log_result("worker_features", "Profile Retrieval - Non-existent Profile", False, None, 
+                              f"Expected 404 for non-existent profile, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Profile Retrieval - Non-existent Profile", False, None, str(e))
+    
     def run_all_tests(self):
         """Run all backend tests"""
         print("🚀 Starting Hapployed Worker Dashboard Backend Tests")
