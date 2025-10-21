@@ -65,6 +65,9 @@ export default function FindWorkersPage() {
           location: 'Chicago, IL',
           availability: 'Available Now',
           skills: ['Plumbing', 'Electrical', 'HVAC', 'Emergency Repairs'],
+          category: 'plumbing',
+          workType: 'gigs',
+          urgency: 'emergency',
           badges: [
             { badge_type: 'gov-verified', badge_name: 'Gov-Verified' },
             { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
