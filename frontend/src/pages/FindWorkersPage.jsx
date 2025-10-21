@@ -855,13 +855,155 @@ export default function FindWorkersPage() {
                               </div>
                             )}
                           </div>
-                          <button className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all">
+                          <button 
+                            onClick={() => toggleProfile(worker.id)}
+                            className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all flex items-center gap-2"
+                          >
                             View Profile
+                            {expandedWorker === worker.id ? (
+                              <ChevronUp className="w-4 h-4" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4" />
+                            )}
                           </button>
-                          <button className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all">
+                          <button 
+                            onClick={() => handleMessage(worker)}
+                            className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
+                          >
                             Message
                           </button>
                         </div>
+
+                        {/* Expanded Profile Section */}
+                        {expandedWorker === worker.id && (
+                          <div className="mt-6 pt-6 border-t border-gray-200 animate-fadeIn">
+                            <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                              <Award className="w-5 h-5 text-purple-600" />
+                              Full Profile
+                            </h4>
+
+                            <div className="grid grid-cols-2 gap-6">
+                              {/* Left Column */}
+                              <div className="space-y-4">
+                                <div>
+                                  <h5 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                    <Briefcase className="w-4 h-4 text-gray-600" />
+                                    Professional Details
+                                  </h5>
+                                  <div className="space-y-2 text-sm">
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">Total Jobs:</span>
+                                      <span className="font-semibold">{worker.completedJobs}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">Success Rate:</span>
+                                      <span className="font-semibold text-green-600">98%</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">On-time Delivery:</span>
+                                      <span className="font-semibold text-green-600">96%</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">Response Time:</span>
+                                      <span className="font-semibold">{worker.responseTime}</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <h5 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                    <CheckCircle className="w-4 h-4 text-gray-600" />
+                                    Verifications
+                                  </h5>
+                                  <div className="space-y-2">
+                                    {worker.badges.map((badge, idx) => (
+                                      <div key={idx} className="flex items-center gap-2 text-sm">
+                                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span className="text-gray-700">{badge.badge_name}</span>
+                                      </div>
+                                    ))}
+                                    <div className="flex items-center gap-2 text-sm">
+                                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                      <span className="text-gray-700">Identity Verified</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm">
+                                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                      <span className="text-gray-700">Payment Verified</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Right Column */}
+                              <div className="space-y-4">
+                                <div>
+                                  <h5 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                    <Star className="w-4 h-4 text-gray-600" />
+                                    Recent Reviews
+                                  </h5>
+                                  <div className="space-y-3">
+                                    <div className="bg-gray-50 p-3 rounded-lg">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <div className="flex">
+                                          {[...Array(5)].map((_, i) => (
+                                            <Star key={i} className="w-3 h-3 text-yellow-500 fill-current" />
+                                          ))}
+                                        </div>
+                                        <span className="text-xs text-gray-600">2 days ago</span>
+                                      </div>
+                                      <p className="text-xs text-gray-700">
+                                        "Excellent work! Delivered on time and exceeded expectations."
+                                      </p>
+                                    </div>
+                                    <div className="bg-gray-50 p-3 rounded-lg">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <div className="flex">
+                                          {[...Array(5)].map((_, i) => (
+                                            <Star key={i} className="w-3 h-3 text-yellow-500 fill-current" />
+                                          ))}
+                                        </div>
+                                        <span className="text-xs text-gray-600">1 week ago</span>
+                                      </div>
+                                      <p className="text-xs text-gray-700">
+                                        "Professional and responsive. Would hire again!"
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <h5 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                    <TrendingUp className="w-4 h-4 text-gray-600" />
+                                    All Skills
+                                  </h5>
+                                  <div className="flex flex-wrap gap-2">
+                                    {worker.skills.map((skill, idx) => (
+                                      <span key={idx} className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">
+                                        {skill}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Quick Action in Expanded View */}
+                            <div className="mt-6 flex gap-3">
+                              <button
+                                onClick={() => handleHireWorker(worker)}
+                                className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+                              >
+                                Send Job Offer
+                              </button>
+                              <button 
+                                onClick={() => handleMessage(worker)}
+                                className="flex-1 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all"
+                              >
+                                Start Conversation
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
