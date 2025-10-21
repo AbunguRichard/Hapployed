@@ -19,16 +19,51 @@ export default function ProfilePage() {
   });
 
   useEffect(() => {
-    // Load user profile data
-    if (user) {
-      setProfileData({
-        name: user.name || 'John Doe',
-        email: user.email || 'john@example.com',
-        phone: user.phone || '+1 (555) 123-4567',
-        location: user.location || 'San Francisco, CA',
-        bio: user.bio || 'Experienced full-stack developer with 5+ years of experience...'
-      });
-    }
+    // Load user profile data from backend
+    const loadProfile = async () => {
+      if (user && user.email) {
+        try {
+          setLoading(true);
+          const response = await fetch(`${BACKEND_URL}/api/profile/${encodeURIComponent(user.email)}`);
+          
+          if (response.ok) {
+            const profileFromDB = await response.json();
+            console.log('Loaded profile from database:', profileFromDB);
+            setProfileData({
+              name: profileFromDB.name || user.name || 'John Doe',
+              email: profileFromDB.email || user.email || 'john@example.com',
+              phone: profileFromDB.phone || user.phone || '+1 (555) 123-4567',
+              location: profileFromDB.location || user.location || 'San Francisco, CA',
+              bio: profileFromDB.bio || user.bio || 'Experienced full-stack developer with 5+ years of experience...'
+            });
+          } else {
+            // Profile not found in DB, use context data
+            console.log('Profile not in database, using context data');
+            setProfileData({
+              name: user.name || 'John Doe',
+              email: user.email || 'john@example.com',
+              phone: user.phone || '+1 (555) 123-4567',
+              location: user.location || 'San Francisco, CA',
+              bio: user.bio || 'Experienced full-stack developer with 5+ years of experience...'
+            });
+          }
+        } catch (error) {
+          console.error('Error loading profile:', error);
+          // Fallback to context data
+          setProfileData({
+            name: user.name || 'John Doe',
+            email: user.email || 'john@example.com',
+            phone: user.phone || '+1 (555) 123-4567',
+            location: user.location || 'San Francisco, CA',
+            bio: user.bio || 'Experienced full-stack developer with 5+ years of experience...'
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    
+    loadProfile();
   }, [user]);
 
   const handleChange = (field, value) => {
