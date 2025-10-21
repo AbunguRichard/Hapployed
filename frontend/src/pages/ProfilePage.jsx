@@ -1,8 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProfileLayout from '../components/ProfileLayout';
 import { User, Mail, Phone, MapPin, Briefcase, Award } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
+import { toast } from 'sonner';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 export default function ProfilePage() {
+  const { user, setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [profileData, setProfileData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    bio: ''
+  });
+
+  useEffect(() => {
+    // Load user profile data
+    if (user) {
+      setProfileData({
+        name: user.name || 'John Doe',
+        email: user.email || 'john@example.com',
+        phone: user.phone || '+1 (555) 123-4567',
+        location: user.location || 'San Francisco, CA',
+        bio: user.bio || 'Experienced full-stack developer with 5+ years of experience...'
+      });
+    }
+  }, [user]);
+
+  const handleChange = (field, value) => {
+    setProfileData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      
+      // Call backend API to save profile
+      const response = await fetch(`${BACKEND_URL}/api/profile/update`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(profileData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save profile');
+      }
+
+      const updatedUser = await response.json();
+      
+      // Update user context
+      setUser(prev => ({
+        ...prev,
+        ...profileData
+      }));
+
+      toast.success('Profile updated successfully!', {
+        description: 'Your changes have been saved.'
+      });
+
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      toast.error('Failed to save profile', {
+        description: 'Please try again later.'
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <ProfileLayout currentSection="profile">
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
@@ -28,21 +103,29 @@ export default function ProfilePage() {
 
           {/* Name */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">Full Name</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Full Name <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
-              defaultValue="John Doe"
+              value={profileData.name}
+              onChange={(e) => handleChange('name', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="Richard Abungu"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">Email</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Email <span className="text-red-500">*</span>
+            </label>
             <input
               type="email"
-              defaultValue="john@example.com"
+              value={profileData.email}
+              onChange={(e) => handleChange('email', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="john@example.com"
             />
           </div>
 
@@ -51,8 +134,10 @@ export default function ProfilePage() {
             <label className="block text-sm font-semibold text-gray-900 mb-2">Phone Number</label>
             <input
               type="tel"
-              defaultValue="+1 (555) 123-4567"
+              value={profileData.phone}
+              onChange={(e) => handleChange('phone', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="+1 (555) 123-4567"
             />
           </div>
 
@@ -61,8 +146,10 @@ export default function ProfilePage() {
             <label className="block text-sm font-semibold text-gray-900 mb-2">Location</label>
             <input
               type="text"
-              defaultValue="San Francisco, CA"
+              value={profileData.location}
+              onChange={(e) => handleChange('location', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="San Francisco, CA"
             />
           </div>
 
@@ -71,15 +158,28 @@ export default function ProfilePage() {
             <label className="block text-sm font-semibold text-gray-900 mb-2">Bio</label>
             <textarea
               rows="4"
-              defaultValue="Experienced full-stack developer with 5+ years of experience..."
+              value={profileData.bio}
+              onChange={(e) => handleChange('bio', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="Experienced full-stack developer with 5+ years of experience..."
             />
           </div>
 
           {/* Save Button */}
           <div className="flex justify-end">
-            <button className="px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors">
-              Save Changes
+            <button 
+              onClick={handleSave}
+              disabled={saving}
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {saving ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
             </button>
           </div>
         </div>
