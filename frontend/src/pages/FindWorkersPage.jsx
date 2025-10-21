@@ -25,7 +25,7 @@ export default function FindWorkersPage() {
 
   useEffect(() => {
     fetchWorkers();
-  }, [selectedBadges]);
+  }, [selectedBadges, filters, searchQuery]);
 
   const fetchWorkers = async () => {
     try {
