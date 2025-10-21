@@ -360,11 +360,51 @@ export default function PostProjectPage() {
             </div>
 
             {/* Local Gig Card */}
-            <button
-              onClick={() => setWorkType('gig')}
-              className="group relative bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-blue-500 hover:shadow-2xl transition-all duration-300 text-left"
-            >
-              <div className="absolute top-6 right-6 w-6 h-6 rounded-full border-2 border-gray-300 group-hover:border-blue-500 transition-colors"></div>
+            <div className="group relative bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-blue-500 hover:shadow-2xl transition-all duration-300">
+              <div className="absolute top-6 right-6 flex items-center gap-3">
+                {/* Voice Input Button */}
+                <div className="relative group/tooltip3">
+                  <button
+                    onClick={() => startVoiceInput('gig')}
+                    disabled={isListening}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                      isListening
+                        ? 'bg-red-500 animate-pulse'
+                        : 'bg-blue-600 hover:bg-blue-700'
+                    }`}
+                    title="Voice input"
+                  >
+                    <Mic className="w-5 h-5 text-white" />
+                  </button>
+                  {/* Tooltip */}
+                  <div className="absolute bottom-full right-0 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg p-3 opacity-0 group-hover/tooltip3:opacity-100 transition-opacity pointer-events-none z-10">
+                    <div className="flex items-start gap-2">
+                      <Sparkles className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <p>Speak your request and AI will fill the form automatically</p>
+                    </div>
+                    <div className="absolute top-full right-4 -mt-1 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+                
+                {/* Manual Input Button */}
+                <div className="relative group/tooltip4">
+                  <button
+                    onClick={() => setWorkType('gig')}
+                    className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-all"
+                    title="Manual input"
+                  >
+                    <Edit3 className="w-5 h-5 text-gray-700" />
+                  </button>
+                  {/* Tooltip */}
+                  <div className="absolute bottom-full right-0 mb-2 w-64 bg-gray-900 text-white text-xs rounded-lg p-3 opacity-0 group-hover/tooltip4:opacity-100 transition-opacity pointer-events-none z-10">
+                    <div className="flex items-start gap-2">
+                      <Edit3 className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                      <p>Tap to open a quick inline form. Type details without leaving this card.</p>
+                    </div>
+                    <div className="absolute top-full right-4 -mt-1 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+              </div>
               
               <div className="mb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-4">
@@ -393,7 +433,7 @@ export default function PostProjectPage() {
                 <span>Continue with Gig</span>
                 <ArrowRight className="w-5 h-5" />
               </div>
-            </button>
+            </div>
           </div>
         </div>
       </div>
