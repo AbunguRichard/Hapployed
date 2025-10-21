@@ -458,7 +458,7 @@ export default function PostProjectPage() {
 
       {/* Form Content */}
       <div className="max-w-3xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-md p-8">
+        <div className="bg-gray-100 rounded-xl shadow-md p-8">
           {/* Step 1: Project Details */}
           {currentStep === 1 && (
             <div className="space-y-6">
