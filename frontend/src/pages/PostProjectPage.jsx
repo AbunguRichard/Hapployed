@@ -268,13 +268,8 @@ export default function PostProjectPage() {
                 {/* Voice Input Button */}
                 <div className="relative group/tooltip">
                   <button
-                    onClick={() => startVoiceInput('project')}
-                    disabled={isListening}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                      isListening
-                        ? 'bg-red-500 animate-pulse'
-                        : 'bg-purple-600 hover:bg-purple-700'
-                    }`}
+                    onClick={() => handleVoiceInput('project')}
+                    className="w-10 h-10 bg-purple-600 hover:bg-purple-700 rounded-full flex items-center justify-center transition-all"
                     title="Voice input"
                   >
                     <Mic className="w-5 h-5 text-white" />
