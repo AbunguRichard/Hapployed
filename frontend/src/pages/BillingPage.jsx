@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Wallet, DollarSign, Clock, TrendingUp, CreditCard, Receipt, FileText, Send, ArrowDownCircle } from 'lucide-react';
-import DashboardHeader from '../components/DashboardHeader';
+import ProfileLayout from '../components/ProfileLayout';
 import { toast } from 'sonner';
 
 export default function BillingPage() {
