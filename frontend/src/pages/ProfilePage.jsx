@@ -42,36 +42,47 @@ export default function ProfilePage() {
     try {
       setSaving(true);
       
+      console.log('Saving profile data:', profileData);
+      console.log('Backend URL:', BACKEND_URL);
+      
       // Call backend API to save profile
       const response = await fetch(`${BACKEND_URL}/api/profile/update`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(profileData)
       });
 
+      console.log('Response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error('Failed to save profile');
+        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        console.error('Error response:', errorData);
+        throw new Error(errorData.detail || 'Failed to save profile');
       }
 
-      const updatedUser = await response.json();
+      const result = await response.json();
+      console.log('Save successful:', result);
       
       // Update user context
-      setUser(prev => ({
-        ...prev,
-        ...profileData
-      }));
+      if (setUser) {
+        setUser(prev => ({
+          ...prev,
+          ...profileData
+        }));
+      }
 
-      toast.success('Profile updated successfully!', {
-        description: 'Your changes have been saved.'
+      toast.success('✅ Profile updated successfully!', {
+        description: 'Your changes have been saved.',
+        duration: 3000
       });
 
     } catch (error) {
       console.error('Error saving profile:', error);
-      toast.error('Failed to save profile', {
-        description: 'Please try again later.'
+      toast.error('❌ Failed to save profile', {
+        description: error.message || 'Please try again later.',
+        duration: 5000
       });
     } finally {
       setSaving(false);
