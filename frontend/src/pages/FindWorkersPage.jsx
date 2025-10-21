@@ -224,9 +224,148 @@ export default function FindWorkersPage() {
         <div className="flex gap-8">
           {/* Sidebar Filters */}
           <div className="w-80 flex-shrink-0">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-4 space-y-6">
-              {/* Search */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-4 space-y-6 max-h-[calc(100vh-120px)] overflow-y-auto">
+              {/* Main Category Filter */}
               <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Work Type
+                </label>
+                <select
+                  value={filters.workType}
+                  onChange={(e) => setFilters(prev => ({ ...prev, workType: e.target.value }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="all">All Work Types</option>
+                  <option value="gigs">🚀 Local Gigs & Tasks</option>
+                  <option value="projects">💼 Professional Projects</option>
+                </select>
+              </div>
+
+              {/* Gig-specific Filters */}
+              {filters.workType === 'gigs' && (
+                <div className="space-y-4 border-t border-gray-200 pt-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                      Gig Category
+                    </label>
+                    <select
+                      value={filters.gigCategory}
+                      onChange={(e) => setFilters(prev => ({ ...prev, gigCategory: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                    >
+                      <option value="all">All Local Gigs</option>
+                      <option value="cleaning">🧹 Cleaning</option>
+                      <option value="moving">📦 Moving & Labor</option>
+                      <option value="plumbing">🔧 Plumbing</option>
+                      <option value="electrical">⚡ Electrical</option>
+                      <option value="handyman">🛠️ Handyman</option>
+                      <option value="delivery">🚚 Delivery</option>
+                      <option value="events">🎉 Event Staff</option>
+                      <option value="driving">🚗 Driving</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                      Urgency
+                    </label>
+                    <select
+                      value={filters.gigUrgency}
+                      onChange={(e) => setFilters(prev => ({ ...prev, gigUrgency: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                    >
+                      <option value="all">Any Urgency</option>
+                      <option value="emergency">🚨 Emergency/QuickHire</option>
+                      <option value="asap">⏰ ASAP (Today)</option>
+                      <option value="scheduled">📅 Scheduled</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {/* Project-specific Filters */}
+              {filters.workType === 'projects' && (
+                <div className="space-y-4 border-t border-gray-200 pt-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                      Project Category
+                    </label>
+                    <select
+                      value={filters.projectCategory}
+                      onChange={(e) => setFilters(prev => ({ ...prev, projectCategory: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                    >
+                      <option value="all">All Projects</option>
+                      <option value="web-dev">💻 Web Development</option>
+                      <option value="design">🎨 Design & Creative</option>
+                      <option value="writing">✍️ Writing & Content</option>
+                      <option value="marketing">📈 Marketing</option>
+                      <option value="consulting">💡 Consulting</option>
+                      <option value="mobile">📱 Mobile Development</option>
+                      <option value="data">📊 Data Science</option>
+                      <option value="admin">📋 Virtual Assistant</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                      Project Scope
+                    </label>
+                    <select
+                      value={filters.projectScope}
+                      onChange={(e) => setFilters(prev => ({ ...prev, projectScope: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                    >
+                      <option value="all">Any Scope</option>
+                      <option value="small">Small (1-2 weeks)</option>
+                      <option value="medium">Medium (1 month)</option>
+                      <option value="large">Large (2+ months)</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {/* Universal Filters */}
+              <div className="space-y-4 border-t border-gray-200 pt-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Budget Range
+                  </label>
+                  <select
+                    value={filters.budgetRange}
+                    onChange={(e) => setFilters(prev => ({ ...prev, budgetRange: e.target.value }))}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                  >
+                    <option value="all">Any Budget</option>
+                    <option value="0-50">$0 - $50</option>
+                    <option value="50-100">$50 - $100</option>
+                    <option value="100-500">$100 - $500</option>
+                    <option value="500-1000">$500 - $1,000</option>
+                    <option value="1000+">$1,000+</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Location
+                  </label>
+                  <select
+                    value={filters.locationRange}
+                    onChange={(e) => setFilters(prev => ({ ...prev, locationRange: e.target.value }))}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                  >
+                    <option value="all">Anywhere</option>
+                    <option value="1">Within 1 mile</option>
+                    <option value="5">Within 5 miles</option>
+                    <option value="10">Within 10 miles</option>
+                    <option value="25">Within 25 miles</option>
+                    <option value="remote">🌐 Remote Only</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Search */}
+              <div className="border-t border-gray-200 pt-4">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   Search Skills
                 </label>
@@ -243,7 +382,7 @@ export default function FindWorkersPage() {
               </div>
 
               {/* Badge Filter */}
-              <div className="border-t border-gray-200 pt-6">
+              <div className="border-t border-gray-200 pt-4">
                 <BadgeFilter 
                   selectedBadges={selectedBadges}
                   onBadgeToggle={handleBadgeToggle}
