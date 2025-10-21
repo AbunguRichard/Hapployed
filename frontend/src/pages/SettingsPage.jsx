@@ -4,7 +4,7 @@ import {
   User, CreditCard, Lock, Users, Crown, Bell, FileText, Link2, AlertCircle,
   Search, ChevronRight, Save, AlertTriangle
 } from 'lucide-react';
-import DashboardNav from '../components/DashboardNav';
+import ProfileLayout from '../components/ProfileLayout';
 import { useAuth } from '../context/AuthContext';
 
 // Section Components
@@ -36,6 +36,7 @@ export default function SettingsPage() {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [activeSubSection, setActiveSubSection] = useState('my-info');
 
   const currentSection = section || 'my-info';
   const CurrentComponent = SECTIONS.find(s => s.id === currentSection)?.component || MyInfoSection;
@@ -57,8 +58,74 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-white">
-      <DashboardNav />
+    <ProfileLayout currentSection="settings">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        {/* Settings Header */}
+        <div className="p-6 border-b border-gray-200">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
+          <p className="text-gray-600">Manage your account settings and preferences</p>
+        </div>
+
+        {/* Search Bar */}
+        <div className="p-6 border-b border-gray-200">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Type to find a setting..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        {/* Settings Sub-Navigation */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
+          {filteredSections.map((sect) => {
+            const Icon = sect.icon;
+            const isActive = currentSection === sect.id;
+            
+            return (
+              <button
+                key={sect.id}
+                onClick={() => {
+                  setActiveSubSection(sect.id);
+                  navigate(`/settings/${sect.id}`);
+                }}
+                className={`p-4 rounded-xl border-2 transition-all text-left ${
+                  isActive
+                    ? 'border-purple-600 bg-purple-50'
+                    : 'border-gray-200 hover:border-purple-300 hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    isActive ? 'bg-purple-600' : 'bg-gray-100'
+                  }`}>
+                    <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-600'}`} />
+                  </div>
+                  <span className={`font-semibold ${isActive ? 'text-purple-600' : 'text-gray-900'}`}>
+                    {sect.label}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Current Section Content */}
+        <div className="p-6 border-t border-gray-200">
+          <CurrentComponent 
+            user={user}
+            onSave={() => setHasUnsavedChanges(false)}
+            onChange={() => setHasUnsavedChanges(true)}
+          />
+        </div>
+      </div>
+    </ProfileLayout>
+  );
+}
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
