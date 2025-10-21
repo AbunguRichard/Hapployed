@@ -239,7 +239,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "AI Voice Parsing API Endpoint"
     - "VoiceCaptureModal Component - Voice Input Interface"
     - "PostProjectPage - AI Voice Integration"
   stuck_tasks: []
