@@ -120,6 +120,18 @@ backend:
         agent: "testing"
         comment: "✅ BACKEND TESTING COMPLETE - AI Voice Parsing API endpoint working correctly. Fixed Pydantic model validation issues (budget fields expecting strings, null duration handling). All test cases passing: (1) Professional project transcript correctly parsed as Web Development category with 3 weeks duration and proper skills extraction. (2) Local gig transcript correctly identified as Maintenance & Repairs, marked urgent, on-site location with kitchen specificLocation. (3) Empty transcript properly returns 400 error. (4) Missing workType returns 422 validation error. AI integration with GPT-5 via emergentintegrations working perfectly."
 
+  - task: "Profile Update API Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/profile_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PROFILE ENDPOINTS TESTING COMPLETE - Both PUT /api/profile/update and GET /api/profile/{email} endpoints working correctly. Fixed minor error handling issue where HTTPException(404) was being caught and re-raised as 500 error. All test cases passing: (1) Profile update with complete data (name, email, phone, location, bio) successfully saves to MongoDB. (2) Profile retrieval returns correct data matching what was saved. (3) Missing email validation properly returns 422 error. (4) Non-existent profile retrieval properly returns 404 error. MongoDB connection and data persistence working perfectly. Request/response format matches specifications exactly."
+
 frontend:
   - task: "VoiceCaptureModal Component - Voice Input Interface"
     implemented: true
