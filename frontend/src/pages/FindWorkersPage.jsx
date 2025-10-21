@@ -1044,10 +1044,10 @@ export default function FindWorkersPage() {
                               </button>
                               <button
                                 onClick={() => handleShortlist(worker)}
-                                className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 flex items-center justify-center transition-all hover:scale-110 shadow-lg group/love"
+                                className="w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 flex items-center justify-center transition-all hover:scale-110 shadow-lg group/thumbs"
                                 title="Add to Shortlist"
                               >
-                                <Heart className="w-10 h-10 text-white fill-white group-hover/love:scale-110 transition-transform" />
+                                <ThumbsUp className="w-10 h-10 text-white fill-white group-hover/thumbs:scale-110 transition-transform" />
                               </button>
                             </div>
 
