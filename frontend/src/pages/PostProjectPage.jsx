@@ -433,7 +433,24 @@ export default function PostProjectPage() {
             <h1 className="text-2xl font-bold text-gray-900">
               {workType === 'gig' ? 'Post a Gig' : 'Post a Project'}
             </h1>
-            <div className="w-20"></div> {/* Spacer for centering */}
+            
+            {/* Voice-Only Mode Button */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold">
+                <Sparkles className="w-4 h-4" />
+                <span>Voice-Only Mode</span>
+              </div>
+              <button
+                onClick={() => {
+                  setPendingWorkType(workType);
+                  setIsVoiceModalOpen(true);
+                }}
+                className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 rounded-full flex items-center justify-center shadow-lg transition-all hover:shadow-xl"
+                title="Voice input"
+              >
+                <Mic className="w-6 h-6 text-white" />
+              </button>
+            </div>
           </div>
 
           {/* Step Navigation */}
