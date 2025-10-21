@@ -792,6 +792,9 @@ class BackendTester:
         # AI Voice Parsing Tests
         self.test_ai_voice_parsing()
         
+        # AI Price Estimator Tests
+        self.test_ai_price_estimator()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
