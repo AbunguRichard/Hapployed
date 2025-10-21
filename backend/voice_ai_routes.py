@@ -37,6 +37,10 @@ async def parse_voice_input(request: VoiceTranscriptRequest):
     Parse voice transcript using AI (GPT-5) to extract project/gig details
     """
     try:
+        # Validate input
+        if not request.transcript or request.transcript.strip() == "":
+            raise HTTPException(status_code=400, detail="Transcript cannot be empty")
+        
         # Get Emergent LLM Key
         api_key = os.environ.get('EMERGENT_LLM_KEY')
         if not api_key:
