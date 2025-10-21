@@ -308,6 +308,37 @@ export default function FindWorkersPage() {
     navigate('/messages');
   };
 
+  const scrollToNextWorker = (currentWorkerId) => {
+    const currentIndex = workers.findIndex(w => w.id === currentWorkerId);
+    if (currentIndex < workers.length - 1) {
+      // Scroll to next worker
+      setTimeout(() => {
+        const nextWorkerElement = document.querySelector(`[data-worker-id="${workers[currentIndex + 1].id}"]`);
+        if (nextWorkerElement) {
+          nextWorkerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Auto-expand next worker
+          setExpandedWorker(workers[currentIndex + 1].id);
+        }
+      }, 300);
+    } else {
+      // Last worker - collapse
+      setExpandedWorker(null);
+      toast.info('You\'ve reviewed all workers!');
+    }
+  };
+
+  const handleShortlist = (worker) => {
+    setShortlistedWorkers(prev => [...prev, worker]);
+    toast.success(`❤️ ${worker.name} added to shortlist!`);
+    scrollToNextWorker(worker.id);
+  };
+
+  const handleReject = (worker) => {
+    setRejectedWorkers(prev => [...prev, worker]);
+    toast.info(`✖️ ${worker.name} rejected`);
+    scrollToNextWorker(worker.id);
+  };
+
   // Voice Search Handler
   const handleVoiceSearch = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
