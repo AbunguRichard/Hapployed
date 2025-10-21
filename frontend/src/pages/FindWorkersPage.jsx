@@ -126,6 +126,8 @@ export default function FindWorkersPage() {
           location: 'Austin, TX',
           availability: 'Available in 1 week',
           skills: ['Python', 'Machine Learning', 'TensorFlow', 'Data Analysis'],
+          category: 'data',
+          workType: 'projects',
           badges: [
             { badge_type: 'pro-verified', badge_name: 'Pro-Verified' },
             { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
@@ -144,6 +146,9 @@ export default function FindWorkersPage() {
           location: 'Los Angeles, CA',
           availability: 'Available Now',
           skills: ['Home Renovation', 'Carpentry', 'Painting', 'Drywall'],
+          category: 'handyman',
+          workType: 'gigs',
+          urgency: 'scheduled',
           badges: [
             { badge_type: 'gov-verified', badge_name: 'Gov-Verified' },
             { badge_type: 'pro-verified', badge_name: 'Pro-Verified' }
