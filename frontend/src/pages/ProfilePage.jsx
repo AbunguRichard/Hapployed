@@ -140,6 +140,14 @@ export default function ProfilePage() {
         <h1 className="text-3xl font-bold text-gray-900 mb-2">View Profile</h1>
         <p className="text-gray-600 mb-8">Manage your public profile information</p>
 
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading profile...</p>
+            </div>
+          </div>
+        ) : (
         <div className="space-y-6">
           {/* Profile Picture */}
           <div>
