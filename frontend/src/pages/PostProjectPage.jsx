@@ -380,7 +380,7 @@ export default function PostProjectPage() {
             isOpen={isVoiceModalOpen}
             onClose={() => setIsVoiceModalOpen(false)}
             onTranscriptComplete={handleTranscriptComplete}
-            workType={pendingWorkType}
+            workType={workType}
           />
         </div>
       </div>
