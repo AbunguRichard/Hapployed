@@ -12,8 +12,9 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
   const streamRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen) {
-      startListening();
+    // Only cleanup when modal closes
+    if (!isOpen) {
+      cleanup();
     }
     
     return () => {
