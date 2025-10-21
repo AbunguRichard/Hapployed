@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, DollarSign, Star, Briefcase, Clock, Shield, Mic, Sparkles } from 'lucide-react';
+import { Search, MapPin, DollarSign, Star, Briefcase, Clock, Shield, Mic, Sparkles, ChevronDown, ChevronUp, Award, CheckCircle, TrendingUp } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import BadgeDisplay, { BadgeFilter } from '../components/BadgeDisplay';
 import { toast } from 'sonner';
