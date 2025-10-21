@@ -176,15 +176,15 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         </button>
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">
-            <Sparkles className="w-4 h-4" />
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold mb-3">
+            <Sparkles className="w-3 h-3" />
             <span>Voice-Only Mode</span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-xl font-bold text-gray-900 mb-1">
             {workType === 'project' ? 'Describe Your Project' : 'Describe Your Gig'}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-sm text-gray-600">
             Speak naturally. AI will understand and fill your form.
           </p>
         </div>
