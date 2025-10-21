@@ -14,9 +14,13 @@ export default function FindWorkersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBadges, setSelectedBadges] = useState([]);
   const [filters, setFilters] = useState({
-    category: 'all',
-    availability: 'all',
-    hourlyRate: 200
+    workType: 'all', // 'all', 'gigs', 'projects'
+    gigCategory: 'all',
+    gigUrgency: 'all',
+    projectCategory: 'all',
+    projectScope: 'all',
+    budgetRange: 'all',
+    locationRange: 'all'
   });
 
   useEffect(() => {
