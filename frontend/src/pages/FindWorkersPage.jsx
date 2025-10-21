@@ -734,7 +734,11 @@ export default function FindWorkersPage() {
                 {workers.map(worker => {
                   const matchScore = calculateMatchScore(worker);
                   return (
-                  <div key={worker.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all relative group">
+                  <div 
+                    key={worker.id} 
+                    data-worker-id={worker.id}
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all relative group"
+                  >
                     <div className="flex gap-6">
                       {/* Avatar with Match Score Badge */}
                       <div className="relative">
