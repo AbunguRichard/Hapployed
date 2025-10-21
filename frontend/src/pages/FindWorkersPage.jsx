@@ -491,10 +491,43 @@ export default function FindWorkersPage() {
 
           {/* Worker Cards */}
           <div className="flex-1">
+            {/* Results Header */}
+            {!loading && (
+              <div className="mb-6 flex items-center justify-between">
+                <div className="text-sm text-gray-600">
+                  Showing <span className="font-semibold text-gray-900">{workers.length}</span> verified worker{workers.length !== 1 ? 's' : ''}
+                </div>
+              </div>
+            )}
+
             {loading ? (
               <div className="text-center py-12">
                 <div className="inline-block w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
                 <p className="mt-4 text-gray-600">Loading verified workers...</p>
+              </div>
+            ) : workers.length === 0 ? (
+              <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+                <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No workers found</h3>
+                <p className="text-gray-600 mb-4">Try adjusting your filters or search criteria</p>
+                <button
+                  onClick={() => {
+                    setFilters({
+                      workType: 'all',
+                      gigCategory: 'all',
+                      gigUrgency: 'all',
+                      projectCategory: 'all',
+                      projectScope: 'all',
+                      budgetRange: 'all',
+                      locationRange: 'all'
+                    });
+                    setSelectedBadges([]);
+                    setSearchQuery('');
+                  }}
+                  className="px-6 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-all"
+                >
+                  Clear All Filters
+                </button>
               </div>
             ) : (
               <div className="space-y-6">
