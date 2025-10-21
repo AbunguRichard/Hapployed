@@ -137,6 +137,59 @@ export default function PostProjectPage() {
     setIsVoiceModalOpen(true);
   };
 
+  // AI Price Estimator
+  const handleEstimatePrice = async () => {
+    try {
+      setIsEstimatingPrice(true);
+      setPriceEstimate(null);
+      
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+      const response = await fetch(`${backendUrl}/api/estimate-price`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category: projectData.category || 'Other',
+          description: projectData.description || '',
+          location: projectData.location || 'remote',
+          specificLocation: projectData.specificLocation || '',
+          urgency: projectData.urgency || 'normal',
+          workType: workType,
+          duration: projectData.duration || ''
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to estimate price');
+      }
+      
+      const estimate = await response.json();
+      setPriceEstimate(estimate);
+      
+      // Optionally pre-fill the budget fields with AI suggestion
+      toast.success('💡 AI price estimate ready!', {
+        description: 'Review the suggestion below'
+      });
+      
+    } catch (error) {
+      console.error('Error estimating price:', error);
+      toast.error('Failed to get price estimate', {
+        description: 'Please try again or set budget manually'
+      });
+    } finally {
+      setIsEstimatingPrice(false);
+    }
+  };
+
+  const applyPriceEstimate = () => {
+    if (priceEstimate) {
+      updateField('minBudget', priceEstimate.minPrice.toString());
+      updateField('maxBudget', priceEstimate.maxPrice.toString());
+      toast.success('Price range applied!');
+    }
+  };
+
   // AI parsing of voice input to auto-fill form
   const handleTranscriptComplete = async (text, type) => {
     try {
