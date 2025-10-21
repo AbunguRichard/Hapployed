@@ -432,26 +432,35 @@ export default function FindWorkersPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Verified Workers</h1>
             <p className="text-gray-600">Real people, real skills. Hire with confidence.</p>
           </div>
-          {(filters.workType !== 'all' || selectedBadges.length > 0 || searchQuery) && (
-            <button
-              onClick={() => {
-                setFilters({
-                  workType: 'all',
-                  gigCategory: 'all',
-                  gigUrgency: 'all',
-                  projectCategory: 'all',
-                  projectScope: 'all',
-                  budgetRange: 'all',
-                  locationRange: 'all'
-                });
-                setSelectedBadges([]);
-                setSearchQuery('');
-              }}
-              className="px-4 py-2 text-sm font-semibold text-purple-600 hover:text-purple-700 border-2 border-purple-300 rounded-lg hover:bg-purple-50 transition-all"
-            >
-              Clear All Filters
-            </button>
-          )}
+          <div className="flex items-center gap-3">
+            {/* Shortlist Counter */}
+            {shortlistedWorkers.length > 0 && (
+              <div className="px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-lg font-semibold flex items-center gap-2 shadow-lg">
+                <Heart className="w-5 h-5 fill-white" />
+                <span>{shortlistedWorkers.length} Shortlisted</span>
+              </div>
+            )}
+            {(filters.workType !== 'all' || selectedBadges.length > 0 || searchQuery) && (
+              <button
+                onClick={() => {
+                  setFilters({
+                    workType: 'all',
+                    gigCategory: 'all',
+                    gigUrgency: 'all',
+                    projectCategory: 'all',
+                    projectScope: 'all',
+                    budgetRange: 'all',
+                    locationRange: 'all'
+                  });
+                  setSelectedBadges([]);
+                  setSearchQuery('');
+                }}
+                className="px-4 py-2 text-sm font-semibold text-purple-600 hover:text-purple-700 border-2 border-purple-300 rounded-lg hover:bg-purple-50 transition-all"
+              >
+                Clear All Filters
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Stats Bar */}
