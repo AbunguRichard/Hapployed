@@ -61,13 +61,13 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
 
   const startListening = async () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      alert('Voice input is not supported in your browser');
+      alert('Voice input is not supported in your browser. Please use Chrome, Edge, or Safari.');
       onClose();
       return;
     }
 
-    // Initialize audio visualization
     try {
+      // Request microphone permission and initialize audio visualization
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       
@@ -78,8 +78,13 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
       analyserRef.current.fftSize = 256;
       
       visualizeAudio();
+      
+      console.log('✅ Microphone access granted');
     } catch (err) {
-      console.error('Microphone access denied:', err);
+      console.error('❌ Microphone access denied:', err);
+      alert('Microphone access is required for voice input. Please allow microphone access and try again.');
+      onClose();
+      return;
     }
 
     // Initialize speech recognition
@@ -90,6 +95,7 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
     recognitionRef.current.lang = 'en-US';
 
     recognitionRef.current.onstart = () => {
+      console.log('🎤 Speech recognition started');
       setIsListening(true);
     };
 
@@ -106,24 +112,35 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         }
       }
 
-      setTranscript(finalTranscript + interimTranscript);
+      const combinedTranscript = finalTranscript + interimTranscript;
+      console.log('📝 Transcript:', combinedTranscript);
+      setTranscript(combinedTranscript);
     };
 
     recognitionRef.current.onerror = (event) => {
-      console.error('Speech recognition error:', event.error);
-      if (event.error !== 'aborted') {
+      console.error('❌ Speech recognition error:', event.error);
+      if (event.error === 'no-speech') {
+        console.log('No speech detected, continuing...');
+      } else if (event.error === 'not-allowed') {
+        alert('Microphone permission denied. Please allow microphone access in your browser settings.');
+        onClose();
+      } else if (event.error !== 'aborted') {
         setIsListening(false);
       }
     };
 
     recognitionRef.current.onend = () => {
+      console.log('🛑 Speech recognition ended');
       setIsListening(false);
     };
 
     try {
       recognitionRef.current.start();
+      console.log('🚀 Starting speech recognition...');
     } catch (err) {
-      console.error('Failed to start recognition:', err);
+      console.error('❌ Failed to start recognition:', err);
+      alert('Failed to start voice recognition. Please try again.');
+      onClose();
     }
   };
 
