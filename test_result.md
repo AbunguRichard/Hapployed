@@ -105,17 +105,17 @@
 user_problem_statement: "Implement AI-driven voice input feature on Post Project page. Users should be able to speak naturally about their project/gig needs, and AI (GPT-5) should parse the speech to automatically fill form fields including title, description, category, duration, location, budget, and skills. The voice capture should happen in a dedicated modal (VoiceCaptureModal) with user confirmation before applying the parsed data to the form."
 
 backend:
-  - task: "No backend changes required for Phase 1"
+  - task: "AI Voice Parsing API Endpoint"
     implemented: true
-    working: true
-    file: "N/A"
+    working: "NA"
+    file: "/app/backend/voice_ai_routes.py"
     stuck_count: 0
-    priority: "low"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
-      - working: true
+      - working: "NA"
         agent: "main"
-        comment: "Phase 1 focuses on frontend UI updates only"
+        comment: "Created new API endpoint /api/parse-voice-input that uses OpenAI GPT-5 (via emergentintegrations library with Emergent LLM Key) to parse voice transcripts and extract structured project/gig data. Installed emergentintegrations library and integrated with server.py."
 
 frontend:
   - task: "Header Component - Hide Sign Up Button for Logged-in Users"
