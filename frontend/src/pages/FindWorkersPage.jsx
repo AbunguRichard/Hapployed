@@ -11,6 +11,22 @@ export default function FindWorkersPage() {
   const navigate = useNavigate();
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Add fadeIn animation
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBadges, setSelectedBadges] = useState([]);
   const [filters, setFilters] = useState({
