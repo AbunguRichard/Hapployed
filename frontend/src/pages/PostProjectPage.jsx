@@ -121,9 +121,18 @@ export default function PostProjectPage() {
     }, 2000);
   };
 
-  // Open voice capture modal
-  const handleVoiceInput = (type) => {
-    setPendingWorkType(type);
+  // Open voice capture modal from initial cards - go directly to form
+  const handleVoiceInputFromCard = (type) => {
+    setWorkType(type);
+    setCurrentStep(1);
+    // Open modal after a short delay so user sees the transition
+    setTimeout(() => {
+      setIsVoiceModalOpen(true);
+    }, 300);
+  };
+  
+  // Open voice capture modal from form header
+  const handleVoiceInputFromForm = () => {
     setIsVoiceModalOpen(true);
   };
 
