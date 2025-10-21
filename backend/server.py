@@ -69,6 +69,7 @@ app.include_router(worker_features_router)
 app.include_router(ai_matching_router)
 app.include_router(voice_ai_router)
 app.include_router(badge_router)
+app.include_router(profile_router)
 
 app.add_middleware(
     CORSMiddleware,
