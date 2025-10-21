@@ -24,6 +24,7 @@ import PostProjectInfoPage from './pages/PostProjectInfoPage';
 import OpportunitiesInfoPage from './pages/OpportunitiesInfoPage';
 import MyJobsPage from './pages/MyJobsPage';
 import MessagesPage from './pages/MessagesPage';
+import BillingPage from './pages/BillingPage';
 import './App.css';
 
 function App() {
