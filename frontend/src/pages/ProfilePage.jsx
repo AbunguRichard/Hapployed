@@ -107,6 +107,16 @@ export default function ProfilePage() {
           ...profileData
         }));
       }
+      
+      // Reload profile from database to confirm save
+      if (profileData.email) {
+        const verifyResponse = await fetch(`${BACKEND_URL}/api/profile/${encodeURIComponent(profileData.email)}`);
+        if (verifyResponse.ok) {
+          const savedProfile = await verifyResponse.json();
+          console.log('Verified saved profile:', savedProfile);
+          setProfileData(savedProfile);
+        }
+      }
 
       toast.success('✅ Profile updated successfully!', {
         description: 'Your changes have been saved.',
