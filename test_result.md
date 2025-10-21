@@ -118,17 +118,29 @@ backend:
         comment: "Created new API endpoint /api/parse-voice-input that uses OpenAI GPT-5 (via emergentintegrations library with Emergent LLM Key) to parse voice transcripts and extract structured project/gig data. Installed emergentintegrations library and integrated with server.py."
 
 frontend:
-  - task: "Header Component - Hide Sign Up Button for Logged-in Users"
+  - task: "VoiceCaptureModal Component - Voice Input Interface"
     implemented: true
-    working: true
-    file: "/app/frontend/src/components/Header.jsx"
+    working: "NA"
+    file: "/app/frontend/src/components/VoiceCaptureModal.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
+      - working: "NA"
         agent: "main"
-        comment: "Updated Header component to use AuthContext and conditionally hide the 'Sign up' button when user is authenticated. Verified working in both desktop and mobile views."
+        comment: "Fixed duplicate return statement bug that was causing syntax errors. Modal now properly handles browser SpeechRecognition API, AudioContext for visualization, microphone permissions, and cleanup on unmount. Includes 'Stop & Review' button for user confirmation as requested."
+
+  - task: "PostProjectPage - AI Voice Integration"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/PostProjectPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated handleTranscriptComplete function to call backend AI parsing API instead of simple frontend string matching. Now properly integrates with VoiceCaptureModal and applies AI-parsed data to form fields including skills array."
 
   - task: "Unified Hero Section Component"
     implemented: true
