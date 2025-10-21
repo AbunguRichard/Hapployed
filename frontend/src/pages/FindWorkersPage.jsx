@@ -742,12 +742,86 @@ export default function FindWorkersPage() {
 
                         {/* Actions */}
                         <div className="flex gap-3">
-                          <button
-                            onClick={() => handleHireWorker(worker)}
-                            className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+                          <div 
+                            className="flex-1 relative"
+                            onMouseEnter={() => setHoveredWorker(worker.id)}
+                            onMouseLeave={() => setHoveredWorker(null)}
                           >
-                            Hire Now
-                          </button>
+                            <button
+                              onClick={() => handleHireWorker(worker)}
+                              className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+                            >
+                              Hire Now
+                            </button>
+                            
+                            {/* Hover Preview - Micro Resume */}
+                            {hoveredWorker === worker.id && (
+                              <div className="absolute bottom-full left-0 mb-2 w-80 bg-white rounded-xl shadow-2xl border-2 border-purple-200 p-4 z-20 animate-fadeIn">
+                                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-gray-200">
+                                  <img 
+                                    src={worker.avatar} 
+                                    alt={worker.name}
+                                    className="w-12 h-12 rounded-full border-2 border-purple-300"
+                                  />
+                                  <div className="flex-1">
+                                    <div className="font-bold text-gray-900">{worker.name}</div>
+                                    <div className="text-sm text-gray-600">{worker.title}</div>
+                                  </div>
+                                  <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                    matchScore >= 90 ? 'bg-green-100 text-green-700' :
+                                    matchScore >= 80 ? 'bg-blue-100 text-blue-700' :
+                                    'bg-purple-100 text-purple-700'
+                                  }`}>
+                                    {matchScore}% Match
+                                  </div>
+                                </div>
+                                
+                                <div className="space-y-2 text-sm">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-gray-600">Rating:</span>
+                                    <div className="flex items-center gap-1">
+                                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                                      <span className="font-semibold">{worker.rating}</span>
+                                      <span className="text-gray-500">({worker.completedJobs} jobs)</span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-gray-600">Response Time:</span>
+                                    <span className="font-semibold text-green-600">{worker.responseTime}</span>
+                                  </div>
+                                  
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-gray-600">Availability:</span>
+                                    <span className={`font-semibold ${
+                                      worker.availability === 'Available Now' ? 'text-green-600' : 'text-yellow-600'
+                                    }`}>
+                                      {worker.availability}
+                                    </span>
+                                  </div>
+                                  
+                                  <div className="pt-2 border-t border-gray-200">
+                                    <div className="text-gray-600 mb-1">Verifications:</div>
+                                    <BadgeDisplay badges={worker.badges} size="small" showTooltip={false} />
+                                  </div>
+                                  
+                                  <div className="pt-2 border-t border-gray-200">
+                                    <div className="text-gray-600 mb-1">Top Skills:</div>
+                                    <div className="flex flex-wrap gap-1">
+                                      {worker.skills.slice(0, 4).map((skill, idx) => (
+                                        <span key={idx} className="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">
+                                          {skill}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                {/* Arrow pointer */}
+                                <div className="absolute top-full left-8 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-purple-200"></div>
+                              </div>
+                            )}
+                          </div>
                           <button className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all">
                             View Profile
                           </button>
