@@ -44,6 +44,8 @@ export default function FindWorkersPage() {
           location: 'San Francisco, CA',
           availability: 'Available Now',
           skills: ['React', 'Node.js', 'TypeScript', 'AWS'],
+          category: 'web-dev',
+          workType: 'projects',
           badges: [
             { badge_type: 'gov-verified', badge_name: 'Gov-Verified' },
             { badge_type: 'pro-verified', badge_name: 'Pro-Verified' },
