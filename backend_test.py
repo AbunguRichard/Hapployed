@@ -795,6 +795,9 @@ class BackendTester:
         # AI Price Estimator Tests
         self.test_ai_price_estimator()
         
+        # Profile Tests
+        self.test_profile_endpoints()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
