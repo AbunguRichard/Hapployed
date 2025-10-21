@@ -1,64 +1,65 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Mic, Square, Sparkles } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplete, workType }) {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
-  const [audioLevel, setAudioLevel] = useState(0);
-  const recognitionRef = useRef(null);
-  const audioContextRef = useRef(null);
-  const analyserRef = useRef(null);
-  const animationRef = useRef(null);
-  const streamRef = useRef(null);
+  const [recognition, setRecognition] = useState(null);
+
+  // Initialize Speech Recognition (same as Homepage)
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognitionInstance = new SpeechRecognition();
+      
+      recognitionInstance.continuous = true;
+      recognitionInstance.interimResults = true;
+      recognitionInstance.lang = 'en-US';
+
+      recognitionInstance.onresult = (event) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcriptPiece = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcriptPiece + ' ';
+          } else {
+            interimTranscript += transcriptPiece;
+          }
+        }
+
+        setTranscript(finalTranscript + interimTranscript);
+      };
+
+      recognitionInstance.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+        if (event.error !== 'aborted' && event.error !== 'no-speech') {
+          toast.error('Could not understand. Please try again');
+        }
+      };
+
+      recognitionInstance.onend = () => {
+        setIsListening(false);
+      };
+
+      setRecognition(recognitionInstance);
+    }
+  }, []);
 
   useEffect(() => {
-    // Only cleanup when modal closes
-    if (!isOpen) {
-      cleanup();
-    }
-    
     return () => {
-      cleanup();
+      if (recognition) {
+        try {
+          recognition.stop();
+        } catch (e) {
+          // Already stopped
+        }
+      }
     };
-  }, [isOpen]);
-
-  const cleanup = () => {
-    // Stop recognition
-    if (recognitionRef.current) {
-      try {
-        recognitionRef.current.stop();
-      } catch (e) {
-        console.log('Recognition already stopped');
-      }
-      recognitionRef.current = null;
-    }
-
-    // Stop animation
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
-    }
-
-    // Stop audio stream
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
-    }
-
-    // Close audio context
-    if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-      try {
-        audioContextRef.current.close();
-      } catch (e) {
-        console.log('AudioContext already closed');
-      }
-      audioContextRef.current = null;
-    }
-
-    setIsListening(false);
-    setTranscript('');
-    setAudioLevel(0);
-  };
+  }, [recognition]);
 
   const startListening = async () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
