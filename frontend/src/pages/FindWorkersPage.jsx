@@ -686,26 +686,27 @@ export default function FindWorkersPage() {
                   const matchScore = calculateMatchScore(worker);
                   return (
                   <div key={worker.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all relative group">
-                    {/* AI Match Score Badge */}
-                    <div className="absolute top-4 right-4 z-10">
-                      <div className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg animate-fadeIn ${
-                        matchScore >= 90 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' :
-                        matchScore >= 80 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white' :
-                        matchScore >= 70 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' :
-                        'bg-gray-200 text-gray-700'
-                      }`}>
-                        <Sparkles className="w-3 h-3" />
-                        {matchScore}% Match
-                      </div>
-                    </div>
-
                     <div className="flex gap-6">
-                      {/* Avatar */}
-                      <img 
-                        src={worker.avatar} 
-                        alt={worker.name}
-                        className="w-24 h-24 rounded-full object-cover border-4 border-purple-100"
-                      />
+                      {/* Avatar with Match Score Badge */}
+                      <div className="relative">
+                        <img 
+                          src={worker.avatar} 
+                          alt={worker.name}
+                          className="w-24 h-24 rounded-full object-cover border-4 border-purple-100"
+                        />
+                        {/* AI Match Score Badge - Positioned below avatar */}
+                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 z-10">
+                          <div className={`px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg animate-fadeIn whitespace-nowrap ${
+                            matchScore >= 90 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' :
+                            matchScore >= 80 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white' :
+                            matchScore >= 70 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' :
+                            'bg-gray-200 text-gray-700'
+                          }`}>
+                            <Sparkles className="w-3 h-3" />
+                            {matchScore}%
+                          </div>
+                        </div>
+                      </div>
                       
                       {/* Info */}
                       <div className="flex-1">
