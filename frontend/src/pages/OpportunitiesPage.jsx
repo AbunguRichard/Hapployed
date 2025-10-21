@@ -18,8 +18,18 @@ export default function OpportunitiesPage() {
     jobType: 'all', // 'all', 'urgent', 'fixed', 'remote'
     matchLevel: 'all', // 'perfect', 'good', 'all'
     maxBudget: 5000,
-    growthType: null // 'portfolio', 'high-paying', 'top-clients'
+    growthType: null, // 'portfolio', 'high-paying', 'top-clients'
+    badgeTypes: [] // Selected badge types for filtering
   });
+
+  const handleBadgeToggle = (badgeType) => {
+    setFilters(prev => ({
+      ...prev,
+      badgeTypes: prev.badgeTypes.includes(badgeType)
+        ? prev.badgeTypes.filter(b => b !== badgeType)
+        : [...prev.badgeTypes, badgeType]
+    }));
+  };
 
   useEffect(() => {
     fetchOpportunities();
