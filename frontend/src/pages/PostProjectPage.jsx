@@ -411,10 +411,7 @@ export default function PostProjectPage() {
                 <span>Voice-Only Mode</span>
               </div>
               <button
-                onClick={() => {
-                  setPendingWorkType(workType);
-                  setIsVoiceModalOpen(true);
-                }}
+                onClick={handleVoiceInputFromForm}
                 className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 rounded-full flex items-center justify-center shadow-lg transition-all hover:shadow-xl"
                 title="Voice input"
               >
