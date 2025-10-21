@@ -666,8 +666,23 @@ export default function FindWorkersPage() {
               </div>
             ) : (
               <div className="space-y-6">
-                {workers.map(worker => (
-                  <div key={worker.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                {workers.map(worker => {
+                  const matchScore = calculateMatchScore(worker);
+                  return (
+                  <div key={worker.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all relative group">
+                    {/* AI Match Score Badge */}
+                    <div className="absolute top-4 right-4 z-10">
+                      <div className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg animate-fadeIn ${
+                        matchScore >= 90 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' :
+                        matchScore >= 80 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white' :
+                        matchScore >= 70 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' :
+                        'bg-gray-200 text-gray-700'
+                      }`}>
+                        <Sparkles className="w-3 h-3" />
+                        {matchScore}% Match
+                      </div>
+                    </div>
+
                     <div className="flex gap-6">
                       {/* Avatar */}
                       <img 
