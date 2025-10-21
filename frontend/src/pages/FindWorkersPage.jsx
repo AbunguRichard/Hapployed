@@ -42,6 +42,8 @@ export default function FindWorkersPage() {
   const [voiceTranscript, setVoiceTranscript] = useState('');
   const [hoveredWorker, setHoveredWorker] = useState(null);
   const [expandedWorker, setExpandedWorker] = useState(null);
+  const [shortlistedWorkers, setShortlistedWorkers] = useState([]);
+  const [rejectedWorkers, setRejectedWorkers] = useState([]);
 
   useEffect(() => {
     fetchWorkers();
