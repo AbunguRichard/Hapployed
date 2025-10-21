@@ -640,6 +640,9 @@ class BackendTester:
         self.test_ai_suggest_gigs()
         self.test_ai_forecast_demand()
         
+        # AI Voice Parsing Tests
+        self.test_ai_voice_parsing()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
