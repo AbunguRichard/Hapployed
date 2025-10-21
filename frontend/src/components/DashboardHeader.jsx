@@ -9,7 +9,7 @@ const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution
 export default function DashboardHeader() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isQuickHireModalOpen, setIsQuickHireModalOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
