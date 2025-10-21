@@ -71,6 +71,13 @@ export default function DashboardHeader() {
       outlined: true
     },
     { 
+      name: 'Find Workers', 
+      path: '/find-workers',
+      icon: Search,
+      iconColor: 'text-purple-600',
+      badge: '🛡️'
+    },
+    { 
       name: 'My Jobs', 
       path: '/my-jobs',
       icon: ClipboardList,
