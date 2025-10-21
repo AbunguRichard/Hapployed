@@ -702,11 +702,51 @@ export default function FindWorkersPage() {
 
           {/* Worker Cards */}
           <div className="flex-1">
-            {/* Results Header */}
+            {/* Results Header with View Toggle */}
             {!loading && (
               <div className="mb-6 flex items-center justify-between">
                 <div className="text-sm text-gray-600">
                   Showing <span className="font-semibold text-gray-900">{workers.length}</span> verified worker{workers.length !== 1 ? 's' : ''}
+                </div>
+                
+                {/* View Mode Toggle */}
+                <div className="flex items-center gap-2 bg-white rounded-lg border border-gray-200 p-1">
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${
+                      viewMode === 'list'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                    title="List View"
+                  >
+                    <List className="w-4 h-4" />
+                    <span className="text-sm font-semibold">List</span>
+                  </button>
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${
+                      viewMode === 'grid'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                    title="Grid View"
+                  >
+                    <Grid3x3 className="w-4 h-4" />
+                    <span className="text-sm font-semibold">Grid</span>
+                  </button>
+                  <button
+                    onClick={() => setViewMode('map')}
+                    className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${
+                      viewMode === 'map'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                    title="Map View"
+                  >
+                    <Map className="w-4 h-4" />
+                    <span className="text-sm font-semibold">Map</span>
+                  </button>
                 </div>
               </div>
             )}
