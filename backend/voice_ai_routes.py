@@ -96,6 +96,16 @@ Return ONLY a valid JSON object, no additional text or explanation."""
             else:
                 raise ValueError("Could not parse JSON from AI response")
         
+        # Convert data types to match Pydantic model expectations
+        if parsed_data.get('duration') is None:
+            parsed_data['duration'] = ""
+        if parsed_data.get('specificLocation') is None:
+            parsed_data['specificLocation'] = ""
+        if isinstance(parsed_data.get('minBudget'), (int, float)):
+            parsed_data['minBudget'] = str(parsed_data['minBudget'])
+        if isinstance(parsed_data.get('maxBudget'), (int, float)):
+            parsed_data['maxBudget'] = str(parsed_data['maxBudget'])
+        
         # Validate and return parsed data
         result = ParsedProjectData(**parsed_data)
         return result.dict()
