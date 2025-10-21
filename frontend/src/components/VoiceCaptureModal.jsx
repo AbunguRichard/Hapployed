@@ -61,109 +61,28 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
     };
   }, [recognition]);
 
-  const startListening = async () => {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      alert('Voice input is not supported in your browser. Please use Chrome, Edge, or Safari.');
-      onClose();
+  const startListening = () => {
+    if (!recognition) {
+      toast.error('Voice input not supported in this browser');
       return;
     }
 
+    setIsListening(true);
+    setTranscript('');
+    
     try {
-      // Request microphone permission and initialize audio visualization
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = stream;
-      
-      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-      analyserRef.current = audioContextRef.current.createAnalyser();
-      const source = audioContextRef.current.createMediaStreamSource(stream);
-      source.connect(analyserRef.current);
-      analyserRef.current.fftSize = 256;
-      
-      visualizeAudio();
-      
-      console.log('✅ Microphone access granted');
+      recognition.start();
     } catch (err) {
-      console.error('❌ Microphone access denied:', err);
-      alert('Microphone access is required for voice input. Please allow microphone access and try again.');
-      onClose();
-      return;
-    }
-
-    // Initialize speech recognition
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognitionRef.current = new SpeechRecognition();
-    recognitionRef.current.continuous = true;
-    recognitionRef.current.interimResults = true;
-    recognitionRef.current.lang = 'en-US';
-
-    recognitionRef.current.onstart = () => {
-      console.log('🎤 Speech recognition started');
-      setIsListening(true);
-    };
-
-    recognitionRef.current.onresult = (event) => {
-      let interimTranscript = '';
-      let finalTranscript = '';
-
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcriptPiece = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcriptPiece + ' ';
-        } else {
-          interimTranscript += transcriptPiece;
-        }
-      }
-
-      const combinedTranscript = finalTranscript + interimTranscript;
-      console.log('📝 Transcript:', combinedTranscript);
-      setTranscript(combinedTranscript);
-    };
-
-    recognitionRef.current.onerror = (event) => {
-      console.error('❌ Speech recognition error:', event.error);
-      if (event.error === 'no-speech') {
-        console.log('No speech detected, continuing...');
-      } else if (event.error === 'not-allowed') {
-        alert('Microphone permission denied. Please allow microphone access in your browser settings.');
-        onClose();
-      } else if (event.error !== 'aborted') {
-        setIsListening(false);
-      }
-    };
-
-    recognitionRef.current.onend = () => {
-      console.log('🛑 Speech recognition ended');
+      console.error('Error starting recognition:', err);
       setIsListening(false);
-    };
-
-    try {
-      recognitionRef.current.start();
-      console.log('🚀 Starting speech recognition...');
-    } catch (err) {
-      console.error('❌ Failed to start recognition:', err);
-      alert('Failed to start voice recognition. Please try again.');
-      onClose();
     }
   };
 
-  const visualizeAudio = () => {
-    if (!analyserRef.current) return;
-
-    const bufferLength = analyserRef.current.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    const draw = () => {
-      if (!analyserRef.current) return;
-      
-      animationRef.current = requestAnimationFrame(draw);
-      analyserRef.current.getByteFrequencyData(dataArray);
-      
-      // Calculate average audio level
-      const average = dataArray.reduce((a, b) => a + b) / bufferLength;
-      setAudioLevel(average / 255);
-    };
-
-    draw();
+  const stopListening = () => {
+    if (recognition && isListening) {
+      recognition.stop();
+      setIsListening(false);
+    }
   };
 
   const handleStopAndReview = () => {
