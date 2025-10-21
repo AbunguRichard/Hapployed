@@ -291,6 +291,21 @@ export default function FindWorkersPage() {
     toast.success(`Sending job offer to ${worker.name}!`);
   };
 
+  const toggleProfile = (workerId) => {
+    setExpandedWorker(expandedWorker === workerId ? null : workerId);
+  };
+
+  const handleMessage = (worker) => {
+    // Store worker info in session storage for message center
+    sessionStorage.setItem('messageRecipient', JSON.stringify({
+      id: worker.id,
+      name: worker.name,
+      avatar: worker.avatar,
+      title: worker.title
+    }));
+    navigate('/messages');
+  };
+
   // Voice Search Handler
   const handleVoiceSearch = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
