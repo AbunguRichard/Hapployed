@@ -406,8 +406,17 @@ export default function PostProjectPage() {
           </div>
         </div>
       </div>
-    );
-  }
+
+      {/* Voice Capture Modal */}
+      <VoiceCaptureModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
+        onTranscriptComplete={handleTranscriptComplete}
+        workType={pendingWorkType}
+      />
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-gray-50">
