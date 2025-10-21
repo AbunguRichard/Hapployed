@@ -86,7 +86,7 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
   };
 
   const handleStopAndReview = () => {
-    cleanup();
+    stopListening();
     
     if (transcript.trim()) {
       onTranscriptComplete(transcript, workType);
@@ -96,7 +96,8 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
   };
 
   const handleClose = () => {
-    cleanup();
+    stopListening();
+    setTranscript('');
     onClose();
   };
 
