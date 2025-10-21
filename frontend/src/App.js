@@ -147,6 +147,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/billing"
+              element={
+                <ProtectedRoute>
+                  <BillingPage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
