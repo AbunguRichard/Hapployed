@@ -234,6 +234,39 @@ export default function FindWorkersPage() {
     );
   };
 
+  // Calculate AI Match Score based on search query and filters
+  const calculateMatchScore = (worker) => {
+    let score = 70; // Base score
+    
+    // Boost for badge count
+    score += worker.badges.length * 5;
+    
+    // Boost for rating
+    score += (worker.rating - 4.0) * 10;
+    
+    // Boost for search query match
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      const skillMatch = worker.skills.some(skill => skill.toLowerCase().includes(query));
+      const titleMatch = worker.title.toLowerCase().includes(query);
+      if (skillMatch) score += 15;
+      if (titleMatch) score += 10;
+    }
+    
+    // Boost for work type match
+    if (filters.workType !== 'all' && worker.workType === filters.workType) {
+      score += 5;
+    }
+    
+    // Boost for availability
+    if (worker.availability === 'Available Now') {
+      score += 5;
+    }
+    
+    // Cap at 99
+    return Math.min(99, Math.round(score));
+  };
+
   const handleHireWorker = (worker) => {
     toast.success(`Sending job offer to ${worker.name}!`);
   };
