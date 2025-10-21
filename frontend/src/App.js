@@ -70,6 +70,14 @@ function App() {
               }
             />
             <Route
+              path="/find-workers"
+              element={
+                <ProtectedRoute>
+                  <FindWorkersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/gigs-near-me"
               element={
                 <ProtectedRoute>
