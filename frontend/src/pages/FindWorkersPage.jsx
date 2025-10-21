@@ -274,6 +274,88 @@ export default function FindWorkersPage() {
     toast.success(`Sending job offer to ${worker.name}!`);
   };
 
+  // Voice Search Handler
+  const handleVoiceSearch = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      toast.error('Voice search not supported in this browser');
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsVoiceSearching(true);
+      toast.info('🎤 Listening... Speak your search criteria');
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setVoiceTranscript(transcript);
+      parseVoiceSearch(transcript);
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Voice recognition error:', event.error);
+      setIsVoiceSearching(false);
+      toast.error('Could not understand. Please try again');
+    };
+
+    recognition.onend = () => {
+      setIsVoiceSearching(false);
+    };
+
+    recognition.start();
+  };
+
+  // Parse voice search and apply filters
+  const parseVoiceSearch = (transcript) => {
+    const lower = transcript.toLowerCase();
+    
+    // Extract skills/profession
+    const skills = ['react', 'plumber', 'plumbing', 'developer', 'designer', 'carpenter', 'electrician', 'mover', 'cleaner'];
+    const foundSkill = skills.find(skill => lower.includes(skill));
+    if (foundSkill) {
+      setSearchQuery(foundSkill);
+    }
+    
+    // Extract budget
+    const budgetMatch = lower.match(/under (\d+)/);
+    if (budgetMatch) {
+      const budget = parseInt(budgetMatch[1]);
+      if (budget <= 50) setFilters(prev => ({ ...prev, budgetRange: '0-50' }));
+      else if (budget <= 100) setFilters(prev => ({ ...prev, budgetRange: '50-100' }));
+      else if (budget <= 500) setFilters(prev => ({ ...prev, budgetRange: '100-500' }));
+      else if (budget <= 1000) setFilters(prev => ({ ...prev, budgetRange: '500-1000' }));
+      else setFilters(prev => ({ ...prev, budgetRange: '1000+' }));
+    }
+    
+    // Extract work type
+    if (lower.includes('gig') || lower.includes('local') || lower.includes('plumber') || lower.includes('electrician') || lower.includes('mover')) {
+      setFilters(prev => ({ ...prev, workType: 'gigs' }));
+    } else if (lower.includes('project') || lower.includes('developer') || lower.includes('designer')) {
+      setFilters(prev => ({ ...prev, workType: 'projects' }));
+    }
+    
+    // Voice feedback
+    setTimeout(() => {
+      const matchCount = workers.length;
+      const message = `${matchCount} matching ${matchCount === 1 ? 'worker' : 'workers'} found!`;
+      toast.success(message, { duration: 3000 });
+      
+      // Speak the result (if browser supports)
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }, 500);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />
