@@ -255,6 +255,5 @@ export default function BillingPage() {
           )}
         </div>
       </ProfileLayout>
-    );
-  }
+  );
 }
