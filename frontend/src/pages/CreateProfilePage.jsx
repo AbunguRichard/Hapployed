@@ -952,7 +952,11 @@ export default function CreateProfilePage() {
             {currentStep < 3 ? (
               <button
                 type="button"
-                onClick={handleNext}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleNext();
+                }}
                 className="flex-1 btn-primary flex items-center justify-center gap-2"
               >
                 Continue
