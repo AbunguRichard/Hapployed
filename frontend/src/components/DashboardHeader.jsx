@@ -153,15 +153,102 @@ export default function DashboardHeader() {
             </button>
           </nav>
 
-          {/* User Avatar */}
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-green-300 via-cyan-300 to-blue-300 flex items-center justify-center">
-              {/* Simple avatar illustration */}
-              <div className="w-full h-full bg-gradient-to-b from-yellow-200 to-yellow-300 rounded-full flex flex-col items-center justify-end overflow-hidden">
-                <div className="w-6 h-6 bg-yellow-600 rounded-full mb-1"></div>
-                <div className="w-10 h-6 bg-cyan-400 rounded-t-full"></div>
+          {/* User Avatar with Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+              className="flex items-center gap-2 hover:bg-gray-100 rounded-lg px-2 py-1 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-green-300 via-cyan-300 to-blue-300 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-b from-yellow-200 to-yellow-300 rounded-full flex flex-col items-center justify-end overflow-hidden">
+                  <div className="w-5 h-5 bg-yellow-600 rounded-full mb-1"></div>
+                  <div className="w-8 h-5 bg-cyan-400 rounded-t-full"></div>
+                </div>
               </div>
-            </div>
+              <ChevronDown className={`w-4 h-4 text-gray-600 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {/* Dropdown Menu */}
+            {isProfileDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                {/* User Info */}
+                <div className="px-4 py-3 border-b border-gray-200">
+                  <p className="font-semibold text-gray-900">{user?.name || 'John Doe'}</p>
+                  <p className="text-sm text-gray-600">{user?.email || 'john@example.com'}</p>
+                </div>
+
+                {/* Menu Items */}
+                <div className="py-2">
+                  <button
+                    onClick={() => { navigate('/profile'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <User className="w-5 h-5" />
+                    <span>View Profile</span>
+                  </button>
+
+                  <button
+                    onClick={() => { navigate('/settings'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <Settings className="w-5 h-5" />
+                    <span>Settings</span>
+                  </button>
+
+                  <button
+                    onClick={() => { navigate('/billing'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <CreditCard className="w-5 h-5" />
+                    <span>Billing & Payments</span>
+                  </button>
+
+                  <button
+                    onClick={() => { navigate('/notifications-settings'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <Bell className="w-5 h-5" />
+                    <span>Notification Settings</span>
+                  </button>
+
+                  <button
+                    onClick={() => { navigate('/privacy-security'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <Shield className="w-5 h-5" />
+                    <span>Privacy & Security</span>
+                  </button>
+                </div>
+
+                <div className="border-t border-gray-200 py-2">
+                  <button
+                    onClick={() => { navigate('/switch-account'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <RefreshCw className="w-5 h-5" />
+                    <span>Switch Account Type</span>
+                  </button>
+
+                  <button
+                    onClick={() => { navigate('/help'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                  >
+                    <HelpCircle className="w-5 h-5" />
+                    <span>Help & Support</span>
+                  </button>
+                </div>
+
+                <div className="border-t border-gray-200 py-2">
+                  <button
+                    onClick={() => { logout(); navigate('/auth/login'); setIsProfileDropdownOpen(false); }}
+                    className="w-full px-4 py-2 text-left hover:bg-red-50 flex items-center gap-3 text-red-600"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    <span>Log Out</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
