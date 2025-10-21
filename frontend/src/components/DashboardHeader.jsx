@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Search, Zap, Briefcase, Gauge, Plus, ClipboardList, MessageSquare } from 'lucide-react';
+import { Home, Search, Zap, Briefcase, Gauge, Plus, ClipboardList, MessageSquare, User, Settings, CreditCard, Bell, Shield, HelpCircle, LogOut, ChevronDown, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import QuickHireModal from './QuickHireModal';
 
