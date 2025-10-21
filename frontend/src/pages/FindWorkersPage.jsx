@@ -567,7 +567,7 @@ export default function FindWorkersPage() {
                 </div>
               </div>
 
-              {/* Search */}
+              {/* Search with Voice */}
               <div className="border-t border-gray-200 pt-4">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   Search Skills
@@ -579,9 +579,26 @@ export default function FindWorkersPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="React, Plumbing, Design..."
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   />
+                  <button
+                    onClick={handleVoiceSearch}
+                    disabled={isVoiceSearching}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 rounded-full transition-all ${
+                      isVoiceSearching 
+                        ? 'bg-red-100 text-red-600 animate-pulse' 
+                        : 'bg-purple-100 text-purple-600 hover:bg-purple-200'
+                    }`}
+                    title="Voice search"
+                  >
+                    <Mic className="w-4 h-4" />
+                  </button>
                 </div>
+                {voiceTranscript && (
+                  <div className="mt-2 text-xs text-gray-600 bg-purple-50 p-2 rounded">
+                    🎤 "{voiceTranscript}"
+                  </div>
+                )}
               </div>
 
               {/* Badge Filter */}
