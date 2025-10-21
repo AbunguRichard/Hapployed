@@ -1,0 +1,358 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search, MapPin, DollarSign, Star, Briefcase, Clock, Shield } from 'lucide-react';
+import DashboardHeader from '../components/DashboardHeader';
+import BadgeDisplay, { BadgeFilter } from '../components/BadgeDisplay';
+import { toast } from 'sonner';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+
+export default function FindWorkersPage() {
+  const navigate = useNavigate();
+  const [workers, setWorkers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedBadges, setSelectedBadges] = useState([]);
+  const [filters, setFilters] = useState({
+    category: 'all',
+    availability: 'all',
+    hourlyRate: 200
+  });
+
+  useEffect(() => {
+    fetchWorkers();
+  }, [selectedBadges]);
+
+  const fetchWorkers = async () => {
+    try {
+      setLoading(true);
+      
+      // Mock verified workers data
+      const mockWorkers = [
+        {
+          id: 1,
+          name: 'Sarah Johnson',
+          title: 'Senior Full-Stack Developer',
+          avatar: 'https://i.pravatar.cc/150?img=1',
+          rating: 4.9,
+          completedJobs: 127,
+          hourlyRate: 85,
+          location: 'San Francisco, CA',
+          availability: 'Available Now',
+          skills: ['React', 'Node.js', 'TypeScript', 'AWS'],
+          badges: [
+            { badge_type: 'gov-verified', badge_name: 'Gov-Verified' },
+            { badge_type: 'pro-verified', badge_name: 'Pro-Verified' },
+            { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
+          ],
+          bio: 'Experienced full-stack developer specializing in React and Node.js. Built 50+ production apps.',
+          responseTime: '< 1 hour'
+        },
+        {
+          id: 2,
+          name: 'Marcus Chen',
+          title: 'Certified Plumber & Electrician',
+          avatar: 'https://i.pravatar.cc/150?img=2',
+          rating: 4.8,
+          completedJobs: 234,
+          hourlyRate: 75,
+          location: 'Chicago, IL',
+          availability: 'Available Now',
+          skills: ['Plumbing', 'Electrical', 'HVAC', 'Emergency Repairs'],
+          badges: [
+            { badge_type: 'gov-verified', badge_name: 'Gov-Verified' },
+            { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
+          ],
+          bio: 'Licensed plumber and electrician with 15+ years experience. Available for emergency calls.',
+          responseTime: '< 30 mins'
+        },
+        {
+          id: 3,
+          name: 'Emily Rodriguez',
+          title: 'UI/UX Designer',
+          avatar: 'https://i.pravatar.cc/150?img=3',
+          rating: 5.0,
+          completedJobs: 89,
+          hourlyRate: 95,
+          location: 'Remote',
+          availability: 'Available in 2 days',
+          skills: ['Figma', 'Adobe XD', 'User Research', 'Prototyping'],
+          badges: [
+            { badge_type: 'pro-verified', badge_name: 'Pro-Verified' },
+            { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
+          ],
+          bio: 'Award-winning designer with portfolio of 100+ successful projects. Specialized in SaaS products.',
+          responseTime: '< 2 hours'
+        },
+        {
+          id: 4,
+          name: 'David Thompson',
+          title: 'Professional Mover & Handyman',
+          avatar: 'https://i.pravatar.cc/150?img=4',
+          rating: 4.7,
+          completedJobs: 312,
+          hourlyRate: 45,
+          location: 'New York, NY',
+          availability: 'Available Now',
+          skills: ['Moving', 'Assembly', 'Heavy Lifting', 'Packing'],
+          badges: [
+            { badge_type: 'gov-verified', badge_name: 'Gov-Verified' }
+          ],
+          bio: 'Professional moving specialist with own truck and equipment. Same-day service available.',
+          responseTime: '< 1 hour'
+        },
+        {
+          id: 5,
+          name: 'Priya Patel',
+          title: 'Data Scientist & ML Engineer',
+          avatar: 'https://i.pravatar.cc/150?img=5',
+          rating: 4.9,
+          completedJobs: 67,
+          hourlyRate: 110,
+          location: 'Austin, TX',
+          availability: 'Available in 1 week',
+          skills: ['Python', 'Machine Learning', 'TensorFlow', 'Data Analysis'],
+          badges: [
+            { badge_type: 'pro-verified', badge_name: 'Pro-Verified' },
+            { badge_type: 'community-trusted', badge_name: 'Community-Trusted' }
+          ],
+          bio: 'PhD in Computer Science. Specialized in AI/ML solutions for startups and enterprises.',
+          responseTime: '< 3 hours'
+        },
+        {
+          id: 6,
+          name: 'James Wilson',
+          title: 'Licensed Contractor',
+          avatar: 'https://i.pravatar.cc/150?img=6',
+          rating: 4.8,
+          completedJobs: 156,
+          hourlyRate: 65,
+          location: 'Los Angeles, CA',
+          availability: 'Available Now',
+          skills: ['Home Renovation', 'Carpentry', 'Painting', 'Drywall'],
+          badges: [
+            { badge_type: 'gov-verified', badge_name: 'Gov-Verified' },
+            { badge_type: 'pro-verified', badge_name: 'Pro-Verified' }
+          ],
+          bio: 'Licensed general contractor with 20 years experience. Specialized in home renovations.',
+          responseTime: '< 2 hours'
+        }
+      ];
+
+      // Filter by selected badges
+      let filtered = mockWorkers;
+      if (selectedBadges.length > 0) {
+        filtered = mockWorkers.filter(worker => 
+          selectedBadges.some(selectedBadge => 
+            worker.badges.some(badge => badge.badge_type === selectedBadge)
+          )
+        );
+      }
+
+      setWorkers(filtered);
+      
+    } catch (error) {
+      console.error('Error fetching workers:', error);
+      toast.error('Failed to load workers');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBadgeToggle = (badgeType) => {
+    setSelectedBadges(prev => 
+      prev.includes(badgeType)
+        ? prev.filter(b => b !== badgeType)
+        : [...prev, badgeType]
+    );
+  };
+
+  const handleHireWorker = (worker) => {
+    toast.success(`Sending job offer to ${worker.name}!`);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <DashboardHeader />
+      
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Verified Workers</h1>
+          <p className="text-gray-600">Real people, real skills. Hire with confidence.</p>
+        </div>
+
+        {/* Stats Bar */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="w-5 h-5 text-blue-600" />
+              <span className="text-sm font-semibold text-gray-600">Gov-Verified</span>
+            </div>
+            <div className="text-2xl font-bold text-gray-900">
+              {workers.filter(w => w.badges.some(b => b.badge_type === 'gov-verified')).length}
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="w-5 h-5 text-purple-600" />
+              <span className="text-sm font-semibold text-gray-600">Pro-Verified</span>
+            </div>
+            <div className="text-2xl font-bold text-gray-900">
+              {workers.filter(w => w.badges.some(b => b.badge_type === 'pro-verified')).length}
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="w-5 h-5 text-green-600" />
+              <span className="text-sm font-semibold text-gray-600">Community-Trusted</span>
+            </div>
+            <div className="text-2xl font-bold text-gray-900">
+              {workers.filter(w => w.badges.some(b => b.badge_type === 'community-trusted')).length}
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-purple-500 to-blue-500 p-4 rounded-lg text-white">
+            <div className="text-sm font-semibold mb-1">Total Verified</div>
+            <div className="text-2xl font-bold">{workers.length}</div>
+          </div>
+        </div>
+
+        <div className="flex gap-8">
+          {/* Sidebar Filters */}
+          <div className="w-80 flex-shrink-0">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-4 space-y-6">
+              {/* Search */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Search Skills
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="React, Plumbing, Design..."
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              {/* Badge Filter */}
+              <div className="border-t border-gray-200 pt-6">
+                <BadgeFilter 
+                  selectedBadges={selectedBadges}
+                  onBadgeToggle={handleBadgeToggle}
+                />
+              </div>
+
+              {/* Trust Message */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-sm font-semibold text-blue-900 mb-1">100% Verified</div>
+                    <div className="text-xs text-blue-700">
+                      All workers shown have completed at least one verification process
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Worker Cards */}
+          <div className="flex-1">
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="inline-block w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-4 text-gray-600">Loading verified workers...</p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {workers.map(worker => (
+                  <div key={worker.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                    <div className="flex gap-6">
+                      {/* Avatar */}
+                      <img 
+                        src={worker.avatar} 
+                        alt={worker.name}
+                        className="w-24 h-24 rounded-full object-cover border-4 border-purple-100"
+                      />
+                      
+                      {/* Info */}
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-1">{worker.name}</h3>
+                            <p className="text-gray-600 mb-2">{worker.title}</p>
+                            <BadgeDisplay badges={worker.badges} size="small" />
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-purple-600">${worker.hourlyRate}/hr</div>
+                            <div className="text-sm text-gray-600">avg rate</div>
+                          </div>
+                        </div>
+
+                        <p className="text-gray-700 mb-4">{worker.bio}</p>
+
+                        {/* Stats */}
+                        <div className="flex flex-wrap gap-4 mb-4 text-sm">
+                          <div className="flex items-center gap-1.5">
+                            <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                            <span className="font-semibold">{worker.rating}</span>
+                            <span className="text-gray-600">({worker.completedJobs} jobs)</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-gray-600">
+                            <MapPin className="w-4 h-4" />
+                            {worker.location}
+                          </div>
+                          <div className="flex items-center gap-1.5 text-gray-600">
+                            <Clock className="w-4 h-4" />
+                            {worker.responseTime} response
+                          </div>
+                          <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                            worker.availability === 'Available Now' 
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            {worker.availability}
+                          </div>
+                        </div>
+
+                        {/* Skills */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {worker.skills.map((skill, idx) => (
+                            <span key={idx} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => handleHireWorker(worker)}
+                            className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+                          >
+                            Hire Now
+                          </button>
+                          <button className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all">
+                            View Profile
+                          </button>
+                          <button className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all">
+                            Message
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
