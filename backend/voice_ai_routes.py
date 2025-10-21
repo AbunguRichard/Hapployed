@@ -31,6 +31,113 @@ class ParsedProjectData(BaseModel):
     type: str
     skills: list = []
 
+class PriceEstimateRequest(BaseModel):
+    category: str
+    description: str = ""
+    location: str = "remote"
+    specificLocation: str = ""
+    urgency: str = "normal"
+    workType: str  # 'project' or 'gig'
+    duration: str = ""
+
+class PriceEstimateResponse(BaseModel):
+    minPrice: int
+    maxPrice: int
+    suggestedPrice: int
+    explanation: str
+    factors: dict
+
+@router.post("/estimate-price")
+async def estimate_price(request: PriceEstimateRequest):
+    """
+    AI-powered price estimation based on skill, distance, urgency, and market trends
+    """
+    try:
+        # Get Emergent LLM Key
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="API key not configured")
+        
+        work_type_label = "project" if request.workType == "project" else "gig"
+        
+        system_message = f"""You are an expert pricing consultant for {work_type_label}s. Analyze the provided details and suggest a fair price range based on:
+1. **Skill Level & Category**: Market rates for the specific skill/category
+2. **Location**: Local market rates (if on-site) or global rates (if remote)
+3. **Urgency**: Premium pricing for urgent/emergency work
+4. **Market Trends**: Current demand and supply dynamics
+
+Return a JSON object with:
+- minPrice: Minimum fair price (integer, USD)
+- maxPrice: Maximum fair price (integer, USD)
+- suggestedPrice: Recommended fair price (integer, USD)
+- explanation: Brief explanation (2-3 sentences) of why this price range is fair
+- factors: Object with breakdown (skill_factor, urgency_factor, location_factor, market_factor as percentages)
+
+Guidelines:
+- Projects: $100-$10,000+ depending on complexity
+- Gigs: $30-$500 depending on task
+- Urgent work: 20-50% premium
+- Specialized skills: Higher rates
+- Remote work: Global market rates
+- On-site work: Local market rates + travel consideration
+
+Be realistic and fair. Protect both workers (from lowball offers) and clients (from overpricing)."""
+
+        # Build context from request
+        context_parts = [
+            f"Type: {work_type_label.capitalize()}",
+            f"Category: {request.category}",
+            f"Urgency: {request.urgency}",
+            f"Location: {request.location}"
+        ]
+        
+        if request.specificLocation:
+            context_parts.append(f"Specific Location: {request.specificLocation}")
+        if request.duration:
+            context_parts.append(f"Duration: {request.duration}")
+        if request.description:
+            context_parts.append(f"Description: {request.description[:200]}")
+        
+        context = "\n".join(context_parts)
+        
+        # Initialize LLM Chat with GPT-5
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"price-estimate-{request.workType}",
+            system_message=system_message
+        ).with_model("openai", "gpt-5")
+        
+        # Create user message
+        user_message = UserMessage(
+            text=f"Estimate a fair price for this {work_type_label}:\n\n{context}"
+        )
+        
+        # Get AI response
+        response = await chat.send_message(user_message)
+        
+        logger.info(f"AI Price Estimate Response: {response}")
+        
+        # Parse the JSON response
+        import json
+        try:
+            parsed_data = json.loads(response)
+        except json.JSONDecodeError:
+            # Try to extract JSON from the response if it's wrapped in other text
+            import re
+            json_match = re.search(r'\{.*\}', response, re.DOTALL)
+            if json_match:
+                parsed_data = json.loads(json_match.group())
+            else:
+                raise ValueError("Could not parse JSON from AI response")
+        
+        # Validate and return parsed data
+        result = PriceEstimateResponse(**parsed_data)
+        return result.dict()
+        
+    except Exception as e:
+        logger.error(f"Error estimating price: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to estimate price: {str(e)}")
+
 @router.post("/parse-voice-input")
 async def parse_voice_input(request: VoiceTranscriptRequest):
     """
