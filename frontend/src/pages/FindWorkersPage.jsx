@@ -329,7 +329,7 @@ export default function FindWorkersPage() {
 
   const handleShortlist = (worker) => {
     setShortlistedWorkers(prev => [...prev, worker]);
-    toast.success(`❤️ ${worker.name} added to shortlist!`);
+    toast.success(`👍 ${worker.name} added to shortlist!`);
     scrollToNextWorker(worker.id);
   };
 
