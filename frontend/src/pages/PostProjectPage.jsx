@@ -121,6 +121,139 @@ export default function PostProjectPage() {
     }, 2000);
   };
 
+  // AI-powered voice input handler
+  const startVoiceInput = (type) => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      toast.error('Voice input is not supported in your browser');
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognitionRef.current = new SpeechRecognition();
+    recognitionRef.current.continuous = false;
+    recognitionRef.current.interimResults = false;
+    recognitionRef.current.lang = 'en-US';
+
+    recognitionRef.current.onstart = () => {
+      setIsListening(true);
+      toast.info('🎤 Listening... Speak your request', {
+        description: 'Describe what you need done'
+      });
+    };
+
+    recognitionRef.current.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setVoiceText(transcript);
+      parseVoiceInput(transcript, type);
+      setIsListening(false);
+    };
+
+    recognitionRef.current.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      setIsListening(false);
+      toast.error('Could not understand audio. Please try again.');
+    };
+
+    recognitionRef.current.onend = () => {
+      setIsListening(false);
+    };
+
+    recognitionRef.current.start();
+  };
+
+  // AI parsing of voice input to auto-fill form
+  const parseVoiceInput = (text, type) => {
+    // Simple AI-like parsing logic
+    const lowerText = text.toLowerCase();
+    
+    // Extract title (first few words)
+    const words = text.split(' ');
+    let title = words.slice(0, Math.min(5, words.length)).join(' ');
+    if (title.length > 50) title = title.substring(0, 50);
+    
+    // Detect category
+    let category = '';
+    if (lowerText.includes('move') || lowerText.includes('moving') || lowerText.includes('couch') || lowerText.includes('furniture')) {
+      category = 'Labor & Moving';
+    } else if (lowerText.includes('clean') || lowerText.includes('cleaning')) {
+      category = 'Cleaning';
+    } else if (lowerText.includes('fix') || lowerText.includes('repair') || lowerText.includes('plumb')) {
+      category = 'Maintenance & Repairs';
+    } else if (lowerText.includes('website') || lowerText.includes('app') || lowerText.includes('develop')) {
+      category = 'Web Development';
+    } else if (lowerText.includes('design') || lowerText.includes('logo') || lowerText.includes('graphic')) {
+      category = 'Design';
+    } else {
+      category = 'Other';
+    }
+    
+    // Extract duration
+    let duration = '';
+    const hourMatch = lowerText.match(/(\d+)\s*(hour|hr)/);
+    if (hourMatch) {
+      duration = `${hourMatch[1]} hours`;
+    }
+    
+    // Extract location hints
+    let location = 'remote';
+    let specificLocation = '';
+    if (lowerText.includes('downtown') || lowerText.includes('apartment') || lowerText.includes('house') || lowerText.includes('office')) {
+      location = 'on-site';
+      const locationMatch = text.match(/(downtown|apartment|house|office|[0-9]+th floor)/gi);
+      if (locationMatch) {
+        specificLocation = locationMatch.join(', ');
+      }
+    }
+    
+    // Estimate budget based on category and duration
+    let minBudget = '';
+    let maxBudget = '';
+    if (type === 'gig') {
+      if (category === 'Labor & Moving') {
+        minBudget = '50';
+        maxBudget = '150';
+      } else if (category === 'Cleaning') {
+        minBudget = '40';
+        maxBudget = '100';
+      } else {
+        minBudget = '30';
+        maxBudget = '80';
+      }
+    } else {
+      if (category === 'Web Development') {
+        minBudget = '500';
+        maxBudget = '2000';
+      } else if (category === 'Design') {
+        minBudget = '300';
+        maxBudget = '1000';
+      } else {
+        minBudget = '100';
+        maxBudget = '500';
+      }
+    }
+    
+    // Update project data
+    setProjectData({
+      ...projectData,
+      title: title,
+      description: text,
+      category: category,
+      duration: duration,
+      location: location,
+      specificLocation: specificLocation,
+      minBudget: minBudget,
+      maxBudget: maxBudget
+    });
+    
+    // Set work type and move to step 1
+    setWorkType(type);
+    setCurrentStep(1);
+    
+    toast.success('✨ AI has filled your form!', {
+      description: 'Review and adjust the details as needed'
+    });
+  };
+
   // If work type is not selected, show selection screen
   if (!workType) {
     return (
