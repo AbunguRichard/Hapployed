@@ -786,6 +786,225 @@ export default function FindWorkersPage() {
                 {workers.map(worker => {
                   const matchScore = calculateMatchScore(worker);
                   return (
+                    <div
+                      key={worker.id}
+                      className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-xl transition-all group"
+                    >
+                      {/* Header with Avatar and Match Score */}
+                      <div className="flex flex-col items-center mb-4">
+                        <div className="relative mb-3">
+                          <img
+                            src={worker.avatar}
+                            alt={worker.name}
+                            className="w-20 h-20 rounded-full object-cover border-4 border-purple-100"
+                          />
+                          <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg ${
+                            matchScore >= 90 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' :
+                            matchScore >= 80 ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white' :
+                            'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                          }`}>
+                            <Sparkles className="w-3 h-3" />
+                            {matchScore}%
+                          </div>
+                        </div>
+                        
+                        <h3 className="text-lg font-bold text-gray-900 text-center mb-1">{worker.name}</h3>
+                        <p className="text-sm text-gray-600 text-center mb-2">{worker.title}</p>
+                        
+                        <div className="flex flex-wrap gap-1 justify-center mb-3">
+                          <BadgeDisplay badges={worker.badges} size="small" />
+                        </div>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="space-y-2 mb-4 text-sm">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 text-gray-600">
+                            <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                            <span className="font-semibold">{worker.rating}</span>
+                          </div>
+                          <span className="text-gray-500">({worker.completedJobs} jobs)</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-gray-600">Hourly Rate:</span>
+                          <span className="text-lg font-bold text-purple-600">${worker.hourlyRate}/hr</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-gray-600">
+                          <MapPin className="w-4 h-4" />
+                          <span className="text-xs">{worker.location}</span>
+                        </div>
+                      </div>
+
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {worker.skills.slice(0, 3).map((skill, idx) => (
+                          <span key={idx} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                            {skill}
+                          </span>
+                        ))}
+                        {worker.skills.length > 3 && (
+                          <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full font-semibold">
+                            +{worker.skills.length - 3}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="space-y-2">
+                        <button
+                          onClick={() => handleHireWorker(worker)}
+                          className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all"
+                        >
+                          Hire Now
+                        </button>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleMessage(worker)}
+                            className="flex-1 px-3 py-2 border-2 border-gray-300 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-50 transition-all"
+                          >
+                            Message
+                          </button>
+                          <button
+                            onClick={() => handleShortlist(worker)}
+                            className="px-3 py-2 bg-green-100 hover:bg-green-200 rounded-lg transition-all"
+                            title="Shortlist"
+                          >
+                            <ThumbsUp className="w-4 h-4 text-green-600" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : viewMode === 'map' ? (
+              /* MAP VIEW */
+              <div className="space-y-6">
+                {/* Map Controls */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                      <Map className="w-5 h-5 text-purple-600" />
+                      Map View - Local Workers
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-gray-600">Radius:</span>
+                      <input
+                        type="range"
+                        min="1"
+                        max="50"
+                        value={mapRadius}
+                        onChange={(e) => setMapRadius(parseInt(e.target.value))}
+                        className="w-32"
+                      />
+                      <span className="text-sm font-semibold text-purple-600 min-w-[60px]">{mapRadius} miles</span>
+                    </div>
+                  </div>
+                  
+                  {/* Mock Map */}
+                  <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border-2 border-gray-200 overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        <MapPin className="w-16 h-16 text-purple-400 mx-auto mb-3" />
+                        <p className="text-gray-600 font-semibold mb-2">Interactive Map</p>
+                        <p className="text-sm text-gray-500">Showing workers within {mapRadius} miles</p>
+                      </div>
+                    </div>
+                    
+                    {/* Mock Worker Pins */}
+                    {workers.slice(0, 5).map((worker, idx) => (
+                      <div
+                        key={worker.id}
+                        className="absolute animate-fadeIn cursor-pointer group/pin"
+                        style={{
+                          left: `${20 + idx * 15}%`,
+                          top: `${30 + (idx % 3) * 20}%`
+                        }}
+                      >
+                        <div className="relative">
+                          <MapPin className="w-8 h-8 text-purple-600 fill-purple-200 hover:scale-125 transition-transform" />
+                          {/* Pin Popup on Hover */}
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover/pin:opacity-100 transition-opacity pointer-events-none">
+                            <div className="bg-white rounded-lg shadow-xl border-2 border-purple-200 p-3 whitespace-nowrap">
+                              <div className="flex items-center gap-2 mb-1">
+                                <img src={worker.avatar} alt={worker.name} className="w-8 h-8 rounded-full" />
+                                <div>
+                                  <div className="text-sm font-bold text-gray-900">{worker.name}</div>
+                                  <div className="text-xs text-gray-600">${worker.hourlyRate}/hr</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Workers List Below Map */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {workers.map(worker => {
+                    const matchScore = calculateMatchScore(worker);
+                    return (
+                      <div
+                        key={worker.id}
+                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-lg transition-all flex gap-4"
+                      >
+                        <img
+                          src={worker.avatar}
+                          alt={worker.name}
+                          className="w-16 h-16 rounded-full object-cover border-2 border-purple-100"
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between mb-2">
+                            <div>
+                              <h4 className="font-bold text-gray-900">{worker.name}</h4>
+                              <p className="text-sm text-gray-600">{worker.title}</p>
+                            </div>
+                            <div className={`px-2 py-1 rounded-full text-xs font-bold ${
+                              matchScore >= 90 ? 'bg-green-100 text-green-700' :
+                              matchScore >= 80 ? 'bg-blue-100 text-blue-700' :
+                              'bg-purple-100 text-purple-700'
+                            }`}>
+                              {matchScore}%
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4 text-sm mb-3">
+                            <div className="flex items-center gap-1">
+                              <MapPin className="w-3 h-3 text-gray-500" />
+                              <span className="text-gray-600 text-xs">{worker.location}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Star className="w-3 h-3 text-yellow-500 fill-current" />
+                              <span className="font-semibold">{worker.rating}</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleHireWorker(worker)}
+                              className="flex-1 px-3 py-1.5 bg-purple-600 text-white text-xs font-semibold rounded-lg hover:bg-purple-700 transition-all"
+                            >
+                              Hire
+                            </button>
+                            <button
+                              onClick={() => handleMessage(worker)}
+                              className="px-3 py-1.5 border border-gray-300 text-gray-700 text-xs font-semibold rounded-lg hover:bg-gray-50 transition-all"
+                            >
+                              Message
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              /* LIST VIEW (Original) */
+              <div className="space-y-6">
+                {workers.map(worker => {
+                  const matchScore = calculateMatchScore(worker);
+                  return (
                   <div 
                     key={worker.id} 
                     data-worker-id={worker.id}
