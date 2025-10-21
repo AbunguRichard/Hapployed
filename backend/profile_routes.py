@@ -53,17 +53,24 @@ async def update_profile(profile: ProfileUpdate):
         if updated_user:
             # Remove MongoDB _id field
             updated_user.pop('_id', None)
+            print(f"Profile updated successfully: {updated_user}")
             return {
                 "message": "Profile updated successfully",
                 "user": updated_user
             }
         else:
+            print(f"Profile created successfully: {update_data}")
             return {
                 "message": "Profile created successfully",
                 "user": update_data
             }
         
+    except HTTPException:
+        raise
     except Exception as e:
+        print(f"Error updating profile: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/profile/{email}")
