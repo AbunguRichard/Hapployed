@@ -1000,6 +1000,14 @@ export default function PostProjectPage() {
           </div>
         </div>
       </div>
+
+      {/* Voice Capture Modal for Form */}
+      <VoiceCaptureModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
+        onTranscriptComplete={handleTranscriptComplete}
+        workType={workType}
+      />
     </div>
   );
 }
