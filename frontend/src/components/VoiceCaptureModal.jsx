@@ -166,7 +166,7 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-8 relative animate-slideUp">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-slideUp">
         {/* Close Button */}
         <button
           onClick={handleClose}
