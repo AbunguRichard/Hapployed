@@ -22,9 +22,9 @@ class ParsedProjectData(BaseModel):
     title: str
     description: str
     category: str
-    duration: str
+    duration: str = ""
     location: str
-    specificLocation: str
+    specificLocation: str = ""
     minBudget: str
     maxBudget: str
     urgency: str
