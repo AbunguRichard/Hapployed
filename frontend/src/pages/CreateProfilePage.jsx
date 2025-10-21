@@ -280,6 +280,13 @@ export default function CreateProfilePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('handleSubmit called - currentStep:', currentStep, 'userType:', userType);
+    
+    if (currentStep !== 3) {
+      console.warn('Submit called but not on step 3, ignoring');
+      return;
+    }
+    
     setError('');
     setLoading(true);
 
