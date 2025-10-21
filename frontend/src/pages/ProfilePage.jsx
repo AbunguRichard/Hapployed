@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ProfileLayout from '../components/ProfileLayout';
 import { User, Mail, Phone, MapPin, Briefcase, Award } from 'lucide-react';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
