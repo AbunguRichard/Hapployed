@@ -10,6 +10,7 @@ import CreateProfilePage from './pages/CreateProfilePage';
 import DashboardPage from './pages/DashboardPage';
 import OpportunitiesPage from './pages/OpportunitiesPage';
 import PostProjectPage from './pages/PostProjectPage';
+import FindWorkersPage from './pages/FindWorkersPage';
 import GigsNearMePage from './pages/GigsNearMePage';
 import SettingsPage from './pages/SettingsPage';
 import WorkerDashboard from './pages/WorkerDashboard';
