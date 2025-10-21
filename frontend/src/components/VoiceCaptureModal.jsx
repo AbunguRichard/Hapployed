@@ -132,9 +132,11 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         <div className="relative mb-6">
           <div className="flex items-center justify-center gap-1 h-20">
             {[...Array(15)].map((_, i) => {
+              const baseHeight = 12;
+              const maxHeight = 48;
               const height = isListening 
-                ? Math.max(12, Math.random() * audioLevel * 60 + 12) 
-                : 12;
+                ? baseHeight + Math.random() * (maxHeight - baseHeight)
+                : baseHeight;
               
               return (
                 <div
