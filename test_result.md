@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Implement the new unified platform vision for Hapployed: Redesign the Homepage to be role-aware with descriptive buttons (Gigs Near Me, Current Projects, QuickHire) that link to informational pages with beautiful designs and pictures. Hide the signup button for logged-in users."
+user_problem_statement: "Implement AI-driven voice input feature on Post Project page. Users should be able to speak naturally about their project/gig needs, and AI (GPT-5) should parse the speech to automatically fill form fields including title, description, category, duration, location, budget, and skills. The voice capture should happen in a dedicated modal (VoiceCaptureModal) with user confirmation before applying the parsed data to the form."
 
 backend:
   - task: "No backend changes required for Phase 1"
