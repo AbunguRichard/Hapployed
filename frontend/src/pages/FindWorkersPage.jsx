@@ -832,7 +832,8 @@ export default function FindWorkersPage() {
                       </div>
                     </div>
                   </div>
-                ))}
+                );
+                })}
               </div>
             )}
           </div>
