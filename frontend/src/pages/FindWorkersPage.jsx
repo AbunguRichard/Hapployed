@@ -244,9 +244,31 @@ export default function FindWorkersPage() {
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Verified Workers</h1>
-          <p className="text-gray-600">Real people, real skills. Hire with confidence.</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Verified Workers</h1>
+            <p className="text-gray-600">Real people, real skills. Hire with confidence.</p>
+          </div>
+          {(filters.workType !== 'all' || selectedBadges.length > 0 || searchQuery) && (
+            <button
+              onClick={() => {
+                setFilters({
+                  workType: 'all',
+                  gigCategory: 'all',
+                  gigUrgency: 'all',
+                  projectCategory: 'all',
+                  projectScope: 'all',
+                  budgetRange: 'all',
+                  locationRange: 'all'
+                });
+                setSelectedBadges([]);
+                setSearchQuery('');
+              }}
+              className="px-4 py-2 text-sm font-semibold text-purple-600 hover:text-purple-700 border-2 border-purple-300 rounded-lg hover:bg-purple-50 transition-all"
+            >
+              Clear All Filters
+            </button>
+          )}
         </div>
 
         {/* Stats Bar */}
