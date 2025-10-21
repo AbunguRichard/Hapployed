@@ -233,9 +233,9 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
 
         {/* Transcript Display */}
         {transcript && (
-          <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
-            <p className="text-sm text-gray-600 mb-1">Your request:</p>
-            <p className="text-gray-900">{transcript}</p>
+          <div className="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <p className="text-xs text-gray-500 mb-1">Your request:</p>
+            <p className="text-sm text-gray-900">{transcript}</p>
           </div>
         )}
 
