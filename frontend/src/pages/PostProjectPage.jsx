@@ -238,7 +238,7 @@ export default function PostProjectPage() {
                 {/* Voice Input Button */}
                 <div className="relative group/tooltip">
                   <button
-                    onClick={() => handleVoiceInput('project')}
+                    onClick={() => handleVoiceInputFromCard('project')}
                     className="w-10 h-10 bg-purple-600 hover:bg-purple-700 rounded-full flex items-center justify-center transition-all"
                     title="Voice input"
                   >
