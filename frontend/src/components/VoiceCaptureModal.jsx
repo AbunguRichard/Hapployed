@@ -190,8 +190,8 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         </div>
 
         {/* Audio Visualization */}
-        <div className="relative mb-8">
-          <div className="flex items-center justify-center gap-2 h-32">
+        <div className="relative mb-6">
+          <div className="flex items-center justify-center gap-1 h-20">
             {[...Array(20)].map((_, i) => {
               const height = isListening 
                 ? Math.max(20, Math.random() * audioLevel * 100 + 20) 
