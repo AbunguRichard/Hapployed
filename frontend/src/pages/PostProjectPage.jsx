@@ -128,109 +128,70 @@ export default function PostProjectPage() {
   };
 
   // AI parsing of voice input to auto-fill form
-  const handleTranscriptComplete = (text, type) => {
-    // Simple AI-like parsing logic
-    const lowerText = text.toLowerCase();
-    
-    // Extract title (first few words)
-    const words = text.split(' ');
-    let title = words.slice(0, Math.min(5, words.length)).join(' ');
-    if (title.length > 50) title = title.substring(0, 50);
-    
-    // Detect category
-    let category = '';
-    if (lowerText.includes('move') || lowerText.includes('moving') || lowerText.includes('couch') || lowerText.includes('furniture')) {
-      category = 'Labor & Moving';
-    } else if (lowerText.includes('clean') || lowerText.includes('cleaning')) {
-      category = 'Cleaning';
-    } else if (lowerText.includes('fix') || lowerText.includes('repair') || lowerText.includes('plumb') || lowerText.includes('leak')) {
-      category = 'Maintenance & Repairs';
-    } else if (lowerText.includes('website') || lowerText.includes('app') || lowerText.includes('develop')) {
-      category = 'Web Development';
-    } else if (lowerText.includes('design') || lowerText.includes('logo') || lowerText.includes('graphic')) {
-      category = 'Design';
-    } else {
-      category = 'Other';
-    }
-    
-    // Detect urgency
-    let urgency = 'normal';
-    let projectType = 'regular';
-    if (lowerText.includes('urgent') || lowerText.includes('today') || lowerText.includes('right now') || lowerText.includes('asap') || lowerText.includes('immediately')) {
-      urgency = 'urgent';
-      projectType = 'emergency';
-    }
-    
-    // Extract duration
-    let duration = '';
-    const hourMatch = lowerText.match(/(\d+)\s*(hour|hr)/);
-    if (hourMatch) {
-      duration = `${hourMatch[1]} hours`;
-    }
-    
-    // Extract location hints
-    let location = 'remote';
-    let specificLocation = '';
-    if (lowerText.includes('downtown') || lowerText.includes('apartment') || lowerText.includes('house') || lowerText.includes('office') || lowerText.includes('kitchen') || lowerText.includes('bathroom')) {
-      location = 'on-site';
-      const locationMatch = text.match(/(downtown|apartment|house|office|[0-9]+th floor|kitchen|bathroom)/gi);
-      if (locationMatch) {
-        specificLocation = locationMatch.join(', ');
+  const handleTranscriptComplete = async (text, type) => {
+    try {
+      // Show loading toast
+      const loadingToast = toast.loading('🤖 AI is processing your request...');
+      
+      // Call backend API for AI parsing
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+      const response = await fetch(`${backendUrl}/api/parse-voice-input`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transcript: text,
+          workType: type
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to parse voice input');
       }
+      
+      const parsedData = await response.json();
+      
+      // Update project data with AI-parsed fields
+      setProjectData({
+        ...projectData,
+        title: parsedData.title || '',
+        description: parsedData.description || text,
+        category: parsedData.category || 'Other',
+        duration: parsedData.duration || '',
+        location: parsedData.location || 'remote',
+        specificLocation: parsedData.specificLocation || '',
+        minBudget: parsedData.minBudget || '',
+        maxBudget: parsedData.maxBudget || '',
+        urgency: parsedData.urgency || 'normal',
+        type: parsedData.type || 'regular',
+        skills: parsedData.skills || []
+      });
+      
+      // Set work type and move to step 1
+      setWorkType(type);
+      setCurrentStep(1);
+      
+      // Dismiss loading toast and show success
+      toast.dismiss(loadingToast);
+      toast.success('✨ AI has filled your form!', {
+        description: 'Review and adjust the details as needed'
+      });
+      
+    } catch (error) {
+      console.error('Error parsing voice input:', error);
+      toast.error('Failed to process voice input', {
+        description: 'Please try again or fill the form manually'
+      });
+      
+      // Fallback: Set basic data manually
+      setProjectData({
+        ...projectData,
+        description: text
+      });
+      setWorkType(type);
+      setCurrentStep(1);
     }
-    
-    // Estimate budget based on category and duration
-    let minBudget = '';
-    let maxBudget = '';
-    if (type === 'gig') {
-      if (category === 'Labor & Moving') {
-        minBudget = '50';
-        maxBudget = '150';
-      } else if (category === 'Cleaning') {
-        minBudget = '40';
-        maxBudget = '100';
-      } else if (category === 'Maintenance & Repairs') {
-        minBudget = '60';
-        maxBudget = '200';
-      } else {
-        minBudget = '30';
-        maxBudget = '80';
-      }
-    } else {
-      if (category === 'Web Development') {
-        minBudget = '500';
-        maxBudget = '2000';
-      } else if (category === 'Design') {
-        minBudget = '300';
-        maxBudget = '1000';
-      } else {
-        minBudget = '100';
-        maxBudget = '500';
-      }
-    }
-    
-    // Update project data with highlighted fields
-    setProjectData({
-      ...projectData,
-      title: title,
-      description: text,
-      category: category,
-      duration: duration,
-      location: location,
-      specificLocation: specificLocation,
-      minBudget: minBudget,
-      maxBudget: maxBudget,
-      urgency: urgency,
-      type: projectType
-    });
-    
-    // Set work type and move to step 1
-    setWorkType(type);
-    setCurrentStep(1);
-    
-    toast.success('✨ AI has filled your form!', {
-      description: 'Review and adjust the details as needed'
-    });
   };
 
   // If work type is not selected, show selection screen
