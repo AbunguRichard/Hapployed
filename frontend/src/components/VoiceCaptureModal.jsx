@@ -240,35 +240,35 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         )}
 
         {/* Controls */}
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           {isListening ? (
             <button
               onClick={handleStopAndReview}
-              className="flex-1 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
-              <Square className="w-5 h-5 fill-current" />
+              <Square className="w-4 h-4 fill-current" />
               <span>Stop & Review</span>
             </button>
           ) : transcript ? (
             <button
               onClick={handleStopAndReview}
-              className="flex-1 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <span>Continue to Form</span>
             </button>
           ) : (
             <button
               onClick={startListening}
-              className="flex-1 px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
-              <Mic className="w-5 h-5" />
+              <Mic className="w-4 h-4" />
               <span>Start Recording</span>
             </button>
           )}
           
           <button
             onClick={handleClose}
-            className="px-6 py-4 bg-gray-200 text-gray-700 rounded-xl font-bold text-lg hover:bg-gray-300 transition-all"
+            className="px-4 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold text-sm hover:bg-gray-300 transition-all"
           >
             Cancel
           </button>
