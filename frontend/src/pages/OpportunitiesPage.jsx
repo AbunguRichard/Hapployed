@@ -267,6 +267,14 @@ export default function OpportunitiesPage() {
                 </div>
               </div>
 
+              {/* Verified Workforce Badge Filter */}
+              <div className="border-t border-gray-200 pt-4">
+                <BadgeFilter 
+                  selectedBadges={filters.badgeTypes}
+                  onBadgeToggle={handleBadgeToggle}
+                />
+              </div>
+
               {/* AI Suggestions */}
               <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                 <h4 className="font-semibold text-gray-900 mb-2">🤖 AI Suggestions</h4>
