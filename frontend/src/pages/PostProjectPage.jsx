@@ -121,48 +121,14 @@ export default function PostProjectPage() {
     }, 2000);
   };
 
-  // AI-powered voice input handler
-  const startVoiceInput = (type) => {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      toast.error('Voice input is not supported in your browser');
-      return;
-    }
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognitionRef.current = new SpeechRecognition();
-    recognitionRef.current.continuous = false;
-    recognitionRef.current.interimResults = false;
-    recognitionRef.current.lang = 'en-US';
-
-    recognitionRef.current.onstart = () => {
-      setIsListening(true);
-      toast.info('🎤 Listening... Speak your request', {
-        description: 'Describe what you need done'
-      });
-    };
-
-    recognitionRef.current.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setVoiceText(transcript);
-      parseVoiceInput(transcript, type);
-      setIsListening(false);
-    };
-
-    recognitionRef.current.onerror = (event) => {
-      console.error('Speech recognition error:', event.error);
-      setIsListening(false);
-      toast.error('Could not understand audio. Please try again.');
-    };
-
-    recognitionRef.current.onend = () => {
-      setIsListening(false);
-    };
-
-    recognitionRef.current.start();
+  // Open voice capture modal
+  const handleVoiceInput = (type) => {
+    setPendingWorkType(type);
+    setIsVoiceModalOpen(true);
   };
 
   // AI parsing of voice input to auto-fill form
-  const parseVoiceInput = (text, type) => {
+  const handleTranscriptComplete = (text, type) => {
     // Simple AI-like parsing logic
     const lowerText = text.toLowerCase();
     
@@ -177,7 +143,7 @@ export default function PostProjectPage() {
       category = 'Labor & Moving';
     } else if (lowerText.includes('clean') || lowerText.includes('cleaning')) {
       category = 'Cleaning';
-    } else if (lowerText.includes('fix') || lowerText.includes('repair') || lowerText.includes('plumb')) {
+    } else if (lowerText.includes('fix') || lowerText.includes('repair') || lowerText.includes('plumb') || lowerText.includes('leak')) {
       category = 'Maintenance & Repairs';
     } else if (lowerText.includes('website') || lowerText.includes('app') || lowerText.includes('develop')) {
       category = 'Web Development';
@@ -185,6 +151,14 @@ export default function PostProjectPage() {
       category = 'Design';
     } else {
       category = 'Other';
+    }
+    
+    // Detect urgency
+    let urgency = 'normal';
+    let projectType = 'regular';
+    if (lowerText.includes('urgent') || lowerText.includes('today') || lowerText.includes('right now') || lowerText.includes('asap') || lowerText.includes('immediately')) {
+      urgency = 'urgent';
+      projectType = 'emergency';
     }
     
     // Extract duration
@@ -197,9 +171,9 @@ export default function PostProjectPage() {
     // Extract location hints
     let location = 'remote';
     let specificLocation = '';
-    if (lowerText.includes('downtown') || lowerText.includes('apartment') || lowerText.includes('house') || lowerText.includes('office')) {
+    if (lowerText.includes('downtown') || lowerText.includes('apartment') || lowerText.includes('house') || lowerText.includes('office') || lowerText.includes('kitchen') || lowerText.includes('bathroom')) {
       location = 'on-site';
-      const locationMatch = text.match(/(downtown|apartment|house|office|[0-9]+th floor)/gi);
+      const locationMatch = text.match(/(downtown|apartment|house|office|[0-9]+th floor|kitchen|bathroom)/gi);
       if (locationMatch) {
         specificLocation = locationMatch.join(', ');
       }
@@ -215,6 +189,9 @@ export default function PostProjectPage() {
       } else if (category === 'Cleaning') {
         minBudget = '40';
         maxBudget = '100';
+      } else if (category === 'Maintenance & Repairs') {
+        minBudget = '60';
+        maxBudget = '200';
       } else {
         minBudget = '30';
         maxBudget = '80';
@@ -232,7 +209,7 @@ export default function PostProjectPage() {
       }
     }
     
-    // Update project data
+    // Update project data with highlighted fields
     setProjectData({
       ...projectData,
       title: title,
@@ -242,7 +219,9 @@ export default function PostProjectPage() {
       location: location,
       specificLocation: specificLocation,
       minBudget: minBudget,
-      maxBudget: maxBudget
+      maxBudget: maxBudget,
+      urgency: urgency,
+      type: projectType
     });
     
     // Set work type and move to step 1
