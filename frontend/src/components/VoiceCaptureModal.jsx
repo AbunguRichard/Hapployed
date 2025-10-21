@@ -215,19 +215,19 @@ export default function VoiceCaptureModal({ isOpen, onClose, onTranscriptComplet
         </div>
 
         {/* Status Text */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           {isListening ? (
             <>
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-lg font-semibold text-gray-900">Listening... Speak now</span>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-semibold text-gray-900">Listening... Speak now</span>
               </div>
-              <p className="text-sm text-gray-600 max-w-md mx-auto">
-                For example: "I need a plumber tomorrow at 5 PM to fix a leak in my kitchen sink"
+              <p className="text-xs text-gray-500">
+                e.g., "I need a plumber tomorrow at 5 PM"
               </p>
             </>
           ) : (
-            <span className="text-lg font-semibold text-gray-600">Processing your request...</span>
+            <span className="text-sm font-semibold text-gray-600">Processing your request...</span>
           )}
         </div>
 
