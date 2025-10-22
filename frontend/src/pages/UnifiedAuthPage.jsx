@@ -6,11 +6,11 @@ const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution
 
 // Your custom background images
 const SLIDES = [
-  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/psd7o3o9_Image%201.png',
-  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/pdmdyzn6_image%202.png',
-  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/efua2yxh_image%203.png',
-  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/66726t96_image%204.png',
-  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/mlr3wjfz_Image%205.png'
+  'https://customer-assets.emergentagent.com/job_ai-recruiter-25/artifacts/kcsec8u2_Image%201.png',
+  'https://customer-assets.emergentagent.com/job_ai-recruiter-25/artifacts/l9hoxhgc_image%202.png',
+  'https://customer-assets.emergentagent.com/job_ai-recruiter-25/artifacts/y7qcajjs_image%203.png',
+  'https://customer-assets.emergentagent.com/job_ai-recruiter-25/artifacts/8rxr0au0_image%204.png',
+  'https://customer-assets.emergentagent.com/job_ai-recruiter-25/artifacts/gkxk3zg5_Image%205.png'
 ];
 
 export default function UnifiedAuthPage() {
