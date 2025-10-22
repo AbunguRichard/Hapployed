@@ -7,7 +7,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://hapployed-ux.preview.emergentagent.com/api"
+BASE_URL = "https://ai-recruiter-25.preview.emergentagent.com/api"
 
 def test_voice_parsing():
     """Test AI Voice Parsing endpoint"""
