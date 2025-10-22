@@ -69,13 +69,6 @@ export default function Header() {
           )}
         </div>
       </header>
-
-      {/* Voice Mode Modal */}
-      <VoiceOnlyModeModal 
-        isOpen={isVoiceModeOpen} 
-        onClose={() => setIsVoiceModeOpen(false)} 
-        user={null} 
-      />
     </>
   );
 }
