@@ -1495,6 +1495,9 @@ class BackendTester:
         # Job Posting Tests
         self.test_job_posting_endpoints()
         
+        # Worker Profile Tests
+        self.test_worker_profile_endpoints()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
