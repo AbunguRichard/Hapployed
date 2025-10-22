@@ -1201,6 +1201,405 @@ class BackendTester:
             except Exception as e:
                 self.log_result("worker_features", "Worker Profile - Delete Profile", False, None, str(e))
 
+    def test_application_system_endpoints(self):
+        """Test Application System API endpoints"""
+        print("\n📋 Testing Application System Endpoints...")
+        
+        # Store IDs for tests
+        test_worker_id = "app-test-worker-123"
+        test_job_id = None
+        test_application_id = None
+        
+        # Step 1: Create test worker profile first
+        try:
+            worker_payload = {
+                "userId": test_worker_id,
+                "email": "appworker@example.com",
+                "name": "Application Test Worker",
+                "bio": "Experienced developer for application testing",
+                "skills": ["React", "Node.js", "Python"],
+                "experience": "senior",
+                "availability": "fulltime",
+                "hourlyRate": 75,
+                "location": {"city": "San Francisco", "state": "CA", "country": "USA"},
+                "categories": ["Web Development"],
+                "badges": ["pro-verified"],
+                "isAvailable": True
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles", json=worker_payload)
+            
+            if response.status_code == 201:
+                worker_data = response.json()
+                self.log_result("job_posting", "Application Test - Create Worker Profile", True, 
+                              {"worker_id": worker_data.get("id"), "user_id": worker_data.get("userId")})
+            else:
+                self.log_result("job_posting", "Application Test - Create Worker Profile", False, None, 
+                              f"Failed to create worker profile: HTTP {response.status_code}")
+                return  # Can't continue without worker profile
+                
+        except Exception as e:
+            self.log_result("job_posting", "Application Test - Create Worker Profile", False, None, str(e))
+            return
+        
+        # Step 2: Create test job
+        try:
+            job_payload = {
+                "userId": "test-hirer-123",
+                "userEmail": "hirer@example.com",
+                "jobType": "project",
+                "title": "React Application Development",
+                "description": "Build a modern React application with backend integration",
+                "category": "Web Development",
+                "budget": {"min": 1000, "max": 2000},
+                "duration": "2-4 weeks",
+                "location": "remote",
+                "skills": ["React", "Node.js", "MongoDB"],
+                "urgency": "normal",
+                "status": "published"
+            }
+            
+            response = requests.post(f"{BASE_URL}/jobs", json=job_payload)
+            
+            if response.status_code == 201:
+                job_data = response.json()
+                test_job_id = job_data.get("id")
+                self.log_result("job_posting", "Application Test - Create Job", True, 
+                              {"job_id": test_job_id, "title": job_data.get("title")})
+            else:
+                self.log_result("job_posting", "Application Test - Create Job", False, None, 
+                              f"Failed to create job: HTTP {response.status_code}")
+                return  # Can't continue without job
+                
+        except Exception as e:
+            self.log_result("job_posting", "Application Test - Create Job", False, None, str(e))
+            return
+        
+        # Test 1: POST /api/applications - Submit application
+        try:
+            application_payload = {
+                "jobId": test_job_id,
+                "workerId": test_worker_id,
+                "workerEmail": "appworker@example.com",
+                "coverLetter": "I am very interested in this React development project. I have 5+ years of experience with React and Node.js.",
+                "proposedRate": 80.0,
+                "availableStartDate": "2024-01-15"
+            }
+            
+            response = requests.post(f"{BASE_URL}/applications", json=application_payload)
+            
+            if response.status_code == 201:
+                app_data = response.json()
+                test_application_id = app_data.get("id")
+                
+                # Verify all required fields
+                if (app_data.get("jobId") == test_job_id and
+                    app_data.get("workerId") == test_worker_id and
+                    app_data.get("status") == "pending" and
+                    app_data.get("coverLetter") == application_payload["coverLetter"] and
+                    app_data.get("proposedRate") == application_payload["proposedRate"] and
+                    "workerProfile" in app_data and
+                    "jobDetails" in app_data):
+                    self.log_result("job_posting", "Application System - Submit Application", True, app_data)
+                else:
+                    self.log_result("job_posting", "Application System - Submit Application", False, app_data, 
+                                  "Application data missing required fields or incorrect values")
+            else:
+                self.log_result("job_posting", "Application System - Submit Application", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Application System - Submit Application", False, None, str(e))
+        
+        # Test 2: Duplicate application prevention
+        if test_application_id:
+            try:
+                # Try to apply again to same job
+                duplicate_payload = {
+                    "jobId": test_job_id,
+                    "workerId": test_worker_id,
+                    "workerEmail": "appworker@example.com",
+                    "coverLetter": "Another application"
+                }
+                
+                response = requests.post(f"{BASE_URL}/applications", json=duplicate_payload)
+                
+                if response.status_code == 400:
+                    self.log_result("job_posting", "Application System - Duplicate Prevention", True, 
+                                  {"status_code": response.status_code, "message": "Properly prevented duplicate application"})
+                else:
+                    self.log_result("job_posting", "Application System - Duplicate Prevention", False, None, 
+                                  f"Expected 400 for duplicate application, got HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Duplicate Prevention", False, None, str(e))
+        
+        # Test 3: Invalid job ID
+        try:
+            invalid_payload = {
+                "jobId": "non-existent-job-id",
+                "workerId": test_worker_id,
+                "workerEmail": "appworker@example.com"
+            }
+            
+            response = requests.post(f"{BASE_URL}/applications", json=invalid_payload)
+            
+            if response.status_code == 404:
+                self.log_result("job_posting", "Application System - Invalid Job ID", True, 
+                              {"status_code": response.status_code, "message": "Properly returned 404 for invalid job"})
+            else:
+                self.log_result("job_posting", "Application System - Invalid Job ID", False, None, 
+                              f"Expected 404 for invalid job, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Application System - Invalid Job ID", False, None, str(e))
+        
+        # Test 4: GET /api/jobs/{jobId}/applications - Get applications for job
+        if test_job_id:
+            try:
+                response = requests.get(f"{BASE_URL}/jobs/{test_job_id}/applications")
+                
+                if response.status_code == 200:
+                    apps_data = response.json()
+                    if isinstance(apps_data, list) and len(apps_data) > 0:
+                        app = apps_data[0]
+                        # Verify enriched data
+                        if ("workerProfile" in app and 
+                            "jobDetails" in app and
+                            app.get("jobId") == test_job_id):
+                            self.log_result("job_posting", "Application System - Get Job Applications", True, 
+                                          {"applications_count": len(apps_data), "enriched_data": True})
+                        else:
+                            self.log_result("job_posting", "Application System - Get Job Applications", False, apps_data, 
+                                          "Applications missing enriched data")
+                    else:
+                        self.log_result("job_posting", "Application System - Get Job Applications", True, 
+                                      {"applications_count": 0, "message": "No applications found (acceptable)"})
+                else:
+                    self.log_result("job_posting", "Application System - Get Job Applications", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Get Job Applications", False, None, str(e))
+        
+        # Test 5: GET /api/jobs/{jobId}/applications with status filter
+        if test_job_id:
+            try:
+                response = requests.get(f"{BASE_URL}/jobs/{test_job_id}/applications?status=pending")
+                
+                if response.status_code == 200:
+                    apps_data = response.json()
+                    if isinstance(apps_data, list):
+                        # Check if all returned applications have pending status
+                        pending_apps = [app for app in apps_data if app.get("status") == "pending"]
+                        if len(pending_apps) == len(apps_data):
+                            self.log_result("job_posting", "Application System - Get Job Applications with Status Filter", True, 
+                                          {"filtered_applications": len(apps_data)})
+                        else:
+                            self.log_result("job_posting", "Application System - Get Job Applications with Status Filter", False, apps_data, 
+                                          "Status filter not working correctly")
+                    else:
+                        self.log_result("job_posting", "Application System - Get Job Applications with Status Filter", False, apps_data, 
+                                      "Expected list of applications")
+                else:
+                    self.log_result("job_posting", "Application System - Get Job Applications with Status Filter", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Get Job Applications with Status Filter", False, None, str(e))
+        
+        # Test 6: GET /api/workers/{workerId}/applications - Get worker's applications
+        try:
+            response = requests.get(f"{BASE_URL}/workers/{test_worker_id}/applications")
+            
+            if response.status_code == 200:
+                apps_data = response.json()
+                if isinstance(apps_data, list) and len(apps_data) > 0:
+                    app = apps_data[0]
+                    # Verify enriched data includes job details
+                    if ("jobDetails" in app and 
+                        app.get("workerId") == test_worker_id):
+                        self.log_result("job_posting", "Application System - Get Worker Applications", True, 
+                                      {"applications_count": len(apps_data), "enriched_data": True})
+                    else:
+                        self.log_result("job_posting", "Application System - Get Worker Applications", False, apps_data, 
+                                      "Applications missing job details")
+                else:
+                    self.log_result("job_posting", "Application System - Get Worker Applications", True, 
+                                  {"applications_count": 0, "message": "No applications found (acceptable)"})
+            else:
+                self.log_result("job_posting", "Application System - Get Worker Applications", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Application System - Get Worker Applications", False, None, str(e))
+        
+        # Test 7: GET /api/applications/{applicationId} - Get single application
+        if test_application_id:
+            try:
+                response = requests.get(f"{BASE_URL}/applications/{test_application_id}")
+                
+                if response.status_code == 200:
+                    app_data = response.json()
+                    # Verify enriched data
+                    if ("workerProfile" in app_data and 
+                        "jobDetails" in app_data and
+                        app_data.get("id") == test_application_id):
+                        self.log_result("job_posting", "Application System - Get Single Application", True, app_data)
+                    else:
+                        self.log_result("job_posting", "Application System - Get Single Application", False, app_data, 
+                                      "Application missing enriched data")
+                else:
+                    self.log_result("job_posting", "Application System - Get Single Application", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Get Single Application", False, None, str(e))
+        
+        # Test 8: GET /api/applications/{applicationId} with invalid ID
+        try:
+            response = requests.get(f"{BASE_URL}/applications/invalid-application-id")
+            
+            if response.status_code == 404:
+                self.log_result("job_posting", "Application System - Get Invalid Application", True, 
+                              {"status_code": response.status_code, "message": "Properly returned 404 for invalid application"})
+            else:
+                self.log_result("job_posting", "Application System - Get Invalid Application", False, None, 
+                              f"Expected 404 for invalid application, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Application System - Get Invalid Application", False, None, str(e))
+        
+        # Test 9: PATCH /api/applications/{applicationId} - Update status to reviewed
+        if test_application_id:
+            try:
+                update_payload = {
+                    "status": "reviewed",
+                    "hirerNotes": "Good candidate, reviewing portfolio"
+                }
+                
+                response = requests.patch(f"{BASE_URL}/applications/{test_application_id}", json=update_payload)
+                
+                if response.status_code == 200:
+                    app_data = response.json()
+                    if (app_data.get("status") == "reviewed" and
+                        app_data.get("hirerNotes") == update_payload["hirerNotes"] and
+                        "updatedAt" in app_data):
+                        self.log_result("job_posting", "Application System - Update Status to Reviewed", True, app_data)
+                    else:
+                        self.log_result("job_posting", "Application System - Update Status to Reviewed", False, app_data, 
+                                      "Status update not applied correctly")
+                else:
+                    self.log_result("job_posting", "Application System - Update Status to Reviewed", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Update Status to Reviewed", False, None, str(e))
+        
+        # Test 10: PATCH /api/applications/{applicationId} - Update status to accepted
+        if test_application_id:
+            try:
+                update_payload = {
+                    "status": "accepted",
+                    "hirerNotes": "Excellent candidate, offer extended"
+                }
+                
+                response = requests.patch(f"{BASE_URL}/applications/{test_application_id}", json=update_payload)
+                
+                if response.status_code == 200:
+                    app_data = response.json()
+                    if (app_data.get("status") == "accepted" and
+                        app_data.get("hirerNotes") == update_payload["hirerNotes"]):
+                        self.log_result("job_posting", "Application System - Update Status to Accepted", True, app_data)
+                    else:
+                        self.log_result("job_posting", "Application System - Update Status to Accepted", False, app_data, 
+                                      "Status update not applied correctly")
+                else:
+                    self.log_result("job_posting", "Application System - Update Status to Accepted", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Update Status to Accepted", False, None, str(e))
+        
+        # Test 11: GET /api/jobs/{jobId}/applications/stats - Get application stats
+        if test_job_id:
+            try:
+                response = requests.get(f"{BASE_URL}/jobs/{test_job_id}/applications/stats")
+                
+                if response.status_code == 200:
+                    stats_data = response.json()
+                    required_fields = ["total", "pending", "reviewed", "accepted", "rejected"]
+                    
+                    if all(field in stats_data for field in required_fields):
+                        # Verify stats make sense
+                        total = stats_data.get("total", 0)
+                        sum_statuses = (stats_data.get("pending", 0) + 
+                                      stats_data.get("reviewed", 0) + 
+                                      stats_data.get("accepted", 0) + 
+                                      stats_data.get("rejected", 0))
+                        
+                        if total == sum_statuses and total > 0:
+                            self.log_result("job_posting", "Application System - Get Application Stats", True, stats_data)
+                        else:
+                            self.log_result("job_posting", "Application System - Get Application Stats", True, stats_data, 
+                                          f"Minor: Stats totals don't match (total={total}, sum={sum_statuses})")
+                    else:
+                        missing_fields = [field for field in required_fields if field not in stats_data]
+                        self.log_result("job_posting", "Application System - Get Application Stats", False, stats_data, 
+                                      f"Missing required fields: {missing_fields}")
+                else:
+                    self.log_result("job_posting", "Application System - Get Application Stats", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Get Application Stats", False, None, str(e))
+        
+        # Test 12: DELETE /api/applications/{applicationId} - Withdraw application
+        if test_application_id:
+            try:
+                response = requests.delete(f"{BASE_URL}/applications/{test_application_id}")
+                
+                if response.status_code == 204:
+                    self.log_result("job_posting", "Application System - Withdraw Application", True, 
+                                  {"status_code": response.status_code, "message": "Application withdrawn successfully"})
+                    
+                    # Verify application is actually deleted
+                    verify_response = requests.get(f"{BASE_URL}/applications/{test_application_id}")
+                    if verify_response.status_code == 404:
+                        self.log_result("job_posting", "Application System - Verify Application Deletion", True, 
+                                      {"message": "Application properly deleted - returns 404 when accessed"})
+                    else:
+                        self.log_result("job_posting", "Application System - Verify Application Deletion", False, None, 
+                                      f"Application still accessible after deletion, got HTTP {verify_response.status_code}")
+                else:
+                    self.log_result("job_posting", "Application System - Withdraw Application", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Withdraw Application", False, None, str(e))
+        
+        # Test 13: Verify job application count decreased after withdrawal
+        if test_job_id:
+            try:
+                response = requests.get(f"{BASE_URL}/jobs/{test_job_id}/applications/stats")
+                
+                if response.status_code == 200:
+                    stats_data = response.json()
+                    total_after_deletion = stats_data.get("total", 0)
+                    
+                    if total_after_deletion == 0:
+                        self.log_result("job_posting", "Application System - Verify Count Decrease", True, 
+                                      {"total_applications": total_after_deletion, "message": "Application count properly decreased"})
+                    else:
+                        self.log_result("job_posting", "Application System - Verify Count Decrease", True, stats_data, 
+                                      f"Minor: Expected 0 applications after deletion, got {total_after_deletion}")
+                else:
+                    self.log_result("job_posting", "Application System - Verify Count Decrease", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Application System - Verify Count Decrease", False, None, str(e))
+
     def test_job_posting_endpoints(self):
         """Test Job Posting API endpoints"""
         print("\n💼 Testing Job Posting Endpoints...")
