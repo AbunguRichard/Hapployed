@@ -28,6 +28,10 @@ import MyJobsPage from './pages/MyJobsPage';
 import MessagesPage from './pages/MessagesPage';
 import BillingPage from './pages/BillingPage';
 import ProfilePage from './pages/ProfilePage';
+import SmartAIMatchingPage from './pages/SmartAIMatchingPage';
+import InstantDeploymentPage from './pages/InstantDeploymentPage';
+import VerifiedNetworkPage from './pages/VerifiedNetworkPage';
+import RealTimeAnalyticsPage from './pages/RealTimeAnalyticsPage';
 import './App.css';
 
 function App() {
