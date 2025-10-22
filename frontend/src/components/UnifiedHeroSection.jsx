@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Briefcase, Zap, Users, TrendingUp, Activity } from 'lucide-react';
+import FeatureModal from './FeatureModal';
 
 export default function UnifiedHeroSection() {
   const navigate = useNavigate();
   const canvasRef = useRef(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
 
   // Animated network background
   useEffect(() => {
