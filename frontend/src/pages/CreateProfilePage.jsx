@@ -299,7 +299,6 @@ export default function CreateProfilePage() {
       });
       
       // Also save to backend worker profile API
-      const { user } = useAuth();
       if (user) {
         const workerProfileData = {
           userId: user.id || user.email,
