@@ -40,6 +40,8 @@ import HireStartPage from './pages/HireStartPage';
 import HirerOnboardingPage from './pages/HirerOnboardingPage';
 import ManageJobsPage from './pages/ManageJobsPage';
 import WorkerProfileDetailPage from './pages/WorkerProfileDetailPage';
+import MyApplicationsPage from './pages/MyApplicationsPage';
+import JobApplicationsPage from './pages/JobApplicationsPage';
 import './App.css';
 
 function App() {
