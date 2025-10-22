@@ -158,6 +158,18 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ WORKER PROFILE API TESTING COMPLETE - All 8 endpoints working perfectly. All test cases passing: (1) POST /api/worker-profiles - Successfully creates worker profiles with complete data validation, proper duplicate prevention (400 error for existing userId). (2) POST /api/worker-profiles/search - Advanced search working with skills, location, rate range, and badges filters. (3) GET /api/worker-profiles/user/{userId} - Correctly retrieves profiles by user ID, proper 404 for non-existent users. (4) GET /api/worker-profiles/{profileId} - Retrieves profiles by profile ID. (5) PATCH /api/worker-profiles/{profileId} - Updates profiles correctly with updatedAt timestamp. (6) PATCH /api/worker-profiles/user/{userId} - Updates profiles via user ID. (7) POST /api/worker-profiles/{profileId}/toggle-availability - Properly toggles availability status. (8) DELETE /api/worker-profiles/{profileId} - Correctly deletes profiles with 204 response, verified deletion with 404 on re-access. MongoDB integration working flawlessly with UUID-based profile IDs. All sample data from review request working perfectly."
+  
+  - task: "Application System API Endpoints"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/application_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Registered application_routes.py in server.py. API endpoints implemented: POST /api/applications (submit application), GET /api/jobs/{jobId}/applications (get applications for job), GET /api/workers/{workerId}/applications (get worker's applications), GET /api/applications/{applicationId} (get single application), PATCH /api/applications/{applicationId} (update status), DELETE /api/applications/{applicationId} (withdraw), GET /api/jobs/{jobId}/applications/stats (get stats). All endpoints support enriched data with worker profiles and job details."
 
 frontend:
   - task: "VoiceCaptureModal Component - Voice Input Interface"
