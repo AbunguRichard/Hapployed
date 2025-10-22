@@ -11,21 +11,21 @@
           "radius_miles": 25,
           "current_location": null,
           "status_message": "Available for plumbing emergencies in downtown area",
-          "available_until": "2025-10-22T00:23:45.305973",
-          "last_updated": "2025-10-21T16:23:45.407358"
+          "available_until": "2025-10-23T04:19:52.597766",
+          "last_updated": "2025-10-22T20:19:52.658572"
         }
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.417346"
+      "timestamp": "2025-10-22T20:19:52.664705"
     },
     "Available Now Toggle - Get Status": {
       "success": true,
       "response": {
         "user_id": "worker-john-smith-123",
         "available_now": true,
-        "available_until": "2025-10-22T00:23:45.305973",
+        "available_until": "2025-10-23T04:19:52.597766",
         "current_location": null,
-        "last_updated": "2025-10-21T16:23:45.407358",
+        "last_updated": "2025-10-22T20:19:52.658572",
         "radius_miles": 25,
         "status_message": "Available for plumbing emergencies in downtown area",
         "preferences": {
@@ -54,7 +54,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.501064"
+      "timestamp": "2025-10-22T20:19:52.706720"
     },
     "Available Now Toggle - Get Available Workers": {
       "success": true,
@@ -63,9 +63,9 @@
           {
             "user_id": "worker-john-smith-123",
             "available_now": true,
-            "available_until": "2025-10-22T00:23:45.305973",
+            "available_until": "2025-10-23T04:19:52.597766",
             "current_location": null,
-            "last_updated": "2025-10-21T16:23:45.407358",
+            "last_updated": "2025-10-22T20:19:52.658572",
             "radius_miles": 25,
             "status_message": "Available for plumbing emergencies in downtown area",
             "preferences": {
@@ -96,17 +96,17 @@
           {
             "user_id": "test-user",
             "available_now": true,
-            "available_until": "2025-10-21T03:50:40.760000+00:00",
+            "available_until": null,
             "current_location": null,
-            "last_updated": "2025-10-20T23:50:40.243296",
-            "radius_miles": 10,
+            "last_updated": "2025-10-22T17:43:51.785091",
+            "radius_miles": 4,
             "status_message": ""
           }
         ],
         "count": 2
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.545652"
+      "timestamp": "2025-10-22T20:19:52.758575"
     },
     "Gamification - Check Achievements": {
       "success": true,
@@ -115,7 +115,7 @@
         "new_achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.631465"
+      "timestamp": "2025-10-22T20:19:52.800057"
     },
     "Gamification - Get Achievements": {
       "success": true,
@@ -123,7 +123,7 @@
         "achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.673442"
+      "timestamp": "2025-10-22T20:19:52.837754"
     },
     "Worker Preferences - Save": {
       "success": true,
@@ -132,7 +132,7 @@
         "message": "Preferences saved"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.714994"
+      "timestamp": "2025-10-22T20:19:52.885153"
     },
     "Worker Preferences - Get": {
       "success": true,
@@ -161,7 +161,7 @@
         "residential_preferred": true
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.754399"
+      "timestamp": "2025-10-22T20:19:52.967333"
     },
     "Gig Chain - Complete Gig": {
       "success": true,
@@ -173,12 +173,12 @@
           "completed_gig_id": "plumbing-emergency-456",
           "bonus_multiplier": 1.5,
           "next_gig_priority": true,
-          "expires_at": "2025-10-21T20:23:45.795557",
-          "created_at": "2025-10-21T16:23:45.795570"
+          "expires_at": "2025-10-23T00:19:53.008512",
+          "created_at": "2025-10-22T20:19:53.008522"
         }
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.807047"
+      "timestamp": "2025-10-22T20:19:53.013098"
     },
     "Gig Chain - Get Status": {
       "success": true,
@@ -189,23 +189,23 @@
             "completed_gig_id": "plumbing-emergency-456",
             "bonus_multiplier": 1.5,
             "next_gig_priority": true,
-            "expires_at": "2025-10-21T20:23:45.795557",
-            "created_at": "2025-10-21T16:23:45.795570"
+            "expires_at": "2025-10-23T00:19:53.008512",
+            "created_at": "2025-10-22T20:19:53.008522"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.844885"
+      "timestamp": "2025-10-22T20:19:53.051727"
     },
     "Gig Squad - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Squad created! Workers can now apply to join",
-        "squad_id": "5296c7f9-6f59-457c-8624-5b91364a6399"
+        "squad_id": "25f87949-002e-4d2e-8f78-f9bc972786eb"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.890196"
+      "timestamp": "2025-10-22T20:19:53.092332"
     },
     "Gig Squad - Join": {
       "success": true,
@@ -214,7 +214,7 @@
         "message": "Application submitted to squad"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.930669"
+      "timestamp": "2025-10-22T20:19:53.133419"
     },
     "Gig Squad - Get Available": {
       "success": true,
@@ -324,21 +324,77 @@
             ],
             "status": "assembling",
             "created_at": "2025-10-21T16:23:45.878826"
+          },
+          {
+            "squad_id": "9c1b59ca-4428-4271-980c-4b3309d3c3a5",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [
+              {
+                "user_id": "worker-john-smith-123",
+                "role": "Lead Plumber",
+                "status": "pending",
+                "applied_at": "2025-10-21T17:38:20.229458"
+              }
+            ],
+            "status": "assembling",
+            "created_at": "2025-10-21T17:38:20.187252"
+          },
+          {
+            "squad_id": "25f87949-002e-4d2e-8f78-f9bc972786eb",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [
+              {
+                "user_id": "worker-john-smith-123",
+                "role": "Lead Plumber",
+                "status": "pending",
+                "applied_at": "2025-10-22T20:19:53.128525"
+              }
+            ],
+            "status": "assembling",
+            "created_at": "2025-10-22T20:19:53.085908"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:45.968788"
+      "timestamp": "2025-10-22T20:19:53.175025"
     },
     "Corporate Pass - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Corporate pass activated",
-        "pass_id": "0f47da5e-5c24-4e92-ad40-fe8fe608b26f"
+        "pass_id": "df1b9a4a-a004-4a1b-ac67-5b05e059291e"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:46.022809"
+      "timestamp": "2025-10-22T20:19:53.219879"
     },
     "Corporate Pass - Use Credit": {
       "success": true,
@@ -347,7 +403,7 @@
         "credits_remaining": 9
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:46.072574"
+      "timestamp": "2025-10-22T20:19:53.257799"
     },
     "Gig Insurance - Activate": {
       "success": true,
@@ -356,17 +412,360 @@
         "message": "Gig is now protected by Hapployed Insurance"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:46.131335"
+      "timestamp": "2025-10-22T20:19:53.299711"
     },
     "Gig Insurance - File Claim": {
       "success": true,
       "response": {
         "success": true,
         "message": "Claim filed. Our team will review within 24 hours",
-        "claim_id": "91ad5c2e-56d4-4009-9e06-c12f66e5c7a2"
+        "claim_id": "81183086-85f4-4fc3-b57c-446b347b913f"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:23:46.182810"
+      "timestamp": "2025-10-22T20:19:53.341554"
+    },
+    "Profile Update - PUT /api/profile/update": {
+      "success": true,
+      "response": {
+        "message": "Profile updated successfully",
+        "user": {
+          "email": "john@example.com",
+          "bio": "Experienced full-stack developer with 5+ years of experience...",
+          "location": "San Francisco, CA",
+          "name": "RICHARD Ochieng ABUNGU",
+          "phone": "+1 (555) 123-4567"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.281421"
+    },
+    "Profile Retrieval - GET /api/profile/{email}": {
+      "success": true,
+      "response": {
+        "email": "john@example.com",
+        "bio": "Experienced full-stack developer with 5+ years of experience...",
+        "location": "San Francisco, CA",
+        "name": "RICHARD Ochieng ABUNGU",
+        "phone": "+1 (555) 123-4567"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.324447"
+    },
+    "Profile Update - Missing Email Validation": {
+      "success": true,
+      "response": {
+        "status_code": 422,
+        "message": "Properly validated missing email"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.365638"
+    },
+    "Profile Retrieval - Non-existent Profile": {
+      "success": true,
+      "response": {
+        "status_code": 404,
+        "message": "Properly returned 404 for non-existent profile"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.405454"
+    },
+    "Job Posting - Create Project Job": {
+      "success": true,
+      "response": {
+        "id": "de5bc8be-db07-4906-b7a5-433b680ce724",
+        "userId": "test-user-123",
+        "userEmail": "test@example.com",
+        "jobType": "project",
+        "title": "Build a React Website",
+        "description": "Need a modern React website with Tailwind CSS",
+        "category": "Web Development",
+        "skills": [
+          "React",
+          "Tailwind",
+          "JavaScript"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 5000,
+          "currency": "USD"
+        },
+        "timeline": "2-3 weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": null,
+        "status": "draft",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-22T20:21:36.441024",
+        "updatedAt": "2025-10-22T20:21:36.441029"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.445605"
+    },
+    "Job Posting - Create Gig Job": {
+      "success": true,
+      "response": {
+        "id": "0863c3f5-7aca-42a2-a586-00b3b3b65c8e",
+        "userId": "test-user-456",
+        "userEmail": "gig@example.com",
+        "jobType": "gig",
+        "title": "Emergency Plumbing Repair",
+        "description": "Need urgent plumbing repair for burst pipe",
+        "category": "Maintenance & Repairs",
+        "skills": [
+          "Plumbing",
+          "Emergency Repair"
+        ],
+        "budget": {
+          "type": "hourly",
+          "amount": 75,
+          "currency": "USD"
+        },
+        "timeline": "ASAP",
+        "location": {
+          "type": "onsite",
+          "address": "123 Main St",
+          "city": "San Francisco",
+          "state": "CA"
+        },
+        "urgency": "asap",
+        "status": "draft",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-22T20:21:36.478739",
+        "updatedAt": "2025-10-22T20:21:36.478743"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.483135"
+    },
+    "Job Posting - Get All Jobs": {
+      "success": true,
+      "response": {
+        "jobs_count": 4,
+        "sample": [
+          {
+            "id": "0863c3f5-7aca-42a2-a586-00b3b3b65c8e",
+            "userId": "test-user-456",
+            "userEmail": "gig@example.com",
+            "jobType": "gig",
+            "title": "Emergency Plumbing Repair",
+            "description": "Need urgent plumbing repair for burst pipe",
+            "category": "Maintenance & Repairs",
+            "skills": [
+              "Plumbing",
+              "Emergency Repair"
+            ],
+            "budget": {
+              "type": "hourly",
+              "amount": 75,
+              "currency": "USD"
+            },
+            "timeline": "ASAP",
+            "location": {
+              "type": "onsite",
+              "address": "123 Main St",
+              "city": "San Francisco",
+              "state": "CA"
+            },
+            "urgency": "asap",
+            "status": "draft",
+            "requirements": null,
+            "attachments": [],
+            "applications": [],
+            "views": 0,
+            "createdAt": "2025-10-22T20:21:36.478739",
+            "updatedAt": "2025-10-22T20:21:36.478743"
+          },
+          {
+            "id": "de5bc8be-db07-4906-b7a5-433b680ce724",
+            "userId": "test-user-123",
+            "userEmail": "test@example.com",
+            "jobType": "project",
+            "title": "Build a React Website",
+            "description": "Need a modern React website with Tailwind CSS",
+            "category": "Web Development",
+            "skills": [
+              "React",
+              "Tailwind",
+              "JavaScript"
+            ],
+            "budget": {
+              "type": "fixed",
+              "amount": 5000,
+              "currency": "USD"
+            },
+            "timeline": "2-3 weeks",
+            "location": {
+              "type": "remote"
+            },
+            "urgency": null,
+            "status": "draft",
+            "requirements": null,
+            "attachments": [],
+            "applications": [],
+            "views": 0,
+            "createdAt": "2025-10-22T20:21:36.441024",
+            "updatedAt": "2025-10-22T20:21:36.441029"
+          }
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.523426"
+    },
+    "Job Posting - Get Jobs with Filters": {
+      "success": true,
+      "response": {
+        "filtered_jobs_count": 2
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.564065"
+    },
+    "Job Posting - Get Jobs by User ID": {
+      "success": true,
+      "response": {
+        "user_jobs_count": 3
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.601074"
+    },
+    "Job Posting - Get Specific Job": {
+      "success": true,
+      "response": {
+        "id": "de5bc8be-db07-4906-b7a5-433b680ce724",
+        "userId": "test-user-123",
+        "userEmail": "test@example.com",
+        "jobType": "project",
+        "title": "Build a React Website",
+        "description": "Need a modern React website with Tailwind CSS",
+        "category": "Web Development",
+        "skills": [
+          "React",
+          "Tailwind",
+          "JavaScript"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 5000,
+          "currency": "USD"
+        },
+        "timeline": "2-3 weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": null,
+        "status": "draft",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-22T20:21:36.441024",
+        "updatedAt": "2025-10-22T20:21:36.441029"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.640798"
+    },
+    "Job Posting - Get Invalid Job ID": {
+      "success": true,
+      "response": {
+        "status_code": 404,
+        "message": "Properly returned 404 for invalid job ID"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.723293"
+    },
+    "Job Posting - Update Job": {
+      "success": true,
+      "response": {
+        "id": "de5bc8be-db07-4906-b7a5-433b680ce724",
+        "userId": "test-user-123",
+        "userEmail": "test@example.com",
+        "jobType": "project",
+        "title": "Build a Modern React Website with AI Features",
+        "description": "Updated description with AI integration requirements",
+        "category": "Web Development",
+        "skills": [
+          "React",
+          "Tailwind",
+          "JavaScript"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 5000,
+          "currency": "USD"
+        },
+        "timeline": "2-3 weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": null,
+        "status": "draft",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 1,
+        "createdAt": "2025-10-22T20:21:36.441024",
+        "updatedAt": "2025-10-22T20:21:36.756781"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.761365"
+    },
+    "Job Posting - Publish Job": {
+      "success": true,
+      "response": {
+        "id": "de5bc8be-db07-4906-b7a5-433b680ce724",
+        "userId": "test-user-123",
+        "userEmail": "test@example.com",
+        "jobType": "project",
+        "title": "Build a Modern React Website with AI Features",
+        "description": "Updated description with AI integration requirements",
+        "category": "Web Development",
+        "skills": [
+          "React",
+          "Tailwind",
+          "JavaScript"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 5000,
+          "currency": "USD"
+        },
+        "timeline": "2-3 weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": null,
+        "status": "published",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 1,
+        "createdAt": "2025-10-22T20:21:36.441024",
+        "updatedAt": "2025-10-22T20:21:36.803802"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.809198"
+    },
+    "Job Posting - Delete Job": {
+      "success": true,
+      "response": {
+        "status_code": 204,
+        "message": "Job deleted successfully"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.846432"
+    },
+    "Job Posting - Verify Job Deletion": {
+      "success": true,
+      "response": {
+        "message": "Job properly deleted - returns 404 when accessed"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.882010"
     }
   },
   "ai_matching": {
@@ -375,68 +774,105 @@
       "response": {
         "success": true,
         "match_data": {
-          "match_score": 88,
+          "match_score": 85,
           "confidence": "medium",
           "strengths": [
-            "Emergency Repair expertise",
-            "Plumbing specialization",
-            "Available Now (supports urgent response)",
+            "Emergency plumbing experience",
             "Weekend availability",
-            "Local to San Francisco",
-            "High rating (4.8) with strong track record (127 gigs)",
-            "Pipe repair/installation experience"
+            "Available now (fits urgent need)",
+            "Covers San Francisco",
+            "5 years experience",
+            "High rating (4.8)",
+            "127 completed gigs"
           ],
           "concerns": [
             "License status not explicitly verified; gig requires a licensed plumber",
-            "Budget ($150) may be low for emergency burst-pipe work in SF, especially if after-hours or parts needed",
-            "Material/parts and potential emergency surcharge not addressed"
+            "Budget ($150) may be low for emergency burst-pipe work and materials",
+            "Possible after-hours/emergency surcharge not addressed"
           ],
-          "recommendation": "Strong match for an urgent burst-pipe repair. The worker has the right skills, immediate availability, weekend coverage, and excellent past performance in the target area. Proceed, but first confirm their plumbing license number and discuss pricing (call-out, emergency surcharge, and parts) to align with the $150 budget or agree on an adjusted rate.",
+          "recommendation": "Strong match if licensing is confirmed. The worker\u2019s emergency repair skill set, immediate availability, weekend coverage, and strong track record make them well-suited for a burst pipe. Verify their plumbing license and align on emergency rates/materials before dispatch.",
           "key_insights": [
-            "Worker\u2019s emergency repair skill plus Available Now aligns well with the gig\u2019s urgency.",
-            "Preferred areas include San Francisco, minimizing travel time for a rapid response.",
-            "Weekend availability satisfies the requirement for off-hours service.",
-            "High rating (4.8) and 127 completed gigs indicate reliability under time-sensitive conditions.",
-            "License is a stated requirement; verify credentials before dispatch.",
-            "Clarify scope (leak isolation, temporary cap, permanent fix) and confirm any additional costs beyond the posted budget."
+            "Urgent gig aligns with worker\u2019s Available Now status for rapid response",
+            "Weekend availability directly satisfies requirement",
+            "Preferred area includes San Francisco, minimizing travel time",
+            "Past performance (4.8 rating, 127 gigs) suggests reliability under pressure",
+            "Experience in emergency repair maps to burst pipe scenarios",
+            "Budget may not cover emergency call-out and parts; clarify pricing upfront",
+            "License verification is the primary gating factor to proceed"
           ]
         }
       },
       "error": null,
-      "timestamp": "2025-10-21T16:24:09.312811"
+      "timestamp": "2025-10-22T20:20:10.839839"
     },
     "AI Suggest Gigs": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-21T16:24:09.407369"
+      "timestamp": "2025-10-22T20:20:10.910632"
     },
     "AI Forecast Demand": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-21T16:24:09.445534"
+      "timestamp": "2025-10-22T20:20:10.946830"
     },
     "AI Voice Parsing - Professional Project": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 500",
-      "timestamp": "2025-10-21T16:24:19.934050"
+      "success": true,
+      "response": {
+        "title": "Modern e-commerce website for clothing store",
+        "description": "I need a website developer to build a modern e-commerce website for my clothing store. I need it done in 3 weeks and my budget is around $1500.",
+        "category": "Web Development",
+        "duration": "3 weeks",
+        "location": "remote",
+        "specificLocation": "",
+        "minBudget": "1500",
+        "maxBudget": "1500",
+        "urgency": "normal",
+        "type": "regular",
+        "skills": [
+          "E-commerce Development",
+          "Responsive Design",
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Payment Gateway Integration",
+          "SEO"
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:20:23.322956"
     },
     "AI Voice Parsing - Local Gig": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 500",
-      "timestamp": "2025-10-21T16:24:29.731522"
+      "success": true,
+      "response": {
+        "title": "Urgent kitchen sink leak repair at 5 PM",
+        "description": "I need a plumber today at 5 PM to fix a leak in my kitchen sink. It's urgent.",
+        "category": "Maintenance & Repairs",
+        "duration": "",
+        "location": "on-site",
+        "specificLocation": "Kitchen sink",
+        "minBudget": "60",
+        "maxBudget": "200",
+        "urgency": "urgent",
+        "type": "emergency",
+        "skills": [
+          "Plumbing",
+          "Leak repair",
+          "Sink repair"
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:20:38.667493"
     },
     "AI Voice Parsing - Empty Transcript": {
       "success": true,
       "response": {
-        "status_code": 500,
+        "status_code": 400,
         "message": "Properly handled empty transcript"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:24:37.199398"
+      "timestamp": "2025-10-22T20:20:38.722557"
     },
     "AI Voice Parsing - Missing WorkType": {
       "success": true,
@@ -445,17 +881,76 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-21T16:24:37.258142"
+      "timestamp": "2025-10-22T20:20:38.762273"
+    },
+    "AI Price Estimator - Web Development Project": {
+      "success": true,
+      "response": {
+        "minPrice": 4000,
+        "maxPrice": 9000,
+        "suggestedPrice": 7000,
+        "explanation": "For a 3-week remote build of a modern e-commerce site with payment integration, a fair range reflects mid-level to senior web dev rates using established platforms (e.g., Shopify/WooCommerce/Next.js + Stripe). Normal urgency means no rush premium, and global remote rates plus strong but well-supplied e-commerce talent keep the range in the mid-tier.",
+        "factors": {
+          "skill_factor": 45,
+          "urgency_factor": 0,
+          "location_factor": 20,
+          "market_factor": 35
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:20:59.486500"
+    },
+    "AI Price Estimator - Urgent Local Gig": {
+      "success": true,
+      "response": {
+        "minPrice": 200,
+        "maxPrice": 400,
+        "suggestedPrice": 275,
+        "explanation": "Urgent on-site plumbing in downtown Chicago typically runs around a service call plus 1 hour of labor and basic parts, with a 20\u201340% premium for urgency and added downtown parking/travel overhead. This assumes a straightforward leak fix taking 0.5\u20131.5 hours; after-hours or complex issues (e.g., corroded valves or faucet replacement) would push toward the upper end.",
+        "factors": {
+          "skill_factor": 35,
+          "urgency_factor": 30,
+          "location_factor": 20,
+          "market_factor": 15
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:19.184806"
+    },
+    "AI Price Estimator - Other Category": {
+      "success": true,
+      "response": {
+        "minPrice": 1000,
+        "maxPrice": 5000,
+        "suggestedPrice": 2500,
+        "explanation": "With limited scope details, a fair baseline for a remote, normal-urgency project in a non-specialized 'Other' category is $1,000\u2013$5,000. This reflects global market rates for generalist work without an urgency premium, covering simple to moderately complex deliverables.",
+        "factors": {
+          "skill_factor": 35,
+          "urgency_factor": 0,
+          "location_factor": 15,
+          "market_factor": 50
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.159628"
+    },
+    "AI Price Estimator - Missing WorkType": {
+      "success": true,
+      "response": {
+        "status_code": 422,
+        "message": "Properly validated missing workType"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T20:21:36.232202"
     }
   },
+  "job_posting": {},
   "summary": {
-    "passed": 19,
-    "failed": 4,
+    "passed": 40,
+    "failed": 2,
     "errors": [
       "AI Suggest Gigs: HTTP 422",
-      "AI Forecast Demand: HTTP 422",
-      "AI Voice Parsing - Professional Project: HTTP 500",
-      "AI Voice Parsing - Local Gig: HTTP 500"
+      "AI Forecast Demand: HTTP 422"
     ]
   }
 }
