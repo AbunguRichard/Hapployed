@@ -94,6 +94,9 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            
+            {/* Worker Profile Detail */}
+            <Route path="/worker-profile/:profileId" element={<WorkerProfileDetailPage />} />
             <Route 
               path="/hire-method-choice" 
               element={
