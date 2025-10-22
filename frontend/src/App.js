@@ -54,6 +54,12 @@ function App() {
             <Route path="/opportunities-info" element={<OpportunitiesInfoPage />} />
             <Route path="/current-projects-info" element={<CurrentProjectsInfoPage />} />
             
+            {/* Feature Pages - Public */}
+            <Route path="/features/smart-ai-matching" element={<SmartAIMatchingPage />} />
+            <Route path="/features/instant-deployment" element={<InstantDeploymentPage />} />
+            <Route path="/features/verified-network" element={<VerifiedNetworkPage />} />
+            <Route path="/features/real-time-analytics" element={<RealTimeAnalyticsPage />} />
+            
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
