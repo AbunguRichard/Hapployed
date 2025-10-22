@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lightbulb, Trophy, Sparkles, Zap, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
+import JobApplicationModal from '../components/JobApplicationModal';
+import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
 import { BadgeFilter } from '../components/BadgeDisplay';
 
@@ -9,9 +11,12 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 export default function OpportunitiesPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [opportunities, setOpportunities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedCards, setExpandedCards] = useState({});
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
   
   // Filters
   const [filters, setFilters] = useState({
