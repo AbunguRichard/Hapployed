@@ -73,6 +73,7 @@ app.include_router(voice_ai_router)
 app.include_router(badge_router)
 app.include_router(profile_router)
 app.include_router(job_posting_router)
+app.include_router(worker_profile_router)
 
 app.add_middleware(
     CORSMiddleware,
