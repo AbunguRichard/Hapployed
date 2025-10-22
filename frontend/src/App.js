@@ -38,6 +38,7 @@ import GigsNearMeServicePage from './pages/GigsNearMeServicePage';
 import HireMethodChoicePage from './pages/HireMethodChoicePage';
 import HireStartPage from './pages/HireStartPage';
 import HirerOnboardingPage from './pages/HirerOnboardingPage';
+import ManageJobsPage from './pages/ManageJobsPage';
 import './App.css';
 
 function App() {
