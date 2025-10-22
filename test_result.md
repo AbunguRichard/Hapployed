@@ -341,7 +341,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Application System API Endpoints"
     - "JobApplicationModal Component"
     - "OpportunitiesPage - Application Integration"
     - "MyApplicationsPage"
