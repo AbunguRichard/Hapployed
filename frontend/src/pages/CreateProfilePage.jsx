@@ -43,7 +43,7 @@ export default function CreateProfilePage() {
   const [generalSkillInput, setGeneralSkillInput] = useState('');
   const [skillSuggestions, setSkillSuggestions] = useState([]);
   
-  const { createProfile } = useAuth();
+  const { createProfile, user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const next = searchParams.get('next') || '/dashboard';
