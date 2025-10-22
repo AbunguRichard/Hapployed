@@ -240,67 +240,33 @@ export default function FindWorkersPage() {
           bio: 'Licensed general contractor with 20 years experience. Specialized in home renovations.',
           responseTime: '< 2 hours'
         }
-      ];
+        ];
 
-      // Apply all filters
-      let filtered = mockWorkers;
-      
-      // Filter by work type
-      if (filters.workType !== 'all') {
-        filtered = filtered.filter(worker => worker.workType === filters.workType);
-      }
-      
-      // Filter by gig category
-      if (filters.workType === 'gigs' && filters.gigCategory !== 'all') {
-        filtered = filtered.filter(worker => worker.category === filters.gigCategory);
-      }
-      
-      // Filter by gig urgency
-      if (filters.workType === 'gigs' && filters.gigUrgency !== 'all') {
-        filtered = filtered.filter(worker => worker.urgency === filters.gigUrgency);
-      }
-      
-      // Filter by project category
-      if (filters.workType === 'projects' && filters.projectCategory !== 'all') {
-        filtered = filtered.filter(worker => worker.category === filters.projectCategory);
-      }
-      
-      // Filter by budget range
-      if (filters.budgetRange !== 'all') {
-        const [min, max] = filters.budgetRange.split('-').map(v => parseInt(v.replace('+', '')));
-        filtered = filtered.filter(worker => {
-          if (filters.budgetRange === '1000+') {
-            return worker.hourlyRate >= 100;
-          }
-          return worker.hourlyRate >= (min || 0) && worker.hourlyRate <= (max || 999999);
-        });
-      }
-      
-      // Filter by location (Remote filter)
-      if (filters.locationRange === 'remote') {
-        filtered = filtered.filter(worker => worker.location === 'Remote');
-      }
-      
-      // Filter by selected badges
-      if (selectedBadges.length > 0) {
-        filtered = filtered.filter(worker => 
-          selectedBadges.some(selectedBadge => 
-            worker.badges.some(badge => badge.badge_type === selectedBadge)
-          )
-        );
-      }
-      
-      // Filter by search query
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        filtered = filtered.filter(worker => 
-          worker.skills.some(skill => skill.toLowerCase().includes(query)) ||
-          worker.title.toLowerCase().includes(query) ||
-          worker.name.toLowerCase().includes(query)
-        );
-      }
+        // Apply frontend filters to mock data
+        let filtered = mockWorkers;
+        
+        // Filter by work type
+        if (filters.workType !== 'all') {
+          filtered = filtered.filter(worker => worker.workType === filters.workType);
+        }
+        
+        // Filter by gig category
+        if (filters.workType === 'gigs' && filters.gigCategory !== 'all') {
+          filtered = filtered.filter(worker => worker.category === filters.gigCategory);
+        }
+        
+        // Filter by search query
+        if (searchQuery.trim()) {
+          const query = searchQuery.toLowerCase();
+          filtered = filtered.filter(worker => 
+            worker.skills.some(skill => skill.toLowerCase().includes(query)) ||
+            worker.title.toLowerCase().includes(query) ||
+            worker.name.toLowerCase().includes(query)
+          );
+        }
 
-      setWorkers(filtered);
+        setWorkers(filtered);
+      }
       
     } catch (error) {
       console.error('Error fetching workers:', error);
