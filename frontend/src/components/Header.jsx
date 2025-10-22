@@ -48,16 +48,10 @@ export default function Header() {
               <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
                 What we offer
               </Link>
-              <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
-                Sign In
-              </Link>
               {!isAuthenticated && (
-                <button 
-                  onClick={() => navigate('/auth/signup')}
-                  className="btn-primary w-full"
-                >
-                  Sign Up
-                </button>
+                <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
+                  Sign In / Sign Up
+                </Link>
               )}
             </div>
           )}
