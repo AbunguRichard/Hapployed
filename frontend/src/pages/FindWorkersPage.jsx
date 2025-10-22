@@ -1190,10 +1190,17 @@ export default function FindWorkersPage() {
                             )}
                           </div>
                           <button 
+                            onClick={() => navigate(`/worker-profile/${worker.id}`)}
+                            className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all flex items-center gap-2"
+                          >
+                            <Eye className="w-4 h-4" />
+                            Full Profile
+                          </button>
+                          <button 
                             onClick={() => toggleProfile(worker.id)}
                             className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all flex items-center gap-2"
                           >
-                            View Profile
+                            Quick View
                             {expandedWorker === worker.id ? (
                               <ChevronUp className="w-4 h-4" />
                             ) : (
