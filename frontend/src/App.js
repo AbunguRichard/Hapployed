@@ -32,6 +32,9 @@ import SmartAIMatchingPage from './pages/SmartAIMatchingPage';
 import InstantDeploymentPage from './pages/InstantDeploymentPage';
 import VerifiedNetworkPage from './pages/VerifiedNetworkPage';
 import RealTimeAnalyticsPage from './pages/RealTimeAnalyticsPage';
+import ProjectsServicePage from './pages/ProjectsServicePage';
+import EmergencyGigsServicePage from './pages/EmergencyGigsServicePage';
+import GigsNearMeServicePage from './pages/GigsNearMeServicePage';
 import './App.css';
 
 function App() {
