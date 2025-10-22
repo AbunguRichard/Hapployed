@@ -1206,7 +1206,8 @@ class BackendTester:
         print("\n📋 Testing Application System Endpoints...")
         
         # Store IDs for tests
-        test_worker_id = "app-test-worker-123"
+        import time
+        test_worker_id = f"app-test-worker-{int(time.time())}"
         test_job_id = None
         test_application_id = None
         
