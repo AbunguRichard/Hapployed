@@ -65,7 +65,8 @@ export default function ServicesSection() {
             return (
               <div
                 key={index}
-                className="card hover-lift group"
+                onClick={() => navigate(service.link)}
+                className="card hover-lift group cursor-pointer"
               >
                 {/* Image */}
                 <div className="relative mb-4 rounded-xl overflow-hidden h-48">
