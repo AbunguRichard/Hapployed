@@ -4,16 +4,16 @@ import { useAuth } from '../context/AuthContext';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
 
-// Background images
+// Futuristic background images
 const SLIDES = [
-  'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&h=1080&fit=crop', // City skyline
-  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop', // Modern buildings
-  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&h=1080&fit=crop', // City lights
-  'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&h=1080&fit=crop', // Urban landscape
-  'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&h=1080&fit=crop', // Night city
-  'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=1920&h=1080&fit=crop', // Architecture
-  'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1920&h=1080&fit=crop', // Office buildings
-  'https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=1920&h=1080&fit=crop'  // Modern cityscape
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop', // Digital Earth network
+  'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop', // Futuristic tech
+  'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&h=1080&fit=crop', // Technology circuit
+  'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&h=1080&fit=crop', // AI neural network
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&h=1080&fit=crop', // Tech background
+  'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1920&h=1080&fit=crop', // Digital technology
+  'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1920&h=1080&fit=crop', // Futuristic interface
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop'  // Sci-fi network
 ];
 
 export default function UnifiedAuthPage() {
