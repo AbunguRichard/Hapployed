@@ -35,6 +35,7 @@ import RealTimeAnalyticsPage from './pages/RealTimeAnalyticsPage';
 import ProjectsServicePage from './pages/ProjectsServicePage';
 import EmergencyGigsServicePage from './pages/EmergencyGigsServicePage';
 import GigsNearMeServicePage from './pages/GigsNearMeServicePage';
+import HireMethodChoicePage from './pages/HireMethodChoicePage';
 import './App.css';
 
 function App() {
