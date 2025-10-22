@@ -122,16 +122,28 @@ export default function OpportunitiesPage() {
   };
 
   const handleSmartApply = (opportunity) => {
-    toast.success('AI is optimizing your proposal...', {
-      description: `Success rate: ${opportunity.aiSuccessRate}%`
-    });
-    setTimeout(() => {
-      navigate(`/apply/${opportunity.id}`, { state: { opportunity, mode: 'smart' } });
-    }, 1500);
+    if (!user) {
+      toast.error('Please log in to apply for jobs');
+      navigate('/auth');
+      return;
+    }
+    setSelectedJob(opportunity);
+    setShowApplicationModal(true);
   };
 
   const handleQuickApply = (opportunity) => {
-    navigate(`/apply/${opportunity.id}`, { state: { opportunity, mode: 'quick' } });
+    if (!user) {
+      toast.error('Please log in to apply for jobs');
+      navigate('/auth');
+      return;
+    }
+    setSelectedJob(opportunity);
+    setShowApplicationModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowApplicationModal(false);
+    setSelectedJob(null);
   };
 
   const toggleExpand = (id) => {
