@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, MapPin, Clock, DollarSign, Eye, Edit, Trash2, CheckCircle, XCircle, Plus, Search } from 'lucide-react';
+import { Briefcase, MapPin, Clock, DollarSign, Eye, Edit, Trash2, CheckCircle, XCircle, Plus, Search, FileText, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import DashboardHeader from '../components/DashboardHeader';
 
@@ -12,6 +12,7 @@ export default function ManageJobsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // all, published, draft, closed
   const [searchQuery, setSearchQuery] = useState('');
+  const [applicationStats, setApplicationStats] = useState({});
 
   useEffect(() => {
     if (user) {
