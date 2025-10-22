@@ -34,6 +34,22 @@ export default function ManageJobsPage() {
 
       const data = await response.json();
       setJobs(data);
+      
+      // Fetch application stats for each job
+      const stats = {};
+      for (const job of data) {
+        try {
+          const statsResponse = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/api/jobs/${job.id}/applications/stats`
+          );
+          if (statsResponse.ok) {
+            stats[job.id] = await statsResponse.json();
+          }
+        } catch (error) {
+          console.log(`Failed to fetch stats for job ${job.id}`, error);
+        }
+      }
+      setApplicationStats(stats);
     } catch (error) {
       console.error('Error fetching jobs:', error);
       toast.error('Failed to load your jobs');
