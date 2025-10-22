@@ -291,11 +291,59 @@ export default function CreateProfilePage() {
     setLoading(true);
 
     try {
+      // Save to AuthContext (for local state)
       await createProfile({
         ...formData,
         userType,
         createdAt: new Date().toISOString(),
       });
+      
+      // Also save to backend worker profile API
+      const { user } = useAuth();
+      if (user) {
+        const workerProfileData = {
+          userId: user.id || user.email,
+          email: user.email,
+          name: formData.fullName,
+          phone: formData.phone,
+          bio: formData.bio,
+          skills: [...formData.skills, ...formData.customSkills],
+          experience: userType === 'professional' ? formData.experience : 'entry',
+          availability: formData.workPreference?.join(',') || 'flexible',
+          hourlyRate: null, // Can be set later in profile settings
+          location: {
+            city: formData.location,
+            state: '',
+            country: 'USA'
+          },
+          portfolio: formData.portfolio ? [{ title: 'Portfolio', link: formData.portfolio }] : [],
+          categories: userType === 'professional' 
+            ? ['Professional Services'] 
+            : formData.physicalCapability || ['General Labor'],
+          isAvailable: true,
+          badges: [],
+        };
+
+        try {
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/api/worker-profiles`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(workerProfileData)
+            }
+          );
+
+          if (!response.ok) {
+            console.error('Failed to save worker profile to backend');
+          }
+        } catch (apiError) {
+          console.error('Error saving to worker profile API:', apiError);
+          // Continue anyway - profile saved to AuthContext
+        }
+      }
       
       localStorage.setItem('showOnboarding', 'true');
       localStorage.setItem('userType', userType);
