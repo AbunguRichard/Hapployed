@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Briefcase, Zap, MapPin, CheckCircle2 } from 'lucide-react';
 
 export default function ServicesSection() {
+  const navigate = useNavigate();
+  
   const services = [
     {
       icon: Briefcase,
@@ -12,6 +15,7 @@ export default function ServicesSection() {
         'AI matching',
         'Milestones & Reviews',
       ],
+      link: '/services/projects',
     },
     {
       icon: Zap,
@@ -25,6 +29,7 @@ export default function ServicesSection() {
         'Live ETA',
         'Safety checks',
       ],
+      link: '/services/emergency-gigs',
     },
     {
       icon: MapPin,
@@ -38,6 +43,7 @@ export default function ServicesSection() {
         'Verified badges',
         'Instant chat',
       ],
+      link: '/services/gigs-near-me',
     },
   ];
 
