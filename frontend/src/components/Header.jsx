@@ -46,11 +46,9 @@ export default function Header() {
               <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
                 What we offer
               </Link>
-              {!isAuthenticated && (
-                <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
-                  Sign In / Sign Up
-                </Link>
-              )}
+              <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
+                Sign In / Sign Up
+              </Link>
             </div>
           )}
         </div>
