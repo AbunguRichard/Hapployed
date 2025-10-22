@@ -39,6 +39,7 @@ import HireMethodChoicePage from './pages/HireMethodChoicePage';
 import HireStartPage from './pages/HireStartPage';
 import HirerOnboardingPage from './pages/HirerOnboardingPage';
 import ManageJobsPage from './pages/ManageJobsPage';
+import WorkerProfileDetailPage from './pages/WorkerProfileDetailPage';
 import './App.css';
 
 function App() {
