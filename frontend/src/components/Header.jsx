@@ -7,7 +7,6 @@ const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVoiceModeOpen, setIsVoiceModeOpen] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
