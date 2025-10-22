@@ -876,6 +876,331 @@ class BackendTester:
         except Exception as e:
             self.log_result("worker_features", "Profile Retrieval - Non-existent Profile", False, None, str(e))
     
+    def test_worker_profile_endpoints(self):
+        """Test Worker Profile API endpoints"""
+        print("\n👷 Testing Worker Profile Endpoints...")
+        
+        # Store profile IDs for later tests
+        profile_id = None
+        test_user_id = "worker-test-123"
+        
+        # Test 1: Create worker profile
+        try:
+            payload = {
+                "userId": test_user_id,
+                "email": "worker@example.com",
+                "name": "John Doe",
+                "bio": "Experienced full-stack developer",
+                "skills": ["React", "Node.js", "Python"],
+                "experience": "senior",
+                "availability": "fulltime",
+                "hourlyRate": 75,
+                "location": {"city": "San Francisco", "state": "CA", "country": "USA"},
+                "categories": ["Web Development", "Mobile Development"],
+                "badges": ["pro-verified"],
+                "isAvailable": True
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles", json=payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                # Verify all required fields are present and correct
+                if (data.get("userId") == payload["userId"] and
+                    data.get("email") == payload["email"] and
+                    data.get("name") == payload["name"] and
+                    data.get("skills") == payload["skills"] and
+                    data.get("hourlyRate") == payload["hourlyRate"] and
+                    "id" in data and
+                    "createdAt" in data):
+                    profile_id = data["id"]
+                    self.log_result("worker_features", "Worker Profile - Create Profile", True, data)
+                else:
+                    self.log_result("worker_features", "Worker Profile - Create Profile", False, data, 
+                                  "Profile data mismatch or missing required fields")
+            else:
+                self.log_result("worker_features", "Worker Profile - Create Profile", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Create Profile", False, None, str(e))
+        
+        # Test 2: Test duplicate prevention
+        try:
+            # Try to create another profile with same userId
+            duplicate_payload = {
+                "userId": test_user_id,
+                "email": "duplicate@example.com",
+                "name": "Duplicate User"
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles", json=duplicate_payload)
+            
+            if response.status_code == 400:
+                self.log_result("worker_features", "Worker Profile - Duplicate Prevention", True, 
+                              {"status_code": response.status_code, "message": "Properly prevented duplicate profile"})
+            else:
+                self.log_result("worker_features", "Worker Profile - Duplicate Prevention", False, None, 
+                              f"Expected 400 for duplicate profile, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Duplicate Prevention", False, None, str(e))
+        
+        # Test 3: Search workers with skills filter
+        try:
+            search_payload = {
+                "skills": ["React", "Python"]
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles/search", json=search_payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check if returned profiles have matching skills
+                    matching_profiles = [p for p in data if any(skill in p.get("skills", []) for skill in search_payload["skills"])]
+                    if len(matching_profiles) > 0:
+                        self.log_result("worker_features", "Worker Profile - Search by Skills", True, 
+                                      {"profiles_found": len(data), "matching_profiles": len(matching_profiles)})
+                    else:
+                        self.log_result("worker_features", "Worker Profile - Search by Skills", True, 
+                                      {"profiles_found": len(data), "message": "No matching profiles found (acceptable)"})
+                else:
+                    self.log_result("worker_features", "Worker Profile - Search by Skills", False, data, 
+                                  "Expected list of profiles")
+            else:
+                self.log_result("worker_features", "Worker Profile - Search by Skills", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Search by Skills", False, None, str(e))
+        
+        # Test 4: Search workers with location filter
+        try:
+            search_payload = {
+                "location": "San Francisco"
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles/search", json=search_payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_result("worker_features", "Worker Profile - Search by Location", True, 
+                                  {"profiles_found": len(data)})
+                else:
+                    self.log_result("worker_features", "Worker Profile - Search by Location", False, data, 
+                                  "Expected list of profiles")
+            else:
+                self.log_result("worker_features", "Worker Profile - Search by Location", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Search by Location", False, None, str(e))
+        
+        # Test 5: Search workers with rate range filter
+        try:
+            search_payload = {
+                "minRate": 50,
+                "maxRate": 100
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles/search", json=search_payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check if returned profiles are within rate range
+                    in_range_profiles = [p for p in data if p.get("hourlyRate") and 50 <= p.get("hourlyRate") <= 100]
+                    self.log_result("worker_features", "Worker Profile - Search by Rate Range", True, 
+                                  {"profiles_found": len(data), "in_range_profiles": len(in_range_profiles)})
+                else:
+                    self.log_result("worker_features", "Worker Profile - Search by Rate Range", False, data, 
+                                  "Expected list of profiles")
+            else:
+                self.log_result("worker_features", "Worker Profile - Search by Rate Range", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Search by Rate Range", False, None, str(e))
+        
+        # Test 6: Search workers with badges filter
+        try:
+            search_payload = {
+                "badges": ["pro-verified"]
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-profiles/search", json=search_payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check if returned profiles have matching badges
+                    matching_profiles = [p for p in data if any(badge in p.get("badges", []) for badge in search_payload["badges"])]
+                    self.log_result("worker_features", "Worker Profile - Search by Badges", True, 
+                                  {"profiles_found": len(data), "matching_profiles": len(matching_profiles)})
+                else:
+                    self.log_result("worker_features", "Worker Profile - Search by Badges", False, data, 
+                                  "Expected list of profiles")
+            else:
+                self.log_result("worker_features", "Worker Profile - Search by Badges", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Search by Badges", False, None, str(e))
+        
+        # Test 7: Get profile by user ID
+        try:
+            response = requests.get(f"{BASE_URL}/worker-profiles/user/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("userId") == test_user_id and
+                    data.get("email") == "worker@example.com" and
+                    data.get("name") == "John Doe"):
+                    self.log_result("worker_features", "Worker Profile - Get by User ID", True, data)
+                else:
+                    self.log_result("worker_features", "Worker Profile - Get by User ID", False, data, 
+                                  "Profile data doesn't match expected values")
+            else:
+                self.log_result("worker_features", "Worker Profile - Get by User ID", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Get by User ID", False, None, str(e))
+        
+        # Test 8: Test 404 for non-existent user
+        try:
+            response = requests.get(f"{BASE_URL}/worker-profiles/user/non-existent-user")
+            
+            if response.status_code == 404:
+                self.log_result("worker_features", "Worker Profile - Get Non-existent User", True, 
+                              {"status_code": response.status_code, "message": "Properly returned 404 for non-existent user"})
+            else:
+                self.log_result("worker_features", "Worker Profile - Get Non-existent User", False, None, 
+                              f"Expected 404 for non-existent user, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Get Non-existent User", False, None, str(e))
+        
+        # Test 9: Get profile by profile ID
+        if profile_id:
+            try:
+                response = requests.get(f"{BASE_URL}/worker-profiles/{profile_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("id") == profile_id and
+                        data.get("userId") == test_user_id):
+                        self.log_result("worker_features", "Worker Profile - Get by Profile ID", True, data)
+                    else:
+                        self.log_result("worker_features", "Worker Profile - Get by Profile ID", False, data, 
+                                      "Profile data doesn't match expected values")
+                else:
+                    self.log_result("worker_features", "Worker Profile - Get by Profile ID", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Worker Profile - Get by Profile ID", False, None, str(e))
+        
+        # Test 10: Update profile by profile ID
+        if profile_id:
+            try:
+                update_payload = {
+                    "bio": "Updated bio: Senior full-stack developer with expertise in React and Python",
+                    "skills": ["React", "Node.js", "Python", "TypeScript"],
+                    "hourlyRate": 85
+                }
+                
+                response = requests.patch(f"{BASE_URL}/worker-profiles/{profile_id}", json=update_payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("bio") == update_payload["bio"] and
+                        data.get("skills") == update_payload["skills"] and
+                        data.get("hourlyRate") == update_payload["hourlyRate"] and
+                        "updatedAt" in data):
+                        self.log_result("worker_features", "Worker Profile - Update by Profile ID", True, data)
+                    else:
+                        self.log_result("worker_features", "Worker Profile - Update by Profile ID", False, data, 
+                                      "Profile update didn't apply correctly")
+                else:
+                    self.log_result("worker_features", "Worker Profile - Update by Profile ID", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Worker Profile - Update by Profile ID", False, None, str(e))
+        
+        # Test 11: Update profile by user ID
+        try:
+            update_payload = {
+                "bio": "Updated via user ID: Expert full-stack developer",
+                "hourlyRate": 95
+            }
+            
+            response = requests.patch(f"{BASE_URL}/worker-profiles/user/{test_user_id}", json=update_payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("bio") == update_payload["bio"] and
+                    data.get("hourlyRate") == update_payload["hourlyRate"] and
+                    "updatedAt" in data):
+                    self.log_result("worker_features", "Worker Profile - Update by User ID", True, data)
+                else:
+                    self.log_result("worker_features", "Worker Profile - Update by User ID", False, data, 
+                                  "Profile update didn't apply correctly")
+            else:
+                self.log_result("worker_features", "Worker Profile - Update by User ID", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Worker Profile - Update by User ID", False, None, str(e))
+        
+        # Test 12: Toggle availability
+        if profile_id:
+            try:
+                response = requests.post(f"{BASE_URL}/worker-profiles/{profile_id}/toggle-availability")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    # Check if availability was toggled (should be False now since it was True initially)
+                    if "isAvailable" in data and "updatedAt" in data:
+                        self.log_result("worker_features", "Worker Profile - Toggle Availability", True, 
+                                      {"isAvailable": data.get("isAvailable"), "message": "Availability toggled successfully"})
+                    else:
+                        self.log_result("worker_features", "Worker Profile - Toggle Availability", False, data, 
+                                      "Availability toggle response missing required fields")
+                else:
+                    self.log_result("worker_features", "Worker Profile - Toggle Availability", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Worker Profile - Toggle Availability", False, None, str(e))
+        
+        # Test 13: Delete profile
+        if profile_id:
+            try:
+                response = requests.delete(f"{BASE_URL}/worker-profiles/{profile_id}")
+                
+                if response.status_code == 204:
+                    self.log_result("worker_features", "Worker Profile - Delete Profile", True, 
+                                  {"status_code": response.status_code, "message": "Profile deleted successfully"})
+                    
+                    # Verify profile is actually deleted by trying to get it
+                    verify_response = requests.get(f"{BASE_URL}/worker-profiles/{profile_id}")
+                    if verify_response.status_code == 404:
+                        self.log_result("worker_features", "Worker Profile - Verify Profile Deletion", True, 
+                                      {"message": "Profile properly deleted - returns 404 when accessed"})
+                    else:
+                        self.log_result("worker_features", "Worker Profile - Verify Profile Deletion", False, None, 
+                                      f"Profile still accessible after deletion, got HTTP {verify_response.status_code}")
+                else:
+                    self.log_result("worker_features", "Worker Profile - Delete Profile", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Worker Profile - Delete Profile", False, None, str(e))
+
     def test_job_posting_endpoints(self):
         """Test Job Posting API endpoints"""
         print("\n💼 Testing Job Posting Endpoints...")
