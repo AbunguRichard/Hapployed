@@ -53,28 +53,18 @@ export default function Header() {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden py-4 border-t border-border space-y-4">
-              <button
-                onClick={() => {
-                  setIsVoiceModeOpen(true);
-                  setIsMenuOpen(false);
-                }}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-accent text-white hover:shadow-lg transition-all font-medium w-full justify-center"
-              >
-                <Volume2 className="w-5 h-5" />
-                <span>Voice Mode</span>
-              </button>
               <Link to="/what-we-offer" className="block text-foreground hover:text-primary transition-colors font-medium">
                 What we offer
               </Link>
               <Link to="/auth/login" className="block text-foreground hover:text-primary transition-colors font-medium">
-                Log in
+                Sign In
               </Link>
               {!isAuthenticated && (
                 <button 
                   onClick={() => navigate('/auth/signup')}
                   className="btn-primary w-full"
                 >
-                  Sign up
+                  Sign Up
                 </button>
               )}
             </div>
