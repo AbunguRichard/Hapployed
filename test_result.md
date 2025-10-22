@@ -132,6 +132,21 @@ backend:
         agent: "testing"
         comment: "✅ PROFILE ENDPOINTS TESTING COMPLETE - Both PUT /api/profile/update and GET /api/profile/{email} endpoints working correctly. Fixed minor error handling issue where HTTPException(404) was being caught and re-raised as 500 error. All test cases passing: (1) Profile update with complete data (name, email, phone, location, bio) successfully saves to MongoDB. (2) Profile retrieval returns correct data matching what was saved. (3) Missing email validation properly returns 422 error. (4) Non-existent profile retrieval properly returns 404 error. MongoDB connection and data persistence working perfectly. Request/response format matches specifications exactly."
 
+  - task: "Job Posting API Endpoints"
+    implemented: true
+    working: true
+    file: "/app/backend/job_posting_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created comprehensive job posting API with 7 endpoints: POST /api/jobs (create), GET /api/jobs (list with filters), GET /api/jobs/user/{userId} (user jobs), GET /api/jobs/{jobId} (single job), PATCH /api/jobs/{jobId} (update), POST /api/jobs/{jobId}/publish (publish), DELETE /api/jobs/{jobId} (delete). Supports both project and gig job types with full CRUD operations."
+      - working: true
+        agent: "testing"
+        comment: "✅ JOB POSTING API TESTING COMPLETE - All 7 endpoints working perfectly. Fixed router prefix issue (added /api prefix to job_posting_routes.py). All test cases passing: (1) POST /api/jobs - Successfully creates project and gig jobs with proper data validation and MongoDB persistence. (2) GET /api/jobs - Returns job lists with working filters (jobType, status, category). (3) GET /api/jobs/user/{userId} - Correctly filters jobs by user ID. (4) GET /api/jobs/{jobId} - Retrieves specific jobs and increments view count, returns 404 for invalid IDs. (5) PATCH /api/jobs/{jobId} - Updates job fields correctly with updatedAt timestamp. (6) POST /api/jobs/{jobId}/publish - Changes status from draft to published. (7) DELETE /api/jobs/{jobId} - Properly deletes jobs and returns 204, verified deletion with 404 on subsequent access. MongoDB integration working flawlessly with UUID-based job IDs."
+
 frontend:
   - task: "VoiceCaptureModal Component - Voice Input Interface"
     implemented: true
