@@ -114,7 +114,9 @@ export default function OpportunitiesPage() {
         }
       ];
       
-      setOpportunities(mockData);
+      // Use real jobs if available, otherwise use mock data
+      const finalJobs = jobsData.length > 0 ? jobsData : mockData;
+      setOpportunities(finalJobs);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching opportunities:', error);
