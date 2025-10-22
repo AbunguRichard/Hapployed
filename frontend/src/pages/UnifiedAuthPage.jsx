@@ -43,13 +43,13 @@ export default function UnifiedAuthPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Particle animation
+  // Moving Stars Animation
   useEffect(() => {
     const canvas = document.getElementById('fx');
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
-    let w, h, particles = [];
+    let w, h, stars = [];
     
     function resize() {
       w = canvas.width = window.innerWidth;
@@ -59,35 +59,63 @@ export default function UnifiedAuthPage() {
     window.addEventListener('resize', resize);
     resize();
     
+    // Create stars with various properties
     function spawn(n) {
       for (let i = 0; i < n; i++) {
-        particles.push({
+        stars.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.15,
-          vy: (Math.random() - 0.5) * 0.15,
-          r: Math.random() * 1.4 + 0.6,
-          a: Math.random() * 0.6 + 0.2
+          vx: (Math.random() - 0.5) * 0.3,  // Horizontal movement
+          vy: (Math.random() - 0.5) * 0.3,  // Vertical movement
+          r: Math.random() * 1.8 + 0.4,     // Star size
+          baseAlpha: Math.random() * 0.5 + 0.3,  // Base brightness
+          twinkleSpeed: Math.random() * 0.03 + 0.01,  // Twinkle rate
+          twinklePhase: Math.random() * Math.PI * 2   // Starting phase
         });
       }
     }
     
-    spawn(140);
+    spawn(200);  // More stars for a starry night effect
     
     function step() {
       ctx.clearRect(0, 0, w, h);
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
+      
+      for (const star of stars) {
+        // Move the star
+        star.x += star.vx;
+        star.y += star.vy;
+        
+        // Wrap around screen edges
+        if (star.x < 0) star.x = w;
+        if (star.x > w) star.x = 0;
+        if (star.y < 0) star.y = h;
+        if (star.y > h) star.y = 0;
+        
+        // Twinkle effect
+        star.twinklePhase += star.twinkleSpeed;
+        const twinkle = Math.sin(star.twinklePhase) * 0.4 + 0.6;
+        const alpha = star.baseAlpha * twinkle;
+        
+        // Draw star with glow effect
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(160, 215, 255, ${p.a})`;
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        
+        // Create a radial gradient for glow
+        const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.r * 3);
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        gradient.addColorStop(0.4, `rgba(200, 220, 255, ${alpha * 0.6})`);
+        gradient.addColorStop(1, `rgba(160, 200, 255, 0)`);
+        
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        
+        // Draw core star
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r * 0.6, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 1.2})`;
         ctx.fill();
       }
+      
       requestAnimationFrame(step);
     }
     
