@@ -355,12 +355,7 @@ metadata:
   phase: "Application System Testing Complete"
 
 test_plan:
-  current_focus:
-    - "JobApplicationModal Component"
-    - "OpportunitiesPage - Application Integration"
-    - "MyApplicationsPage"
-    - "JobApplicationsPage - Hirer View"
-    - "ManageJobsPage - Application Stats"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
