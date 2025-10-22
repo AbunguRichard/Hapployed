@@ -55,8 +55,68 @@ export default function FindWorkersPage() {
     try {
       setLoading(true);
       
-      // Mock verified workers data
-      const mockWorkers = [
+      // Build search query for backend
+      const searchPayload = {
+        skills: searchQuery ? [searchQuery] : null,
+        category: filters.projectCategory !== 'all' ? filters.projectCategory : null,
+        location: filters.locationRange !== 'all' ? filters.locationRange : null,
+        badges: selectedBadges.length > 0 ? selectedBadges : null,
+        isAvailable: true
+      };
+
+      // Remove null values
+      Object.keys(searchPayload).forEach(key => {
+        if (searchPayload[key] === null) {
+          delete searchPayload[key];
+        }
+      });
+
+      const response = await fetch(
+        `${BACKEND_URL}/api/worker-profiles/search`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(searchPayload)
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch workers');
+      }
+
+      const data = await response.json();
+      
+      // Transform backend data to match frontend format
+      const transformedWorkers = data.map((profile) => ({
+        id: profile.id,
+        name: profile.name || 'Anonymous Worker',
+        title: profile.bio?.substring(0, 50) || 'Professional Worker',
+        avatar: profile.profileImage || `https://i.pravatar.cc/150?u=${profile.id}`,
+        rating: profile.rating || 0,
+        completedJobs: profile.completedJobs || 0,
+        hourlyRate: profile.hourlyRate || 0,
+        location: profile.location?.city ? `${profile.location.city}, ${profile.location.state}` : 'Remote',
+        availability: profile.isAvailable ? 'Available Now' : 'Not Available',
+        skills: profile.skills || [],
+        category: profile.categories?.[0] || 'general',
+        workType: profile.availability === 'gig' ? 'gigs' : 'projects',
+        badges: profile.badges?.map(badge => ({
+          badge_type: badge,
+          badge_name: badge.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-')
+        })) || [],
+        bio: profile.bio || 'No bio available',
+        responseTime: '< 2 hours',
+        experience: profile.experience || 'mid'
+      }));
+
+      setWorkers(transformedWorkers);
+
+      // Fallback to mock data if no results and no filters
+      if (transformedWorkers.length === 0 && Object.keys(searchPayload).length === 1) {
+        // Load mock data as fallback
+        const mockWorkers = [
         {
           id: 1,
           name: 'Sarah Johnson',
