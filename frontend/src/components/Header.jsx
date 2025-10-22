@@ -25,26 +25,18 @@ export default function Header() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6">
-              <button
-                onClick={() => setIsVoiceModeOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-accent text-white hover:shadow-lg transition-all font-medium"
-                title="Voice Mode - Talk to Hapployed"
-              >
-                <Volume2 className="w-5 h-5" />
-                <span>Voice Mode</span>
-              </button>
               <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
                 What we offer
               </Link>
               <Link to="/auth/login" className="text-foreground hover:text-primary transition-colors font-medium">
-                Log in
+                Sign In
               </Link>
               {!isAuthenticated && (
                 <button 
                   onClick={() => navigate('/auth/signup')}
                   className="btn-primary"
                 >
-                  Sign up
+                  Sign Up
                 </button>
               )}
             </nav>
