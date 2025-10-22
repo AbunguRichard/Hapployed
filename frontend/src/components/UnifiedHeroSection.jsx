@@ -106,83 +106,59 @@ export default function UnifiedHeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl w-full">
+      <div className="relative z-10 max-w-7xl w-full mx-auto text-center">
         {/* Hero Text */}
         <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-            Get <br />
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+            Get{' '}
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 text-transparent bg-clip-text">
               Hapployed
             </span>
             <br />
             Get Ahead.
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
-            Navigate the future of work with confidence. Discover your next gig, 
-            launch your project, or deploy emergency support—instantly. Our AI 
-            doesn't just connect; it <span className="text-cyan-400 font-semibold">anticipates</span>.
+          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12">
+            Whether you're hiring top talent or looking for your next opportunity, 
+            Hapployed connects you instantly with AI-powered matching.
           </p>
         </div>
 
-        {/* Key Metrics */}
-        <div className="flex flex-wrap gap-6 mb-10">
-          <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl px-5 py-3">
-            <Users className="w-6 h-6 text-purple-400" />
-            <div>
-              <div className="text-2xl font-bold text-white">50K+</div>
-              <div className="text-sm text-gray-400">Active Pros</div>
+        {/* Main CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          <button
+            onClick={() => navigate('/auth/signup')}
+            className="group relative px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white rounded-2xl font-bold text-xl transition-all hover:scale-105 shadow-2xl shadow-cyan-500/50 min-w-[280px]"
+          >
+            <div className="flex flex-col items-center gap-2">
+              <Briefcase className="w-8 h-8" />
+              <span>I'm looking to hire</span>
             </div>
-          </div>
-          <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl px-5 py-3">
-            <TrendingUp className="w-6 h-6 text-orange-400" />
-            <div>
-              <div className="text-2xl font-bold text-white">2,847</div>
-              <div className="text-sm text-gray-400">Live Projects</div>
+          </button>
+          <button
+            onClick={() => navigate('/auth/signup')}
+            className="group relative px-10 py-5 bg-white hover:bg-gray-100 text-slate-900 rounded-2xl font-bold text-xl transition-all hover:scale-105 shadow-2xl min-w-[280px]"
+          >
+            <div className="flex flex-col items-center gap-2">
+              <Users className="w-8 h-8" />
+              <span>I'm looking for work</span>
             </div>
-          </div>
-          <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl px-5 py-3">
-            <Activity className="w-6 h-6 text-pink-400" />
-            <div>
-              <div className="text-2xl font-bold text-white">98%</div>
-              <div className="text-sm text-gray-400">Match Rate</div>
-            </div>
-          </div>
+          </button>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-wrap gap-4 mb-8">
-          <button
-            onClick={() => navigate('/discover-opportunities-info')}
-            className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 shadow-lg shadow-cyan-500/50"
-          >
-            <MapPin className="w-5 h-5" />
-            Discover Opportunities →
-          </button>
-          <button
-            onClick={() => navigate('/post-project-info')}
-            className="flex items-center gap-2 bg-white hover:bg-gray-100 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
-          >
-            <Briefcase className="w-5 h-5" />
-            Post a Project
-          </button>
-          <button
-            onClick={() => navigate('/gigs-near-me-info')}
-            className="bg-orange-500 hover:bg-orange-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
-          >
-            Gigs Near Me
-          </button>
-          <button
-            onClick={() => navigate('/quickhire-info')}
-            className="bg-purple-500 hover:bg-purple-400 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
-          >
-            QuickHire
-          </button>
-          <button
-            onClick={() => navigate('/opportunities-info')}
-            className="bg-blue-400 hover:bg-blue-300 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
-          >
-            Opportunities
-          </button>
+        {/* Key Stats */}
+        <div className="flex flex-wrap justify-center gap-8 mb-12">
+          <div className="flex items-center gap-3">
+            <div className="text-3xl font-bold text-cyan-400">50K+</div>
+            <div className="text-sm text-gray-400">Active Professionals</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="text-3xl font-bold text-cyan-400">2,847</div>
+            <div className="text-sm text-gray-400">Live Projects</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="text-3xl font-bold text-cyan-400">98%</div>
+            <div className="text-sm text-gray-400">Match Rate</div>
+          </div>
         </div>
 
         {/* Feature Tags - Navigate to Dedicated Pages */}
