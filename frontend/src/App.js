@@ -74,7 +74,16 @@ function App() {
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
-            {/* Hire Method Choice - After Signup/Login */}
+            {/* Hire Flow */}
+            <Route path="/hire/start" element={<HireStartPage />} />
+            <Route 
+              path="/hire/onboarding" 
+              element={
+                <ProtectedRoute>
+                  <HirerOnboardingPage />
+                </ProtectedRoute>
+              } 
+            />
             <Route 
               path="/hire-method-choice" 
               element={
