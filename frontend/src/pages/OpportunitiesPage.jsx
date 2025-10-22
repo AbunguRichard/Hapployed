@@ -522,6 +522,16 @@ export default function OpportunitiesPage() {
           </div>
         </div>
       </div>
+
+      {/* Application Modal */}
+      {showApplicationModal && selectedJob && user && (
+        <JobApplicationModal
+          isOpen={showApplicationModal}
+          onClose={handleCloseModal}
+          job={selectedJob}
+          worker={user}
+        />
+      )}
     </div>
   );
 }
