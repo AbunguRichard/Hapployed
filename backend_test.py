@@ -1251,11 +1251,11 @@ class BackendTester:
                 "title": "React Application Development",
                 "description": "Build a modern React application with backend integration",
                 "category": "Web Development",
-                "budget": {"min": 1000, "max": 2000},
-                "duration": "2-4 weeks",
-                "location": "remote",
+                "budget": {"type": "fixed", "amount": 1500, "currency": "USD"},
+                "timeline": "2-4 weeks",
+                "location": {"type": "remote"},
                 "skills": ["React", "Node.js", "MongoDB"],
-                "urgency": "normal",
+                "urgency": "flexible",
                 "status": "published"
             }
             
