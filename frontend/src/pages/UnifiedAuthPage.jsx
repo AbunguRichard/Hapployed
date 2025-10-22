@@ -192,6 +192,27 @@ export default function UnifiedAuthPage() {
           padding: '28px',
           boxShadow: '0 12px 36px rgba(0,0,0,.28)'
         }}>
+          {/* Back Button */}
+          <button
+            onClick={() => navigate('/')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'transparent',
+              border: 'none',
+              color: '#7c3aed',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '600',
+              marginBottom: '16px',
+              padding: '4px 0'
+            }}
+          >
+            <ArrowLeft style={{ width: '18px', height: '18px' }} />
+            Back to Home
+          </button>
+
           {/* Logo */}
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center' }}>
             <img src={LOGO_URL} alt="Hapployed" style={{ width: '28px', height: '28px' }} />
