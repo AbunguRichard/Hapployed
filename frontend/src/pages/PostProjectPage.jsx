@@ -7,14 +7,17 @@ import { useAuth } from '../context/AuthContext';
 
 export default function PostProjectPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const initialType = searchParams.get('type') || 'regular';
+  const isGuest = searchParams.get('guest') === 'true';
   
   const [workType, setWorkType] = useState(null); // 'project' or 'gig'
   const [currentStep, setCurrentStep] = useState(1);
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [isEstimatingPrice, setIsEstimatingPrice] = useState(false);
   const [priceEstimate, setPriceEstimate] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [projectData, setProjectData] = useState({
     type: initialType,
