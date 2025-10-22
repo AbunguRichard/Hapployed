@@ -4,16 +4,13 @@ import { useAuth } from '../context/AuthContext';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_visual-evolution/artifacts/l0gczbs1_background_AI-removebg-preview%20%281%29.png';
 
-// Futuristic background images
+// Your custom background images
 const SLIDES = [
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop', // Digital Earth network
-  'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&h=1080&fit=crop', // Futuristic tech
-  'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&h=1080&fit=crop', // Technology circuit
-  'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&h=1080&fit=crop', // AI neural network
-  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&h=1080&fit=crop', // Tech background
-  'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1920&h=1080&fit=crop', // Digital technology
-  'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1920&h=1080&fit=crop', // Futuristic interface
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop'  // Sci-fi network
+  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/psd7o3o9_Image%201.png',
+  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/pdmdyzn6_image%202.png',
+  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/efua2yxh_image%203.png',
+  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/66726t96_image%204.png',
+  'https://customer-assets.emergentagent.com/job_hapployed-ux/artifacts/mlr3wjfz_Image%205.png'
 ];
 
 export default function UnifiedAuthPage() {
