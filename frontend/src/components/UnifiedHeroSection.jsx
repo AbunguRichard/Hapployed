@@ -187,22 +187,42 @@ export default function UnifiedHeroSection() {
           </button>
         </div>
 
-        {/* Feature Tags */}
+        {/* Feature Tags - Now Clickable */}
         <div className="flex flex-wrap gap-3">
-          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+          <button
+            onClick={() => setSelectedFeature('Smart AI Matching')}
+            className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
+          >
             Smart AI Matching
-          </div>
-          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+          </button>
+          <button
+            onClick={() => setSelectedFeature('Instant Deployment')}
+            className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
+          >
             Instant Deployment
-          </div>
-          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+          </button>
+          <button
+            onClick={() => setSelectedFeature('Verified Network')}
+            className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
+          >
             Verified Network
-          </div>
-          <div className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm">
+          </button>
+          <button
+            onClick={() => setSelectedFeature('Real-time Analytics')}
+            className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
+          >
             Real-time Analytics
-          </div>
+          </button>
         </div>
       </div>
+
+      {/* Feature Modal */}
+      {selectedFeature && (
+        <FeatureModal
+          feature={selectedFeature}
+          onClose={() => setSelectedFeature(null)}
+        />
+      )}
     </section>
   );
 }
