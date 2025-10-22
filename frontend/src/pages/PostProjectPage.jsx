@@ -116,14 +116,92 @@ export default function PostProjectPage() {
     }
   };
 
-  const handleSubmit = () => {
-    const jobType = workType === 'gig' ? 'gig' : 'project';
-    toast.success(`${workType === 'gig' ? 'Gig' : 'Project'} posted successfully!`, {
-      description: `Your ${jobType} is now live and visible to workers`
-    });
-    setTimeout(() => {
-      navigate('/dashboard');
-    }, 2000);
+  const handleSubmit = async (saveAsDraft = false) => {
+    // Check if guest user
+    if (isGuest) {
+      toast.error('Sign up required to post jobs', {
+        description: 'Create an account to publish your job posting'
+      });
+      navigate('/auth/signup?role=hirer');
+      return;
+    }
+
+    // Check if user is logged in
+    if (!user) {
+      toast.error('Please sign in to post a job');
+      navigate('/auth/login');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const jobType = workType === 'gig' ? 'gig' : 'project';
+      
+      // Prepare job data for backend
+      const jobData = {
+        userId: user.id || user.email,
+        userEmail: user.email,
+        jobType: jobType,
+        title: projectData.title,
+        description: projectData.description,
+        category: projectData.category,
+        skills: projectData.skills,
+        budget: {
+          type: projectData.budgetType,
+          amount: projectData.budgetType === 'fixed' 
+            ? parseFloat(projectData.maxBudget) 
+            : parseFloat(projectData.minBudget),
+          currency: 'USD'
+        },
+        timeline: projectData.timeline || projectData.duration,
+        location: {
+          type: projectData.location,
+          address: projectData.specificLocation || ''
+        },
+        urgency: projectData.urgency,
+        status: saveAsDraft ? 'draft' : 'published',
+        requirements: projectData.description
+      };
+
+      // Save to backend
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jobData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to post job');
+      }
+
+      const createdJob = await response.json();
+
+      toast.success(
+        saveAsDraft 
+          ? 'Job saved as draft!' 
+          : `${workType === 'gig' ? 'Gig' : 'Project'} posted successfully!`, 
+        {
+          description: saveAsDraft 
+            ? 'You can publish it later from My Jobs' 
+            : `Your ${jobType} is now live and visible to workers`
+        }
+      );
+
+      setTimeout(() => {
+        navigate('/my-jobs');
+      }, 1500);
+
+    } catch (error) {
+      console.error('Error posting job:', error);
+      toast.error('Failed to post job', {
+        description: 'Please try again or contact support'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Open voice capture modal from initial cards - go directly to form
