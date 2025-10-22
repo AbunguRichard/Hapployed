@@ -191,7 +191,7 @@ export default function PostProjectPage() {
       );
 
       setTimeout(() => {
-        navigate('/my-jobs');
+        navigate('/manage-jobs');
       }, 1500);
 
     } catch (error) {
