@@ -86,6 +86,14 @@ function App() {
               } 
             />
             <Route 
+              path="/manage-jobs" 
+              element={
+                <ProtectedRoute>
+                  <ManageJobsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/hire-method-choice" 
               element={
                 <ProtectedRoute>
