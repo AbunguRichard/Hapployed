@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle, Briefcase, Wrench, Mic, Edit3, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import VoiceCaptureModal from '../components/VoiceCaptureModal';
+import { useAuth } from '../context/AuthContext';
 
 export default function PostProjectPage() {
   const navigate = useNavigate();
