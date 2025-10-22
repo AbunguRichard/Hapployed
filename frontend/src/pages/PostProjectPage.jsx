@@ -1172,12 +1172,32 @@ export default function PostProjectPage() {
                 <ArrowRight className="w-5 h-5" />
               </button>
             ) : (
-              <button
-                onClick={handleSubmit}
-                className="ml-auto px-8 py-3 bg-green-500 text-white rounded-lg font-bold text-lg hover:bg-green-600 transition-colors"
-              >
-                {workType === 'gig' ? 'Post Gig' : 'Post Project'}
-              </button>
+              <div className="ml-auto flex gap-3">
+                <button
+                  onClick={() => handleSubmit(true)}
+                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-slate-600 text-white rounded-lg font-semibold hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Save as Draft
+                </button>
+                <button
+                  onClick={() => handleSubmit(false)}
+                  disabled={isSubmitting}
+                  className="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg font-bold text-lg hover:from-green-600 hover:to-emerald-600 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Posting...
+                    </>
+                  ) : (
+                    <>
+                      {workType === 'gig' ? 'Post Gig' : 'Post Project'}
+                      <CheckCircle className="w-5 h-5" />
+                    </>
+                  )}
+                </button>
+              </div>
             )}
           </div>
         </div>
