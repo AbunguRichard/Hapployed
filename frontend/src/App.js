@@ -6,6 +6,7 @@ import Homepage from './pages/Homepage';
 import WhatWeOfferPage from './pages/WhatWeOfferPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import UnifiedAuthPage from './pages/UnifiedAuthPage';
 import CreateProfilePage from './pages/CreateProfilePage';
 import DashboardPage from './pages/DashboardPage';
 import OpportunitiesPage from './pages/OpportunitiesPage';
