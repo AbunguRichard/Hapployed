@@ -141,10 +141,10 @@ export default function UnifiedAuthPage() {
     try {
       if (mode === 'login') {
         await login(email, password);
-        navigate('/dashboard');
+        navigate('/hire-method-choice');
       } else {
-        // Sign up flow
-        navigate('/auth/signup', { state: { email, password } });
+        // Sign up flow - redirect to profile creation with hire-method-choice as next step
+        navigate('/profile/create?next=/hire-method-choice');
       }
     } catch (err) {
       setError(mode === 'login' ? 'Invalid email or password' : 'Sign up failed');
