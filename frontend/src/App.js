@@ -63,6 +63,11 @@ function App() {
             <Route path="/features/verified-network" element={<VerifiedNetworkPage />} />
             <Route path="/features/real-time-analytics" element={<RealTimeAnalyticsPage />} />
             
+            {/* Service Pages - Public */}
+            <Route path="/services/projects" element={<ProjectsServicePage />} />
+            <Route path="/services/emergency-gigs" element={<EmergencyGigsServicePage />} />
+            <Route path="/services/gigs-near-me" element={<GigsNearMeServicePage />} />
+            
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
