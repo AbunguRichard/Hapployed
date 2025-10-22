@@ -39,8 +39,8 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<Homepage />} />
             <Route path="/what-we-offer" element={<WhatWeOfferPage />} />
-            <Route path="/auth/login" element={<LoginPage />} />
-            <Route path="/auth/signup" element={<SignupPage />} />
+            <Route path="/auth/login" element={<UnifiedAuthPage />} />
+            <Route path="/auth/signup" element={<UnifiedAuthPage />} />
             
             {/* Informational Pages - Public */}
             <Route path="/discover-opportunities-info" element={<DiscoverOpportunitiesInfoPage />} />
