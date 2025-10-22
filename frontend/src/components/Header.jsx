@@ -14,7 +14,7 @@ export default function Header() {
     <>
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="w-full px-4 md:px-6 lg:px-8">
-          <div className="flex items-center h-16 gap-8">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
               <img src={LOGO_URL} alt="Hapployed" className="w-10 h-10 object-contain" />
@@ -22,7 +22,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-6">
               <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
                 What we offer
               </Link>
