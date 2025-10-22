@@ -185,42 +185,34 @@ export default function UnifiedHeroSection() {
           </button>
         </div>
 
-        {/* Feature Tags - Now Clickable */}
+        {/* Feature Tags - Navigate to Dedicated Pages */}
         <div className="flex flex-wrap gap-3">
           <button
-            onClick={() => setSelectedFeature('Smart AI Matching')}
+            onClick={() => navigate('/features/smart-ai-matching')}
             className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
           >
             Smart AI Matching
           </button>
           <button
-            onClick={() => setSelectedFeature('Instant Deployment')}
+            onClick={() => navigate('/features/instant-deployment')}
             className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
           >
             Instant Deployment
           </button>
           <button
-            onClick={() => setSelectedFeature('Verified Network')}
+            onClick={() => navigate('/features/verified-network')}
             className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
           >
             Verified Network
           </button>
           <button
-            onClick={() => setSelectedFeature('Real-time Analytics')}
+            onClick={() => navigate('/features/real-time-analytics')}
             className="bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm hover:bg-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
           >
             Real-time Analytics
           </button>
         </div>
       </div>
-
-      {/* Feature Modal */}
-      {selectedFeature && (
-        <FeatureModal
-          feature={selectedFeature}
-          onClose={() => setSelectedFeature(null)}
-        />
-      )}
     </section>
   );
 }
