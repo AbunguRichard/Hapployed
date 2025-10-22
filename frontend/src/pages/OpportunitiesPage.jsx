@@ -44,7 +44,18 @@ export default function OpportunitiesPage() {
     try {
       setLoading(true);
       
-      // Mock data with exact design elements
+      // Try to fetch real jobs from backend
+      let jobsData = [];
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/jobs?status=published`);
+        if (response.ok) {
+          jobsData = await response.json();
+        }
+      } catch (error) {
+        console.log('Failed to fetch jobs from backend, using mock data', error);
+      }
+      
+      // If no real jobs, use mock data
       const mockData = [
         {
           id: 1,
