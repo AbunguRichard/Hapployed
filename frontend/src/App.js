@@ -72,6 +72,16 @@ function App() {
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
+            {/* Hire Method Choice - After Signup/Login */}
+            <Route 
+              path="/hire-method-choice" 
+              element={
+                <ProtectedRoute>
+                  <HireMethodChoicePage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* Protected Routes - Require Auth + Profile */}
             <Route
               path="/dashboard"
