@@ -14,15 +14,15 @@ export default function Header() {
     <>
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="w-full px-4 md:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center h-16 gap-8">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 mr-auto">
+            <Link to="/" className="flex items-center gap-2">
               <img src={LOGO_URL} alt="Hapployed" className="w-10 h-10 object-contain" />
               <span className="text-2xl font-bold text-foreground">Hapployed</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-8">
               <Link to="/what-we-offer" className="text-foreground hover:text-primary transition-colors font-medium">
                 What we offer
               </Link>
