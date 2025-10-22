@@ -106,59 +106,118 @@ export default function UnifiedHeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl w-full mx-auto text-center">
-        {/* Hero Text */}
-        <div className="mb-12">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-            Get{' '}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 text-transparent bg-clip-text">
-              Hapployed
-            </span>
-            <br />
-            Get Ahead.
+      <div className="relative z-10 max-w-7xl w-full mx-auto">
+        {/* Hero Text - Centered */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            Work <span className="text-cyan-400">smarter.</span><br />
+            Hire <span className="text-cyan-400">faster.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12">
-            Whether you're hiring top talent or looking for your next opportunity, 
-            Hapployed connects you instantly with AI-powered matching.
+          <p className="text-xl md:text-2xl text-gray-300 mb-4">
+            Hapployed connects people and projects in{' '}
+            <span className="text-cyan-400 font-semibold">real time.</span>
+          </p>
+          <p className="text-lg text-gray-400">
+            AI-powered matching for every gig, contract, or emergency task.
           </p>
         </div>
 
-        {/* Main CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-          <button
-            onClick={() => navigate('/auth/signup')}
-            className="group relative px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white rounded-2xl font-bold text-xl transition-all hover:scale-105 shadow-2xl shadow-cyan-500/50 min-w-[280px]"
-          >
-            <div className="flex flex-col items-center gap-2">
-              <Briefcase className="w-8 h-8" />
-              <span>I'm looking to hire</span>
+        {/* Two Main Cards */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
+          {/* Find Work Card */}
+          <div className="relative bg-slate-800/40 backdrop-blur-md border-2 border-cyan-500/30 rounded-3xl p-8 hover:border-cyan-500/60 transition-all">
+            <div className="flex flex-col items-center text-center space-y-6">
+              {/* Image placeholder - would use actual image */}
+              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center mb-4">
+                <Users className="w-16 h-16 text-cyan-400" />
+              </div>
+              <h3 className="text-3xl font-bold text-white">Find Work</h3>
+              <p className="text-gray-300 text-lg">
+                Discover opportunities that match your skill and schedule.
+              </p>
+              <button
+                onClick={() => navigate('/auth/signup')}
+                className="w-full px-8 py-4 bg-transparent border-2 border-cyan-500 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 rounded-full font-bold text-lg transition-all"
+              >
+                Find Opportunities
+              </button>
             </div>
+          </div>
+
+          {/* Hire Talent Card */}
+          <div className="relative bg-slate-800/40 backdrop-blur-md border-2 border-cyan-500/30 rounded-3xl p-8 hover:border-cyan-500/60 transition-all">
+            <div className="flex flex-col items-center text-center space-y-6">
+              {/* Icon */}
+              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center mb-4">
+                <Briefcase className="w-16 h-16 text-cyan-400" />
+              </div>
+              <h3 className="text-3xl font-bold text-white">Hire Talent</h3>
+              <p className="text-gray-300 text-lg">
+                Hire professionals, contractors, and skilled workers.
+              </p>
+              <button
+                onClick={() => navigate('/auth/signup')}
+                className="w-full px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-cyan-500/50"
+              >
+                Hire Talent
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="flex flex-wrap justify-center gap-12 mb-12">
+          <div className="flex items-center gap-3">
+            <Users className="w-8 h-8 text-cyan-400" />
+            <div>
+              <div className="text-3xl font-bold text-white">50K+</div>
+              <div className="text-sm text-gray-400">Active Pros</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Briefcase className="w-8 h-8 text-cyan-400" />
+            <div>
+              <div className="text-3xl font-bold text-white">2,800+</div>
+              <div className="text-sm text-gray-400">Live Projects</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Zap className="w-8 h-8 text-cyan-400" />
+            <div>
+              <div className="text-3xl font-bold text-white">98%</div>
+              <div className="text-sm text-gray-400">Match rate</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <button
+            onClick={() => navigate('/discover-opportunities-info')}
+            className="px-8 py-3 bg-transparent border-2 border-cyan-500 hover:bg-cyan-500/20 text-cyan-400 rounded-full font-semibold transition-all"
+          >
+            Discover Opportunities
           </button>
           <button
-            onClick={() => navigate('/auth/signup')}
-            className="group relative px-10 py-5 bg-white hover:bg-gray-100 text-slate-900 rounded-2xl font-bold text-xl transition-all hover:scale-105 shadow-2xl min-w-[280px]"
+            onClick={() => navigate('/post-project-info')}
+            className="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-full font-semibold transition-all"
           >
-            <div className="flex flex-col items-center gap-2">
-              <Users className="w-8 h-8" />
-              <span>I'm looking for work</span>
-            </div>
+            Post a Project
+          </button>
+          <button
+            onClick={() => navigate('/gigs-near-me-info')}
+            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-full font-semibold transition-all"
+          >
+            Gigs Near Me
           </button>
         </div>
 
-        {/* Key Stats */}
-        <div className="flex flex-wrap justify-center gap-8 mb-12">
-          <div className="flex items-center gap-3">
-            <div className="text-3xl font-bold text-cyan-400">50K+</div>
-            <div className="text-sm text-gray-400">Active Professionals</div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="text-3xl font-bold text-cyan-400">2,847</div>
-            <div className="text-sm text-gray-400">Live Projects</div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="text-3xl font-bold text-cyan-400">98%</div>
-            <div className="text-sm text-gray-400">Match Rate</div>
-          </div>
+        {/* Bottom Text */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <span className="text-cyan-400">AI-Powered</span> Work.{' '}
+            <span className="text-cyan-400">Real-Time</span> Results.
+          </h2>
         </div>
 
         {/* Feature Tags - Navigate to Dedicated Pages */}
