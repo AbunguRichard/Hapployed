@@ -382,6 +382,18 @@ export default function ManageJobsPage() {
                       View
                     </button>
                     <button
+                      onClick={() => navigate(`/job/${job.id}/applications`)}
+                      className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-semibold transition-all flex items-center gap-2 relative"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Applications
+                      {applicationStats[job.id] && applicationStats[job.id].total > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                          {applicationStats[job.id].total}
+                        </span>
+                      )}
+                    </button>
+                    <button
                       onClick={() => handleDelete(job.id)}
                       className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-all flex items-center gap-2"
                     >
@@ -390,6 +402,35 @@ export default function ManageJobsPage() {
                     </button>
                   </div>
                 </div>
+                
+                {/* Application Stats Footer */}
+                {applicationStats[job.id] && applicationStats[job.id].total > 0 && (
+                  <div className="mt-4 pt-4 border-t border-slate-700">
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span className="text-gray-400">
+                          <span className="font-semibold text-white">{applicationStats[job.id].total}</span> Applications
+                        </span>
+                      </div>
+                      {applicationStats[job.id].pending > 0 && (
+                        <span className="text-yellow-400">
+                          {applicationStats[job.id].pending} Pending
+                        </span>
+                      )}
+                      {applicationStats[job.id].reviewed > 0 && (
+                        <span className="text-blue-400">
+                          {applicationStats[job.id].reviewed} Reviewed
+                        </span>
+                      )}
+                      {applicationStats[job.id].accepted > 0 && (
+                        <span className="text-green-400">
+                          {applicationStats[job.id].accepted} Accepted
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
