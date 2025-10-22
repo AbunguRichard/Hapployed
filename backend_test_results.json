@@ -11,21 +11,21 @@
           "radius_miles": 25,
           "current_location": null,
           "status_message": "Available for plumbing emergencies in downtown area",
-          "available_until": "2025-10-23T04:34:05.646497",
-          "last_updated": "2025-10-22T20:34:05.717240"
+          "available_until": "2025-10-23T05:09:14.272300",
+          "last_updated": "2025-10-22T21:09:14.345528"
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.723970"
+      "timestamp": "2025-10-22T21:09:14.356486"
     },
     "Available Now Toggle - Get Status": {
       "success": true,
       "response": {
         "user_id": "worker-john-smith-123",
         "available_now": true,
-        "available_until": "2025-10-23T04:34:05.646497",
+        "available_until": "2025-10-23T05:09:14.272300",
         "current_location": null,
-        "last_updated": "2025-10-22T20:34:05.717240",
+        "last_updated": "2025-10-22T21:09:14.345528",
         "radius_miles": 25,
         "status_message": "Available for plumbing emergencies in downtown area",
         "preferences": {
@@ -54,7 +54,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.763793"
+      "timestamp": "2025-10-22T21:09:14.437478"
     },
     "Available Now Toggle - Get Available Workers": {
       "success": true,
@@ -63,9 +63,9 @@
           {
             "user_id": "worker-john-smith-123",
             "available_now": true,
-            "available_until": "2025-10-23T04:34:05.646497",
+            "available_until": "2025-10-23T05:09:14.272300",
             "current_location": null,
-            "last_updated": "2025-10-22T20:34:05.717240",
+            "last_updated": "2025-10-22T21:09:14.345528",
             "radius_miles": 25,
             "status_message": "Available for plumbing emergencies in downtown area",
             "preferences": {
@@ -106,7 +106,7 @@
         "count": 2
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.802833"
+      "timestamp": "2025-10-22T21:09:14.516168"
     },
     "Gamification - Check Achievements": {
       "success": true,
@@ -115,7 +115,7 @@
         "new_achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.841035"
+      "timestamp": "2025-10-22T21:09:14.561987"
     },
     "Gamification - Get Achievements": {
       "success": true,
@@ -123,7 +123,7 @@
         "achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.886463"
+      "timestamp": "2025-10-22T21:09:14.601902"
     },
     "Worker Preferences - Save": {
       "success": true,
@@ -132,7 +132,7 @@
         "message": "Preferences saved"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.925099"
+      "timestamp": "2025-10-22T21:09:14.640994"
     },
     "Worker Preferences - Get": {
       "success": true,
@@ -161,7 +161,7 @@
         "residential_preferred": true
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:05.964658"
+      "timestamp": "2025-10-22T21:09:14.720985"
     },
     "Gig Chain - Complete Gig": {
       "success": true,
@@ -173,12 +173,12 @@
           "completed_gig_id": "plumbing-emergency-456",
           "bonus_multiplier": 1.5,
           "next_gig_priority": true,
-          "expires_at": "2025-10-23T00:34:06.003613",
-          "created_at": "2025-10-22T20:34:06.003620"
+          "expires_at": "2025-10-23T01:09:14.761925",
+          "created_at": "2025-10-22T21:09:14.761932"
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.007086"
+      "timestamp": "2025-10-22T21:09:14.768553"
     },
     "Gig Chain - Get Status": {
       "success": true,
@@ -199,21 +199,29 @@
             "next_gig_priority": true,
             "expires_at": "2025-10-23T00:34:06.003613",
             "created_at": "2025-10-22T20:34:06.003620"
+          },
+          {
+            "user_id": "worker-john-smith-123",
+            "completed_gig_id": "plumbing-emergency-456",
+            "bonus_multiplier": 1.5,
+            "next_gig_priority": true,
+            "expires_at": "2025-10-23T01:09:14.761925",
+            "created_at": "2025-10-22T21:09:14.761932"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.044492"
+      "timestamp": "2025-10-22T21:09:14.806428"
     },
     "Gig Squad - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Squad created! Workers can now apply to join",
-        "squad_id": "d37a08eb-faa9-4221-aa16-c55b7b6b06b3"
+        "squad_id": "f02531e7-2fc5-4116-af95-ec2efadde829"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.083513"
+      "timestamp": "2025-10-22T21:09:14.850238"
     },
     "Gig Squad - Join": {
       "success": true,
@@ -222,7 +230,7 @@
         "message": "Application submitted to squad"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.120258"
+      "timestamp": "2025-10-22T21:09:14.892317"
     },
     "Gig Squad - Get Available": {
       "success": true,
@@ -416,21 +424,49 @@
             ],
             "status": "assembling",
             "created_at": "2025-10-22T20:34:06.080359"
+          },
+          {
+            "squad_id": "f02531e7-2fc5-4116-af95-ec2efadde829",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [
+              {
+                "user_id": "worker-john-smith-123",
+                "role": "Lead Plumber",
+                "status": "pending",
+                "applied_at": "2025-10-22T21:09:14.888684"
+              }
+            ],
+            "status": "assembling",
+            "created_at": "2025-10-22T21:09:14.842168"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.157894"
+      "timestamp": "2025-10-22T21:09:14.930092"
     },
     "Corporate Pass - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Corporate pass activated",
-        "pass_id": "826e0efc-518e-4a5c-a294-1f70e5081dfd"
+        "pass_id": "67d3369c-abcd-4ab0-9aa1-cd92242d22e8"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.194980"
+      "timestamp": "2025-10-22T21:09:14.983391"
     },
     "Corporate Pass - Use Credit": {
       "success": true,
@@ -439,7 +475,7 @@
         "credits_remaining": 9
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.231052"
+      "timestamp": "2025-10-22T21:09:15.029680"
     },
     "Gig Insurance - Activate": {
       "success": true,
@@ -448,17 +484,17 @@
         "message": "Gig is now protected by Hapployed Insurance"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.266857"
+      "timestamp": "2025-10-22T21:09:15.076492"
     },
     "Gig Insurance - File Claim": {
       "success": true,
       "response": {
         "success": true,
         "message": "Claim filed. Our team will review within 24 hours",
-        "claim_id": "a590e676-896e-471d-8266-9a0c2b109a3e"
+        "claim_id": "08e18f52-12bf-4b47-a404-5e7e143313a5"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:06.303319"
+      "timestamp": "2025-10-22T21:09:15.120009"
     },
     "Profile Update - PUT /api/profile/update": {
       "success": true,
@@ -473,7 +509,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.129553"
+      "timestamp": "2025-10-22T21:10:21.977798"
     },
     "Profile Retrieval - GET /api/profile/{email}": {
       "success": true,
@@ -485,7 +521,7 @@
         "phone": "+1 (555) 123-4567"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.173411"
+      "timestamp": "2025-10-22T21:10:22.021866"
     },
     "Profile Update - Missing Email Validation": {
       "success": true,
@@ -494,7 +530,7 @@
         "message": "Properly validated missing email"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.208775"
+      "timestamp": "2025-10-22T21:10:22.060568"
     },
     "Profile Retrieval - Non-existent Profile": {
       "success": true,
@@ -503,12 +539,12 @@
         "message": "Properly returned 404 for non-existent profile"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.243514"
+      "timestamp": "2025-10-22T21:10:22.097443"
     },
     "Job Posting - Create Project Job": {
       "success": true,
       "response": {
-        "id": "3b2034d1-3753-4b8c-917e-156bd1bf2db2",
+        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -535,16 +571,16 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-22T20:35:43.278631",
-        "updatedAt": "2025-10-22T20:35:43.278635"
+        "createdAt": "2025-10-22T21:10:22.136653",
+        "updatedAt": "2025-10-22T21:10:22.136659"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.285394"
+      "timestamp": "2025-10-22T21:10:22.149978"
     },
     "Job Posting - Create Gig Job": {
       "success": true,
       "response": {
-        "id": "7ceacea5-c502-4321-8c39-e46a2f00b3fc",
+        "id": "30dae1aa-92fb-491d-86eb-66d4d90eae20",
         "userId": "test-user-456",
         "userEmail": "gig@example.com",
         "jobType": "gig",
@@ -573,19 +609,19 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-22T20:35:43.322688",
-        "updatedAt": "2025-10-22T20:35:43.322693"
+        "createdAt": "2025-10-22T21:10:22.185917",
+        "updatedAt": "2025-10-22T21:10:22.185922"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.328840"
+      "timestamp": "2025-10-22T21:10:22.191051"
     },
     "Job Posting - Get All Jobs": {
       "success": true,
       "response": {
-        "jobs_count": 5,
+        "jobs_count": 6,
         "sample": [
           {
-            "id": "7ceacea5-c502-4321-8c39-e46a2f00b3fc",
+            "id": "30dae1aa-92fb-491d-86eb-66d4d90eae20",
             "userId": "test-user-456",
             "userEmail": "gig@example.com",
             "jobType": "gig",
@@ -614,11 +650,11 @@
             "attachments": [],
             "applications": [],
             "views": 0,
-            "createdAt": "2025-10-22T20:35:43.322688",
-            "updatedAt": "2025-10-22T20:35:43.322693"
+            "createdAt": "2025-10-22T21:10:22.185917",
+            "updatedAt": "2025-10-22T21:10:22.185922"
           },
           {
-            "id": "3b2034d1-3753-4b8c-917e-156bd1bf2db2",
+            "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
             "userId": "test-user-123",
             "userEmail": "test@example.com",
             "jobType": "project",
@@ -645,13 +681,13 @@
             "attachments": [],
             "applications": [],
             "views": 0,
-            "createdAt": "2025-10-22T20:35:43.278631",
-            "updatedAt": "2025-10-22T20:35:43.278635"
+            "createdAt": "2025-10-22T21:10:22.136653",
+            "updatedAt": "2025-10-22T21:10:22.136659"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.367965"
+      "timestamp": "2025-10-22T21:10:22.235432"
     },
     "Job Posting - Get Jobs with Filters": {
       "success": true,
@@ -659,20 +695,20 @@
         "filtered_jobs_count": 2
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.404669"
+      "timestamp": "2025-10-22T21:10:22.275792"
     },
     "Job Posting - Get Jobs by User ID": {
       "success": true,
       "response": {
-        "user_jobs_count": 4
+        "user_jobs_count": 5
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.442275"
+      "timestamp": "2025-10-22T21:10:22.316679"
     },
     "Job Posting - Get Specific Job": {
       "success": true,
       "response": {
-        "id": "3b2034d1-3753-4b8c-917e-156bd1bf2db2",
+        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -699,11 +735,11 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-22T20:35:43.278631",
-        "updatedAt": "2025-10-22T20:35:43.278635"
+        "createdAt": "2025-10-22T21:10:22.136653",
+        "updatedAt": "2025-10-22T21:10:22.136659"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.477957"
+      "timestamp": "2025-10-22T21:10:22.356551"
     },
     "Job Posting - Get Invalid Job ID": {
       "success": true,
@@ -712,12 +748,12 @@
         "message": "Properly returned 404 for invalid job ID"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.515724"
+      "timestamp": "2025-10-22T21:10:22.398660"
     },
     "Job Posting - Update Job": {
       "success": true,
       "response": {
-        "id": "3b2034d1-3753-4b8c-917e-156bd1bf2db2",
+        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -744,16 +780,16 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-22T20:35:43.278631",
-        "updatedAt": "2025-10-22T20:35:43.551861"
+        "createdAt": "2025-10-22T21:10:22.136653",
+        "updatedAt": "2025-10-22T21:10:22.433096"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.556711"
+      "timestamp": "2025-10-22T21:10:22.438346"
     },
     "Job Posting - Publish Job": {
       "success": true,
       "response": {
-        "id": "3b2034d1-3753-4b8c-917e-156bd1bf2db2",
+        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -780,11 +816,11 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-22T20:35:43.278631",
-        "updatedAt": "2025-10-22T20:35:43.591090"
+        "createdAt": "2025-10-22T21:10:22.136653",
+        "updatedAt": "2025-10-22T21:10:22.470071"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.595642"
+      "timestamp": "2025-10-22T21:10:22.474259"
     },
     "Job Posting - Delete Job": {
       "success": true,
@@ -793,7 +829,7 @@
         "message": "Job deleted successfully"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.631979"
+      "timestamp": "2025-10-22T21:10:22.512661"
     },
     "Job Posting - Verify Job Deletion": {
       "success": true,
@@ -801,12 +837,12 @@
         "message": "Job properly deleted - returns 404 when accessed"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.669969"
+      "timestamp": "2025-10-22T21:10:22.555475"
     },
     "Worker Profile - Create Profile": {
       "success": true,
       "response": {
-        "id": "ea7192fa-d005-4787-b30a-c4f6d3f62e42",
+        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -842,11 +878,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T20:35:43.708107",
-        "updatedAt": "2025-10-22T20:35:43.708112"
+        "createdAt": "2025-10-22T21:10:22.598002",
+        "updatedAt": "2025-10-22T21:10:22.598007"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.726761"
+      "timestamp": "2025-10-22T21:10:22.602574"
     },
     "Worker Profile - Duplicate Prevention": {
       "success": true,
@@ -855,7 +891,7 @@
         "message": "Properly prevented duplicate profile"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.765642"
+      "timestamp": "2025-10-22T21:10:22.688926"
     },
     "Worker Profile - Search by Skills": {
       "success": true,
@@ -864,7 +900,7 @@
         "matching_profiles": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.803627"
+      "timestamp": "2025-10-22T21:10:22.763652"
     },
     "Worker Profile - Search by Location": {
       "success": true,
@@ -872,7 +908,7 @@
         "profiles_found": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.846537"
+      "timestamp": "2025-10-22T21:10:22.811055"
     },
     "Worker Profile - Search by Rate Range": {
       "success": true,
@@ -881,7 +917,7 @@
         "in_range_profiles": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.885930"
+      "timestamp": "2025-10-22T21:10:22.852427"
     },
     "Worker Profile - Search by Badges": {
       "success": true,
@@ -890,12 +926,12 @@
         "matching_profiles": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.927222"
+      "timestamp": "2025-10-22T21:10:22.895891"
     },
     "Worker Profile - Get by User ID": {
       "success": true,
       "response": {
-        "id": "ea7192fa-d005-4787-b30a-c4f6d3f62e42",
+        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -931,11 +967,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T20:35:43.708107",
-        "updatedAt": "2025-10-22T20:35:43.708112"
+        "createdAt": "2025-10-22T21:10:22.598002",
+        "updatedAt": "2025-10-22T21:10:22.598007"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.967240"
+      "timestamp": "2025-10-22T21:10:22.937275"
     },
     "Worker Profile - Get Non-existent User": {
       "success": true,
@@ -944,12 +980,12 @@
         "message": "Properly returned 404 for non-existent user"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.007419"
+      "timestamp": "2025-10-22T21:10:22.975671"
     },
     "Worker Profile - Get by Profile ID": {
       "success": true,
       "response": {
-        "id": "ea7192fa-d005-4787-b30a-c4f6d3f62e42",
+        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -985,16 +1021,16 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T20:35:43.708107",
-        "updatedAt": "2025-10-22T20:35:43.708112"
+        "createdAt": "2025-10-22T21:10:22.598002",
+        "updatedAt": "2025-10-22T21:10:22.598007"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.044370"
+      "timestamp": "2025-10-22T21:10:23.014737"
     },
     "Worker Profile - Update by Profile ID": {
       "success": true,
       "response": {
-        "id": "ea7192fa-d005-4787-b30a-c4f6d3f62e42",
+        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1031,16 +1067,16 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T20:35:43.708107",
-        "updatedAt": "2025-10-22T20:35:44.078947"
+        "createdAt": "2025-10-22T21:10:22.598002",
+        "updatedAt": "2025-10-22T21:10:23.049077"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.083037"
+      "timestamp": "2025-10-22T21:10:23.054163"
     },
     "Worker Profile - Update by User ID": {
       "success": true,
       "response": {
-        "id": "ea7192fa-d005-4787-b30a-c4f6d3f62e42",
+        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1077,11 +1113,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T20:35:43.708107",
-        "updatedAt": "2025-10-22T20:35:44.117133"
+        "createdAt": "2025-10-22T21:10:22.598002",
+        "updatedAt": "2025-10-22T21:10:23.090548"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.121682"
+      "timestamp": "2025-10-22T21:10:23.095742"
     },
     "Worker Profile - Toggle Availability": {
       "success": true,
@@ -1090,7 +1126,7 @@
         "message": "Availability toggled successfully"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.159130"
+      "timestamp": "2025-10-22T21:10:23.134296"
     },
     "Worker Profile - Delete Profile": {
       "success": true,
@@ -1099,7 +1135,7 @@
         "message": "Profile deleted successfully"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.196173"
+      "timestamp": "2025-10-22T21:10:23.169945"
     },
     "Worker Profile - Verify Profile Deletion": {
       "success": true,
@@ -1107,7 +1143,7 @@
         "message": "Profile properly deleted - returns 404 when accessed"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:44.233192"
+      "timestamp": "2025-10-22T21:10:23.207603"
     }
   },
   "ai_matching": {
@@ -1116,51 +1152,51 @@
       "response": {
         "success": true,
         "match_data": {
-          "match_score": 84,
+          "match_score": 88,
           "confidence": "medium",
           "strengths": [
-            "Emergency repair expertise",
-            "Plumbing and pipe installation skills",
-            "Available now (fits urgent need)",
-            "Weekend availability",
-            "Local to San Francisco (fast response)",
-            "Strong track record (4.8 rating, 127 gigs)",
-            "5 years of hands-on experience"
+            "Direct skills match: Plumbing and Emergency Repair",
+            "Available now and weekend coverage",
+            "Local to San Francisco (preferred area)",
+            "5 years experience with 127 completed gigs",
+            "High past performance rating (4.8)",
+            "Pipe installation/repair competency for burst pipe scenarios"
           ],
           "concerns": [
-            "License status not specified but required",
-            "Budget ($150) may be low for emergency burst pipe service"
+            "License status not explicitly confirmed; requirement is a licensed plumber",
+            "Budget ($150) may be low for emergency/after-hours call-out and materials",
+            "If response needed immediately, travel and parts availability may impact total cost/timeline"
           ],
-          "recommendation": "Strong match if licensed. This worker\u2019s emergency repair skills, weekend availability, immediate readiness, and proximity to San Francisco make them well-suited for an urgent burst pipe. Verify active plumbing license and confirm emergency rate before dispatch.",
+          "recommendation": "Strong operational match for an urgent burst pipe. Contact the worker immediately due to \u2018Available Now\u2019 status and proven emergency repair experience. Before dispatch, verify their plumbing license/credentials, confirm emergency call-out rates and any after-hours surcharge, and align on the $150 budget (may need adjustment). Provide exact address, access details, and photos/video of the burst area to accelerate response.",
           "key_insights": [
-            "Urgency aligns with the worker\u2019s \u2018Available Now\u2019 status for rapid response.",
-            "Weekend availability directly meets the gig\u2019s requirement.",
-            "Emergency Repair skill maps well to burst pipe scenarios.",
-            "Local service area (San Francisco) should minimize travel time and arrival delays.",
-            "High rating and many completed gigs suggest reliability under pressure.",
-            "Must confirm active plumbing license to satisfy a core requirement; budget expectations should be aligned upfront."
+            "Urgency aligns with worker\u2019s emergency repair skill set and immediate availability",
+            "Local proximity in San Francisco minimizes travel time for rapid response",
+            "Weekend availability satisfies the gig\u2019s weekend requirement",
+            "High rating (4.8) and 127 gigs indicate reliability and quality under pressure",
+            "License verification is the only missing hard requirement; resolving it likely elevates this to a top-tier match",
+            "Clarifying scope (temporary shutoff vs. full repair) and material needs will manage budget expectations"
           ]
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:23.226579"
+      "timestamp": "2025-10-22T21:09:25.436268"
     },
     "AI Suggest Gigs": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-22T20:34:23.283625"
+      "timestamp": "2025-10-22T21:09:25.499391"
     },
     "AI Forecast Demand": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-22T20:34:23.320598"
+      "timestamp": "2025-10-22T21:09:25.576610"
     },
     "AI Voice Parsing - Professional Project": {
       "success": true,
       "response": {
-        "title": "E-commerce website for clothing store",
+        "title": "Build e-commerce site for clothing store",
         "description": "I need a website developer to build a modern e-commerce website for my clothing store. I need it done in 3 weeks and my budget is around $1500.",
         "category": "Web Development",
         "duration": "3 weeks",
@@ -1173,23 +1209,20 @@
         "skills": [
           "Web Development",
           "E-commerce",
+          "Frontend Development",
+          "Backend Development",
           "Payment Gateway Integration",
           "Responsive Design",
-          "SEO",
-          "HTML",
-          "CSS",
-          "JavaScript",
-          "Shopify",
-          "WooCommerce"
+          "SEO"
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:37.954147"
+      "timestamp": "2025-10-22T21:09:31.624027"
     },
     "AI Voice Parsing - Local Gig": {
       "success": true,
       "response": {
-        "title": "Urgent kitchen sink leak repair today 5 PM",
+        "title": "Urgent plumber for kitchen sink leak",
         "description": "I need a plumber today at 5 PM to fix a leak in my kitchen sink. It's urgent.",
         "category": "Maintenance & Repairs",
         "duration": "",
@@ -1201,13 +1234,13 @@
         "type": "emergency",
         "skills": [
           "Plumbing",
-          "Leak Repair",
-          "Pipe Repair",
-          "Emergency Service"
+          "Leak detection",
+          "Sink repair",
+          "Pipe repair"
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:49.521378"
+      "timestamp": "2025-10-22T21:09:37.554173"
     },
     "AI Voice Parsing - Empty Transcript": {
       "success": true,
@@ -1216,7 +1249,7 @@
         "message": "Properly handled empty transcript"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:49.575130"
+      "timestamp": "2025-10-22T21:09:37.609819"
     },
     "AI Voice Parsing - Missing WorkType": {
       "success": true,
@@ -1225,58 +1258,58 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:34:49.610882"
+      "timestamp": "2025-10-22T21:09:37.647694"
     },
     "AI Price Estimator - Web Development Project": {
       "success": true,
       "response": {
-        "minPrice": 6000,
-        "maxPrice": 12000,
-        "suggestedPrice": 9000,
-        "explanation": "A modern e-commerce build with secure payment integration typically needs a mid\u2013senior developer and ~100\u2013140 hours over 3 weeks. At global remote rates of roughly $50\u2013$100/hour, a fair range is $6k\u2013$12k; no urgency premium applies, and e-commerce demand keeps pricing centered around $9k for quality implementation.",
+        "minPrice": 4000,
+        "maxPrice": 9000,
+        "suggestedPrice": 6500,
+        "explanation": "A modern e-commerce site with payment integration typically takes 60\u2013120 hours and requires mid-to-senior web development skills with secure payment setup. At global remote rates of $50\u2013$90/hr, a fair range is $4k\u2013$9k, with ~$6.5k reasonable for a 3-week build. Normal urgency and remote work mean no rush or on-site premium; demand is steady but mature tooling keeps costs mid-range.",
         "factors": {
-          "skill_factor": 50,
-          "urgency_factor": 0,
-          "location_factor": 15,
-          "market_factor": 35
+          "skill_factor": 55,
+          "urgency_factor": 5,
+          "location_factor": 10,
+          "market_factor": 30
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:07.791947"
+      "timestamp": "2025-10-22T21:10:00.205767"
     },
     "AI Price Estimator - Urgent Local Gig": {
       "success": true,
       "response": {
-        "minPrice": 180,
-        "maxPrice": 420,
+        "minPrice": 225,
+        "maxPrice": 450,
         "suggestedPrice": 300,
-        "explanation": "Licensed plumbers in Chicago typically charge a $120\u2013$180 service call plus $100\u2013$200/hour; a leaking sink fix usually takes 30\u201390 minutes with $10\u2013$50 in parts. Urgent same-day service adds a 20\u201340% premium, and downtown travel/parking bumps costs slightly, making $180\u2013$420 fair with $300 a balanced target.",
+        "explanation": "Licensed plumber rates in Chicago typically run $120-$200/hour plus a service call, and downtown jobs often add parking/access overhead. Urgent same-day work merits a 20-40% premium. This range covers a quick leak fix with basic parts; more complex repairs (e.g., faucet cartridge or trap replacement) push toward the upper end.",
         "factors": {
-          "skill_factor": 35,
+          "skill_factor": 40,
           "urgency_factor": 30,
           "location_factor": 20,
-          "market_factor": 15
+          "market_factor": 10
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:21.919584"
+      "timestamp": "2025-10-22T21:10:09.476689"
     },
     "AI Price Estimator - Other Category": {
       "success": true,
       "response": {
         "minPrice": 1000,
-        "maxPrice": 3500,
-        "suggestedPrice": 2000,
-        "explanation": "For a general remote project with normal urgency and unspecified specialty, a mid-level scope typically runs 30\u201360 hours at global rates of $35\u2013$60/hr. Normal urgency means no rush premium, and remote work applies competitive global pricing while still protecting for professional quality.",
+        "maxPrice": 3000,
+        "suggestedPrice": 1800,
+        "explanation": "With normal urgency and a remote setup, a small-to-medium scoped project using generalist skills typically lands in the $1,000\u2013$3,000 range. Remote work taps into global supply, keeping rates competitive, and no urgency premium applies. The suggested mid-range price protects quality while remaining fair to the client.",
         "factors": {
-          "skill_factor": 10,
+          "skill_factor": 45,
           "urgency_factor": 0,
-          "location_factor": -5,
-          "market_factor": 5
+          "location_factor": 20,
+          "market_factor": 35
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.030639"
+      "timestamp": "2025-10-22T21:10:21.868447"
     },
     "AI Price Estimator - Missing WorkType": {
       "success": true,
@@ -1285,16 +1318,33 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-22T20:35:43.086723"
+      "timestamp": "2025-10-22T21:10:21.929068"
     }
   },
-  "job_posting": {},
+  "job_posting": {
+    "Application Test - Create Worker Profile": {
+      "success": true,
+      "response": {
+        "worker_id": "922574af-1c74-4df7-abf7-88690d9e5463",
+        "user_id": "app-test-worker-123"
+      },
+      "error": null,
+      "timestamp": "2025-10-22T21:10:23.246419"
+    },
+    "Application Test - Create Job": {
+      "success": false,
+      "response": null,
+      "error": "Failed to create job: HTTP 422",
+      "timestamp": "2025-10-22T21:10:23.285180"
+    }
+  },
   "summary": {
-    "passed": 54,
-    "failed": 2,
+    "passed": 55,
+    "failed": 3,
     "errors": [
       "AI Suggest Gigs: HTTP 422",
-      "AI Forecast Demand: HTTP 422"
+      "AI Forecast Demand: HTTP 422",
+      "Application Test - Create Job: Failed to create job: HTTP 422"
     ]
   }
 }
