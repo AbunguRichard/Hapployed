@@ -875,6 +875,267 @@ class BackendTester:
         except Exception as e:
             self.log_result("worker_features", "Profile Retrieval - Non-existent Profile", False, None, str(e))
     
+    def test_job_posting_endpoints(self):
+        """Test Job Posting API endpoints"""
+        print("\n💼 Testing Job Posting Endpoints...")
+        
+        # Store job IDs for later tests
+        project_job_id = None
+        gig_job_id = None
+        
+        # Test 1: Create a project type job
+        try:
+            payload = {
+                "userId": "test-user-123",
+                "userEmail": "test@example.com",
+                "jobType": "project",
+                "title": "Build a React Website",
+                "description": "Need a modern React website with Tailwind CSS",
+                "category": "Web Development",
+                "skills": ["React", "Tailwind", "JavaScript"],
+                "budget": {"type": "fixed", "amount": 5000, "currency": "USD"},
+                "timeline": "2-3 weeks",
+                "location": {"type": "remote"},
+                "status": "draft"
+            }
+            
+            response = requests.post(f"{BASE_URL}/jobs", json=payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                # Verify all required fields are present and correct
+                if (data.get("userId") == payload["userId"] and
+                    data.get("jobType") == payload["jobType"] and
+                    data.get("title") == payload["title"] and
+                    data.get("status") == payload["status"] and
+                    "id" in data and
+                    "createdAt" in data):
+                    project_job_id = data["id"]
+                    self.log_result("worker_features", "Job Posting - Create Project Job", True, data)
+                else:
+                    self.log_result("worker_features", "Job Posting - Create Project Job", False, data, 
+                                  "Job data mismatch or missing required fields")
+            else:
+                self.log_result("worker_features", "Job Posting - Create Project Job", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Job Posting - Create Project Job", False, None, str(e))
+        
+        # Test 2: Create a gig type job
+        try:
+            payload = {
+                "userId": "test-user-456",
+                "userEmail": "gig@example.com",
+                "jobType": "gig",
+                "title": "Emergency Plumbing Repair",
+                "description": "Need urgent plumbing repair for burst pipe",
+                "category": "Maintenance & Repairs",
+                "skills": ["Plumbing", "Emergency Repair"],
+                "budget": {"type": "hourly", "amount": 75, "currency": "USD"},
+                "timeline": "ASAP",
+                "location": {"type": "onsite", "address": "123 Main St", "city": "San Francisco", "state": "CA"},
+                "urgency": "asap",
+                "status": "draft"
+            }
+            
+            response = requests.post(f"{BASE_URL}/jobs", json=payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                # Verify all required fields are present and correct
+                if (data.get("userId") == payload["userId"] and
+                    data.get("jobType") == payload["jobType"] and
+                    data.get("title") == payload["title"] and
+                    data.get("urgency") == payload["urgency"] and
+                    "id" in data):
+                    gig_job_id = data["id"]
+                    self.log_result("worker_features", "Job Posting - Create Gig Job", True, data)
+                else:
+                    self.log_result("worker_features", "Job Posting - Create Gig Job", False, data, 
+                                  "Gig data mismatch or missing required fields")
+            else:
+                self.log_result("worker_features", "Job Posting - Create Gig Job", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Job Posting - Create Gig Job", False, None, str(e))
+        
+        # Test 3: Get all jobs
+        try:
+            response = requests.get(f"{BASE_URL}/jobs")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list) and len(data) >= 0:
+                    self.log_result("worker_features", "Job Posting - Get All Jobs", True, 
+                                  {"jobs_count": len(data), "sample": data[:2] if data else []})
+                else:
+                    self.log_result("worker_features", "Job Posting - Get All Jobs", False, data, 
+                                  "Expected list of jobs")
+            else:
+                self.log_result("worker_features", "Job Posting - Get All Jobs", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Job Posting - Get All Jobs", False, None, str(e))
+        
+        # Test 4: Get jobs with filters
+        try:
+            response = requests.get(f"{BASE_URL}/jobs?jobType=project&status=draft")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check if filtering worked (all returned jobs should be project type and draft status)
+                    all_match_filter = all(job.get("jobType") == "project" and job.get("status") == "draft" 
+                                         for job in data)
+                    if all_match_filter:
+                        self.log_result("worker_features", "Job Posting - Get Jobs with Filters", True, 
+                                      {"filtered_jobs_count": len(data)})
+                    else:
+                        self.log_result("worker_features", "Job Posting - Get Jobs with Filters", False, data, 
+                                      "Filter not working properly - returned jobs don't match filter criteria")
+                else:
+                    self.log_result("worker_features", "Job Posting - Get Jobs with Filters", False, data, 
+                                  "Expected list of jobs")
+            else:
+                self.log_result("worker_features", "Job Posting - Get Jobs with Filters", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Job Posting - Get Jobs with Filters", False, None, str(e))
+        
+        # Test 5: Get jobs by user ID
+        try:
+            response = requests.get(f"{BASE_URL}/jobs/user/test-user-123")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check if all returned jobs belong to the specified user
+                    all_match_user = all(job.get("userId") == "test-user-123" for job in data)
+                    if all_match_user:
+                        self.log_result("worker_features", "Job Posting - Get Jobs by User ID", True, 
+                                      {"user_jobs_count": len(data)})
+                    else:
+                        self.log_result("worker_features", "Job Posting - Get Jobs by User ID", False, data, 
+                                      "User filter not working - returned jobs don't belong to specified user")
+                else:
+                    self.log_result("worker_features", "Job Posting - Get Jobs by User ID", False, data, 
+                                  "Expected list of jobs")
+            else:
+                self.log_result("worker_features", "Job Posting - Get Jobs by User ID", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Job Posting - Get Jobs by User ID", False, None, str(e))
+        
+        # Test 6: Get specific job by ID (using project job)
+        if project_job_id:
+            try:
+                response = requests.get(f"{BASE_URL}/jobs/{project_job_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("id") == project_job_id and
+                        data.get("title") == "Build a React Website" and
+                        "views" in data):
+                        self.log_result("worker_features", "Job Posting - Get Specific Job", True, data)
+                    else:
+                        self.log_result("worker_features", "Job Posting - Get Specific Job", False, data, 
+                                      "Job data doesn't match expected values")
+                else:
+                    self.log_result("worker_features", "Job Posting - Get Specific Job", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Job Posting - Get Specific Job", False, None, str(e))
+        
+        # Test 7: Test 404 for invalid job ID
+        try:
+            response = requests.get(f"{BASE_URL}/jobs/invalid-job-id-123")
+            
+            if response.status_code == 404:
+                self.log_result("worker_features", "Job Posting - Get Invalid Job ID", True, 
+                              {"status_code": response.status_code, "message": "Properly returned 404 for invalid job ID"})
+            else:
+                self.log_result("worker_features", "Job Posting - Get Invalid Job ID", False, None, 
+                              f"Expected 404 for invalid job ID, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("worker_features", "Job Posting - Get Invalid Job ID", False, None, str(e))
+        
+        # Test 8: Update job (using project job)
+        if project_job_id:
+            try:
+                payload = {
+                    "title": "Build a Modern React Website with AI Features",
+                    "description": "Updated description with AI integration requirements",
+                    "status": "draft"
+                }
+                
+                response = requests.patch(f"{BASE_URL}/jobs/{project_job_id}", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("title") == payload["title"] and
+                        data.get("description") == payload["description"] and
+                        "updatedAt" in data):
+                        self.log_result("worker_features", "Job Posting - Update Job", True, data)
+                    else:
+                        self.log_result("worker_features", "Job Posting - Update Job", False, data, 
+                                      "Job update didn't apply correctly")
+                else:
+                    self.log_result("worker_features", "Job Posting - Update Job", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Job Posting - Update Job", False, None, str(e))
+        
+        # Test 9: Publish job (change status from draft to published)
+        if project_job_id:
+            try:
+                response = requests.post(f"{BASE_URL}/jobs/{project_job_id}/publish")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("status") == "published":
+                        self.log_result("worker_features", "Job Posting - Publish Job", True, data)
+                    else:
+                        self.log_result("worker_features", "Job Posting - Publish Job", False, data, 
+                                      f"Job status not changed to published, got: {data.get('status')}")
+                else:
+                    self.log_result("worker_features", "Job Posting - Publish Job", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Job Posting - Publish Job", False, None, str(e))
+        
+        # Test 10: Delete job (using gig job)
+        if gig_job_id:
+            try:
+                response = requests.delete(f"{BASE_URL}/jobs/{gig_job_id}")
+                
+                if response.status_code == 204:
+                    self.log_result("worker_features", "Job Posting - Delete Job", True, 
+                                  {"status_code": response.status_code, "message": "Job deleted successfully"})
+                    
+                    # Verify job is actually deleted by trying to get it
+                    verify_response = requests.get(f"{BASE_URL}/jobs/{gig_job_id}")
+                    if verify_response.status_code == 404:
+                        self.log_result("worker_features", "Job Posting - Verify Job Deletion", True, 
+                                      {"message": "Job properly deleted - returns 404 when accessed"})
+                    else:
+                        self.log_result("worker_features", "Job Posting - Verify Job Deletion", False, None, 
+                                      f"Job still accessible after deletion, got HTTP {verify_response.status_code}")
+                else:
+                    self.log_result("worker_features", "Job Posting - Delete Job", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("worker_features", "Job Posting - Delete Job", False, None, str(e))
+    
     def run_all_tests(self):
         """Run all backend tests"""
         print("🚀 Starting Hapployed Worker Dashboard Backend Tests")
