@@ -19,6 +19,7 @@ from badge_routes import router as badge_router
 from profile_routes import router as profile_router
 from job_posting_routes import router as job_posting_router
 from worker_profile_routes import router as worker_profile_router
+from messaging_routes import router as messaging_router
 
 
 ROOT_DIR = Path(__file__).parent
