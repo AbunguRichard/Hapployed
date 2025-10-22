@@ -36,6 +36,8 @@ import ProjectsServicePage from './pages/ProjectsServicePage';
 import EmergencyGigsServicePage from './pages/EmergencyGigsServicePage';
 import GigsNearMeServicePage from './pages/GigsNearMeServicePage';
 import HireMethodChoicePage from './pages/HireMethodChoicePage';
+import HireStartPage from './pages/HireStartPage';
+import HirerOnboardingPage from './pages/HirerOnboardingPage';
 import './App.css';
 
 function App() {
