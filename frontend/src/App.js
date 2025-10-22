@@ -99,6 +99,25 @@ function App() {
             
             {/* Worker Profile Detail */}
             <Route path="/worker-profile/:profileId" element={<WorkerProfileDetailPage />} />
+            
+            {/* Applications */}
+            <Route 
+              path="/my-applications" 
+              element={
+                <ProtectedRoute>
+                  <MyApplicationsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/job/:jobId/applications" 
+              element={
+                <ProtectedRoute>
+                  <JobApplicationsPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             <Route 
               path="/hire-method-choice" 
               element={
