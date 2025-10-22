@@ -1897,6 +1897,9 @@ class BackendTester:
         # Worker Profile Tests
         self.test_worker_profile_endpoints()
         
+        # Application System Tests
+        self.test_application_system_endpoints()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
