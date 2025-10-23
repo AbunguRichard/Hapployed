@@ -1,21 +1,69 @@
-import React, { useState } from 'react';
-import { X, Send, DollarSign, Calendar, FileText, Loader } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { X, Send, DollarSign, Calendar, FileText, Loader, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 export default function JobApplicationModal({ isOpen, onClose, job, worker }) {
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+  const [hasSkills, setHasSkills] = useState(true);
+  const [checkingSkills, setCheckingSkills] = useState(true);
+  const [showSkillsPrompt, setShowSkillsPrompt] = useState(false);
   const [formData, setFormData] = useState({
     coverLetter: '',
     proposedRate: job?.budget?.min || '',
     availableStartDate: ''
   });
 
+  useEffect(() => {
+    if (isOpen && worker) {
+      checkUserSkills();
+    }
+  }, [isOpen, worker]);
+
+  const checkUserSkills = async () => {
+    setCheckingSkills(true);
+    try {
+      const userId = worker.id || worker.email;
+      const response = await fetch(`${BACKEND_URL}/api/worker-profiles/user/${userId}`);
+      
+      if (response.ok) {
+        const profile = await response.json();
+        const skillsExist = profile.skills && profile.skills.length > 0;
+        setHasSkills(skillsExist);
+        
+        if (!skillsExist) {
+          setShowSkillsPrompt(true);
+        }
+      } else {
+        setHasSkills(false);
+        setShowSkillsPrompt(true);
+      }
+    } catch (error) {
+      console.error('Error checking skills:', error);
+      setHasSkills(false);
+      setShowSkillsPrompt(true);
+    } finally {
+      setCheckingSkills(false);
+    }
+  };
+
   if (!isOpen) return null;
+
+  const handleGoToSkills = () => {
+    onClose();
+    navigate('/my-skills');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!hasSkills) {
+      setShowSkillsPrompt(true);
+      return;
+    }
     
     if (!formData.coverLetter.trim()) {
       toast.error('Please provide a cover letter');
