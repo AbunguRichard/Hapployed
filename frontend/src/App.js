@@ -123,6 +123,16 @@ function App() {
               } 
             />
             
+            {/* My Skills */}
+            <Route 
+              path="/my-skills" 
+              element={
+                <ProtectedRoute>
+                  <MySkillsPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* QuickHire Routes */}
             <Route 
               path="/quickhire/post" 
