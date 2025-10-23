@@ -507,10 +507,13 @@ export default function PostProjectPage() {
                 </div>
               </div>
 
-              <div className="mt-6 flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-4 transition-all">
+              <button
+                onClick={() => setWorkType('gig')}
+                className="mt-6 flex items-center gap-2 text-blue-600 font-semibold hover:gap-4 transition-all cursor-pointer hover:text-blue-700"
+              >
                 <span>Continue with Gig</span>
                 <ArrowRight className="w-5 h-5" />
-              </div>
+              </button>
             </div>
           </div>
 
