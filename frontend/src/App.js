@@ -168,6 +168,16 @@ function App() {
               } 
             />
             
+            {/* Job Type Selection */}
+            <Route 
+              path="/select-job-type" 
+              element={
+                <ProtectedRoute>
+                  <JobTypeSelectionPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             <Route 
               path="/hire-method-choice" 
               element={
