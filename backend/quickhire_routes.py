@@ -12,7 +12,7 @@ router = APIRouter(prefix="/api/quickhire")
 # MongoDB connection
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(MONGO_URL)
-db = client['hapployed']
+db = client[os.environ.get('DB_NAME', 'test_database')]
 quickhire_gigs_collection = db['quickhire_gigs']
 quickhire_assignments_collection = db['quickhire_assignments']
 quickhire_ratings_collection = db['quickhire_ratings']
