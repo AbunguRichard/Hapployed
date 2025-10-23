@@ -121,6 +121,40 @@ function App() {
               } 
             />
             
+            {/* QuickHire Routes */}
+            <Route 
+              path="/quickhire/post" 
+              element={
+                <ProtectedRoute>
+                  <QuickHirePostPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/quickhire/track/:gigId" 
+              element={
+                <ProtectedRoute>
+                  <QuickHireTrackingPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/quickhire/worker" 
+              element={
+                <ProtectedRoute>
+                  <QuickHireWorkerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/quickhire/worker/:gigId" 
+              element={
+                <ProtectedRoute>
+                  <QuickHireTrackingPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             <Route 
               path="/hire-method-choice" 
               element={
