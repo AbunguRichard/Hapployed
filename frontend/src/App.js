@@ -45,6 +45,7 @@ import JobApplicationsPage from './pages/JobApplicationsPage';
 import QuickHirePostPage from './pages/QuickHirePostPage';
 import QuickHireTrackingPage from './pages/QuickHireTrackingPage';
 import QuickHireWorkerDashboard from './pages/QuickHireWorkerDashboard';
+import MySkillsPage from './pages/MySkillsPage';
 import './App.css';
 
 function App() {
