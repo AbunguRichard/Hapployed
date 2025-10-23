@@ -56,6 +56,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<Homepage />} />
             <Route path="/what-we-offer" element={<WhatWeOfferPage />} />
+            <Route path="/auth" element={<UnifiedAuthPage />} />
             <Route path="/auth/login" element={<UnifiedAuthPage />} />
             <Route path="/auth/signup" element={<UnifiedAuthPage />} />
             
