@@ -433,10 +433,13 @@ export default function PostProjectPage() {
                 </div>
               </div>
 
-              <div className="mt-6 flex items-center gap-2 text-purple-600 font-semibold group-hover:gap-4 transition-all">
+              <button
+                onClick={() => setWorkType('project')}
+                className="mt-6 flex items-center gap-2 text-purple-600 font-semibold hover:gap-4 transition-all cursor-pointer hover:text-purple-700"
+              >
                 <span>Continue with Project</span>
                 <ArrowRight className="w-5 h-5" />
-              </div>
+              </button>
             </div>
 
             {/* Local Gig Card */}
