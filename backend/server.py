@@ -79,6 +79,7 @@ app.include_router(job_posting_router)
 app.include_router(worker_profile_router)
 app.include_router(messaging_router)
 app.include_router(application_router)
+app.include_router(quickhire_router)
 
 app.add_middleware(
     CORSMiddleware,
