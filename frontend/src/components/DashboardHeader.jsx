@@ -86,12 +86,17 @@ export default function DashboardHeader() {
               const active = item.path && isActive(item.path);
               
               if (item.hasDropdown) {
+                // Check if any dropdown item is active
+                const isDropdownActive = item.dropdownItems.some(dropdownItem => 
+                  isActive(dropdownItem.path)
+                );
+                
                 return (
                   <div key={index} className="relative" ref={quickHireDropdownRef}>
                     <button
                       onClick={() => setIsQuickHireDropdownOpen(!isQuickHireDropdownOpen)}
-                      className={`px-4 py-1.5 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors flex items-center gap-2 ${
-                        active ? 'bg-gray-600' : ''
+                      className={`px-4 py-1.5 rounded-full transition-colors flex items-center gap-2 ${
+                        isDropdownActive ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-700 hover:bg-gray-600'
                       }`}
                     >
                       <span className="text-sm font-medium text-white">{item.name}</span>
@@ -125,8 +130,8 @@ export default function DashboardHeader() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-4 py-1.5 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors ${
-                    active ? 'bg-gray-600' : ''
+                  className={`px-4 py-1.5 rounded-full transition-colors ${
+                    active ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-700 hover:bg-gray-600'
                   }`}
                 >
                   <span className="text-sm font-medium text-white">{item.name}</span>
