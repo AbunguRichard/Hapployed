@@ -72,7 +72,7 @@ export default function DashboardHeader() {
   ];
 
   return (
-    <header className="bg-white sticky top-0 z-50 shadow-sm">
+    <header className="bg-[#FFE5D4] sticky top-0 z-50 border-b-2 border-gray-300">
       <div className="w-full px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -81,25 +81,41 @@ export default function DashboardHeader() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 flex-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.path);
+          <nav className="hidden md:flex items-center gap-3 flex-1">
+            {navItems.map((item, index) => {
+              const active = item.path && isActive(item.path);
               
-              if (item.isButton) {
+              if (item.hasDropdown) {
                 return (
-                  <button
-                    key={item.path}
-                    onClick={item.onClick || (() => navigate(item.path))}
-                    className="flex flex-col items-center gap-1 group"
-                  >
-                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg hover:scale-110 transition-transform`}>
-                      <Icon className="w-6 h-6 text-white" strokeWidth={2.5} />
-                    </div>
-                    <span className="text-xs font-medium text-gray-700">
-                      {item.name}
-                    </span>
-                  </button>
+                  <div key={index} className="relative" ref={quickHireDropdownRef}>
+                    <button
+                      onClick={() => setIsQuickHireDropdownOpen(!isQuickHireDropdownOpen)}
+                      className={`px-5 py-2.5 rounded-lg border-2 border-black bg-white hover:bg-gray-50 transition-colors flex items-center gap-2 ${
+                        active ? 'bg-purple-50' : ''
+                      }`}
+                    >
+                      <span className="text-sm font-semibold text-black">{item.name}</span>
+                      <ChevronDown className={`w-4 h-4 text-black transition-transform ${isQuickHireDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Quick Hire Dropdown */}
+                    {isQuickHireDropdownOpen && (
+                      <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border-2 border-black py-2 z-50">
+                        {item.dropdownItems.map((dropdownItem) => (
+                          <button
+                            key={dropdownItem.path}
+                            onClick={() => {
+                              navigate(dropdownItem.path);
+                              setIsQuickHireDropdownOpen(false);
+                            }}
+                            className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm font-medium text-black"
+                          >
+                            {dropdownItem.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 );
               }
               
@@ -107,135 +123,119 @@ export default function DashboardHeader() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className="flex flex-col items-center gap-1 group"
+                  className={`px-5 py-2.5 rounded-lg border-2 border-black bg-white hover:bg-gray-50 transition-colors ${
+                    active ? 'bg-purple-50' : ''
+                  }`}
                 >
-                  {item.gradient ? (
-                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center`}>
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                  ) : (
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-                      <Icon 
-                        className={`w-6 h-6 ${item.iconColor}`} 
-                        strokeWidth={item.outlined ? 1.5 : 2}
-                      />
-                    </div>
-                  )}
-                  <span className={`text-xs font-medium ${active ? 'text-purple-600' : 'text-gray-700'}`}>
-                    {item.name}
-                  </span>
+                  <span className="text-sm font-semibold text-black">{item.name}</span>
                 </Link>
               );
             })}
-            
-            {/* Post Project Button */}
-            <button
-              onClick={() => navigate('/post-project')}
-              className="flex flex-col items-center gap-1 group ml-6"
-            >
-              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition-colors shadow-md">
-                <Plus className="w-5 h-5 text-white" />
-                <span className="text-sm font-medium text-white">Post Project</span>
-              </div>
-            </button>
           </nav>
 
-          {/* User Avatar with Dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-4">
+            {/* Post Project/Gigs Button */}
             <button
-              onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-              className="flex items-center gap-2 hover:bg-gray-100 rounded-lg px-2 py-1 transition-colors"
+              onClick={() => navigate('/post-project')}
+              className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-colors shadow-md"
             >
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-green-300 via-cyan-300 to-blue-300 flex items-center justify-center">
-                <div className="w-full h-full bg-gradient-to-b from-yellow-200 to-yellow-300 rounded-full flex flex-col items-center justify-end overflow-hidden">
-                  <div className="w-5 h-5 bg-yellow-600 rounded-full mb-1"></div>
-                  <div className="w-8 h-5 bg-cyan-400 rounded-t-full"></div>
-                </div>
-              </div>
-              <ChevronDown className={`w-4 h-4 text-gray-600 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+              <Plus className="w-5 h-5 text-white" />
+              <span className="text-sm font-semibold text-white">Post Project/Gigs</span>
             </button>
 
-            {/* Dropdown Menu */}
-            {isProfileDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                {/* User Info */}
-                <div className="px-4 py-3 border-b border-gray-200">
-                  <p className="font-semibold text-gray-900">{user?.name || 'John Doe'}</p>
-                  <p className="text-sm text-gray-600">{user?.email || 'john@example.com'}</p>
+            {/* User Avatar with Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              >
+                <User className="w-10 h-10 text-green-600 stroke-[2.5]" />
+                <ChevronDown className={`w-4 h-4 text-black transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border-2 border-black py-2 z-50">
+                  {/* User Info */}
+                  <div className="px-4 py-3 border-b-2 border-gray-200">
+                    <p className="font-semibold text-gray-900">{user?.name || 'John Doe'}</p>
+                    <p className="text-sm text-gray-600">{user?.email || 'john@example.com'}</p>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="py-2">
+                    <button
+                      onClick={() => { navigate('/profile'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <User className="w-5 h-5" />
+                      <span>View Profile</span>
+                    </button>
+
+                    <button
+                      onClick={() => { navigate('/settings'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <Settings className="w-5 h-5" />
+                      <span>Settings</span>
+                    </button>
+
+                    <button
+                      onClick={() => { navigate('/billing'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <CreditCard className="w-5 h-5" />
+                      <span>Billing & Payments</span>
+                    </button>
+
+                    <button
+                      onClick={() => { navigate('/notifications-settings'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <Bell className="w-5 h-5" />
+                      <span>Notification Settings</span>
+                    </button>
+
+                    <button
+                      onClick={() => { navigate('/privacy-security'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <Shield className="w-5 h-5" />
+                      <span>Privacy & Security</span>
+                    </button>
+                  </div>
+
+                  <div className="border-t-2 border-gray-200 py-2">
+                    <button
+                      onClick={() => { navigate('/switch-account'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <RefreshCw className="w-5 h-5" />
+                      <span>Switch Account Type</span>
+                    </button>
+
+                    <button
+                      onClick={() => { navigate('/help'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <HelpCircle className="w-5 h-5" />
+                      <span>Help & Support</span>
+                    </button>
+                  </div>
+
+                  <div className="border-t-2 border-gray-200 py-2">
+                    <button
+                      onClick={() => { logout(); navigate('/auth/login'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-red-50 flex items-center gap-3 text-red-600"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      <span>Log Out</span>
+                    </button>
+                  </div>
                 </div>
-
-                {/* Menu Items */}
-                <div className="py-2">
-                  <button
-                    onClick={() => { navigate('/profile'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <User className="w-5 h-5" />
-                    <span>View Profile</span>
-                  </button>
-
-                  <button
-                    onClick={() => { navigate('/settings'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <Settings className="w-5 h-5" />
-                    <span>Settings</span>
-                  </button>
-
-                  <button
-                    onClick={() => { navigate('/billing'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <CreditCard className="w-5 h-5" />
-                    <span>Billing & Payments</span>
-                  </button>
-
-                  <button
-                    onClick={() => { navigate('/notifications-settings'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <Bell className="w-5 h-5" />
-                    <span>Notification Settings</span>
-                  </button>
-
-                  <button
-                    onClick={() => { navigate('/privacy-security'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <Shield className="w-5 h-5" />
-                    <span>Privacy & Security</span>
-                  </button>
-                </div>
-
-                <div className="border-t border-gray-200 py-2">
-                  <button
-                    onClick={() => { navigate('/switch-account'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <RefreshCw className="w-5 h-5" />
-                    <span>Switch Account Type</span>
-                  </button>
-
-                  <button
-                    onClick={() => { navigate('/help'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                  >
-                    <HelpCircle className="w-5 h-5" />
-                    <span>Help & Support</span>
-                  </button>
-                </div>
-
-                <div className="border-t border-gray-200 py-2">
-                  <button
-                    onClick={() => { logout(); navigate('/auth/login'); setIsProfileDropdownOpen(false); }}
-                    className="w-full px-4 py-2 text-left hover:bg-red-50 flex items-center gap-3 text-red-600"
-                  >
-                    <LogOut className="w-5 h-5" />
-                    <span>Log Out</span>
-                  </button>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
