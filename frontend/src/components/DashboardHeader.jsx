@@ -144,7 +144,7 @@ export default function DashboardHeader() {
           <div className="flex items-center gap-3">
             {/* Post Project/Gigs Button */}
             <button
-              onClick={() => navigate('/post-project')}
+              onClick={() => navigate('/select-job-type')}
               className="flex items-center gap-2 px-5 py-1.5 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 transition-colors"
             >
               <Plus className="w-4 h-4 text-white" />
