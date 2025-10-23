@@ -11,7 +11,7 @@ router = APIRouter(prefix="/api/worker", tags=["Worker Features"])
 # MongoDB connection
 MONGO_URL = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.get_database('test_database')
+db = client.get_database(os.getenv('DB_NAME', 'test_database'))
 workers_collection = db.workers
 achievements_collection = db.achievements
 gig_history_collection = db.gig_history
