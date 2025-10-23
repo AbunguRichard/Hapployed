@@ -1,0 +1,364 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Mic, MapPin, DollarSign, Clock, Zap, Camera, CheckCircle, Loader } from 'lucide-react';
+import { toast } from 'sonner';
+import DashboardHeader from '../components/DashboardHeader';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+
+const CATEGORIES = [
+  'Plumber', 'Electrician', 'Cleaning', 'Handyman', 'Moving',
+  'Locksmith', 'HVAC', 'Painting', 'Carpentry', 'Landscaping'
+];
+
+export default function QuickHirePostPage() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [submitting, setSubmitting] = useState(false);
+  const [isVoiceMode, setIsVoiceMode] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [transcript, setTranscript] = useState('');
+  
+  const [formData, setFormData] = useState({
+    category: '',
+    description: '',
+    location: {
+      address: '',
+      latitude: null,
+      longitude: null
+    },
+    radius: 5,
+    urgency: 'ASAP',
+    budget: '',
+    photos: []
+  });
+
+  // Get current location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setFormData(prev => ({
+            ...prev,
+            location: {
+              ...prev.location,
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            }
+          }));
+          toast.success('Location detected');
+        },
+        (error) => {
+          console.error('Location error:', error);
+          toast.error('Could not detect location');
+        }
+      );
+    }
+  }, []);
+
+  const handleVoiceInput = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      toast.error('Voice input not supported in your browser');
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsRecording(true);
+      toast.info('Listening... Speak now!');
+    };
+
+    recognition.onresult = (event) => {
+      const voiceText = event.results[0][0].transcript;
+      setTranscript(voiceText);
+      setFormData(prev => ({
+        ...prev,
+        description: voiceText
+      }));
+      toast.success('Voice captured!');
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      toast.error('Voice input failed');
+      setIsRecording(false);
+    };
+
+    recognition.onend = () => {
+      setIsRecording(false);
+    };
+
+    recognition.start();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.category) {
+      toast.error('Please select a category');
+      return;
+    }
+    
+    if (!formData.description) {
+      toast.error('Please describe what you need');
+      return;
+    }
+    
+    if (!formData.location.latitude || !formData.location.longitude) {
+      toast.error('Please enable location services');
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const gigData = {
+        clientId: user.id || user.email,
+        clientName: user.name || user.email,
+        clientEmail: user.email,
+        category: formData.category,
+        description: formData.description,
+        location: {
+          type: 'Point',
+          coordinates: [formData.location.longitude, formData.location.latitude],
+          address: formData.location.address || 'Current Location'
+        },
+        radius: formData.radius,
+        urgency: formData.urgency,
+        budget: formData.budget ? parseFloat(formData.budget) : null,
+        photos: formData.photos
+      };
+
+      const response = await fetch(`${BACKEND_URL}/api/quickhire/gigs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(gigData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to post gig');
+      }
+
+      const result = await response.json();
+      
+      toast.success('QuickHire request posted! Finding nearby workers...');
+      
+      // Navigate to tracking page
+      setTimeout(() => {
+        navigate(`/quickhire/track/${result.id}`);
+      }, 1500);
+      
+    } catch (error) {
+      console.error('Error posting gig:', error);
+      toast.error('Failed to post QuickHire request');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
+      <DashboardHeader />
+      
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-full mb-4">
+            <Zap className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">QuickHire</h1>
+          <p className="text-lg text-gray-600">Get help fast - workers nearby in minutes!</p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8 space-y-6">
+          {/* Voice Mode Toggle */}
+          <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg border-2 border-orange-200">
+            <div className="flex items-center gap-3">
+              <Mic className="w-6 h-6 text-orange-600" />
+              <div>
+                <p className="font-semibold text-gray-900">Voice-First Mode</p>
+                <p className="text-sm text-gray-600">Just speak what you need</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleVoiceInput}
+              disabled={isRecording}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                isRecording
+                  ? 'bg-red-500 text-white animate-pulse'
+                  : 'bg-orange-500 hover:bg-orange-600 text-white'
+              }`}
+            >
+              {isRecording ? '🎤 Recording...' : '🎤 Speak Now'}
+            </button>
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              What do you need? *
+            </label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-lg"
+            >
+              <option value="">Select category...</option>
+              {CATEGORIES.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Describe the job *
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              placeholder="Example: I need a plumber to fix a leaking sink in my kitchen..."
+              required
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+            />
+            {transcript && (
+              <p className="mt-2 text-sm text-green-600">
+                ✓ Voice captured: "{transcript.substring(0, 50)}..."
+              </p>
+            )}
+          </div>
+
+          {/* Location */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <MapPin className="w-4 h-4" />
+              Location
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={formData.location.address}
+              onChange={(e) => setFormData(prev => ({
+                ...prev,
+                location: { ...prev.location, address: e.target.value }
+              }))}
+              placeholder="Current Location (GPS)"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            />
+            {formData.location.latitude && (
+              <p className="mt-2 text-sm text-green-600">
+                ✓ GPS location detected
+              </p>
+            )}
+          </div>
+
+          {/* Radius */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Search radius: {formData.radius} miles
+            </label>
+            <input
+              type="range"
+              name="radius"
+              min="1"
+              max="20"
+              value={formData.radius}
+              onChange={handleChange}
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+            />
+          </div>
+
+          {/* Urgency */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <Clock className="w-4 h-4" />
+              How urgent?
+            </label>
+            <div className="grid grid-cols-3 gap-3">
+              {['ASAP', 'Today', 'Later'].map(urgency => (
+                <button
+                  key={urgency}
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, urgency }))}
+                  className={`px-4 py-3 rounded-lg font-semibold transition-all ${
+                    formData.urgency === urgency
+                      ? 'bg-orange-500 text-white shadow-lg'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {urgency === 'ASAP' && '🚨 '}
+                  {urgency}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Budget */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <DollarSign className="w-4 h-4" />
+              Budget (optional)
+            </label>
+            <input
+              type="number"
+              name="budget"
+              value={formData.budget}
+              onChange={handleChange}
+              placeholder="Estimated budget"
+              min="0"
+              step="10"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full px-6 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-bold text-lg hover:from-orange-600 hover:to-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg"
+          >
+            {submitting ? (
+              <>
+                <Loader className="w-6 h-6 animate-spin" />
+                Finding nearby workers...
+              </>
+            ) : (
+              <>
+                <Zap className="w-6 h-6" />
+                Post QuickHire Request
+              </>
+            )}
+          </button>
+
+          <p className="text-center text-sm text-gray-600">
+            ⚡ Average response time: <span className="font-bold text-orange-600">8 minutes</span>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}
