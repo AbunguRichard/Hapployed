@@ -72,178 +72,173 @@ export default function DashboardHeader() {
   ];
 
   return (
-    <header className="bg-white sticky top-0 z-50">
+    <header className="bg-gray-100 sticky top-0 z-50">
       <div className="w-full px-4 md:px-6 lg:px-8">
-        {/* Top Row: Logo */}
-        <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center">
-            <img src={LOGO_URL} alt="Hapployed" className="w-16 h-16 object-contain" />
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center mr-6">
+            <img src={LOGO_URL} alt="Hapployed" className="w-14 h-14 object-contain" />
           </Link>
-        </div>
-        
-        {/* Bottom Row: Navigation */}
-        <div className="bg-gray-200 -mx-4 md:-mx-6 lg:-mx-8 px-4 md:px-6 lg:px-8 py-3">
-          <div className="flex items-center justify-between">
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-3 flex-1">
-              {navItems.map((item, index) => {
-                const active = item.path && isActive(item.path);
-                
-                if (item.hasDropdown) {
-                  return (
-                    <div key={index} className="relative" ref={quickHireDropdownRef}>
-                      <button
-                        onClick={() => setIsQuickHireDropdownOpen(!isQuickHireDropdownOpen)}
-                        className={`px-5 py-2 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors flex items-center gap-2 ${
-                          active ? 'bg-gray-600' : ''
-                        }`}
-                      >
-                        <span className="text-sm font-medium text-white">{item.name}</span>
-                        <div className="w-4 h-4 border border-white/30 rounded flex items-center justify-center">
-                          <ChevronDown className={`w-3 h-3 text-white transition-transform ${isQuickHireDropdownOpen ? 'rotate-180' : ''}`} />
-                        </div>
-                      </button>
 
-                      {/* Quick Hire Dropdown */}
-                      {isQuickHireDropdownOpen && (
-                        <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                          {item.dropdownItems.map((dropdownItem) => (
-                            <button
-                              key={dropdownItem.path}
-                              onClick={() => {
-                                navigate(dropdownItem.path);
-                                setIsQuickHireDropdownOpen(false);
-                              }}
-                              className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm font-medium text-gray-700"
-                            >
-                              {dropdownItem.name}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
-                
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-2 flex-1">
+            {navItems.map((item, index) => {
+              const active = item.path && isActive(item.path);
+              
+              if (item.hasDropdown) {
                 return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`px-5 py-2 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors ${
-                      active ? 'bg-gray-600' : ''
-                    }`}
-                  >
-                    <span className="text-sm font-medium text-white">{item.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
+                  <div key={index} className="relative" ref={quickHireDropdownRef}>
+                    <button
+                      onClick={() => setIsQuickHireDropdownOpen(!isQuickHireDropdownOpen)}
+                      className={`px-4 py-1.5 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors flex items-center gap-2 ${
+                        active ? 'bg-gray-600' : ''
+                      }`}
+                    >
+                      <span className="text-sm font-medium text-white">{item.name}</span>
+                      <div className="w-3.5 h-3.5 border border-white/40 rounded flex items-center justify-center">
+                        <ChevronDown className={`w-2.5 h-2.5 text-white transition-transform ${isQuickHireDropdownOpen ? 'rotate-180' : ''}`} />
+                      </div>
+                    </button>
 
-            {/* Right Side Actions */}
-            <div className="flex items-center gap-4">
-              {/* Post Project/Gigs Button */}
+                    {/* Quick Hire Dropdown */}
+                    {isQuickHireDropdownOpen && (
+                      <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                        {item.dropdownItems.map((dropdownItem) => (
+                          <button
+                            key={dropdownItem.path}
+                            onClick={() => {
+                              navigate(dropdownItem.path);
+                              setIsQuickHireDropdownOpen(false);
+                            }}
+                            className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm font-medium text-gray-700"
+                          >
+                            {dropdownItem.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-4 py-1.5 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors ${
+                    active ? 'bg-gray-600' : ''
+                  }`}
+                >
+                  <span className="text-sm font-medium text-white">{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-3">
+            {/* Post Project/Gigs Button */}
+            <button
+              onClick={() => navigate('/post-project')}
+              className="flex items-center gap-2 px-5 py-1.5 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 transition-colors"
+            >
+              <Plus className="w-4 h-4 text-white" />
+              <span className="text-sm font-medium text-white">Post Project/Gigs</span>
+            </button>
+
+            {/* User Avatar with Dropdown */}
+            <div className="relative" ref={dropdownRef}>
               <button
-                onClick={() => navigate('/post-project')}
-                className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-colors"
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="flex items-center gap-1 hover:opacity-80 transition-opacity"
               >
-                <Plus className="w-5 h-5 text-white" />
-                <span className="text-sm font-medium text-white">Post Project/Gigs</span>
+                <User className="w-8 h-8 text-green-600 stroke-[2]" />
+                <div className="w-3.5 h-3.5 border border-gray-400 rounded flex items-center justify-center">
+                  <ChevronDown className={`w-2.5 h-2.5 text-gray-700 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+                </div>
               </button>
 
-              {/* User Avatar with Dropdown */}
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                  className="flex items-center gap-1 hover:opacity-80 transition-opacity"
-                >
-                  <User className="w-9 h-9 text-green-600 stroke-[2]" />
-                  <div className="w-4 h-4 border border-white/30 rounded flex items-center justify-center">
-                    <ChevronDown className={`w-3 h-3 text-gray-700 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+              {/* Dropdown Menu */}
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  {/* User Info */}
+                  <div className="px-4 py-3 border-b border-gray-200">
+                    <p className="font-semibold text-gray-900">{user?.name || 'John Doe'}</p>
+                    <p className="text-sm text-gray-600">{user?.email || 'john@example.com'}</p>
                   </div>
-                </button>
 
-                {/* Dropdown Menu */}
-                {isProfileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                    {/* User Info */}
-                    <div className="px-4 py-3 border-b border-gray-200">
-                      <p className="font-semibold text-gray-900">{user?.name || 'John Doe'}</p>
-                      <p className="text-sm text-gray-600">{user?.email || 'john@example.com'}</p>
-                    </div>
+                  {/* Menu Items */}
+                  <div className="py-2">
+                    <button
+                      onClick={() => { navigate('/profile'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <User className="w-5 h-5" />
+                      <span>View Profile</span>
+                    </button>
 
-                    {/* Menu Items */}
-                    <div className="py-2">
-                      <button
-                        onClick={() => { navigate('/profile'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <User className="w-5 h-5" />
-                        <span>View Profile</span>
-                      </button>
+                    <button
+                      onClick={() => { navigate('/settings'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <Settings className="w-5 h-5" />
+                      <span>Settings</span>
+                    </button>
 
-                      <button
-                        onClick={() => { navigate('/settings'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <Settings className="w-5 h-5" />
-                        <span>Settings</span>
-                      </button>
+                    <button
+                      onClick={() => { navigate('/billing'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <CreditCard className="w-5 h-5" />
+                      <span>Billing & Payments</span>
+                    </button>
 
-                      <button
-                        onClick={() => { navigate('/billing'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <CreditCard className="w-5 h-5" />
-                        <span>Billing & Payments</span>
-                      </button>
+                    <button
+                      onClick={() => { navigate('/notifications-settings'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <Bell className="w-5 h-5" />
+                      <span>Notification Settings</span>
+                    </button>
 
-                      <button
-                        onClick={() => { navigate('/notifications-settings'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <Bell className="w-5 h-5" />
-                        <span>Notification Settings</span>
-                      </button>
-
-                      <button
-                        onClick={() => { navigate('/privacy-security'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <Shield className="w-5 h-5" />
-                        <span>Privacy & Security</span>
-                      </button>
-                    </div>
-
-                    <div className="border-t border-gray-200 py-2">
-                      <button
-                        onClick={() => { navigate('/switch-account'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <RefreshCw className="w-5 h-5" />
-                        <span>Switch Account Type</span>
-                      </button>
-
-                      <button
-                        onClick={() => { navigate('/help'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
-                      >
-                        <HelpCircle className="w-5 h-5" />
-                        <span>Help & Support</span>
-                      </button>
-                    </div>
-
-                    <div className="border-t border-gray-200 py-2">
-                      <button
-                        onClick={() => { logout(); navigate('/auth/login'); setIsProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-left hover:bg-red-50 flex items-center gap-3 text-red-600"
-                      >
-                        <LogOut className="w-5 h-5" />
-                        <span>Log Out</span>
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => { navigate('/privacy-security'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <Shield className="w-5 h-5" />
+                      <span>Privacy & Security</span>
+                    </button>
                   </div>
-                )}
-              </div>
+
+                  <div className="border-t border-gray-200 py-2">
+                    <button
+                      onClick={() => { navigate('/switch-account'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <RefreshCw className="w-5 h-5" />
+                      <span>Switch Account Type</span>
+                    </button>
+
+                    <button
+                      onClick={() => { navigate('/help'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-3 text-gray-700"
+                    >
+                      <HelpCircle className="w-5 h-5" />
+                      <span>Help & Support</span>
+                    </button>
+                  </div>
+
+                  <div className="border-t border-gray-200 py-2">
+                    <button
+                      onClick={() => { logout(); navigate('/auth/login'); setIsProfileDropdownOpen(false); }}
+                      className="w-full px-4 py-2 text-left hover:bg-red-50 flex items-center gap-3 text-red-600"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      <span>Log Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
