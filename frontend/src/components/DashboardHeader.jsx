@@ -81,7 +81,7 @@ export default function DashboardHeader() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2 flex-1">
+          <nav className="hidden md:flex items-center gap-2 flex-1 mt-1">
             {navItems.map((item, index) => {
               const active = item.path && isActive(item.path);
               
