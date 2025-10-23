@@ -42,6 +42,9 @@ import ManageJobsPage from './pages/ManageJobsPage';
 import WorkerProfileDetailPage from './pages/WorkerProfileDetailPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
 import JobApplicationsPage from './pages/JobApplicationsPage';
+import QuickHirePostPage from './pages/QuickHirePostPage';
+import QuickHireTrackingPage from './pages/QuickHireTrackingPage';
+import QuickHireWorkerDashboard from './pages/QuickHireWorkerDashboard';
 import './App.css';
 
 function App() {
