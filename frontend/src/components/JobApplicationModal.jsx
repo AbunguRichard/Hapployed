@@ -301,6 +301,7 @@ export default function JobApplicationModal({ isOpen, onClose, job, worker }) {
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );
