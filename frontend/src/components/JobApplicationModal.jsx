@@ -126,6 +126,42 @@ export default function JobApplicationModal({ isOpen, onClose, job, worker }) {
     }));
   };
 
+  // Show skills prompt if user has no skills
+  if (showSkillsPrompt && !hasSkills) {
+    return (
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+          <div className="p-6">
+            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <AlertCircle className="w-8 h-8 text-yellow-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 text-center mb-3">Skills Required</h2>
+            <p className="text-gray-600 text-center mb-6">
+              You haven't set up your skills yet. Would you like to add them now?
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowSkillsPrompt(false);
+                  onClose();
+                }}
+                className="flex-1 px-4 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleGoToSkills}
+                className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+              >
+                Add Skills Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -146,7 +182,13 @@ export default function JobApplicationModal({ isOpen, onClose, job, worker }) {
         </div>
 
         {/* Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        {checkingSkills ? (
+          <div className="p-12 text-center">
+            <Loader className="w-8 h-8 animate-spin text-purple-600 mx-auto mb-3" />
+            <p className="text-gray-600">Checking your profile...</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Job Details Summary */}
           <div className="bg-gray-50 rounded-lg p-4 space-y-2">
             <div className="flex items-center gap-2 text-sm text-gray-700">
