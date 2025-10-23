@@ -11,14 +11,19 @@ export default function DashboardHeader() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [isQuickHireModalOpen, setIsQuickHireModalOpen] = useState(false);
+  const [isQuickHireDropdownOpen, setIsQuickHireDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const quickHireDropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsProfileDropdownOpen(false);
+      }
+      if (quickHireDropdownRef.current && !quickHireDropdownRef.current.contains(event.target)) {
+        setIsQuickHireDropdownOpen(false);
       }
     };
     
@@ -32,62 +37,37 @@ export default function DashboardHeader() {
 
   const navItems = [
     { 
-      name: 'Home', 
-      path: '/',
-      icon: Home,
-      gradient: 'from-orange-400 via-red-400 to-green-400'
-    },
-    { 
       name: 'Dashboard', 
       path: '/dashboard',
-      icon: Gauge,
-      iconColor: 'text-gray-800'
     },
     { 
       name: 'Find Work', 
-      path: '/find-work',
-      icon: Search,
-      gradient: 'from-purple-500 to-blue-500'
+      path: '/opportunities',
     },
     { 
       name: 'Quick Hire', 
-      path: '/quickhire-info',
-      icon: Plus,
-      gradient: 'from-purple-600 to-blue-500',
-      isButton: true,
-      onClick: () => setIsQuickHireModalOpen(true)
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Post QuickHire', path: '/quickhire/post' },
+        { name: 'Worker Dashboard', path: '/quickhire/worker' },
+        { name: 'QuickHire Info', path: '/quickhire-info' }
+      ]
     },
     { 
       name: 'Find Gigs', 
       path: '/gigs-near-me',
-      icon: Briefcase,
-      iconColor: 'text-red-800'
-    },
-    { 
-      name: 'Find Projects', 
-      path: '/opportunities',
-      icon: Briefcase,
-      iconColor: 'text-green-500',
-      outlined: true
     },
     { 
       name: 'Find Workers', 
       path: '/find-workers',
-      icon: Search,
-      iconColor: 'text-purple-600',
-      badge: '🛡️'
     },
     { 
       name: 'My Jobs', 
-      path: '/my-jobs',
-      icon: ClipboardList,
-      iconColor: 'text-blue-600'
+      path: '/manage-jobs',
     },
     { 
       name: 'Messages', 
       path: '/messages',
-      icon: MessageSquare,
-      iconColor: 'text-purple-600'
     }
   ];
 
