@@ -235,7 +235,7 @@ export default function DashboardHeader() {
 
                   <div className="border-t border-gray-200 py-2">
                     <button
-                      onClick={() => { logout(); navigate('/auth/login'); setIsProfileDropdownOpen(false); }}
+                      onClick={() => { logout(); navigate('/'); setIsProfileDropdownOpen(false); }}
                       className="w-full px-4 py-2 text-left hover:bg-red-50 flex items-center gap-3 text-red-600"
                     >
                       <LogOut className="w-5 h-5" />
