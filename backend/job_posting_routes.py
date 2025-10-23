@@ -11,7 +11,7 @@ router = APIRouter(prefix="/api")
 # MongoDB connection
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(MONGO_URL)
-db = client['hapployed']
+db = client[os.environ.get('DB_NAME', 'test_database')]
 jobs_collection = db['jobs']
 
 # Pydantic models
