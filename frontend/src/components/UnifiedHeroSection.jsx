@@ -205,6 +205,13 @@ export default function UnifiedHeroSection() {
             Post a Project
           </button>
           <button
+            onClick={() => navigate('/quickhire/post')}
+            className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-full font-semibold transition-all flex items-center gap-2"
+          >
+            <Zap className="w-5 h-5" />
+            Post Gig for QuickHire
+          </button>
+          <button
             onClick={() => navigate('/gigs-near-me-info')}
             className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-full font-semibold transition-all"
           >
