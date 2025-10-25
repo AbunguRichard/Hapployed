@@ -31,7 +31,12 @@ export default function QuickHirePostPage() {
     radius: 5,
     urgency: 'ASAP',
     budget: '',
-    photos: []
+    photos: [],
+    // Multiple Hire fields
+    gigType: 'Single',
+    workersNeeded: 1,
+    payPerPerson: '',
+    groupMode: false
   });
 
   // Get current location
