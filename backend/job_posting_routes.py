@@ -58,6 +58,9 @@ class JobUpdate(BaseModel):
     status: Optional[str] = None
     requirements: Optional[str] = None
     attachments: Optional[List[str]] = None
+    # Multi-Hire Role-Based fields
+    hiringType: Optional[str] = None
+    roles: Optional[List[RoleDefinition]] = None
 
 class JobResponse(BaseModel):
     id: str
