@@ -1014,6 +1014,193 @@ export default function PostProjectPage() {
                   ))}
                 </div>
               </div>
+
+              {/* Role-Based Multi-Hire Section - Only for Professional Projects */}
+              {workType === 'project' && (
+                <div className="border-t border-gray-300 pt-6 mt-6">
+                  <div className="mb-6">
+                    <label className="block text-sm font-semibold text-gray-900 mb-3">
+                      Hiring Type *
+                    </label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          updateField('hiringType', 'Single');
+                          updateField('roles', []);
+                        }}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          projectData.hiringType === 'Single'
+                            ? 'border-purple-500 bg-purple-50'
+                            : 'border-gray-300 hover:border-gray-400'
+                        }`}
+                      >
+                        <div className="text-2xl mb-2">👤</div>
+                        <div className="font-semibold">Single Hire</div>
+                        <div className="text-sm text-gray-600">Hire one person for this project</div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          updateField('hiringType', 'Multi-Role');
+                          if (projectData.roles.length === 0) {
+                            addRole(); // Add first role automatically
+                          }
+                        }}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          projectData.hiringType === 'Multi-Role'
+                            ? 'border-purple-500 bg-purple-50'
+                            : 'border-gray-300 hover:border-gray-400'
+                        }`}
+                      >
+                        <div className="text-2xl mb-2">👥</div>
+                        <div className="font-semibold">Multi-Role Hire</div>
+                        <div className="text-sm text-gray-600">Hire multiple people for different roles</div>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Role Management UI - Only show if Multi-Role is selected */}
+                  {projectData.hiringType === 'Multi-Role' && (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-bold text-gray-900">Define Roles</h3>
+                        <button
+                          type="button"
+                          onClick={addRole}
+                          className="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 transition-all"
+                        >
+                          + Add Role
+                        </button>
+                      </div>
+
+                      {projectData.roles.map((role, index) => (
+                        <div key={role.roleId} className="border-2 border-gray-300 rounded-lg p-4 space-y-4 bg-white">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="text-md font-bold text-gray-800">Role {index + 1}</h4>
+                            {projectData.roles.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeRole(role.roleId)}
+                                className="px-3 py-1 bg-red-100 text-red-600 text-sm font-semibold rounded hover:bg-red-200 transition-all"
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Role Name *
+                              </label>
+                              <input
+                                type="text"
+                                value={role.roleName}
+                                onChange={(e) => updateRole(role.roleId, 'roleName', e.target.value)}
+                                placeholder="e.g., Frontend Developer"
+                                required
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Number of People *
+                              </label>
+                              <input
+                                type="number"
+                                min="1"
+                                value={role.numberOfPeople}
+                                onChange={(e) => updateRole(role.roleId, 'numberOfPeople', e.target.value)}
+                                required
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Pay Per Person ($)
+                              </label>
+                              <input
+                                type="number"
+                                value={role.payPerPerson}
+                                onChange={(e) => updateRole(role.roleId, 'payPerPerson', e.target.value)}
+                                placeholder="e.g., 5000"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Experience Level
+                              </label>
+                              <select
+                                value={role.experienceLevel}
+                                onChange={(e) => updateRole(role.roleId, 'experienceLevel', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                              >
+                                <option value="Entry">Entry Level</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Expert">Expert</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                              Work Location
+                            </label>
+                            <div className="grid grid-cols-3 gap-3">
+                              {['Remote', 'On-site', 'Hybrid'].map(location => (
+                                <button
+                                  type="button"
+                                  key={location}
+                                  onClick={() => updateRole(role.roleId, 'workLocation', location)}
+                                  className={`p-2 rounded-lg border-2 text-sm transition-all ${
+                                    role.workLocation === location
+                                      ? 'border-purple-500 bg-purple-50 font-semibold'
+                                      : 'border-gray-300 hover:border-gray-400'
+                                  }`}
+                                >
+                                  {location}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                              Required Skills for this Role
+                            </label>
+                            <div className="flex flex-wrap gap-2">
+                              {availableSkills.slice(0, 9).map(skill => (
+                                <button
+                                  key={skill}
+                                  type="button"
+                                  onClick={() => toggleRoleSkill(role.roleId, skill)}
+                                  className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                                    role.requiredSkills.includes(skill)
+                                      ? 'bg-purple-600 text-white'
+                                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                  }`}
+                                >
+                                  {skill}
+                                </button>
+                              ))}
+                            </div>
+                            {role.requiredSkills.length > 0 && (
+                              <div className="mt-2 text-xs text-gray-600">
+                                Selected: {role.requiredSkills.join(', ')}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
