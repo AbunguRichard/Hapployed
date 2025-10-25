@@ -173,6 +173,18 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ APPLICATION SYSTEM API TESTING COMPLETE - All 7 endpoints working perfectly. Comprehensive testing completed: (1) POST /api/applications - Successfully submits applications with proper validation, duplicate prevention (400 error for same job/worker), job existence check (404 for invalid jobId), creates applications with status='pending' and enriched data. (2) GET /api/jobs/{jobId}/applications - Returns applications for job with and without status filters (?status=pending), includes enriched workerProfile and jobDetails data, returns empty array for jobs with no applications. (3) GET /api/workers/{workerId}/applications - Returns worker's applications with optional status filtering, includes enriched jobDetails data, proper empty array handling. (4) GET /api/applications/{applicationId} - Retrieves single applications with full enriched data (workerProfile, jobDetails), proper 404 handling for invalid IDs. (5) PATCH /api/applications/{applicationId} - Successfully updates status (pending→reviewed→accepted), supports hirerNotes, updates updatedAt timestamp correctly. (6) DELETE /api/applications/{applicationId} - Properly withdraws applications with 204 response, removes from database, decreases job application count. (7) GET /api/jobs/{jobId}/applications/stats - Returns accurate statistics (total, pending, reviewed, accepted, rejected counts). All endpoints accessible at correct paths, request/response formats match Pydantic models, MongoDB integration working with UUID-based IDs, proper error handling (404, 400, 422), application enrichment working perfectly, status transitions functioning correctly. Application system ready for production use."
+  
+  - task: "Role-Based Multi-Hire Backend Models"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/job_posting_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated backend Pydantic models to support Role-Based Multi-Hire feature. Changes: (1) Added RoleDefinition model with fields: roleId, roleName, numberOfPeople, requiredSkills, payPerPerson, experienceLevel, workLocation, applicants, hired, status. (2) Updated JobCreate model to include hiringType ('Single' or 'Multi-Role') and roles (List[RoleDefinition]). (3) Updated JobUpdate model to allow updating hiringType and roles. (4) Updated JobResponse model to return hiringType and roles fields. All existing job endpoints will now support role-based multi-hire data for professional projects."
 
 frontend:
   - task: "VoiceCaptureModal Component - Voice Input Interface"
