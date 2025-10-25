@@ -32,10 +32,15 @@ class QuickHireGigCreate(BaseModel):
     description: str
     location: GigLocation
     radius: int = 5  # miles
-    urgency: str = "ASAP"  # ASAP, Today, Later
+    urgency: str = "ASAP"  # ASAP, Today, Later, Within 1 hr, Same Day, Tomorrow
     budget: Optional[float] = None
     photos: Optional[List[str]] = None
     voiceNote: Optional[str] = None
+    # Multiple Hire fields
+    gigType: str = "Single"  # "Single" or "Multiple"
+    workersNeeded: int = 1  # Number of workers needed (1-10+)
+    payPerPerson: Optional[float] = None  # Pay per worker
+    groupMode: bool = False  # If true, all workers must work together
 
 class WorkerLocation(BaseModel):
     workerId: str
