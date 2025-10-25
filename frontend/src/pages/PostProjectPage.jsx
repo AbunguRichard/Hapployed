@@ -217,7 +217,23 @@ export default function PostProjectPage() {
         },
         urgency: projectData.urgency,
         status: saveAsDraft ? 'draft' : 'published',
-        requirements: projectData.description
+        requirements: projectData.description,
+        // Multi-Hire Role-Based fields (only for projects)
+        hiringType: workType === 'project' ? projectData.hiringType : 'Single',
+        roles: workType === 'project' && projectData.hiringType === 'Multi-Role' 
+          ? projectData.roles.map(role => ({
+              roleId: role.roleId,
+              roleName: role.roleName,
+              numberOfPeople: parseInt(role.numberOfPeople) || 1,
+              requiredSkills: role.requiredSkills,
+              payPerPerson: parseFloat(role.payPerPerson) || null,
+              experienceLevel: role.experienceLevel,
+              workLocation: role.workLocation,
+              applicants: 0,
+              hired: 0,
+              status: 'Open'
+            }))
+          : []
       };
 
       // Save to backend
