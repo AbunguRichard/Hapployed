@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Implement AI-driven voice input feature on Post Project page. Users should be able to speak naturally about their project/gig needs, and AI (GPT-5) should parse the speech to automatically fill form fields including title, description, category, duration, location, budget, and skills. The voice capture should happen in a dedicated modal (VoiceCaptureModal) with user confirmation before applying the parsed data to the form."
+user_problem_statement: "Implement Role-Based Multi-Hire feature for Professional Projects. Clients should be able to select between 'Single Hire' (one person) or 'Multi-Role Hire' (multiple people for different roles). For Multi-Role projects, clients can dynamically add/remove roles with specific details: role name, number of people needed, required skills, pay per person, experience level, and work location (Remote/On-site/Hybrid). Backend models should be updated to support hiringType and roles fields, and frontend should provide an intuitive interface for role management in the PostProjectPage."
 
 backend:
   - task: "AI Voice Parsing API Endpoint"
