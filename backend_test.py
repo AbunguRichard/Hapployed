@@ -2170,10 +2170,13 @@ class BackendTester:
 
     def run_all_tests(self):
         """Run all backend tests"""
-        print("🚀 Starting Hapployed Worker Dashboard Backend Tests")
+        print("🚀 Starting Hapployed Backend Testing - Role-Based Multi-Hire Focus")
         print(f"🌐 Testing against: {BASE_URL}")
         print(f"👤 Test User ID: {TEST_USER_ID}")
         print("=" * 60)
+        
+        # PRIORITY: Role-Based Multi-Hire Feature Tests
+        self.test_role_based_multi_hire()
         
         # Worker Features Tests
         self.test_available_now_toggle()
