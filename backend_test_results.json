@@ -11,21 +11,21 @@
           "radius_miles": 25,
           "current_location": null,
           "status_message": "Available for plumbing emergencies in downtown area",
-          "available_until": "2025-10-23T05:09:14.272300",
-          "last_updated": "2025-10-22T21:09:14.345528"
+          "available_until": "2025-10-26T02:52:45.581126",
+          "last_updated": "2025-10-25T18:52:45.613908"
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.356486"
+      "timestamp": "2025-10-25T18:52:45.626220"
     },
     "Available Now Toggle - Get Status": {
       "success": true,
       "response": {
         "user_id": "worker-john-smith-123",
         "available_now": true,
-        "available_until": "2025-10-23T05:09:14.272300",
+        "available_until": "2025-10-26T02:52:45.581126",
         "current_location": null,
-        "last_updated": "2025-10-22T21:09:14.345528",
+        "last_updated": "2025-10-25T18:52:45.613908",
         "radius_miles": 25,
         "status_message": "Available for plumbing emergencies in downtown area",
         "preferences": {
@@ -54,7 +54,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.437478"
+      "timestamp": "2025-10-25T18:52:45.662706"
     },
     "Available Now Toggle - Get Available Workers": {
       "success": true,
@@ -63,9 +63,9 @@
           {
             "user_id": "worker-john-smith-123",
             "available_now": true,
-            "available_until": "2025-10-23T05:09:14.272300",
+            "available_until": "2025-10-26T02:52:45.581126",
             "current_location": null,
-            "last_updated": "2025-10-22T21:09:14.345528",
+            "last_updated": "2025-10-25T18:52:45.613908",
             "radius_miles": 25,
             "status_message": "Available for plumbing emergencies in downtown area",
             "preferences": {
@@ -96,17 +96,17 @@
           {
             "user_id": "test-user",
             "available_now": true,
-            "available_until": null,
+            "available_until": "2025-10-24T22:02:02.234000+00:00",
             "current_location": null,
-            "last_updated": "2025-10-22T17:43:51.785091",
-            "radius_miles": 4,
+            "last_updated": "2025-10-24T18:02:01.106745",
+            "radius_miles": 46,
             "status_message": ""
           }
         ],
         "count": 2
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.516168"
+      "timestamp": "2025-10-25T18:52:45.703958"
     },
     "Gamification - Check Achievements": {
       "success": true,
@@ -115,7 +115,7 @@
         "new_achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.561987"
+      "timestamp": "2025-10-25T18:52:45.750585"
     },
     "Gamification - Get Achievements": {
       "success": true,
@@ -123,7 +123,7 @@
         "achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.601902"
+      "timestamp": "2025-10-25T18:52:45.786909"
     },
     "Worker Preferences - Save": {
       "success": true,
@@ -132,7 +132,7 @@
         "message": "Preferences saved"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.640994"
+      "timestamp": "2025-10-25T18:52:45.821115"
     },
     "Worker Preferences - Get": {
       "success": true,
@@ -161,7 +161,7 @@
         "residential_preferred": true
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.720985"
+      "timestamp": "2025-10-25T18:52:45.857358"
     },
     "Gig Chain - Complete Gig": {
       "success": true,
@@ -173,12 +173,12 @@
           "completed_gig_id": "plumbing-emergency-456",
           "bonus_multiplier": 1.5,
           "next_gig_priority": true,
-          "expires_at": "2025-10-23T01:09:14.761925",
-          "created_at": "2025-10-22T21:09:14.761932"
+          "expires_at": "2025-10-25T22:52:45.907462",
+          "created_at": "2025-10-25T18:52:45.907472"
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.768553"
+      "timestamp": "2025-10-25T18:52:45.924113"
     },
     "Gig Chain - Get Status": {
       "success": true,
@@ -189,39 +189,23 @@
             "completed_gig_id": "plumbing-emergency-456",
             "bonus_multiplier": 1.5,
             "next_gig_priority": true,
-            "expires_at": "2025-10-23T00:19:53.008512",
-            "created_at": "2025-10-22T20:19:53.008522"
-          },
-          {
-            "user_id": "worker-john-smith-123",
-            "completed_gig_id": "plumbing-emergency-456",
-            "bonus_multiplier": 1.5,
-            "next_gig_priority": true,
-            "expires_at": "2025-10-23T00:34:06.003613",
-            "created_at": "2025-10-22T20:34:06.003620"
-          },
-          {
-            "user_id": "worker-john-smith-123",
-            "completed_gig_id": "plumbing-emergency-456",
-            "bonus_multiplier": 1.5,
-            "next_gig_priority": true,
-            "expires_at": "2025-10-23T01:09:14.761925",
-            "created_at": "2025-10-22T21:09:14.761932"
+            "expires_at": "2025-10-25T22:52:45.907462",
+            "created_at": "2025-10-25T18:52:45.907472"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.806428"
+      "timestamp": "2025-10-25T18:52:45.960036"
     },
     "Gig Squad - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Squad created! Workers can now apply to join",
-        "squad_id": "f02531e7-2fc5-4116-af95-ec2efadde829"
+        "squad_id": "8acf8b91-f685-46e7-84ce-30acfb31e80a"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.850238"
+      "timestamp": "2025-10-25T18:52:46.007533"
     },
     "Gig Squad - Join": {
       "success": true,
@@ -230,7 +214,7 @@
         "message": "Application submitted to squad"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.892317"
+      "timestamp": "2025-10-25T18:52:46.043837"
     },
     "Gig Squad - Get Available": {
       "success": true,
@@ -452,21 +436,49 @@
             ],
             "status": "assembling",
             "created_at": "2025-10-22T21:09:14.842168"
+          },
+          {
+            "squad_id": "8acf8b91-f685-46e7-84ce-30acfb31e80a",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [
+              {
+                "user_id": "worker-john-smith-123",
+                "role": "Lead Plumber",
+                "status": "pending",
+                "applied_at": "2025-10-25T18:52:46.039496"
+              }
+            ],
+            "status": "assembling",
+            "created_at": "2025-10-25T18:52:45.990891"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.930092"
+      "timestamp": "2025-10-25T18:52:46.081527"
     },
     "Corporate Pass - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Corporate pass activated",
-        "pass_id": "67d3369c-abcd-4ab0-9aa1-cd92242d22e8"
+        "pass_id": "452116ca-1c7d-47d0-be5a-b5ecf83724a7"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:14.983391"
+      "timestamp": "2025-10-25T18:52:46.165659"
     },
     "Corporate Pass - Use Credit": {
       "success": true,
@@ -475,7 +487,7 @@
         "credits_remaining": 9
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:15.029680"
+      "timestamp": "2025-10-25T18:52:46.206127"
     },
     "Gig Insurance - Activate": {
       "success": true,
@@ -484,17 +496,17 @@
         "message": "Gig is now protected by Hapployed Insurance"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:15.076492"
+      "timestamp": "2025-10-25T18:52:46.249239"
     },
     "Gig Insurance - File Claim": {
       "success": true,
       "response": {
         "success": true,
         "message": "Claim filed. Our team will review within 24 hours",
-        "claim_id": "08e18f52-12bf-4b47-a404-5e7e143313a5"
+        "claim_id": "fa76f348-3569-495f-b174-e8a09804f899"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:15.120009"
+      "timestamp": "2025-10-25T18:52:46.292746"
     },
     "Profile Update - PUT /api/profile/update": {
       "success": true,
@@ -509,7 +521,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:21.977798"
+      "timestamp": "2025-10-25T18:54:13.189307"
     },
     "Profile Retrieval - GET /api/profile/{email}": {
       "success": true,
@@ -521,7 +533,7 @@
         "phone": "+1 (555) 123-4567"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.021866"
+      "timestamp": "2025-10-25T18:54:13.228106"
     },
     "Profile Update - Missing Email Validation": {
       "success": true,
@@ -530,7 +542,7 @@
         "message": "Properly validated missing email"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.060568"
+      "timestamp": "2025-10-25T18:54:13.302799"
     },
     "Profile Retrieval - Non-existent Profile": {
       "success": true,
@@ -539,12 +551,12 @@
         "message": "Properly returned 404 for non-existent profile"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.097443"
+      "timestamp": "2025-10-25T18:54:13.379788"
     },
     "Job Posting - Create Project Job": {
       "success": true,
       "response": {
-        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
+        "id": "fe393e42-59b6-49ef-abed-1845587b79f8",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -571,16 +583,18 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-22T21:10:22.136653",
-        "updatedAt": "2025-10-22T21:10:22.136659"
+        "createdAt": "2025-10-25T18:54:13.413643",
+        "updatedAt": "2025-10-25T18:54:13.413647",
+        "hiringType": "Single",
+        "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.149978"
+      "timestamp": "2025-10-25T18:54:13.418358"
     },
     "Job Posting - Create Gig Job": {
       "success": true,
       "response": {
-        "id": "30dae1aa-92fb-491d-86eb-66d4d90eae20",
+        "id": "9fc4ad52-dc4e-4e25-85c1-0ee31eecbafa",
         "userId": "test-user-456",
         "userEmail": "gig@example.com",
         "jobType": "gig",
@@ -609,106 +623,40 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-22T21:10:22.185917",
-        "updatedAt": "2025-10-22T21:10:22.185922"
+        "createdAt": "2025-10-25T18:54:13.454864",
+        "updatedAt": "2025-10-25T18:54:13.454868",
+        "hiringType": "Single",
+        "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.191051"
+      "timestamp": "2025-10-25T18:54:13.460649"
     },
     "Job Posting - Get All Jobs": {
-      "success": true,
-      "response": {
-        "jobs_count": 6,
-        "sample": [
-          {
-            "id": "30dae1aa-92fb-491d-86eb-66d4d90eae20",
-            "userId": "test-user-456",
-            "userEmail": "gig@example.com",
-            "jobType": "gig",
-            "title": "Emergency Plumbing Repair",
-            "description": "Need urgent plumbing repair for burst pipe",
-            "category": "Maintenance & Repairs",
-            "skills": [
-              "Plumbing",
-              "Emergency Repair"
-            ],
-            "budget": {
-              "type": "hourly",
-              "amount": 75,
-              "currency": "USD"
-            },
-            "timeline": "ASAP",
-            "location": {
-              "type": "onsite",
-              "address": "123 Main St",
-              "city": "San Francisco",
-              "state": "CA"
-            },
-            "urgency": "asap",
-            "status": "draft",
-            "requirements": null,
-            "attachments": [],
-            "applications": [],
-            "views": 0,
-            "createdAt": "2025-10-22T21:10:22.185917",
-            "updatedAt": "2025-10-22T21:10:22.185922"
-          },
-          {
-            "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
-            "userId": "test-user-123",
-            "userEmail": "test@example.com",
-            "jobType": "project",
-            "title": "Build a React Website",
-            "description": "Need a modern React website with Tailwind CSS",
-            "category": "Web Development",
-            "skills": [
-              "React",
-              "Tailwind",
-              "JavaScript"
-            ],
-            "budget": {
-              "type": "fixed",
-              "amount": 5000,
-              "currency": "USD"
-            },
-            "timeline": "2-3 weeks",
-            "location": {
-              "type": "remote"
-            },
-            "urgency": null,
-            "status": "draft",
-            "requirements": null,
-            "attachments": [],
-            "applications": [],
-            "views": 0,
-            "createdAt": "2025-10-22T21:10:22.136653",
-            "updatedAt": "2025-10-22T21:10:22.136659"
-          }
-        ]
-      },
-      "error": null,
-      "timestamp": "2025-10-22T21:10:22.235432"
+      "success": false,
+      "response": null,
+      "error": "HTTP 500: Internal Server Error",
+      "timestamp": "2025-10-25T18:54:13.501139"
     },
     "Job Posting - Get Jobs with Filters": {
       "success": true,
       "response": {
-        "filtered_jobs_count": 2
+        "filtered_jobs_count": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.275792"
+      "timestamp": "2025-10-25T18:54:13.543074"
     },
     "Job Posting - Get Jobs by User ID": {
       "success": true,
       "response": {
-        "user_jobs_count": 5
+        "user_jobs_count": 4
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.316679"
+      "timestamp": "2025-10-25T18:54:13.578291"
     },
     "Job Posting - Get Specific Job": {
       "success": true,
       "response": {
-        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
+        "id": "fe393e42-59b6-49ef-abed-1845587b79f8",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -735,11 +683,13 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-22T21:10:22.136653",
-        "updatedAt": "2025-10-22T21:10:22.136659"
+        "createdAt": "2025-10-25T18:54:13.413643",
+        "updatedAt": "2025-10-25T18:54:13.413647",
+        "hiringType": "Single",
+        "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.356551"
+      "timestamp": "2025-10-25T18:54:13.616661"
     },
     "Job Posting - Get Invalid Job ID": {
       "success": true,
@@ -748,12 +698,12 @@
         "message": "Properly returned 404 for invalid job ID"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.398660"
+      "timestamp": "2025-10-25T18:54:13.693426"
     },
     "Job Posting - Update Job": {
       "success": true,
       "response": {
-        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
+        "id": "fe393e42-59b6-49ef-abed-1845587b79f8",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -780,16 +730,18 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-22T21:10:22.136653",
-        "updatedAt": "2025-10-22T21:10:22.433096"
+        "createdAt": "2025-10-25T18:54:13.413643",
+        "updatedAt": "2025-10-25T18:54:13.725250",
+        "hiringType": "Single",
+        "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.438346"
+      "timestamp": "2025-10-25T18:54:13.729624"
     },
     "Job Posting - Publish Job": {
       "success": true,
       "response": {
-        "id": "4f55a21f-6f65-422e-a554-b82505eb72ff",
+        "id": "fe393e42-59b6-49ef-abed-1845587b79f8",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -816,11 +768,13 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-22T21:10:22.136653",
-        "updatedAt": "2025-10-22T21:10:22.470071"
+        "createdAt": "2025-10-25T18:54:13.413643",
+        "updatedAt": "2025-10-25T18:54:13.761494",
+        "hiringType": "Single",
+        "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.474259"
+      "timestamp": "2025-10-25T18:54:13.766223"
     },
     "Job Posting - Delete Job": {
       "success": true,
@@ -829,7 +783,7 @@
         "message": "Job deleted successfully"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.512661"
+      "timestamp": "2025-10-25T18:54:13.803686"
     },
     "Job Posting - Verify Job Deletion": {
       "success": true,
@@ -837,12 +791,12 @@
         "message": "Job properly deleted - returns 404 when accessed"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.555475"
+      "timestamp": "2025-10-25T18:54:13.838107"
     },
     "Worker Profile - Create Profile": {
       "success": true,
       "response": {
-        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
+        "id": "8b260dfd-c3c3-49e4-8933-04733a07fc24",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -878,11 +832,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T21:10:22.598002",
-        "updatedAt": "2025-10-22T21:10:22.598007"
+        "createdAt": "2025-10-25T18:54:13.879548",
+        "updatedAt": "2025-10-25T18:54:13.879552"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.602574"
+      "timestamp": "2025-10-25T18:54:13.890313"
     },
     "Worker Profile - Duplicate Prevention": {
       "success": true,
@@ -891,16 +845,16 @@
         "message": "Properly prevented duplicate profile"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.688926"
+      "timestamp": "2025-10-25T18:54:13.926256"
     },
     "Worker Profile - Search by Skills": {
       "success": true,
       "response": {
-        "profiles_found": 1,
-        "matching_profiles": 1
+        "profiles_found": 2,
+        "matching_profiles": 2
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.763652"
+      "timestamp": "2025-10-25T18:54:13.962652"
     },
     "Worker Profile - Search by Location": {
       "success": true,
@@ -908,16 +862,16 @@
         "profiles_found": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.811055"
+      "timestamp": "2025-10-25T18:54:13.997969"
     },
     "Worker Profile - Search by Rate Range": {
       "success": true,
       "response": {
-        "profiles_found": 1,
-        "in_range_profiles": 1
+        "profiles_found": 2,
+        "in_range_profiles": 2
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.852427"
+      "timestamp": "2025-10-25T18:54:14.036627"
     },
     "Worker Profile - Search by Badges": {
       "success": true,
@@ -926,12 +880,12 @@
         "matching_profiles": 1
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.895891"
+      "timestamp": "2025-10-25T18:54:14.069853"
     },
     "Worker Profile - Get by User ID": {
       "success": true,
       "response": {
-        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
+        "id": "8b260dfd-c3c3-49e4-8933-04733a07fc24",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -967,11 +921,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T21:10:22.598002",
-        "updatedAt": "2025-10-22T21:10:22.598007"
+        "createdAt": "2025-10-25T18:54:13.879548",
+        "updatedAt": "2025-10-25T18:54:13.879552"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.937275"
+      "timestamp": "2025-10-25T18:54:14.109329"
     },
     "Worker Profile - Get Non-existent User": {
       "success": true,
@@ -980,12 +934,12 @@
         "message": "Properly returned 404 for non-existent user"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:22.975671"
+      "timestamp": "2025-10-25T18:54:14.143420"
     },
     "Worker Profile - Get by Profile ID": {
       "success": true,
       "response": {
-        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
+        "id": "8b260dfd-c3c3-49e4-8933-04733a07fc24",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1021,16 +975,16 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T21:10:22.598002",
-        "updatedAt": "2025-10-22T21:10:22.598007"
+        "createdAt": "2025-10-25T18:54:13.879548",
+        "updatedAt": "2025-10-25T18:54:13.879552"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.014737"
+      "timestamp": "2025-10-25T18:54:14.179843"
     },
     "Worker Profile - Update by Profile ID": {
       "success": true,
       "response": {
-        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
+        "id": "8b260dfd-c3c3-49e4-8933-04733a07fc24",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1067,16 +1021,16 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T21:10:22.598002",
-        "updatedAt": "2025-10-22T21:10:23.049077"
+        "createdAt": "2025-10-25T18:54:13.879548",
+        "updatedAt": "2025-10-25T18:54:14.209282"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.054163"
+      "timestamp": "2025-10-25T18:54:14.213663"
     },
     "Worker Profile - Update by User ID": {
       "success": true,
       "response": {
-        "id": "78717cd6-ca53-4bf7-9413-e3d461344b0a",
+        "id": "8b260dfd-c3c3-49e4-8933-04733a07fc24",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1113,11 +1067,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-22T21:10:22.598002",
-        "updatedAt": "2025-10-22T21:10:23.090548"
+        "createdAt": "2025-10-25T18:54:13.879548",
+        "updatedAt": "2025-10-25T18:54:14.245111"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.095742"
+      "timestamp": "2025-10-25T18:54:14.249606"
     },
     "Worker Profile - Toggle Availability": {
       "success": true,
@@ -1126,7 +1080,7 @@
         "message": "Availability toggled successfully"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.134296"
+      "timestamp": "2025-10-25T18:54:14.286663"
     },
     "Worker Profile - Delete Profile": {
       "success": true,
@@ -1135,7 +1089,7 @@
         "message": "Profile deleted successfully"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.169945"
+      "timestamp": "2025-10-25T18:54:14.323635"
     },
     "Worker Profile - Verify Profile Deletion": {
       "success": true,
@@ -1143,7 +1097,7 @@
         "message": "Profile properly deleted - returns 404 when accessed"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.207603"
+      "timestamp": "2025-10-25T18:54:14.360893"
     }
   },
   "ai_matching": {
@@ -1152,51 +1106,51 @@
       "response": {
         "success": true,
         "match_data": {
-          "match_score": 88,
+          "match_score": 86,
           "confidence": "medium",
           "strengths": [
-            "Direct skills match: Plumbing and Emergency Repair",
-            "Available now and weekend coverage",
-            "Local to San Francisco (preferred area)",
-            "5 years experience with 127 completed gigs",
-            "High past performance rating (4.8)",
-            "Pipe installation/repair competency for burst pipe scenarios"
+            "Emergency repair expertise",
+            "Plumbing proficiency",
+            "Available now (meets urgent need)",
+            "Weekend availability",
+            "Local to San Francisco (reduced travel time)",
+            "High past performance (4.8 rating, 127 gigs)",
+            "Relevant pipe work experience"
           ],
           "concerns": [
-            "License status not explicitly confirmed; requirement is a licensed plumber",
-            "Budget ($150) may be low for emergency/after-hours call-out and materials",
-            "If response needed immediately, travel and parts availability may impact total cost/timeline"
+            "License status not explicitly listed\u2014must be verified",
+            "Budget ($150) may be low for emergency burst pipe service in San Francisco"
           ],
-          "recommendation": "Strong operational match for an urgent burst pipe. Contact the worker immediately due to \u2018Available Now\u2019 status and proven emergency repair experience. Before dispatch, verify their plumbing license/credentials, confirm emergency call-out rates and any after-hours surcharge, and align on the $150 budget (may need adjustment). Provide exact address, access details, and photos/video of the burst area to accelerate response.",
+          "recommendation": "Strong match if license is confirmed. The worker has direct emergency plumbing skills, is available now, covers San Francisco, and has excellent ratings and volume of completed gigs. Confirm they hold an active plumbing license and clarify emergency call-out pricing; be prepared to adjust the budget or request a quote. If license is verified and pricing aligns, proceed immediately given the urgency.",
           "key_insights": [
-            "Urgency aligns with worker\u2019s emergency repair skill set and immediate availability",
-            "Local proximity in San Francisco minimizes travel time for rapid response",
-            "Weekend availability satisfies the gig\u2019s weekend requirement",
-            "High rating (4.8) and 127 gigs indicate reliability and quality under pressure",
-            "License verification is the only missing hard requirement; resolving it likely elevates this to a top-tier match",
-            "Clarifying scope (temporary shutoff vs. full repair) and material needs will manage budget expectations"
+            "Urgency is well-covered by the worker\u2019s 'Available Now' status and emergency repair skill.",
+            "Preferred area includes San Francisco, minimizing response time for a burst pipe.",
+            "Weekend availability directly satisfies the gig\u2019s requirement.",
+            "5 years of experience plus a 4.8 rating over 127 gigs suggests reliability under pressure.",
+            "License verification is a gating requirement before assignment.",
+            "Budget may need flexibility to secure rapid emergency service in SF."
           ]
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:25.436268"
+      "timestamp": "2025-10-25T18:53:00.682512"
     },
     "AI Suggest Gigs": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-22T21:09:25.499391"
+      "timestamp": "2025-10-25T18:53:00.733638"
     },
     "AI Forecast Demand": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-22T21:09:25.576610"
+      "timestamp": "2025-10-25T18:53:00.771396"
     },
     "AI Voice Parsing - Professional Project": {
       "success": true,
       "response": {
-        "title": "Build e-commerce site for clothing store",
+        "title": "Build clothing e-commerce website",
         "description": "I need a website developer to build a modern e-commerce website for my clothing store. I need it done in 3 weeks and my budget is around $1500.",
         "category": "Web Development",
         "duration": "3 weeks",
@@ -1207,40 +1161,38 @@
         "urgency": "normal",
         "type": "regular",
         "skills": [
-          "Web Development",
-          "E-commerce",
-          "Frontend Development",
-          "Backend Development",
-          "Payment Gateway Integration",
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Shopify or WooCommerce",
+          "Payment Integration",
           "Responsive Design",
           "SEO"
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:31.624027"
+      "timestamp": "2025-10-25T18:53:16.406244"
     },
     "AI Voice Parsing - Local Gig": {
       "success": true,
       "response": {
-        "title": "Urgent plumber for kitchen sink leak",
+        "title": "Urgent plumber needed today at 5 PM",
         "description": "I need a plumber today at 5 PM to fix a leak in my kitchen sink. It's urgent.",
         "category": "Maintenance & Repairs",
         "duration": "",
         "location": "on-site",
-        "specificLocation": "Kitchen sink",
-        "minBudget": "100",
+        "specificLocation": "kitchen sink",
+        "minBudget": "60",
         "maxBudget": "200",
         "urgency": "urgent",
         "type": "emergency",
         "skills": [
           "Plumbing",
-          "Leak detection",
-          "Sink repair",
-          "Pipe repair"
+          "Leak Repair"
         ]
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:37.554173"
+      "timestamp": "2025-10-25T18:53:27.029292"
     },
     "AI Voice Parsing - Empty Transcript": {
       "success": true,
@@ -1249,7 +1201,7 @@
         "message": "Properly handled empty transcript"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:37.609819"
+      "timestamp": "2025-10-25T18:53:27.085000"
     },
     "AI Voice Parsing - Missing WorkType": {
       "success": true,
@@ -1258,58 +1210,58 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:09:37.647694"
+      "timestamp": "2025-10-25T18:53:27.120551"
     },
     "AI Price Estimator - Web Development Project": {
       "success": true,
       "response": {
-        "minPrice": 4000,
+        "minPrice": 5000,
         "maxPrice": 9000,
-        "suggestedPrice": 6500,
-        "explanation": "A modern e-commerce site with payment integration typically takes 60\u2013120 hours and requires mid-to-senior web development skills with secure payment setup. At global remote rates of $50\u2013$90/hr, a fair range is $4k\u2013$9k, with ~$6.5k reasonable for a 3-week build. Normal urgency and remote work mean no rush or on-site premium; demand is steady but mature tooling keeps costs mid-range.",
+        "suggestedPrice": 7000,
+        "explanation": "A modern e-commerce site with payment integration over ~3 weeks typically requires an intermediate-to-senior developer, with global remote rates around $50\u2013$90/hour, putting the fair total in the $5k\u2013$9k range. Normal urgency means no rush premium, and current e-commerce demand is steady with ample talent supply, keeping prices competitive but not low.",
         "factors": {
-          "skill_factor": 55,
-          "urgency_factor": 5,
-          "location_factor": 10,
+          "skill_factor": 50,
+          "urgency_factor": 0,
+          "location_factor": 20,
           "market_factor": 30
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:00.205767"
+      "timestamp": "2025-10-25T18:53:40.618194"
     },
     "AI Price Estimator - Urgent Local Gig": {
       "success": true,
       "response": {
-        "minPrice": 225,
-        "maxPrice": 450,
+        "minPrice": 200,
+        "maxPrice": 400,
         "suggestedPrice": 300,
-        "explanation": "Licensed plumber rates in Chicago typically run $120-$200/hour plus a service call, and downtown jobs often add parking/access overhead. Urgent same-day work merits a 20-40% premium. This range covers a quick leak fix with basic parts; more complex repairs (e.g., faucet cartridge or trap replacement) push toward the upper end.",
+        "explanation": "Urgent on-site plumbing in downtown Chicago typically runs $150-$250 for a standard service call and first hour, plus a 25-40% urgency premium. Downtown access/parking and the need for a licensed plumber push the fair urgent range to about $200-$400, with minor parts included.",
         "factors": {
-          "skill_factor": 40,
-          "urgency_factor": 30,
+          "skill_factor": 30,
+          "urgency_factor": 35,
           "location_factor": 20,
-          "market_factor": 10
+          "market_factor": 15
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:09.476689"
+      "timestamp": "2025-10-25T18:53:52.090114"
     },
     "AI Price Estimator - Other Category": {
       "success": true,
       "response": {
-        "minPrice": 1000,
+        "minPrice": 800,
         "maxPrice": 3000,
         "suggestedPrice": 1800,
-        "explanation": "With normal urgency and a remote setup, a small-to-medium scoped project using generalist skills typically lands in the $1,000\u2013$3,000 range. Remote work taps into global supply, keeping rates competitive, and no urgency premium applies. The suggested mid-range price protects quality while remaining fair to the client.",
+        "explanation": "For a remote, normal-urgency project in a general 'Other' category, a fair range is $800\u2013$3,000 based on typical global market rates for mid-scope work. No rush premium applies, and broad global supply keeps prices competitive; specialized scope or complex deliverables would justify higher pricing.",
         "factors": {
-          "skill_factor": 45,
+          "skill_factor": 35,
           "urgency_factor": 0,
-          "location_factor": 20,
-          "market_factor": 35
+          "location_factor": 10,
+          "market_factor": 55
         }
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:21.868447"
+      "timestamp": "2025-10-25T18:54:13.080477"
     },
     "AI Price Estimator - Missing WorkType": {
       "success": true,
@@ -1318,33 +1270,573 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:21.929068"
+      "timestamp": "2025-10-25T18:54:13.138398"
     }
   },
   "job_posting": {
+    "Multi-Role Project Creation": {
+      "success": true,
+      "response": {
+        "id": "cb846942-f934-46e0-bb57-e50395b14e62",
+        "userId": "test-user-123",
+        "userEmail": "hirer@test.com",
+        "jobType": "project",
+        "title": "Full Stack Web Application Development",
+        "description": "Need a team to build a modern web application",
+        "category": "web-development",
+        "skills": [
+          "React",
+          "Node.js",
+          "MongoDB"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 15000,
+          "currency": "USD"
+        },
+        "timeline": "2-4-weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": "normal",
+        "status": "published",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-25T18:52:45.357689",
+        "updatedAt": "2025-10-25T18:52:45.357694",
+        "hiringType": "Multi-Role",
+        "roles": [
+          {
+            "roleId": "0164de46-9958-4d71-bda3-bfc099ac2db4",
+            "roleName": "Frontend Developer",
+            "numberOfPeople": 2,
+            "requiredSkills": [
+              "React",
+              "JavaScript",
+              "UI/UX Design"
+            ],
+            "payPerPerson": 5000.0,
+            "experienceLevel": "Intermediate",
+            "workLocation": "Remote",
+            "applicants": 0,
+            "hired": 0,
+            "status": "Open"
+          },
+          {
+            "roleId": "34f67672-ed8f-4d2f-9528-4602815dc2f9",
+            "roleName": "Backend Developer",
+            "numberOfPeople": 1,
+            "requiredSkills": [
+              "Node.js",
+              "Python",
+              "MongoDB"
+            ],
+            "payPerPerson": 6000.0,
+            "experienceLevel": "Expert",
+            "workLocation": "Remote",
+            "applicants": 0,
+            "hired": 0,
+            "status": "Open"
+          },
+          {
+            "roleId": "f602c88e-a83e-402c-87e5-f94b0d182a39",
+            "roleName": "UI/UX Designer",
+            "numberOfPeople": 1,
+            "requiredSkills": [
+              "UI/UX Design",
+              "Figma"
+            ],
+            "payPerPerson": 4000.0,
+            "experienceLevel": "Intermediate",
+            "workLocation": "Hybrid",
+            "applicants": 0,
+            "hired": 0,
+            "status": "Open"
+          }
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:52:45.379513"
+    },
+    "Single Hire Project Creation": {
+      "success": true,
+      "response": {
+        "id": "c7c79b65-9062-4f2c-90c5-760209b46932",
+        "userId": "test-user-123",
+        "userEmail": "hirer@test.com",
+        "jobType": "project",
+        "title": "Simple Landing Page",
+        "description": "Need a landing page built",
+        "category": "web-development",
+        "skills": [
+          "HTML",
+          "CSS"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 500,
+          "currency": "USD"
+        },
+        "timeline": "1-2-weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": "normal",
+        "status": "published",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-25T18:52:45.415290",
+        "updatedAt": "2025-10-25T18:52:45.415294",
+        "hiringType": "Single",
+        "roles": []
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:52:45.420406"
+    },
+    "Retrieve Jobs with Role Fields": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 500: Internal Server Error",
+      "timestamp": "2025-10-25T18:52:45.459466"
+    },
+    "Retrieve Single Job with Role Info": {
+      "success": true,
+      "response": {
+        "id": "cb846942-f934-46e0-bb57-e50395b14e62",
+        "userId": "test-user-123",
+        "userEmail": "hirer@test.com",
+        "jobType": "project",
+        "title": "Full Stack Web Application Development",
+        "description": "Need a team to build a modern web application",
+        "category": "web-development",
+        "skills": [
+          "React",
+          "Node.js",
+          "MongoDB"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 15000,
+          "currency": "USD"
+        },
+        "timeline": "2-4-weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": "normal",
+        "status": "published",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-25T18:52:45.357689",
+        "updatedAt": "2025-10-25T18:52:45.357694",
+        "hiringType": "Multi-Role",
+        "roles": [
+          {
+            "roleId": "0164de46-9958-4d71-bda3-bfc099ac2db4",
+            "roleName": "Frontend Developer",
+            "numberOfPeople": 2,
+            "requiredSkills": [
+              "React",
+              "JavaScript",
+              "UI/UX Design"
+            ],
+            "payPerPerson": 5000.0,
+            "experienceLevel": "Intermediate",
+            "workLocation": "Remote",
+            "applicants": 0,
+            "hired": 0,
+            "status": "Open"
+          },
+          {
+            "roleId": "34f67672-ed8f-4d2f-9528-4602815dc2f9",
+            "roleName": "Backend Developer",
+            "numberOfPeople": 1,
+            "requiredSkills": [
+              "Node.js",
+              "Python",
+              "MongoDB"
+            ],
+            "payPerPerson": 6000.0,
+            "experienceLevel": "Expert",
+            "workLocation": "Remote",
+            "applicants": 0,
+            "hired": 0,
+            "status": "Open"
+          },
+          {
+            "roleId": "f602c88e-a83e-402c-87e5-f94b0d182a39",
+            "roleName": "UI/UX Designer",
+            "numberOfPeople": 1,
+            "requiredSkills": [
+              "UI/UX Design",
+              "Figma"
+            ],
+            "payPerPerson": 4000.0,
+            "experienceLevel": "Intermediate",
+            "workLocation": "Hybrid",
+            "applicants": 0,
+            "hired": 0,
+            "status": "Open"
+          }
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:52:45.500302"
+    },
+    "Update Job with Roles": {
+      "success": true,
+      "response": {
+        "id": "cb846942-f934-46e0-bb57-e50395b14e62",
+        "userId": "test-user-123",
+        "userEmail": "hirer@test.com",
+        "jobType": "project",
+        "title": "Full Stack Web Application Development",
+        "description": "Need a team to build a modern web application",
+        "category": "web-development",
+        "skills": [
+          "React",
+          "Node.js",
+          "MongoDB"
+        ],
+        "budget": {
+          "type": "fixed",
+          "amount": 15000,
+          "currency": "USD"
+        },
+        "timeline": "2-4-weeks",
+        "location": {
+          "type": "remote"
+        },
+        "urgency": "normal",
+        "status": "published",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 1,
+        "createdAt": "2025-10-25T18:52:45.357689",
+        "updatedAt": "2025-10-25T18:52:45.536988",
+        "hiringType": "Multi-Role",
+        "roles": [
+          {
+            "roleId": "1c80b291-1448-4270-9d90-6359f928d90d",
+            "roleName": "Frontend Developer",
+            "numberOfPeople": 3,
+            "requiredSkills": [
+              "React",
+              "TypeScript"
+            ],
+            "payPerPerson": 5500.0,
+            "experienceLevel": "Expert",
+            "workLocation": "Remote",
+            "applicants": 2,
+            "hired": 0,
+            "status": "Open"
+          }
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:52:45.541397"
+    },
+    "Backward Compatibility Test": {
+      "success": true,
+      "response": {
+        "id": "f34f8245-0202-4d73-85bc-c4bb37005ee1",
+        "userId": "test-user-123",
+        "userEmail": "hirer@test.com",
+        "jobType": "gig",
+        "title": "Legacy Gig Job",
+        "description": "A job created without role-based fields",
+        "category": "maintenance",
+        "skills": [],
+        "budget": null,
+        "timeline": null,
+        "location": null,
+        "urgency": null,
+        "status": "published",
+        "requirements": null,
+        "attachments": [],
+        "applications": [],
+        "views": 0,
+        "createdAt": "2025-10-25T18:52:45.575606",
+        "updatedAt": "2025-10-25T18:52:45.575609",
+        "hiringType": "Single",
+        "roles": []
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:52:45.580554"
+    },
     "Application Test - Create Worker Profile": {
       "success": true,
       "response": {
-        "worker_id": "922574af-1c74-4df7-abf7-88690d9e5463",
-        "user_id": "app-test-worker-123"
+        "worker_id": "e94c864a-88fe-4802-9432-353042a37577",
+        "user_id": "app-test-worker-1761418454"
       },
       "error": null,
-      "timestamp": "2025-10-22T21:10:23.246419"
+      "timestamp": "2025-10-25T18:54:14.401038"
     },
     "Application Test - Create Job": {
-      "success": false,
-      "response": null,
-      "error": "Failed to create job: HTTP 422",
-      "timestamp": "2025-10-22T21:10:23.285180"
+      "success": true,
+      "response": {
+        "job_id": "cf5c6e34-d4f4-47a1-83e2-4d99e7746408",
+        "title": "React Application Development"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.438427"
+    },
+    "Application System - Submit Application": {
+      "success": true,
+      "response": {
+        "id": "c1bd4ad3-df41-4333-b780-df264964e5a2",
+        "jobId": "cf5c6e34-d4f4-47a1-83e2-4d99e7746408",
+        "workerId": "app-test-worker-1761418454",
+        "workerEmail": "appworker@example.com",
+        "workerName": "Application Test Worker",
+        "workerProfile": {
+          "name": "Application Test Worker",
+          "skills": [
+            "React",
+            "Node.js",
+            "Python"
+          ],
+          "hourlyRate": 75.0,
+          "rating": null,
+          "completedJobs": 0
+        },
+        "jobTitle": "React Application Development",
+        "jobDetails": {
+          "title": "React Application Development",
+          "category": "Web Development",
+          "budget": {
+            "type": "fixed",
+            "amount": 1500,
+            "currency": "USD"
+          }
+        },
+        "coverLetter": "I am very interested in this React development project. I have 5+ years of experience with React and Node.js.",
+        "proposedRate": 80.0,
+        "availableStartDate": "2024-01-15",
+        "status": "pending",
+        "hirerNotes": null,
+        "createdAt": "2025-10-25T18:54:14.470632",
+        "updatedAt": "2025-10-25T18:54:14.470637"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.501769"
+    },
+    "Application System - Duplicate Prevention": {
+      "success": true,
+      "response": {
+        "status_code": 400,
+        "message": "Properly prevented duplicate application"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.537672"
+    },
+    "Application System - Invalid Job ID": {
+      "success": true,
+      "response": {
+        "status_code": 404,
+        "message": "Properly returned 404 for invalid job"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.572457"
+    },
+    "Application System - Get Job Applications": {
+      "success": true,
+      "response": {
+        "applications_count": 1,
+        "enriched_data": true
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.610642"
+    },
+    "Application System - Get Job Applications with Status Filter": {
+      "success": true,
+      "response": {
+        "filtered_applications": 1
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.648418"
+    },
+    "Application System - Get Worker Applications": {
+      "success": true,
+      "response": {
+        "applications_count": 1,
+        "enriched_data": true
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.684498"
+    },
+    "Application System - Get Single Application": {
+      "success": true,
+      "response": {
+        "id": "c1bd4ad3-df41-4333-b780-df264964e5a2",
+        "jobId": "cf5c6e34-d4f4-47a1-83e2-4d99e7746408",
+        "workerId": "app-test-worker-1761418454",
+        "workerEmail": "appworker@example.com",
+        "workerName": "Application Test Worker",
+        "workerProfile": {
+          "name": "Application Test Worker",
+          "skills": [
+            "React",
+            "Node.js",
+            "Python"
+          ],
+          "hourlyRate": 75.0,
+          "rating": null,
+          "completedJobs": 0
+        },
+        "jobTitle": null,
+        "jobDetails": {
+          "title": "React Application Development",
+          "category": "Web Development",
+          "budget": {
+            "type": "fixed",
+            "amount": 1500,
+            "currency": "USD"
+          }
+        },
+        "coverLetter": "I am very interested in this React development project. I have 5+ years of experience with React and Node.js.",
+        "proposedRate": 80.0,
+        "availableStartDate": "2024-01-15",
+        "status": "pending",
+        "hirerNotes": null,
+        "createdAt": "2025-10-25T18:54:14.470632",
+        "updatedAt": "2025-10-25T18:54:14.470637"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.722353"
+    },
+    "Application System - Get Invalid Application": {
+      "success": true,
+      "response": {
+        "status_code": 404,
+        "message": "Properly returned 404 for invalid application"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.757301"
+    },
+    "Application System - Update Status to Reviewed": {
+      "success": true,
+      "response": {
+        "id": "c1bd4ad3-df41-4333-b780-df264964e5a2",
+        "jobId": "cf5c6e34-d4f4-47a1-83e2-4d99e7746408",
+        "workerId": "app-test-worker-1761418454",
+        "workerEmail": "appworker@example.com",
+        "workerName": "Application Test Worker",
+        "workerProfile": {
+          "name": "Application Test Worker",
+          "skills": [
+            "React",
+            "Node.js",
+            "Python"
+          ],
+          "hourlyRate": 75.0,
+          "rating": null
+        },
+        "jobTitle": null,
+        "jobDetails": {
+          "title": "React Application Development",
+          "category": "Web Development"
+        },
+        "coverLetter": "I am very interested in this React development project. I have 5+ years of experience with React and Node.js.",
+        "proposedRate": 80.0,
+        "availableStartDate": "2024-01-15",
+        "status": "reviewed",
+        "hirerNotes": "Good candidate, reviewing portfolio",
+        "createdAt": "2025-10-25T18:54:14.470632",
+        "updatedAt": "2025-10-25T18:54:14.789727"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.794819"
+    },
+    "Application System - Update Status to Accepted": {
+      "success": true,
+      "response": {
+        "id": "c1bd4ad3-df41-4333-b780-df264964e5a2",
+        "jobId": "cf5c6e34-d4f4-47a1-83e2-4d99e7746408",
+        "workerId": "app-test-worker-1761418454",
+        "workerEmail": "appworker@example.com",
+        "workerName": "Application Test Worker",
+        "workerProfile": {
+          "name": "Application Test Worker",
+          "skills": [
+            "React",
+            "Node.js",
+            "Python"
+          ],
+          "hourlyRate": 75.0,
+          "rating": null
+        },
+        "jobTitle": null,
+        "jobDetails": {
+          "title": "React Application Development",
+          "category": "Web Development"
+        },
+        "coverLetter": "I am very interested in this React development project. I have 5+ years of experience with React and Node.js.",
+        "proposedRate": 80.0,
+        "availableStartDate": "2024-01-15",
+        "status": "accepted",
+        "hirerNotes": "Excellent candidate, offer extended",
+        "createdAt": "2025-10-25T18:54:14.470632",
+        "updatedAt": "2025-10-25T18:54:14.827373"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.832882"
+    },
+    "Application System - Get Application Stats": {
+      "success": true,
+      "response": {
+        "total": 1,
+        "pending": 0,
+        "reviewed": 0,
+        "accepted": 1,
+        "rejected": 0
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.871338"
+    },
+    "Application System - Withdraw Application": {
+      "success": true,
+      "response": {
+        "status_code": 204,
+        "message": "Application withdrawn successfully"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.907740"
+    },
+    "Application System - Verify Application Deletion": {
+      "success": true,
+      "response": {
+        "message": "Application properly deleted - returns 404 when accessed"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.941497"
+    },
+    "Application System - Verify Count Decrease": {
+      "success": true,
+      "response": {
+        "total_applications": 0,
+        "message": "Application count properly decreased"
+      },
+      "error": null,
+      "timestamp": "2025-10-25T18:54:14.978928"
     }
   },
   "summary": {
-    "passed": 55,
-    "failed": 3,
+    "passed": 74,
+    "failed": 4,
     "errors": [
+      "Retrieve Jobs with Role Fields: HTTP 500: Internal Server Error",
       "AI Suggest Gigs: HTTP 422",
       "AI Forecast Demand: HTTP 422",
-      "Application Test - Create Job: Failed to create job: HTTP 422"
+      "Job Posting - Get All Jobs: HTTP 500: Internal Server Error"
     ]
   }
 }
