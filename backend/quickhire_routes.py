@@ -638,4 +638,97 @@ async def update_worker_location(location: WorkerLocation):
                 }
             )
     
+
+# Get Multiple Hire Status
+@router.get("/gigs/{gigId}/hiring-status")
+async def get_hiring_status(gigId: str):
+    """
+    Get live hiring status for multiple hire gigs
+    Shows how many workers accepted, their profiles, etc.
+    """
+    gig = await quickhire_gigs_collection.find_one({'_id': gigId})
+    
+    if not gig:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Gig not found"
+        )
+    
+    if gig.get('gigType') != 'Multiple':
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This endpoint is only for multiple hire gigs"
+        )
+    
+    # Get all assignments for this gig
+    assignments_cursor = quickhire_assignments_collection.find({'gigId': gigId})
+    assignments = await assignments_cursor.to_list(length=100)
+    
+    # Enrich with worker profiles
+    enriched_workers = []
+    for assignment in assignments:
+        worker_profile = await worker_profiles_collection.find_one(
+            {'userId': assignment['workerId']}
+        )
+        enriched_workers.append({
+            'workerId': assignment['workerId'],
+            'workerName': assignment.get('workerName', 'Worker'),
+            'status': 'Confirmed',  # Pending, Confirmed, On The Way
+            'eta': assignment.get('eta'),
+            'distance': assignment.get('distance'),
+            'profile': {
+                'name': worker_profile.get('name') if worker_profile else None,
+                'rating': worker_profile.get('rating') if worker_profile else None,
+                'completedJobs': worker_profile.get('completedJobs') if worker_profile else 0,
+                'profileImage': worker_profile.get('profileImage') if worker_profile else None
+            } if worker_profile else None,
+            'acceptedAt': assignment.get('acceptedAt')
+        })
+    
+    return {
+        'gigId': gigId,
+        'workersNeeded': gig.get('workersNeeded', 1),
+        'workersHired': gig.get('workersHired', 0),
+        'payPerPerson': gig.get('payPerPerson', 0),
+        'totalPayment': gig.get('totalPayment', 0),
+        'status': gig.get('status'),
+        'groupMode': gig.get('groupMode', False),
+        'workers': enriched_workers,
+        'isFull': gig.get('workersHired', 0) >= gig.get('workersNeeded', 1)
+    }
+
+# Close Hiring (Manual)
+@router.post("/gigs/{gigId}/close-hiring")
+async def close_hiring(gigId: str):
+    """
+    Manually close hiring for a multiple hire gig
+    """
+    gig = await quickhire_gigs_collection.find_one({'_id': gigId})
+    
+    if not gig:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Gig not found"
+        )
+    
+    if gig.get('gigType') != 'Multiple':
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This endpoint is only for multiple hire gigs"
+        )
+    
+    # Move to Matched status and prevent more accepts
+    await quickhire_gigs_collection.update_one(
+        {'_id': gigId},
+        {
+            '$set': {
+                'status': 'Matched',
+                'matchedAt': datetime.utcnow().isoformat(),
+                'hiringClosed': True
+            }
+        }
+    )
+    
+    return {'success': True, 'message': 'Hiring closed successfully'}
+
     return {'success': True, 'gigId': gig['_id']}
