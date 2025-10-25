@@ -257,31 +257,66 @@ async def accept_gig(gigId: str, workerId: str, workerLocation: GigLocation):
     try:
         await quickhire_assignments_collection.insert_one(assignment)
         
-        # Update gig status
-        await quickhire_gigs_collection.update_one(
-            {'_id': gigId},
-            {
-                '$set': {
-                    'status': 'Matched',
-                    'matchedAt': datetime.utcnow().isoformat(),
-                    'assignedWorkerId': workerId,
-                    'assignmentId': assignment_id,
-                    'distance': distance,
-                    'eta': eta
-                }
+        # Handle Multiple Hire vs Single Hire
+        if gig.get('gigType') == 'Multiple':
+            # Add worker to assigned workers list
+            assigned_workers = gig.get('assignedWorkers', [])
+            
+            # Check if worker already in list
+            if workerId in assigned_workers:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Worker already accepted this gig"
+                )
+            
+            assigned_workers.append(workerId)
+            workers_hired = len(assigned_workers)
+            workers_needed = gig.get('workersNeeded', 1)
+            
+            # Update gig with new worker
+            update_data = {
+                'assignedWorkers': assigned_workers,
+                'workersHired': workers_hired,
+                'updatedAt': datetime.utcnow().isoformat()
             }
-        )
-        
-        # Auto-transition to On-Route
-        await quickhire_gigs_collection.update_one(
-            {'_id': gigId},
-            {
-                '$set': {
-                    'status': 'On-Route',
-                    'onRouteAt': datetime.utcnow().isoformat()
+            
+            # If all positions filled, move to Matched
+            if workers_hired >= workers_needed:
+                update_data['status'] = 'Matched'
+                update_data['matchedAt'] = datetime.utcnow().isoformat()
+            elif workers_hired == 1:
+                update_data['status'] = 'Partially-Matched'
+            
+            await quickhire_gigs_collection.update_one(
+                {'_id': gigId},
+                {'$set': update_data}
+            )
+        else:
+            # Single hire logic (original)
+            await quickhire_gigs_collection.update_one(
+                {'_id': gigId},
+                {
+                    '$set': {
+                        'status': 'Matched',
+                        'matchedAt': datetime.utcnow().isoformat(),
+                        'assignedWorkerId': workerId,
+                        'assignmentId': assignment_id,
+                        'distance': distance,
+                        'eta': eta
+                    }
                 }
-            }
-        )
+            )
+            
+            # Auto-transition to On-Route
+            await quickhire_gigs_collection.update_one(
+                {'_id': gigId},
+                {
+                    '$set': {
+                        'status': 'On-Route',
+                        'onRouteAt': datetime.utcnow().isoformat()
+                    }
+                }
+            )
         
         updated_gig = await quickhire_gigs_collection.find_one({'_id': gigId})
         return serialize_gig(updated_gig)
