@@ -30,6 +30,7 @@ export default function MySkillsPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
+    console.log('MySkillsPage - User:', user);
     if (user) {
       loadUserSkills();
     }
