@@ -384,7 +384,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Role-Based Multi-Hire Backend Models"
     - "PostProjectPage - Role-Based Multi-Hire UI"
   stuck_tasks: []
   test_all: false
