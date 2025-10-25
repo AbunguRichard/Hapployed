@@ -33,7 +33,10 @@ export default function PostProjectPage() {
     skills: [],
     location: 'remote',
     specificLocation: '',
-    duration: ''
+    duration: '',
+    // Multi-Hire Role-Based fields
+    hiringType: 'Single',  // 'Single' or 'Multi-Role'
+    roles: []
   });
 
   const [customSkillInput, setCustomSkillInput] = useState('');
