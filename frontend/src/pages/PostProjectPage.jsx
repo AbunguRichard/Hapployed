@@ -107,6 +107,59 @@ export default function PostProjectPage() {
     }));
   };
 
+  // Role management functions
+  const addRole = () => {
+    const newRole = {
+      roleId: `role-${Date.now()}`,
+      roleName: '',
+      numberOfPeople: 1,
+      requiredSkills: [],
+      payPerPerson: '',
+      experienceLevel: 'Intermediate',
+      workLocation: 'Remote'
+    };
+    setProjectData(prev => ({
+      ...prev,
+      roles: [...prev.roles, newRole]
+    }));
+    toast.success('New role added!');
+  };
+
+  const removeRole = (roleId) => {
+    setProjectData(prev => ({
+      ...prev,
+      roles: prev.roles.filter(r => r.roleId !== roleId)
+    }));
+    toast.success('Role removed!');
+  };
+
+  const updateRole = (roleId, field, value) => {
+    setProjectData(prev => ({
+      ...prev,
+      roles: prev.roles.map(role =>
+        role.roleId === roleId ? { ...role, [field]: value } : role
+      )
+    }));
+  };
+
+  const toggleRoleSkill = (roleId, skill) => {
+    setProjectData(prev => ({
+      ...prev,
+      roles: prev.roles.map(role => {
+        if (role.roleId === roleId) {
+          const hasSkill = role.requiredSkills.includes(skill);
+          return {
+            ...role,
+            requiredSkills: hasSkill
+              ? role.requiredSkills.filter(s => s !== skill)
+              : [...role.requiredSkills, skill]
+          };
+        }
+        return role;
+      })
+    }));
+  };
+
   const nextStep = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
