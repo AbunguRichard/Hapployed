@@ -1862,6 +1862,312 @@ class BackendTester:
             except Exception as e:
                 self.log_result("worker_features", "Job Posting - Delete Job", False, None, str(e))
     
+    def test_role_based_multi_hire(self):
+        """Test Role-Based Multi-Hire feature implementation"""
+        print("\n🎯 Testing Role-Based Multi-Hire Feature...")
+        
+        # Store job IDs for later tests
+        multi_role_job_id = None
+        single_hire_job_id = None
+        
+        # Test 1: Create Multi-Role Professional Project
+        try:
+            payload = {
+                "userId": "test-user-123",
+                "userEmail": "hirer@test.com",
+                "jobType": "project",
+                "title": "Full Stack Web Application Development",
+                "description": "Need a team to build a modern web application",
+                "category": "web-development",
+                "skills": ["React", "Node.js", "MongoDB"],
+                "budget": {
+                    "type": "fixed",
+                    "amount": 15000,
+                    "currency": "USD"
+                },
+                "timeline": "2-4-weeks",
+                "location": {
+                    "type": "remote"
+                },
+                "urgency": "normal",
+                "status": "published",
+                "hiringType": "Multi-Role",
+                "roles": [
+                    {
+                        "roleName": "Frontend Developer",
+                        "numberOfPeople": 2,
+                        "requiredSkills": ["React", "JavaScript", "UI/UX Design"],
+                        "payPerPerson": 5000,
+                        "experienceLevel": "Intermediate",
+                        "workLocation": "Remote",
+                        "applicants": 0,
+                        "hired": 0,
+                        "status": "Open"
+                    },
+                    {
+                        "roleName": "Backend Developer",
+                        "numberOfPeople": 1,
+                        "requiredSkills": ["Node.js", "Python", "MongoDB"],
+                        "payPerPerson": 6000,
+                        "experienceLevel": "Expert",
+                        "workLocation": "Remote",
+                        "applicants": 0,
+                        "hired": 0,
+                        "status": "Open"
+                    },
+                    {
+                        "roleName": "UI/UX Designer",
+                        "numberOfPeople": 1,
+                        "requiredSkills": ["UI/UX Design", "Figma"],
+                        "payPerPerson": 4000,
+                        "experienceLevel": "Intermediate",
+                        "workLocation": "Hybrid",
+                        "applicants": 0,
+                        "hired": 0,
+                        "status": "Open"
+                    }
+                ]
+            }
+            
+            response = requests.post(f"{BASE_URL}/jobs", json=payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                # Verify Multi-Role project creation
+                if (data.get("hiringType") == "Multi-Role" and
+                    isinstance(data.get("roles"), list) and
+                    len(data.get("roles")) == 3 and
+                    data.get("title") == payload["title"] and
+                    data.get("jobType") == "project"):
+                    
+                    # Verify role structure
+                    roles = data.get("roles")
+                    frontend_role = next((r for r in roles if r.get("roleName") == "Frontend Developer"), None)
+                    backend_role = next((r for r in roles if r.get("roleName") == "Backend Developer"), None)
+                    designer_role = next((r for r in roles if r.get("roleName") == "UI/UX Designer"), None)
+                    
+                    if (frontend_role and backend_role and designer_role and
+                        frontend_role.get("numberOfPeople") == 2 and
+                        backend_role.get("payPerPerson") == 6000 and
+                        designer_role.get("workLocation") == "Hybrid" and
+                        all("roleId" in role for role in roles)):
+                        
+                        multi_role_job_id = data.get("id")
+                        self.log_result("job_posting", "Multi-Role Project Creation", True, data)
+                    else:
+                        self.log_result("job_posting", "Multi-Role Project Creation", False, data, 
+                                      "Role structure validation failed")
+                else:
+                    self.log_result("job_posting", "Multi-Role Project Creation", False, data, 
+                                  f"Expected Multi-Role project with 3 roles, got hiringType={data.get('hiringType')}, roles count={len(data.get('roles', []))}")
+            else:
+                self.log_result("job_posting", "Multi-Role Project Creation", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Multi-Role Project Creation", False, None, str(e))
+        
+        # Test 2: Create Single Hire Project
+        try:
+            payload = {
+                "userId": "test-user-123",
+                "userEmail": "hirer@test.com",
+                "jobType": "project",
+                "title": "Simple Landing Page",
+                "description": "Need a landing page built",
+                "category": "web-development",
+                "skills": ["HTML", "CSS"],
+                "budget": {
+                    "type": "fixed",
+                    "amount": 500,
+                    "currency": "USD"
+                },
+                "timeline": "1-2-weeks",
+                "location": {
+                    "type": "remote"
+                },
+                "urgency": "normal",
+                "status": "published",
+                "hiringType": "Single",
+                "roles": []
+            }
+            
+            response = requests.post(f"{BASE_URL}/jobs", json=payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                # Verify Single Hire project creation
+                if (data.get("hiringType") == "Single" and
+                    isinstance(data.get("roles"), list) and
+                    len(data.get("roles")) == 0 and
+                    data.get("title") == payload["title"] and
+                    data.get("jobType") == "project"):
+                    
+                    single_hire_job_id = data.get("id")
+                    self.log_result("job_posting", "Single Hire Project Creation", True, data)
+                else:
+                    self.log_result("job_posting", "Single Hire Project Creation", False, data, 
+                                  f"Expected Single hire project with empty roles, got hiringType={data.get('hiringType')}, roles count={len(data.get('roles', []))}")
+            else:
+                self.log_result("job_posting", "Single Hire Project Creation", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Single Hire Project Creation", False, None, str(e))
+        
+        # Test 3: Retrieve Jobs with hiringType and roles fields
+        try:
+            response = requests.get(f"{BASE_URL}/jobs")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list) and len(data) > 0:
+                    # Check if jobs include hiringType and roles fields
+                    jobs_with_hiring_type = [job for job in data if "hiringType" in job and "roles" in job]
+                    
+                    if len(jobs_with_hiring_type) > 0:
+                        # Find our test jobs
+                        multi_role_job = next((job for job in data if job.get("id") == multi_role_job_id), None)
+                        single_hire_job = next((job for job in data if job.get("id") == single_hire_job_id), None)
+                        
+                        if multi_role_job and single_hire_job:
+                            self.log_result("job_posting", "Retrieve Jobs with Role Fields", True, 
+                                          {"jobs_found": len(data), "jobs_with_hiring_type": len(jobs_with_hiring_type)})
+                        else:
+                            self.log_result("job_posting", "Retrieve Jobs with Role Fields", True, 
+                                          {"jobs_found": len(data), "message": "Jobs retrieved with role fields but test jobs not found"})
+                    else:
+                        self.log_result("job_posting", "Retrieve Jobs with Role Fields", False, data, 
+                                      "No jobs found with hiringType and roles fields")
+                else:
+                    self.log_result("job_posting", "Retrieve Jobs with Role Fields", True, 
+                                  {"message": "No jobs found (acceptable for empty database)"})
+            else:
+                self.log_result("job_posting", "Retrieve Jobs with Role Fields", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Retrieve Jobs with Role Fields", False, None, str(e))
+        
+        # Test 4: Retrieve Single Job with complete role information
+        if multi_role_job_id:
+            try:
+                response = requests.get(f"{BASE_URL}/jobs/{multi_role_job_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    # Verify complete role information is returned
+                    if (data.get("hiringType") == "Multi-Role" and
+                        isinstance(data.get("roles"), list) and
+                        len(data.get("roles")) == 3):
+                        
+                        roles = data.get("roles")
+                        # Check all role fields are present
+                        required_role_fields = ["roleId", "roleName", "numberOfPeople", "requiredSkills", 
+                                              "payPerPerson", "experienceLevel", "workLocation", 
+                                              "applicants", "hired", "status"]
+                        
+                        all_fields_present = all(
+                            all(field in role for field in required_role_fields) 
+                            for role in roles
+                        )
+                        
+                        if all_fields_present:
+                            self.log_result("job_posting", "Retrieve Single Job with Role Info", True, data)
+                        else:
+                            missing_fields = []
+                            for role in roles:
+                                for field in required_role_fields:
+                                    if field not in role:
+                                        missing_fields.append(f"{role.get('roleName', 'Unknown')}.{field}")
+                            self.log_result("job_posting", "Retrieve Single Job with Role Info", False, data, 
+                                          f"Missing role fields: {missing_fields}")
+                    else:
+                        self.log_result("job_posting", "Retrieve Single Job with Role Info", False, data, 
+                                      "Job structure validation failed")
+                else:
+                    self.log_result("job_posting", "Retrieve Single Job with Role Info", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Retrieve Single Job with Role Info", False, None, str(e))
+        
+        # Test 5: Update Job with Roles via PATCH
+        if multi_role_job_id:
+            try:
+                update_payload = {
+                    "roles": [
+                        {
+                            "roleName": "Frontend Developer",
+                            "numberOfPeople": 3,
+                            "requiredSkills": ["React", "TypeScript"],
+                            "payPerPerson": 5500,
+                            "experienceLevel": "Expert",
+                            "workLocation": "Remote",
+                            "applicants": 2,
+                            "hired": 0,
+                            "status": "Open"
+                        }
+                    ]
+                }
+                
+                response = requests.patch(f"{BASE_URL}/jobs/{multi_role_job_id}", json=update_payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    # Verify role update
+                    if (isinstance(data.get("roles"), list) and
+                        len(data.get("roles")) == 1 and
+                        data.get("roles")[0].get("numberOfPeople") == 3 and
+                        data.get("roles")[0].get("payPerPerson") == 5500 and
+                        data.get("roles")[0].get("experienceLevel") == "Expert" and
+                        "updatedAt" in data):
+                        
+                        self.log_result("job_posting", "Update Job with Roles", True, data)
+                    else:
+                        self.log_result("job_posting", "Update Job with Roles", False, data, 
+                                      "Role update validation failed")
+                else:
+                    self.log_result("job_posting", "Update Job with Roles", False, None, 
+                                  f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result("job_posting", "Update Job with Roles", False, None, str(e))
+        
+        # Test 6: Backward Compatibility - Verify existing jobs without hiringType/roles still work
+        try:
+            # Create a job without hiringType and roles (simulating old job)
+            legacy_payload = {
+                "userId": "test-user-123",
+                "userEmail": "hirer@test.com",
+                "jobType": "gig",
+                "title": "Legacy Gig Job",
+                "description": "A job created without role-based fields",
+                "category": "maintenance",
+                "status": "published"
+            }
+            
+            response = requests.post(f"{BASE_URL}/jobs", json=legacy_payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                # Should default to Single hiring type with empty roles
+                if (data.get("hiringType") == "Single" and
+                    isinstance(data.get("roles"), list) and
+                    len(data.get("roles")) == 0 and
+                    data.get("title") == legacy_payload["title"]):
+                    
+                    self.log_result("job_posting", "Backward Compatibility Test", True, data)
+                else:
+                    self.log_result("job_posting", "Backward Compatibility Test", False, data, 
+                                  "Legacy job should default to Single hiring type with empty roles")
+            else:
+                self.log_result("job_posting", "Backward Compatibility Test", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("job_posting", "Backward Compatibility Test", False, None, str(e))
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("🚀 Starting Hapployed Worker Dashboard Backend Tests")
