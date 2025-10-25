@@ -222,6 +222,96 @@ export default function QuickHirePostPage() {
             </button>
           </div>
 
+          {/* Gig Type Toggle */}
+          <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 border-2 border-purple-200">
+            <label className="block text-lg font-bold text-gray-900 mb-4">Hiring Type</label>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, gigType: 'Single', workersNeeded: 1 }))}
+                className={`flex-1 px-6 py-4 rounded-xl font-bold text-lg transition-all ${
+                  formData.gigType === 'Single'
+                    ? 'bg-orange-500 text-white shadow-lg scale-105'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                🔘 Single Hire
+              </button>
+              <button
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, gigType: 'Multiple', workersNeeded: 3 }))}
+                className={`flex-1 px-6 py-4 rounded-xl font-bold text-lg transition-all ${
+                  formData.gigType === 'Multiple'
+                    ? 'bg-purple-600 text-white shadow-lg scale-105'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                🔘 Multi-Hire
+              </button>
+            </div>
+          </div>
+
+          {/* Multiple Hire Options */}
+          {formData.gigType === 'Multiple' && (
+            <div className="bg-purple-50 rounded-xl p-6 border-2 border-purple-200 space-y-4">
+              <h3 className="text-lg font-bold text-purple-900 mb-4">👥 Multiple Hire Settings</h3>
+              
+              {/* Workers Needed */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  How many people do you need? *
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={formData.workersNeeded}
+                  onChange={(e) => setFormData(prev => ({ ...prev, workersNeeded: parseInt(e.target.value) || 1 }))}
+                  className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent text-lg font-bold"
+                />
+                <p className="mt-2 text-sm text-purple-700">
+                  💡 You're hiring {formData.workersNeeded} worker{formData.workersNeeded > 1 ? 's' : ''} for this task
+                </p>
+              </div>
+
+              {/* Pay Per Person */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Pay per person ($) *
+                </label>
+                <input
+                  type="number"
+                  value={formData.payPerPerson}
+                  onChange={(e) => setFormData(prev => ({ ...prev, payPerPerson: e.target.value }))}
+                  placeholder="e.g., 80"
+                  min="0"
+                  step="10"
+                  className="w-full px-4 py-3 border-2 border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent text-lg"
+                />
+                {formData.payPerPerson && (
+                  <p className="mt-2 text-sm font-bold text-purple-700">
+                    💰 Total Payment: ${(parseFloat(formData.payPerPerson) * formData.workersNeeded).toFixed(2)}
+                  </p>
+                )}
+              </div>
+
+              {/* Group Mode */}
+              <div className="flex items-center gap-3 p-4 bg-white rounded-lg">
+                <input
+                  type="checkbox"
+                  id="groupMode"
+                  checked={formData.groupMode}
+                  onChange={(e) => setFormData(prev => ({ ...prev, groupMode: e.target.checked }))}
+                  className="w-5 h-5 text-purple-600 rounded focus:ring-purple-500"
+                />
+                <label htmlFor="groupMode" className="flex-1">
+                  <span className="font-semibold text-gray-900">Group Mode</span>
+                  <p className="text-sm text-gray-600">All workers must work together at the same time</p>
+                </label>
+              </div>
+            </div>
+          )}
+
           {/* Category */}
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-2">
