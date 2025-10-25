@@ -206,11 +206,30 @@ export default function MessagesPage() {
                 </div>
               ) : filteredConversations.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center p-6">
-                  <MessageCircle className="w-12 h-12 text-gray-500 mb-3" />
-                  <p className="text-gray-400">No conversations yet</p>
-                  <p className="text-gray-500 text-sm mt-2">
-                    Start chatting with workers or hirers
+                  <MessageCircle className="w-16 h-16 text-cyan-500 mb-4" />
+                  <h3 className="text-white text-lg font-bold mb-2">No conversations yet</h3>
+                  <p className="text-gray-400 text-sm mb-4">
+                    Conversations will appear here when you:
                   </p>
+                  <ul className="text-gray-400 text-sm text-left space-y-2 mb-6">
+                    <li>✓ Apply to a job</li>
+                    <li>✓ Accept a worker's application</li>
+                    <li>✓ Hire someone for a QuickHire gig</li>
+                  </ul>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => navigate('/opportunities')}
+                      className="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg font-semibold transition-colors"
+                    >
+                      Browse Jobs
+                    </button>
+                    <button
+                      onClick={() => navigate('/find-workers')}
+                      className="px-6 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-semibold transition-colors"
+                    >
+                      Find Workers
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="divide-y divide-slate-700">
