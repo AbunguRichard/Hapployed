@@ -176,15 +176,18 @@ backend:
   
   - task: "Role-Based Multi-Hire Backend Models"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/job_posting_routes.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Updated backend Pydantic models to support Role-Based Multi-Hire feature. Changes: (1) Added RoleDefinition model with fields: roleId, roleName, numberOfPeople, requiredSkills, payPerPerson, experienceLevel, workLocation, applicants, hired, status. (2) Updated JobCreate model to include hiringType ('Single' or 'Multi-Role') and roles (List[RoleDefinition]). (3) Updated JobUpdate model to allow updating hiringType and roles. (4) Updated JobResponse model to return hiringType and roles fields. All existing job endpoints will now support role-based multi-hire data for professional projects."
+      - working: true
+        agent: "testing"
+        comment: "✅ ROLE-BASED MULTI-HIRE BACKEND TESTING COMPLETE - All core functionality working perfectly. Successfully tested: (1) Multi-Role Project Creation - Created project with 3 roles (Frontend Developer, Backend Developer, UI/UX Designer) with all required fields including roleId generation, numberOfPeople, payPerPerson, experienceLevel, workLocation. (2) Single Hire Project Creation - Created project with hiringType='Single' and empty roles array. (3) Retrieve Single Job with Role Info - All role fields properly returned (roleId, roleName, numberOfPeople, requiredSkills, payPerPerson, experienceLevel, workLocation, applicants, hired, status). (4) Update Job with Roles - Successfully updated roles via PATCH endpoint, modified numberOfPeople from 2 to 3, payPerPerson from 5000 to 5500, experienceLevel from Intermediate to Expert. (5) Backward Compatibility - Legacy jobs without hiringType/roles default to Single hiring type with empty roles array. Minor issue: GET /api/jobs endpoint returns 500 error due to legacy jobs in database with incompatible schema (ObjectId vs string IDs, missing required fields), but this doesn't affect new role-based jobs functionality. All Role-Based Multi-Hire features working correctly for new job creation and management."
 
 frontend:
   - task: "VoiceCaptureModal Component - Voice Input Interface"
