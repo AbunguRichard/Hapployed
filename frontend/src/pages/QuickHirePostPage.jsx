@@ -138,7 +138,12 @@ export default function QuickHirePostPage() {
         radius: formData.radius,
         urgency: formData.urgency,
         budget: formData.budget ? parseFloat(formData.budget) : null,
-        photos: formData.photos
+        photos: formData.photos,
+        // Multiple Hire fields
+        gigType: formData.gigType,
+        workersNeeded: formData.gigType === 'Multiple' ? formData.workersNeeded : 1,
+        payPerPerson: formData.gigType === 'Multiple' && formData.payPerPerson ? parseFloat(formData.payPerPerson) : null,
+        groupMode: formData.gigType === 'Multiple' ? formData.groupMode : false
       };
 
       const response = await fetch(`${BACKEND_URL}/api/quickhire/gigs`, {
