@@ -117,9 +117,25 @@ export default function MySkillsPage() {
   };
 
   const handleSaveSkills = async () => {
+    if (!user) {
+      toast.error('Please log in to save skills');
+      return;
+    }
+
+    if (selectedSkills.length === 0) {
+      toast.error('Please select at least one skill');
+      return;
+    }
+
     setSaving(true);
     try {
       const userId = user.id || user.email;
+      
+      if (!userId) {
+        toast.error('User ID not found. Please log in again.');
+        setSaving(false);
+        return;
+      }
       
       // Try to get existing profile
       let profileExists = false;
@@ -133,7 +149,7 @@ export default function MySkillsPage() {
           profileId = existingProfile.id;
         }
       } catch (error) {
-        console.log('No existing profile');
+        console.log('No existing profile, will create new one');
       }
 
       if (profileExists && profileId) {
@@ -149,34 +165,42 @@ export default function MySkillsPage() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to update skills');
+          const errorData = await response.json();
+          console.error('Update error:', errorData);
+          throw new Error(errorData.detail || 'Failed to update skills');
         }
       } else {
         // Create new profile with skills
+        const profileData = {
+          userId: userId,
+          name: user.name || user.email || 'User',
+          email: user.email || `${userId}@example.com`,
+          skills: selectedSkills,
+          bio: '',
+          hourlyRate: 0
+        };
+        
+        console.log('Creating profile with data:', profileData);
+        
         const response = await fetch(`${BACKEND_URL}/api/worker-profiles`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            userId: userId,
-            name: user.name || user.email,
-            email: user.email,
-            skills: selectedSkills,
-            bio: '',
-            hourlyRate: 0
-          })
+          body: JSON.stringify(profileData)
         });
 
         if (!response.ok) {
-          throw new Error('Failed to save skills');
+          const errorData = await response.json();
+          console.error('Create error:', errorData);
+          throw new Error(errorData.detail || 'Failed to save skills');
         }
       }
 
       toast.success('Skills saved successfully!');
     } catch (error) {
       console.error('Error saving skills:', error);
-      toast.error('Failed to save skills');
+      toast.error(error.message || 'Failed to save skills');
     } finally {
       setSaving(false);
     }
