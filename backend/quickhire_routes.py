@@ -128,12 +128,16 @@ async def create_quickhire_gig(gig: QuickHireGigCreate):
     gig_dict['dispatchedAt'] = None
     gig_dict['matchedAt'] = None
     gig_dict['completedAt'] = None
-    gig_dict['assignedWorkerId'] = None
-    gig_dict['estimatedPrice'] = generate_mock_price(
-        gig.category, 
-        gig.radius, 
-        gig.urgency
-    )
+    
+    # Handle Multiple Hire
+    if gig.gigType == "Multiple":
+        gig_dict['assignedWorkers'] = []  # List of worker IDs
+        gig_dict['workersHired'] = 0  # Current count
+        gig_dict['totalPayment'] = (gig.payPerPerson or 0) * gig.workersNeeded
+        gig_dict['estimatedPrice'] = gig.payPerPerson or generate_mock_price(gig.category, gig.radius, gig.urgency)
+    else:
+        gig_dict['assignedWorkerId'] = None
+        gig_dict['estimatedPrice'] = generate_mock_price(gig.category, gig.radius, gig.urgency)
     
     try:
         await quickhire_gigs_collection.insert_one(gig_dict)
