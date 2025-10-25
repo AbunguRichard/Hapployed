@@ -15,6 +15,18 @@ db = client[os.environ.get('DB_NAME', 'test_database')]
 jobs_collection = db['jobs']
 
 # Pydantic models
+class RoleDefinition(BaseModel):
+    roleId: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    roleName: str
+    numberOfPeople: int = 1
+    requiredSkills: List[str] = []
+    payPerPerson: Optional[float] = None
+    experienceLevel: Optional[str] = None  # 'Entry', 'Intermediate', 'Expert'
+    workLocation: Optional[str] = None  # 'Remote', 'On-site', 'Hybrid'
+    applicants: int = 0
+    hired: int = 0
+    status: str = "Open"  # Open, In Progress, Filled
+
 class JobCreate(BaseModel):
     userId: str
     userEmail: str
@@ -30,6 +42,9 @@ class JobCreate(BaseModel):
     status: str = 'draft'  # 'draft', 'published', 'in-progress', 'completed', 'cancelled'
     requirements: Optional[str] = None
     attachments: Optional[List[str]] = []
+    # Multi-Hire Role-Based fields
+    hiringType: str = 'Single'  # 'Single' or 'Multi-Role'
+    roles: Optional[List[RoleDefinition]] = []
 
 class JobUpdate(BaseModel):
     title: Optional[str] = None
