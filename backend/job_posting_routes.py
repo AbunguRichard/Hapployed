@@ -82,6 +82,9 @@ class JobResponse(BaseModel):
     views: int = 0
     createdAt: str
     updatedAt: str
+    # Multi-Hire Role-Based fields
+    hiringType: str = 'Single'
+    roles: List[RoleDefinition] = []
 
 # Helper function to serialize MongoDB document
 def serialize_job(job) -> dict:
