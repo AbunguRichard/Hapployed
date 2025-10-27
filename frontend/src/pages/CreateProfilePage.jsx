@@ -291,14 +291,30 @@ export default function CreateProfilePage() {
     setLoading(true);
 
     try {
-      // Save to AuthContext (for local state)
-      await createProfile({
-        ...formData,
-        userType,
-        createdAt: new Date().toISOString(),
-      });
+      // Prepare profile data based on user type
+      const profileData = {
+        skills: [...formData.skills, ...formData.customSkills],
+        location: formData.location,
+        bio: formData.bio,
+        profileComplete: true,
+      };
+
+      // Add type-specific fields
+      if (userType === 'professional') {
+        profileData.experience = formData.experience;
+        profileData.portfolio = formData.portfolio;
+      } else {
+        profileData.physicalCapability = formData.physicalCapability;
+        profileData.hasVehicle = formData.hasVehicle;
+        profileData.maxDistance = formData.maxDistance;
+        profileData.availability = formData.availability.join(',');
+        profileData.workPreference = formData.workPreference.join(',');
+      }
+
+      // Update profile using new auth system
+      await updateProfile('worker', profileData);
       
-      // Also save to backend worker profile API
+      // Also save to backend worker profile API (for search/matching)
       if (user) {
         const workerProfileData = {
           userId: user.id || user.email,
