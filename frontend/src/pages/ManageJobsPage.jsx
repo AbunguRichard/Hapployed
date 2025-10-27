@@ -574,8 +574,12 @@ export default function ManageJobsPage() {
         </div>
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-xl border-2 border-gray-200 p-4 mb-6">
-          <div className="grid grid-cols-5 gap-4 mb-4">
+        <div className="bg-white rounded-xl border-2 border-gray-200 p-6 mb-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <Filter className="w-5 h-5 text-purple-600" />
+            <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Filters & Search</h3>
+          </div>
+          <div className="grid grid-cols-5 gap-4">
             {/* Search */}
             <div className="col-span-2 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -584,7 +588,7 @@ export default function ManageJobsPage() {
                 placeholder="Search job titles or descriptions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
               />
             </div>
 
@@ -592,7 +596,7 @@ export default function ManageJobsPage() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+              className="px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium bg-white"
             >
               <option value="all">All Categories</option>
               <option value="web-development">Web Development</option>
@@ -607,7 +611,7 @@ export default function ManageJobsPage() {
             <select
               value={locationFilter}
               onChange={(e) => setLocationFilter(e.target.value)}
-              className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+              className="px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium bg-white"
             >
               <option value="all">All Locations</option>
               <option value="remote">Remote</option>
@@ -619,7 +623,7 @@ export default function ManageJobsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+              className="px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium bg-white"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
