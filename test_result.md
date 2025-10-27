@@ -431,8 +431,9 @@ test_plan:
   current_focus:
     - "WorkerOnboardingPage - 3-Step Onboarding Flow"
     - "EmployerDashboard - Employer-Specific Dashboard"
-    - "RoleTrackerDashboard - Multi-Hire Role Tracking"
-  stuck_tasks: []
+  stuck_tasks: 
+    - "WorkerOnboardingPage - 3-Step Onboarding Flow"
+    - "EmployerDashboard - Employer-Specific Dashboard"
   test_all: false
   test_priority: "high_first"
 
