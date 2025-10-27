@@ -420,7 +420,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "PostProjectPage - Role-Based Multi-Hire UI"
+    - "WorkerOnboardingPage - 3-Step Onboarding Flow"
+    - "EmployerDashboard - Employer-Specific Dashboard"
+    - "RoleTrackerDashboard - Multi-Hire Role Tracking"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
