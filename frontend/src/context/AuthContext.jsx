@@ -237,14 +237,15 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(profileData)
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'Failed to update profile');
+        throw new Error(data.detail || 'Failed to update profile');
       }
 
       // Refresh user data
       await checkAuthStatus();
-      return await response.json();
+      return data;
     } catch (error) {
       throw error;
     }
