@@ -1,3 +1,24 @@
 .App {
   min-height: 100vh;
 }
+
+/* Dual-Track Navigation Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Smooth transitions for mode switching */
+.mode-transition {
+  transition: all 0.3s ease-in-out;
+}
