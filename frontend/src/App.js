@@ -452,8 +452,9 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </AuthProvider>
-  );
+    </WorkModeProvider>
+  </AuthProvider>
+);
 }
 
 export default App;
