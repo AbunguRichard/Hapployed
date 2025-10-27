@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { WorkModeProvider } from './context/WorkModeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Homepage from './pages/Homepage';
 import WhatWeOfferPage from './pages/WhatWeOfferPage';
@@ -50,14 +51,18 @@ import JobTypeSelectionPage from './pages/JobTypeSelectionPage';
 import WorkerOnboardingPage from './pages/WorkerOnboardingPage';
 import EmployerDashboard from './pages/EmployerDashboard';
 import RoleTrackerDashboard from './components/RoleTrackerDashboard';
+import UnifiedDashboard from './pages/UnifiedDashboard';
+import MyGigsPage from './pages/MyGigsPage';
+import MyProjectsPage from './pages/MyProjectsPage';
 import './App.css';
 
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
-        <BrowserRouter>
-          <Routes>
+      <WorkModeProvider>
+        <div className="App">
+          <BrowserRouter>
+            <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Homepage />} />
             <Route path="/what-we-offer" element={<WhatWeOfferPage />} />
