@@ -163,6 +163,26 @@ function App() {
               } 
             />
             
+            {/* Worker Onboarding */}
+            <Route 
+              path="/worker/onboarding" 
+              element={
+                <ProtectedRoute>
+                  <WorkerOnboardingPage />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Role Tracker Dashboard for Multi-Hire Jobs */}
+            <Route 
+              path="/job/:jobId/role-tracker" 
+              element={
+                <ProtectedRoute>
+                  <RoleTrackerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* QuickHire Routes */}
             <Route 
               path="/quickhire/post" 
