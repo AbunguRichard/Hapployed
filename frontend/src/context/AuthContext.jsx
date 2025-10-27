@@ -211,12 +211,12 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ role })
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'Failed to add role');
+        throw new Error(data.detail || 'Failed to add role');
       }
 
-      const data = await response.json();
       // Refresh user data
       await checkAuthStatus();
       return data;
