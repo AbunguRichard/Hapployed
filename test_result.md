@@ -375,15 +375,18 @@ frontend:
 
   - task: "WorkerOnboardingPage - 3-Step Onboarding Flow"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/pages/WorkerOnboardingPage.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created comprehensive 3-step worker onboarding page. Step 1 (Basic Info): Name, phone, location, bio with validation. Step 2 (Skills & Experience): Predefined skill selection, custom skill input, hourly rate, experience level (Entry/Intermediate/Expert). Step 3 (Work Preferences): Availability (full-time/part-time/contract), work location preferences (remote/onsite/hybrid), interested categories, available now toggle with radius selector. Features: Progress bar with visual indicators, validation for each step, integration with worker profile API (POST /api/worker-profiles), updates auth context on completion, redirects to worker dashboard. Route: /worker/onboarding"
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: WorkerOnboardingPage redirects to /profile/create instead of showing the 3-step onboarding flow. When accessing /worker/onboarding with valid authentication, users are redirected to /profile/create?next=%2Fworker%2Fonboarding. This suggests there's a profile creation prerequisite that conflicts with the onboarding flow. The actual WorkerOnboardingPage component is not being rendered. Authentication system works correctly (created test account successfully), but routing logic needs investigation. The page should show the 3-step onboarding form directly, not redirect to profile creation."
 
   - task: "EmployerDashboard - Employer-Specific Dashboard"
     implemented: true
