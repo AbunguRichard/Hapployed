@@ -47,6 +47,9 @@ import QuickHireTrackingPage from './pages/QuickHireTrackingPage';
 import QuickHireWorkerDashboard from './pages/QuickHireWorkerDashboard';
 import MySkillsPage from './pages/MySkillsPage';
 import JobTypeSelectionPage from './pages/JobTypeSelectionPage';
+import WorkerOnboardingPage from './pages/WorkerOnboardingPage';
+import EmployerDashboard from './pages/EmployerDashboard';
+import RoleTrackerDashboard from './components/RoleTrackerDashboard';
 import './App.css';
 
 function App() {
