@@ -1015,8 +1015,8 @@ export default function PostProjectPage() {
                 </div>
               </div>
 
-              {/* Role-Based Multi-Hire Section - Only for Professional Projects */}
-              {workType === 'project' && (
+              {/* Role-Based Multi-Hire Section - For Professional Projects AND Local Gigs */}
+              {(workType === 'project' || workType === 'gig') && (
                 <div className="border-t border-gray-300 pt-6 mt-6">
                   <div className="mb-6">
                     <label className="block text-sm font-semibold text-gray-900 mb-3">
