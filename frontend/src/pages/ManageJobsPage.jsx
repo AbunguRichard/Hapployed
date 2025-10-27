@@ -331,7 +331,7 @@ export default function ManageJobsPage() {
         </div>
 
         {/* Metrics */}
-        <div className="grid grid-cols-4 gap-4 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-5 gap-3 pt-4 border-t border-gray-200">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
               <Eye className="w-4 h-4" />
@@ -353,7 +353,14 @@ export default function ManageJobsPage() {
             <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
               <Star className="w-4 h-4" />
             </div>
-            <div className="text-lg font-bold text-gray-900">{stats.pending || 0}</div>
+            <div className="text-lg font-bold text-yellow-600">{job.saved || 0}</div>
+            <div className="text-xs text-gray-500">Saved</div>
+          </div>
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
+              <Clock className="w-4 h-4" />
+            </div>
+            <div className="text-lg font-bold text-orange-600">{stats.pending || 0}</div>
             <div className="text-xs text-gray-500">Pending</div>
           </div>
           <div className="text-center">
