@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle, Briefcase, Wrench, Mic, Edit3, Spar
 import { toast } from 'sonner';
 import VoiceCaptureModal from '../components/VoiceCaptureModal';
 import { useAuth } from '../context/AuthContext';
+import DualTrackNav from '../components/DualTrackNav';
 
 export default function PostProjectPage() {
   const navigate = useNavigate();
