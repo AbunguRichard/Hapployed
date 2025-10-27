@@ -489,53 +489,28 @@ export default function ManageJobsPage() {
             </button>
           </div>
 
-          {/* Analytics Cards */}
-          <div className="grid grid-cols-4 gap-4 mb-6">
-            <div className="bg-white rounded-xl border-2 border-gray-200 p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">Total Jobs</p>
-                  <p className="text-2xl font-bold text-gray-900">{jobs.length}</p>
-                </div>
-                <div className="p-3 bg-purple-100 rounded-lg">
-                  <Briefcase className="w-6 h-6 text-purple-600" />
-                </div>
+          {/* Analytics Cards - Consolidated Dashboard Metrics */}
+          <div className="bg-white rounded-xl border-2 border-gray-200 p-6 mb-6 shadow-sm">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Dashboard Overview</h3>
+            <div className="grid grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-purple-600 mb-2">{jobs.length}</div>
+                <div className="text-sm font-medium text-gray-600">Total Jobs</div>
               </div>
-            </div>
-            
-            <div className="bg-white rounded-xl border-2 border-gray-200 p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">Active Jobs</p>
-                  <p className="text-2xl font-bold text-green-600">{statusCounts.published}</p>
-                </div>
-                <div className="p-3 bg-green-100 rounded-lg">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                </div>
+              
+              <div className="text-center">
+                <div className="text-3xl font-bold text-green-600 mb-2">{statusCounts.published}</div>
+                <div className="text-sm font-medium text-gray-600">Active Jobs</div>
               </div>
-            </div>
-            
-            <div className="bg-white rounded-xl border-2 border-gray-200 p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">Total Applicants</p>
-                  <p className="text-2xl font-bold text-blue-600">{totalApplicants}</p>
-                </div>
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <Users className="w-6 h-6 text-blue-600" />
-                </div>
+              
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-2">{totalApplicants}</div>
+                <div className="text-sm font-medium text-gray-600">Total Applicants</div>
               </div>
-            </div>
-            
-            <div className="bg-white rounded-xl border-2 border-gray-200 p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">Avg per Job</p>
-                  <p className="text-2xl font-bold text-orange-600">{avgApplicantsPerJob}</p>
-                </div>
-                <div className="p-3 bg-orange-100 rounded-lg">
-                  <BarChart2 className="w-6 h-6 text-orange-600" />
-                </div>
+              
+              <div className="text-center">
+                <div className="text-3xl font-bold text-orange-600 mb-2">{avgApplicantsPerJob}</div>
+                <div className="text-sm font-medium text-gray-600">Avg per Job</div>
               </div>
             </div>
           </div>
