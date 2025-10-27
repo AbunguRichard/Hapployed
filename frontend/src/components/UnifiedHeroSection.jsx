@@ -260,6 +260,33 @@ export default function UnifiedHeroSection() {
           </div>
         </div>
 
+        {/* Post Project CTA - Prominent Third Option */}
+        <div className="max-w-3xl mx-auto mb-16">
+          <button
+            onClick={handlePostProject}
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-2xl p-6 shadow-2xl shadow-purple-500/30 transition-all transform hover:scale-105"
+          >
+            <div className="flex items-center justify-center gap-4">
+              <div className="p-3 bg-white/20 rounded-xl">
+                <Plus className="w-8 h-8" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-2xl font-bold">Post a Project</h3>
+                <p className="text-purple-100 text-sm">Get started in minutes - hire talent or post a gig</p>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* Auth Modal */}
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          initialTab="signup"
+          intent={authIntent}
+          onSuccess={handleAuthSuccess}
+        />
+
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-12 mb-12">
           <div className="flex items-center gap-3">
