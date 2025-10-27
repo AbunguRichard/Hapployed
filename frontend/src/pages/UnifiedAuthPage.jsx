@@ -20,6 +20,7 @@ export default function UnifiedAuthPage() {
   const { login, signup } = useAuth();
   
   const [mode, setMode] = useState('signup'); // 'signup' or 'login'
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
