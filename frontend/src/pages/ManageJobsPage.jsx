@@ -122,7 +122,7 @@ export default function ManageJobsPage() {
   // Bulk actions
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedJobs(filteredJobs.map(job => job.id));
+      setSelectedJobs(sortedAndFilteredJobs.map(job => job.id));
     } else {
       setSelectedJobs([]);
     }
