@@ -375,31 +375,49 @@ export default function ManageJobsPage() {
           </span>
         </div>
 
-        {/* Application Metrics - Clearly Labeled */}
-        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 mb-4">
-          <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wide mb-3">Application Metrics</h4>
-          <div className="grid grid-cols-4 gap-3">
-            <div 
-              className="text-center cursor-pointer hover:bg-white rounded-lg p-2 transition-colors"
-              onClick={() => navigate(`/job/${job.id}/applications`)}
-            >
-              <div className="text-2xl font-bold text-purple-600 mb-1">{stats.total}</div>
-              <div className="text-xs font-medium text-gray-600">Total</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600 mb-1">{job.saved || 0}</div>
-              <div className="text-xs font-medium text-gray-600">Saved</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">{stats.pending}</div>
-              <div className="text-xs font-medium text-gray-600">Pending</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 mb-1">{stats.accepted}</div>
-              <div className="text-xs font-medium text-gray-600">Accepted</div>
+        {/* Application Metrics or Closed Status */}
+        {job.status === 'closed' ? (
+          <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200 rounded-lg p-4 mb-4">
+            <div className="flex items-center gap-3">
+              <XCircle className="w-8 h-8 text-red-600 flex-shrink-0" />
+              <div className="flex-1">
+                <h4 className="font-bold text-red-900 mb-1">Job Closed</h4>
+                <p className="text-sm text-red-700">
+                  This job is no longer accepting applications. 
+                  {stats.total > 0 && ` Received ${stats.total} application${stats.total !== 1 ? 's' : ''} before closing.`}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 mb-4">
+            <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <BarChart2 className="w-4 h-4" />
+              Application Metrics
+            </h4>
+            <div className="grid grid-cols-4 gap-3">
+              <div 
+                className="text-center cursor-pointer hover:bg-white rounded-lg p-2 transition-colors"
+                onClick={() => navigate(`/job/${job.id}/applications`)}
+              >
+                <div className="text-2xl font-bold text-purple-600 mb-1">{stats.total}</div>
+                <div className="text-xs font-medium text-gray-600">Total</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-yellow-600 mb-1">{job.saved || 0}</div>
+                <div className="text-xs font-medium text-gray-600">Saved</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600 mb-1">{stats.pending}</div>
+                <div className="text-xs font-medium text-gray-600">Pending</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600 mb-1">{stats.accepted}</div>
+                <div className="text-xs font-medium text-gray-600">Accepted</div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Quick Action Buttons at Bottom */}
         <div className="flex items-center gap-2">
