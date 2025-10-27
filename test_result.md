@@ -390,15 +390,18 @@ frontend:
 
   - task: "EmployerDashboard - Employer-Specific Dashboard"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/pages/EmployerDashboard.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created comprehensive employer dashboard page. Features: (1) Stats grid showing Active Jobs, Total Applicants, Total Views, Pending Review, Accepted, Total Jobs with trend indicators. (2) Quick action cards for Post New Job, Manage Jobs, Find Workers, Messages. (3) Active job postings list with job cards showing title, location, views, applicants, status. (4) Recent applications feed with applicant cards showing name, job title, status, time ago. (5) Performance insights section with key metrics and comparisons. (6) Pending review alert card. (7) Hiring tips section. (8) Premium upgrade CTA. Fetches data from jobs and applications APIs. Route: /dashboard-employer (updated from placeholder DashboardPage)"
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: EmployerDashboard shows different interface than expected. When accessing /dashboard-employer with valid authentication (created employer test account successfully), the page loads but displays a skill selection interface instead of the employer dashboard. The page shows 'What kind of work do you do?' with skill categories like React, Design, Writing, etc., which appears to be a worker onboarding flow rather than the employer dashboard. Expected elements missing: (1) Stats grid with Active Jobs, Total Applicants, etc. (2) Quick action buttons for Post New Job, Manage Jobs, Find Workers, Messages. (3) Job postings list. (4) Recent applications feed. The routing works but wrong component is being rendered."
 
   - task: "RoleTrackerDashboard - Multi-Hire Role Tracking"
     implemented: true
