@@ -251,7 +251,7 @@ export default function UnifiedHeroSection() {
                 Hire professionals, contractors, and skilled workers.
               </p>
               <button
-                onClick={() => navigate('/hire/start')}
+                onClick={handleHireTalent}
                 className="w-full px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-cyan-500/50"
               >
                 Hire Talent
