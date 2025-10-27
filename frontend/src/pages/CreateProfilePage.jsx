@@ -370,8 +370,22 @@ export default function CreateProfilePage() {
         duration: 3000,
       });
       
+      // Navigate based on user role and intent
       setTimeout(() => {
-        navigate(next);
+        const intent = localStorage.getItem('user_intent');
+        const redirectPath = searchParams.get('next');
+        
+        // Smart navigation
+        if (redirectPath && redirectPath !== '/dashboard') {
+          navigate(redirectPath);
+        } else if (user?.roles?.includes('employer')) {
+          navigate('/dashboard-employer');
+        } else if (user?.roles?.includes('worker')) {
+          navigate('/dashboard-worker');
+        } else {
+          // Default to worker dashboard for new signups
+          navigate('/dashboard-worker');
+        }
       }, 500);
     } catch (err) {
       setError('Failed to create profile. Please try again.');
