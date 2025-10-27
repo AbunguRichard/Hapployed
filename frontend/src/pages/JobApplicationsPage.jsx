@@ -258,26 +258,26 @@ export default function JobApplicationsPage() {
                 </div>
 
                 {/* Tips Section */}
-                <div className="max-w-md mx-auto text-left bg-purple-50 rounded-xl p-6 border-2 border-purple-200">
+                <div className="max-w-md mx-auto text-left bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6 border-2 border-purple-200">
                   <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span className="text-xl">💡</span>
                     Tips to get more applicants:
                   </h4>
                   <ul className="space-y-3 text-gray-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span>Add a detailed job description with clear requirements</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span>Include salary range (jobs with salary get <strong>3x more applicants</strong>)</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span>Share on LinkedIn and other job boards</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span>Use specific job titles that candidates search for</span>
                     </li>
                   </ul>
