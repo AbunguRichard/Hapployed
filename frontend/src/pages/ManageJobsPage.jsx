@@ -278,7 +278,11 @@ export default function ManageJobsPage() {
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  {new Date(job.createdAt).toLocaleDateString()}
+                  {getDaysSincePosting(job.createdAt)}
+                </span>
+                <span className="inline-flex items-center gap-1 text-gray-500">
+                  <Clock className="w-4 h-4" />
+                  Posted {new Date(job.createdAt).toLocaleDateString()}
                 </span>
               </div>
             </div>
