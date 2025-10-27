@@ -145,7 +145,7 @@ export default function UnifiedAuthPage() {
         navigate('/hire-method-choice');
       } else {
         // Sign up flow - create account then redirect to profile creation
-        await signup(email, password, email.split('@')[0], 'worker'); // default to worker role
+        await signup(email, password, name || email.split('@')[0], 'worker'); // default to worker role
         navigate('/profile/create?next=/hire-method-choice');
       }
     } catch (err) {
