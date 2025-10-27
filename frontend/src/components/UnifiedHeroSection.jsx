@@ -231,7 +231,7 @@ export default function UnifiedHeroSection() {
                 Discover opportunities that match your skill and schedule.
               </p>
               <button
-                onClick={() => navigate('/work/start')}
+                onClick={handleFindWork}
                 className="w-full px-8 py-4 bg-transparent border-2 border-cyan-500 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 rounded-full font-bold text-lg transition-all"
               >
                 Find Opportunities
