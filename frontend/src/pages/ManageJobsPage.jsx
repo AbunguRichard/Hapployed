@@ -238,24 +238,24 @@ export default function ManageJobsPage() {
 
   // Job card component
   const JobCard = ({ job }) => {
-    const stats = applicationStats[job.id] || {};
+    const stats = applicationStats[job.id] || { total: 0, pending: 0, accepted: 0, rejected: 0 };
     const [showMenu, setShowMenu] = useState(false);
     
     return (
-      <div className="bg-white rounded-xl border-2 border-gray-200 p-6 hover:shadow-lg transition-all">
-        {/* Header */}
+      <div className="bg-white rounded-xl border-2 border-gray-200 hover:border-purple-300 p-6 hover:shadow-xl transition-all duration-200">
+        {/* Row 1: Title, Status, Checkbox */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-start gap-3 flex-1">
             <input
               type="checkbox"
               checked={selectedJobs.includes(job.id)}
               onChange={() => handleSelectJob(job.id)}
-              className="mt-1 w-4 h-4 text-purple-600 rounded"
+              className="mt-1.5 w-5 h-5 text-purple-600 rounded border-2 border-gray-300 focus:ring-2 focus:ring-purple-500"
             />
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-3 mb-3">
                 <h3 
-                  className="text-lg font-bold text-gray-900 hover:text-purple-600 cursor-pointer"
+                  className="text-xl font-bold text-gray-900 hover:text-purple-600 cursor-pointer transition-colors"
                   onClick={() => navigate(`/job/${job.id}/edit`)}
                 >
                   {job.title}
@@ -263,27 +263,30 @@ export default function ManageJobsPage() {
                 <StatusBadge status={job.status} />
               </div>
               
-              <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
-                <span className="inline-flex items-center gap-1">
-                  <Briefcase className="w-4 h-4" />
+              {/* Row 2: Job Details */}
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <Briefcase className="w-4 h-4 text-gray-500" />
                   {job.category || 'General'}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <MapPin className="w-4 h-4 text-gray-500" />
                   {job.location?.type || 'Remote'}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <DollarSign className="w-4 h-4" />
-                  ${job.budget?.amount || 'N/A'}
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <DollarSign className="w-4 h-4 text-gray-500" />
+                  ${job.budget?.amount?.toLocaleString() || 'Negotiable'}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {getDaysSincePosting(job.createdAt)}
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <FileText className="w-4 h-4 text-gray-500" />
+                  {job.jobType === 'project' ? 'Project' : 'Gig'}
                 </span>
-                <span className="inline-flex items-center gap-1 text-gray-500">
-                  <Clock className="w-4 h-4" />
-                  Posted {new Date(job.createdAt).toLocaleDateString()}
-                </span>
+              </div>
+              
+              {/* Row 3: Post Date */}
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <Clock className="w-4 h-4" />
+                <span>Posted {getDaysSincePosting(job.createdAt)} • {new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
               </div>
             </div>
           </div>
@@ -298,86 +301,166 @@ export default function ManageJobsPage() {
             </button>
             
             {showMenu && (
-              <div className="absolute right-0 top-10 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-10">
-                <button onClick={() => { navigate(`/job/${job.id}/edit`); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
-                  <Edit className="w-4 h-4" /> Edit Job
+              <div className="absolute right-0 top-10 w-52 bg-white rounded-xl shadow-2xl border-2 border-gray-200 py-2 z-10">
+                <button 
+                  onClick={() => { navigate(`/job/${job.id}/edit`); setShowMenu(false); }} 
+                  className="w-full px-4 py-2.5 text-left text-sm font-medium hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                >
+                  <Edit className="w-4 h-4 text-blue-600" /> 
+                  <span>Edit Job Details</span>
                 </button>
-                <button onClick={() => { handleDuplicate(job); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
-                  <Copy className="w-4 h-4" /> Duplicate
+                <button 
+                  onClick={() => { handleDuplicate(job); setShowMenu(false); }} 
+                  className="w-full px-4 py-2.5 text-left text-sm font-medium hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                >
+                  <Copy className="w-4 h-4 text-purple-600" /> 
+                  <span>Duplicate Job</span>
                 </button>
-                <button onClick={() => { navigate(`/job/${job.id}/applications`); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
-                  <Users className="w-4 h-4" /> View Applicants
+                <button 
+                  onClick={() => { navigate(`/job/${job.id}/applications`); setShowMenu(false); }} 
+                  className="w-full px-4 py-2.5 text-left text-sm font-medium hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                >
+                  <Users className="w-4 h-4 text-green-600" /> 
+                  <span>View Applicants</span>
                 </button>
-                <button onClick={() => { navigator.clipboard.writeText(window.location.origin + `/job/${job.id}`); toast.success('Link copied!'); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
-                  <Share2 className="w-4 h-4" /> Share Link
+                <button 
+                  onClick={() => { 
+                    navigator.clipboard.writeText(window.location.origin + `/job/${job.id}`); 
+                    toast.success('Job link copied to clipboard!'); 
+                    setShowMenu(false); 
+                  }} 
+                  className="w-full px-4 py-2.5 text-left text-sm font-medium hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                >
+                  <Share2 className="w-4 h-4 text-cyan-600" /> 
+                  <span>Copy Share Link</span>
                 </button>
-                <hr className="my-2" />
+                <hr className="my-2 border-gray-200" />
                 {job.status === 'draft' && (
-                  <button onClick={() => { handlePublish(job.id); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-green-600">
-                    <CheckCircle className="w-4 h-4" /> Publish
+                  <button 
+                    onClick={() => { handlePublish(job.id); setShowMenu(false); }} 
+                    className="w-full px-4 py-2.5 text-left text-sm font-semibold hover:bg-green-50 flex items-center gap-3 text-green-600 transition-colors"
+                  >
+                    <CheckCircle className="w-4 h-4" /> 
+                    <span>Publish Job</span>
                   </button>
                 )}
                 {job.status === 'published' && (
-                  <button onClick={() => { handleClose(job.id); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-orange-600">
-                    <XCircle className="w-4 h-4" /> Close
+                  <button 
+                    onClick={() => { handleClose(job.id); setShowMenu(false); }} 
+                    className="w-full px-4 py-2.5 text-left text-sm font-semibold hover:bg-orange-50 flex items-center gap-3 text-orange-600 transition-colors"
+                  >
+                    <XCircle className="w-4 h-4" /> 
+                    <span>Close Job</span>
                   </button>
                 )}
-                <button onClick={() => { handleDelete(job.id); setShowMenu(false); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-red-600">
-                  <Trash2 className="w-4 h-4" /> Delete
+                <button 
+                  onClick={() => { handleDelete(job.id); setShowMenu(false); }} 
+                  className="w-full px-4 py-2.5 text-left text-sm font-semibold hover:bg-red-50 flex items-center gap-3 text-red-600 transition-colors"
+                >
+                  <Trash2 className="w-4 h-4" /> 
+                  <span>Delete Job</span>
                 </button>
               </div>
             )}
           </div>
         </div>
 
-        {/* Metrics */}
-        <div className="grid grid-cols-5 gap-3 pt-4 border-t border-gray-200">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
-              <Eye className="w-4 h-4" />
+        {/* Metrics Row with Icons and Real Numbers */}
+        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+          <div className="grid grid-cols-5 gap-3">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
+                <Eye className="w-5 h-5" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900">{job.views || 0}</div>
+              <div className="text-xs font-medium text-gray-600 mt-1">Views</div>
             </div>
-            <div className="text-lg font-bold text-gray-900">{job.views || 0}</div>
-            <div className="text-xs text-gray-500">Views</div>
-          </div>
-          <div 
-            className="text-center cursor-pointer hover:bg-purple-50 rounded-lg transition-colors"
-            onClick={() => navigate(`/job/${job.id}/applications`)}
-          >
-            <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
-              <Users className="w-4 h-4" />
+            <div 
+              className="text-center cursor-pointer hover:bg-purple-100 rounded-lg p-2 transition-colors"
+              onClick={() => navigate(`/job/${job.id}/applications`)}
+            >
+              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
+                <Users className="w-5 h-5" />
+              </div>
+              <div className="text-2xl font-bold text-purple-600">{stats.total}</div>
+              <div className="text-xs font-medium text-gray-600 mt-1">Applicants</div>
             </div>
-            <div className="text-lg font-bold text-purple-600">{stats.total || 0}</div>
-            <div className="text-xs text-gray-500">Applicants</div>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
-              <Star className="w-4 h-4" />
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
+                <Star className="w-5 h-5" />
+              </div>
+              <div className="text-2xl font-bold text-yellow-600">{job.saved || 0}</div>
+              <div className="text-xs font-medium text-gray-600 mt-1">Saved</div>
             </div>
-            <div className="text-lg font-bold text-yellow-600">{job.saved || 0}</div>
-            <div className="text-xs text-gray-500">Saved</div>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
-              <Clock className="w-4 h-4" />
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div className="text-2xl font-bold text-orange-600">{stats.pending}</div>
+              <div className="text-xs font-medium text-gray-600 mt-1">Pending</div>
             </div>
-            <div className="text-lg font-bold text-orange-600">{stats.pending || 0}</div>
-            <div className="text-xs text-gray-500">Pending</div>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-gray-600 mb-1">
-              <CheckCircle className="w-4 h-4" />
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
+                <CheckCircle className="w-5 h-5" />
+              </div>
+              <div className="text-2xl font-bold text-green-600">{stats.accepted}</div>
+              <div className="text-xs font-medium text-gray-600 mt-1">Accepted</div>
             </div>
-            <div className="text-lg font-bold text-green-600">{stats.accepted || 0}</div>
-            <div className="text-xs text-gray-500">Accepted</div>
           </div>
         </div>
 
-        {/* Quick insights */}
+        {/* Quick Action Buttons at Bottom */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate(`/job/${job.id}/applications`)}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-all shadow-sm"
+          >
+            <Users className="w-4 h-4" />
+            View Applicants
+            {stats.total > 0 && (
+              <span className="ml-1 px-2 py-0.5 bg-white text-purple-600 text-xs font-bold rounded-full">
+                {stats.total}
+              </span>
+            )}
+          </button>
+          
+          <button
+            onClick={() => navigate(`/job/${job.id}/edit`)}
+            className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-all flex items-center gap-2"
+          >
+            <Edit className="w-4 h-4" />
+            Edit
+          </button>
+          
+          {job.status === 'draft' && (
+            <button
+              onClick={() => handlePublish(job.id)}
+              className="px-4 py-2.5 bg-green-100 hover:bg-green-200 text-green-700 font-semibold rounded-lg transition-all flex items-center gap-2"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Publish
+            </button>
+          )}
+          
+          {job.status === 'published' && (
+            <button
+              onClick={() => handleClose(job.id)}
+              className="px-4 py-2.5 bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold rounded-lg transition-all flex items-center gap-2"
+            >
+              <XCircle className="w-4 h-4" />
+              Close
+            </button>
+          )}
+        </div>
+
+        {/* Smart insights */}
         {stats.total > avgApplicantsPerJob * 2 && (
-          <div className="mt-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+          <div className="mt-4 p-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-lg">
             <div className="flex items-start gap-2 text-sm text-purple-800">
-              <TrendingUp className="w-4 h-4 mt-0.5 flex-shrink-0" />
-              <span><strong>High performer!</strong> This job has {(stats.total / avgApplicantsPerJob).toFixed(1)}x more applicants than average.</span>
+              <TrendingUp className="w-5 h-5 mt-0.5 flex-shrink-0 text-purple-600" />
+              <span className="font-semibold">
+                🚀 High performer! This job has <span className="text-purple-900">{(stats.total / avgApplicantsPerJob).toFixed(1)}x</span> more applicants than your average job.
+              </span>
             </div>
           </div>
         )}
