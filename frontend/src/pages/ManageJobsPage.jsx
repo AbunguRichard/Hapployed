@@ -482,16 +482,16 @@ export default function ManageJobsPage() {
 
         {/* Filters and Search */}
         <div className="bg-white rounded-xl border-2 border-gray-200 p-4 mb-6">
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-5 gap-4 mb-4">
             {/* Search */}
             <div className="col-span-2 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search job titles..."
+                placeholder="Search job titles or descriptions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
               />
             </div>
 
@@ -499,25 +499,39 @@ export default function ManageJobsPage() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
             >
               <option value="all">All Categories</option>
               <option value="web-development">Web Development</option>
               <option value="mobile-development">Mobile Development</option>
               <option value="design">Design</option>
               <option value="marketing">Marketing</option>
+              <option value="writing">Writing</option>
+              <option value="sales">Sales</option>
             </select>
 
             {/* Location Filter */}
             <select
               value={locationFilter}
               onChange={(e) => setLocationFilter(e.target.value)}
-              className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
             >
               <option value="all">All Locations</option>
               <option value="remote">Remote</option>
               <option value="onsite">On-site</option>
               <option value="hybrid">Hybrid</option>
+            </select>
+
+            {/* Sort Dropdown */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="most-applicants">Most Applicants</option>
+              <option value="most-views">Most Views</option>
             </select>
           </div>
 
