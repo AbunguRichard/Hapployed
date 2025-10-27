@@ -242,9 +242,9 @@ export default function ManageJobsPage() {
     const [showMenu, setShowMenu] = useState(false);
     
     return (
-      <div className="bg-white rounded-xl border-2 border-gray-200 hover:border-purple-300 p-6 hover:shadow-xl transition-all duration-200">
-        {/* Row 1: Title, Status, Checkbox */}
-        <div className="flex items-start justify-between mb-4">
+      <div className="bg-white rounded-xl border-2 border-gray-200 hover:border-purple-300 shadow-sm hover:shadow-lg p-6 transition-all duration-200">
+        {/* Header: Title and Status */}
+        <div className="flex items-start justify-between mb-4 pb-4 border-b border-gray-200">
           <div className="flex items-start gap-3 flex-1">
             <input
               type="checkbox"
@@ -253,7 +253,7 @@ export default function ManageJobsPage() {
               className="mt-1.5 w-5 h-5 text-purple-600 rounded border-2 border-gray-300 focus:ring-2 focus:ring-purple-500"
             />
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-2">
                 <h3 
                   className="text-xl font-bold text-gray-900 hover:text-purple-600 cursor-pointer transition-colors"
                   onClick={() => navigate(`/job/${job.id}/edit`)}
@@ -262,37 +262,11 @@ export default function ManageJobsPage() {
                 </h3>
                 <StatusBadge status={job.status} />
               </div>
-              
-              {/* Row 2: Job Details */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
-                <span className="inline-flex items-center gap-1.5 font-medium">
-                  <Briefcase className="w-4 h-4 text-gray-500" />
-                  {job.category || 'General'}
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-medium">
-                  <MapPin className="w-4 h-4 text-gray-500" />
-                  {job.location?.type || 'Remote'}
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-medium">
-                  <DollarSign className="w-4 h-4 text-gray-500" />
-                  ${job.budget?.amount?.toLocaleString() || 'Negotiable'}
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-medium">
-                  <FileText className="w-4 h-4 text-gray-500" />
-                  {job.jobType === 'project' ? 'Project' : 'Gig'}
-                </span>
-              </div>
-              
-              {/* Row 3: Post Date */}
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <Clock className="w-4 h-4" />
-                <span>Posted {getDaysSincePosting(job.createdAt)} • {new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-              </div>
             </div>
           </div>
 
           {/* Action Menu */}
-          <div className="relative">
+          <div className="relative ml-2">
             <button
               onClick={() => setShowMenu(!showMenu)}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -364,47 +338,65 @@ export default function ManageJobsPage() {
             )}
           </div>
         </div>
+        
+        {/* Job Details */}
+        <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-gray-200">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
+            <Briefcase className="w-4 h-4" />
+            {job.category || 'General'}
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
+            <MapPin className="w-4 h-4" />
+            {job.location?.type || 'Remote'}
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
+            <DollarSign className="w-4 h-4" />
+            ${job.budget?.amount?.toLocaleString() || 'Negotiable'}
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
+            <FileText className="w-4 h-4" />
+            {job.jobType === 'project' ? 'Project' : 'Gig'}
+          </span>
+        </div>
+        
+        {/* Post Date Info */}
+        <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 text-sm text-gray-600">
+          <span className="flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            Posted {getDaysSincePosting(job.createdAt)}
+          </span>
+          <span className="flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            {new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </span>
+          <span className="flex items-center gap-2">
+            <Eye className="w-4 h-4" />
+            {job.views || 0} views
+          </span>
+        </div>
 
-        {/* Metrics Row with Icons and Real Numbers */}
-        <div className="bg-gray-50 rounded-lg p-4 mb-4">
-          <div className="grid grid-cols-5 gap-3">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
-                <Eye className="w-5 h-5" />
-              </div>
-              <div className="text-2xl font-bold text-gray-900">{job.views || 0}</div>
-              <div className="text-xs font-medium text-gray-600 mt-1">Views</div>
-            </div>
+        {/* Application Metrics - Clearly Labeled */}
+        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 mb-4">
+          <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wide mb-3">Application Metrics</h4>
+          <div className="grid grid-cols-4 gap-3">
             <div 
-              className="text-center cursor-pointer hover:bg-purple-100 rounded-lg p-2 transition-colors"
+              className="text-center cursor-pointer hover:bg-white rounded-lg p-2 transition-colors"
               onClick={() => navigate(`/job/${job.id}/applications`)}
             >
-              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
-                <Users className="w-5 h-5" />
-              </div>
-              <div className="text-2xl font-bold text-purple-600">{stats.total}</div>
-              <div className="text-xs font-medium text-gray-600 mt-1">Applicants</div>
+              <div className="text-2xl font-bold text-purple-600 mb-1">{stats.total}</div>
+              <div className="text-xs font-medium text-gray-600">Total</div>
             </div>
             <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
-                <Star className="w-5 h-5" />
-              </div>
-              <div className="text-2xl font-bold text-yellow-600">{job.saved || 0}</div>
-              <div className="text-xs font-medium text-gray-600 mt-1">Saved</div>
+              <div className="text-2xl font-bold text-yellow-600 mb-1">{job.saved || 0}</div>
+              <div className="text-xs font-medium text-gray-600">Saved</div>
             </div>
             <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
-                <Clock className="w-5 h-5" />
-              </div>
-              <div className="text-2xl font-bold text-orange-600">{stats.pending}</div>
-              <div className="text-xs font-medium text-gray-600 mt-1">Pending</div>
+              <div className="text-2xl font-bold text-orange-600 mb-1">{stats.pending}</div>
+              <div className="text-xs font-medium text-gray-600">Pending</div>
             </div>
             <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-gray-600 mb-2">
-                <CheckCircle className="w-5 h-5" />
-              </div>
-              <div className="text-2xl font-bold text-green-600">{stats.accepted}</div>
-              <div className="text-xs font-medium text-gray-600 mt-1">Accepted</div>
+              <div className="text-2xl font-bold text-green-600 mb-1">{stats.accepted}</div>
+              <div className="text-xs font-medium text-gray-600">Accepted</div>
             </div>
           </div>
         </div>
