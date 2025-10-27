@@ -338,7 +338,7 @@ async def get_current_user_info(user: dict = Depends(get_current_user)):
 
 @router.post("/add-role")
 async def add_secondary_role(
-    role: str = Field(..., pattern="^(worker|employer)$"),
+    role: str = Body(..., pattern="^(worker|employer)$", embed=True),
     user: dict = Depends(get_current_user)
 ):
     """Add secondary role to user (worker can become employer, vice versa)"""
