@@ -84,6 +84,32 @@ function App() {
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
+            {/* Dashboard Routes */}
+            <Route 
+              path="/dashboard-worker" 
+              element={
+                <ProtectedRoute>
+                  <WorkerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard-employer" 
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* Hire Flow */}
             <Route path="/hire/start" element={<HireStartPage />} />
             <Route 
