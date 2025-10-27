@@ -421,22 +421,37 @@ export default function ManageJobsPage() {
 
         {/* Quick Action Buttons at Bottom */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => navigate(`/job/${job.id}/applications`)}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-all shadow-sm"
-          >
-            <Users className="w-4 h-4" />
-            View Applicants
-            {stats.total > 0 && (
-              <span className="ml-1 px-2 py-0.5 bg-white text-purple-600 text-xs font-bold rounded-full">
-                {stats.total}
-              </span>
-            )}
-          </button>
+          {job.status !== 'closed' && (
+            <button
+              onClick={() => navigate(`/job/${job.id}/applications`)}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg"
+            >
+              <Users className="w-5 h-5" />
+              View Applicants
+              {stats.total > 0 && (
+                <span className="ml-1 px-2.5 py-0.5 bg-white text-purple-600 text-xs font-bold rounded-full">
+                  {stats.total}
+                </span>
+              )}
+            </button>
+          )}
+          
+          {job.status === 'closed' && (
+            <button
+              onClick={() => navigate(`/job/${job.id}/applications`)}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg transition-all"
+            >
+              <Eye className="w-5 h-5" />
+              View Past Applications
+              {stats.total > 0 && (
+                <span className="ml-1 text-sm text-gray-600">({stats.total})</span>
+              )}
+            </button>
+          )}
           
           <button
             onClick={() => navigate(`/job/${job.id}/edit`)}
-            className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-all flex items-center gap-2"
+            className="px-4 py-3 bg-white border-2 border-gray-300 hover:border-purple-400 hover:bg-purple-50 text-gray-700 hover:text-purple-700 font-semibold rounded-lg transition-all flex items-center gap-2"
           >
             <Edit className="w-4 h-4" />
             Edit
@@ -445,7 +460,7 @@ export default function ManageJobsPage() {
           {job.status === 'draft' && (
             <button
               onClick={() => handlePublish(job.id)}
-              className="px-4 py-2.5 bg-green-100 hover:bg-green-200 text-green-700 font-semibold rounded-lg transition-all flex items-center gap-2"
+              className="px-4 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-all flex items-center gap-2 shadow-md"
             >
               <CheckCircle className="w-4 h-4" />
               Publish
@@ -455,10 +470,20 @@ export default function ManageJobsPage() {
           {job.status === 'published' && (
             <button
               onClick={() => handleClose(job.id)}
-              className="px-4 py-2.5 bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold rounded-lg transition-all flex items-center gap-2"
+              className="px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-all flex items-center gap-2"
             >
               <XCircle className="w-4 h-4" />
               Close
+            </button>
+          )}
+          
+          {job.status === 'closed' && (
+            <button
+              onClick={() => handlePublish(job.id)}
+              className="px-4 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-all flex items-center gap-2"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Reopen
             </button>
           )}
         </div>
