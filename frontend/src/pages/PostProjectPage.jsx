@@ -272,7 +272,7 @@ export default function PostProjectPage() {
     } catch (error) {
       console.error('Error posting job:', error);
       toast.error('Failed to post job', {
-        description: 'Please try again or contact support'
+        description: error.message || 'Please try again or contact support'
       });
     } finally {
       setIsSubmitting(false);
