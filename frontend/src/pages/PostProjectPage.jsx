@@ -1504,5 +1504,6 @@ export default function PostProjectPage() {
         workType={workType}
       />
     </div>
+    </>
   );
 }
