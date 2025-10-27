@@ -446,6 +446,16 @@ function App() {
               } 
             />
             
+            {/* Find Workers/Talent Page */}
+            <Route 
+              path="/talent" 
+              element={
+                <ProtectedRoute>
+                  <TalentPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
             {/* Catch all - redirect to home */}
