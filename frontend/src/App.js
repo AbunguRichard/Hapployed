@@ -163,10 +163,14 @@ function App() {
               } 
             />
             
-            {/* Worker Onboarding - No profile completion check needed */}
+            {/* Worker Onboarding */}
             <Route 
               path="/worker/onboarding" 
-              element={<WorkerOnboardingPage />} 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <WorkerOnboardingPage />
+                </ProtectedRoute>
+              } 
             />
             
             {/* Role Tracker Dashboard for Multi-Hire Jobs */}
