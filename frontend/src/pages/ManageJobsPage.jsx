@@ -205,6 +205,9 @@ export default function ManageJobsPage() {
     return matchesStatus && matchesSearch && matchesCategory && matchesLocation;
   });
 
+  // Apply sorting
+  const sortedAndFilteredJobs = sortJobs(filteredJobs);
+
   // Calculate status counts
   const statusCounts = {
     all: jobs.length,
