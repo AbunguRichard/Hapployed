@@ -237,6 +237,7 @@ export default function PostProjectPage() {
       };
 
       // Save to backend
+      console.log('Posting job data:', jobData);
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`, {
         method: 'POST',
         headers: {
@@ -246,7 +247,9 @@ export default function PostProjectPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to post job');
+        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        console.error('Job posting failed:', response.status, errorData);
+        throw new Error(errorData.detail || `Server error: ${response.status}`);
       }
 
       const createdJob = await response.json();
