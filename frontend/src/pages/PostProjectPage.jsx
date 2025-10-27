@@ -218,9 +218,9 @@ export default function PostProjectPage() {
         urgency: projectData.urgency,
         status: saveAsDraft ? 'draft' : 'published',
         requirements: projectData.description,
-        // Multi-Hire Role-Based fields (only for projects)
-        hiringType: workType === 'project' ? projectData.hiringType : 'Single',
-        roles: workType === 'project' && projectData.hiringType === 'Multi-Role' 
+        // Multi-Hire Role-Based fields (for both projects and gigs)
+        hiringType: (workType === 'project' || workType === 'gig') ? projectData.hiringType : 'Single',
+        roles: (workType === 'project' || workType === 'gig') && projectData.hiringType === 'Multi-Role' 
           ? projectData.roles.map(role => ({
               roleId: role.roleId,
               roleName: role.roleName,
