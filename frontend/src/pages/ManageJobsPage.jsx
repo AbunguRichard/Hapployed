@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import DualTrackNav from '../components/DualTrackNav';
 import { 
   Briefcase, MapPin, Clock, DollarSign, Eye, Edit, Trash2, 
   CheckCircle, XCircle, Plus, Search, FileText, Users, 
@@ -8,7 +9,6 @@ import {
   Filter, Download, Star, MessageSquare, AlertCircle, BarChart2
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardHeader from '../components/DashboardHeader';
 
 export default function ManageJobsPage() {
   const navigate = useNavigate();
