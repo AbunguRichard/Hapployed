@@ -122,12 +122,12 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'Login failed');
+        throw new Error(data.detail || 'Login failed');
       }
 
-      const data = await response.json();
       setAuthToken(data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
       setUser(data.user);
