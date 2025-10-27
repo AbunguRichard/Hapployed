@@ -122,7 +122,9 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
-      const data = await response.json();
+      // Clone response before consuming it (for emergent monitoring)
+      const clonedResponse = response.clone();
+      const data = await clonedResponse.json();
       
       if (!response.ok) {
         throw new Error(data.detail || 'Login failed');
