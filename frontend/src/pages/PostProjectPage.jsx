@@ -313,28 +313,43 @@ export default function PostProjectPage() {
       
       console.log('Requesting price estimate with:', requestData);
       
-      const response = await fetch(`${backendUrl}/api/estimate-price`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData)
-      });
+      // Add timeout for AI request (30 seconds)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
       
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
-        console.error('Price estimation failed:', response.status, errorData);
-        throw new Error(errorData.detail || `Server error: ${response.status}`);
+      try {
+        const response = await fetch(`${backendUrl}/api/estimate-price`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+          console.error('Price estimation failed:', response.status, errorData);
+          throw new Error(errorData.detail || `Server error: ${response.status}`);
+        }
+        
+        const estimate = await response.json();
+        console.log('Price estimate received:', estimate);
+        setPriceEstimate(estimate);
+        
+        // Optionally pre-fill the budget fields with AI suggestion
+        toast.success('💡 AI price estimate ready!', {
+          description: 'Review the suggestion below'
+        });
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timed out. AI is taking longer than usual, please try again.');
+        }
+        throw fetchError;
       }
-      
-      const estimate = await response.json();
-      console.log('Price estimate received:', estimate);
-      setPriceEstimate(estimate);
-      
-      // Optionally pre-fill the budget fields with AI suggestion
-      toast.success('💡 AI price estimate ready!', {
-        description: 'Review the suggestion below'
-      });
       
     } catch (error) {
       console.error('Error estimating price:', error);
