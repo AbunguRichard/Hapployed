@@ -595,7 +595,7 @@ export default function ManageJobsPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {filteredJobs.map(job => (
+            {sortedAndFilteredJobs.map(job => (
               <JobCard key={job.id} job={job} />
             ))}
           </div>
