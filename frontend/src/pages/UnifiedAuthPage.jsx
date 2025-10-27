@@ -268,6 +268,20 @@ export default function UnifiedAuthPage() {
               </div>
             )}
 
+            {mode === 'signup' && (
+              <div style={{ marginBottom: '12px' }}>
+                <label style={{ fontSize: '12px', color: '#374151', display: 'block', marginBottom: '6px' }}>Full Name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="John Doe"
+                  required
+                  style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid rgba(0,0,0,.12)', background: '#fff', color: '#0f172a' }}
+                />
+              </div>
+            )}
+
             <div style={{ marginBottom: '12px' }}>
               <label style={{ fontSize: '12px', color: '#374151', display: 'block', marginBottom: '6px' }}>Email</label>
               <input
