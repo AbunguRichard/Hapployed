@@ -363,6 +363,90 @@ function App() {
               }
             />
             
+            {/* ========== DUAL-TRACK NAVIGATION ROUTES ========== */}
+            
+            {/* Unified Dashboard - Smart routing based on mode */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <UnifiedDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Gig Work Routes */}
+            <Route 
+              path="/gig/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <WorkerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/gig/post" 
+              element={
+                <ProtectedRoute>
+                  <QuickHirePostPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/gig/find" 
+              element={
+                <ProtectedRoute>
+                  <GigsNearMePage />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Professional Work Routes */}
+            <Route 
+              path="/pro/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <EmployerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/pro/find" 
+              element={
+                <ProtectedRoute>
+                  <OpportunitiesPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/pro/post" 
+              element={
+                <ProtectedRoute>
+                  <PostProjectPage />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* My Engagements Routes */}
+            <Route 
+              path="/me/gigs" 
+              element={
+                <ProtectedRoute>
+                  <MyGigsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/me/projects" 
+              element={
+                <ProtectedRoute>
+                  <MyProjectsPage />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* ========== END DUAL-TRACK ROUTES ========== */}
+            
             {/* Catch all - redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
