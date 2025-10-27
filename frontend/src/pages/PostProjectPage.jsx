@@ -301,27 +301,34 @@ export default function PostProjectPage() {
       setPriceEstimate(null);
       
       const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+      const requestData = {
+        category: projectData.category || 'Other',
+        description: projectData.description || '',
+        location: projectData.location || 'remote',
+        specificLocation: projectData.specificLocation || '',
+        urgency: projectData.urgency || 'normal',
+        workType: workType,
+        duration: projectData.duration || ''
+      };
+      
+      console.log('Requesting price estimate with:', requestData);
+      
       const response = await fetch(`${backendUrl}/api/estimate-price`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          category: projectData.category || 'Other',
-          description: projectData.description || '',
-          location: projectData.location || 'remote',
-          specificLocation: projectData.specificLocation || '',
-          urgency: projectData.urgency || 'normal',
-          workType: workType,
-          duration: projectData.duration || ''
-        })
+        body: JSON.stringify(requestData)
       });
       
       if (!response.ok) {
-        throw new Error('Failed to estimate price');
+        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        console.error('Price estimation failed:', response.status, errorData);
+        throw new Error(errorData.detail || `Server error: ${response.status}`);
       }
       
       const estimate = await response.json();
+      console.log('Price estimate received:', estimate);
       setPriceEstimate(estimate);
       
       // Optionally pre-fill the budget fields with AI suggestion
@@ -332,7 +339,7 @@ export default function PostProjectPage() {
     } catch (error) {
       console.error('Error estimating price:', error);
       toast.error('Failed to get price estimate', {
-        description: 'Please try again or set budget manually'
+        description: error.message || 'Please try again or set budget manually'
       });
     } finally {
       setIsEstimatingPrice(false);
