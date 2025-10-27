@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import DualTrackNav from '../components/DualTrackNav';
 import { 
   ArrowLeft, User, Mail, DollarSign, Calendar, FileText, 
   CheckCircle, XCircle, Clock, Eye, Star, Briefcase 
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
