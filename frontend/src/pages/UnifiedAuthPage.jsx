@@ -141,12 +141,30 @@ export default function UnifiedAuthPage() {
     
     try {
       if (mode === 'login') {
-        await login(email, password);
-        navigate('/hire-method-choice');
+        const result = await login(email, password);
+        
+        // Smart navigation based on user's intent and role
+        const intent = result.intent || localStorage.getItem('user_intent');
+        const redirectPath = localStorage.getItem('redirect_after_auth');
+        
+        if (redirectPath) {
+          localStorage.removeItem('redirect_after_auth');
+          navigate(redirectPath);
+        } else if (intent === 'find_work') {
+          navigate('/dashboard-worker');
+        } else if (intent === 'hire_talent' || intent === 'post_project') {
+          navigate('/dashboard-employer');
+        } else if (result.user.roles?.includes('employer')) {
+          navigate('/dashboard-employer');
+        } else if (result.user.roles?.includes('worker')) {
+          navigate('/dashboard-worker');
+        } else {
+          navigate('/hire-method-choice');
+        }
       } else {
         // Sign up flow - create account then redirect to profile creation
         await signup(email, password, name || email.split('@')[0], 'worker'); // default to worker role
-        navigate('/profile/create?next=/hire-method-choice');
+        navigate('/profile/create?next=/dashboard-worker');
       }
     } catch (err) {
       setError(err.message || (mode === 'login' ? 'Invalid email or password' : 'Sign up failed'));
