@@ -158,6 +158,42 @@ export default function ManageJobsPage() {
     }
   };
 
+  // Helper function to calculate days since posting
+  const getDaysSincePosting = (createdAt) => {
+    const posted = new Date(createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now - posted);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    return `${Math.floor(diffDays / 30)} months ago`;
+  };
+
+  // Sorting function
+  const sortJobs = (jobsToSort) => {
+    const sorted = [...jobsToSort];
+    
+    switch (sortBy) {
+      case 'newest':
+        return sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      case 'oldest':
+        return sorted.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      case 'most-applicants':
+        return sorted.sort((a, b) => {
+          const aApplicants = applicationStats[a.id]?.total || 0;
+          const bApplicants = applicationStats[b.id]?.total || 0;
+          return bApplicants - aApplicants;
+        });
+      case 'most-views':
+        return sorted.sort((a, b) => (b.views || 0) - (a.views || 0));
+      default:
+        return sorted;
+    }
+  };
+
   // Filtering and search
   const filteredJobs = jobs.filter(job => {
     const matchesStatus = statusFilter === 'all' || job.status === statusFilter;
