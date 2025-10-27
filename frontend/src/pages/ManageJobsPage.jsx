@@ -541,7 +541,7 @@ export default function ManageJobsPage() {
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  checked={selectedJobs.length === filteredJobs.length}
+                  checked={selectedJobs.length === sortedAndFilteredJobs.length && sortedAndFilteredJobs.length > 0}
                   onChange={handleSelectAll}
                   className="w-4 h-4 text-purple-600 rounded"
                 />
