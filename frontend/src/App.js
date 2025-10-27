@@ -54,6 +54,7 @@ import RoleTrackerDashboard from './components/RoleTrackerDashboard';
 import UnifiedDashboard from './pages/UnifiedDashboard';
 import MyGigsPage from './pages/MyGigsPage';
 import MyProjectsPage from './pages/MyProjectsPage';
+import TalentPage from './pages/TalentPage';
 import './App.css';
 
 function App() {
