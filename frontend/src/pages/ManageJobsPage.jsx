@@ -21,6 +21,7 @@ export default function ManageJobsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [locationFilter, setLocationFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('newest'); // newest, oldest, most-applicants, most-views
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [applicationStats, setApplicationStats] = useState({});
   const [showBulkActions, setShowBulkActions] = useState(false);
