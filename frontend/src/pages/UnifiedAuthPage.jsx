@@ -17,7 +17,7 @@ const SLIDES = [
 export default function UnifiedAuthPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, signup } = useAuth();
   
   const [mode, setMode] = useState('signup'); // 'signup' or 'login'
   const [email, setEmail] = useState('');
