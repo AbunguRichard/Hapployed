@@ -573,7 +573,7 @@ export default function ManageJobsPage() {
             <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">Loading your jobs...</p>
           </div>
-        ) : filteredJobs.length === 0 ? (
+        ) : sortedAndFilteredJobs.length === 0 ? (
           <div className="bg-white rounded-xl border-2 border-gray-200 p-12 text-center">
             <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-900 mb-2">
