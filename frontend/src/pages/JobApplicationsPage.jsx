@@ -215,15 +215,75 @@ export default function JobApplicationsPage() {
             <p className="mt-4 text-gray-600">Loading applications...</p>
           </div>
         ) : filteredApplications.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-            <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No applications yet</h3>
-            <p className="text-gray-600">
+          <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-12 text-center border-2 border-gray-200">
+            {/* Empty State Icon */}
+            <div className="text-7xl mb-6">📭</div>
+            
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">No applications yet</h3>
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
               {filter === 'all' 
-                ? 'No one has applied to this job yet.'
-                : `No ${filter} applications.`
+                ? "No one has applied to this job yet. Here are some ways to attract candidates:"
+                : `No ${filter} applications for this job.`
               }
             </p>
+            
+            {/* Action Buttons */}
+            {filter === 'all' && (
+              <>
+                <div className="flex flex-wrap gap-3 justify-center mb-8">
+                  <button
+                    onClick={() => navigate(`/job/${jobId}/edit`)}
+                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  >
+                    <span className="text-lg">✏️</span>
+                    Edit Job Posting
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.origin + `/job/${jobId}`);
+                      toast.success('Job link copied! Share it on social media.');
+                    }}
+                    className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg transition-all border-2 border-gray-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  >
+                    <span className="text-lg">📢</span>
+                    Share on Social Media
+                  </button>
+                  <button
+                    onClick={() => navigate('/manage-jobs')}
+                    className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg transition-all border-2 border-gray-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  >
+                    <span className="text-lg">📊</span>
+                    View All Jobs
+                  </button>
+                </div>
+
+                {/* Tips Section */}
+                <div className="max-w-md mx-auto text-left bg-purple-50 rounded-xl p-6 border-2 border-purple-200">
+                  <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <span className="text-xl">💡</span>
+                    Tips to get more applicants:
+                  </h4>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span>Add a detailed job description with clear requirements</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span>Include salary range (jobs with salary get <strong>3x more applicants</strong>)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span>Share on LinkedIn and other job boards</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span>Use specific job titles that candidates search for</span>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <div className="space-y-4">
