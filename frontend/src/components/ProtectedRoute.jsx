@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute({ children, requireProfile = true }) {
   const { isAuthenticated, user, loading, hasRole, isProfileComplete } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -38,11 +38,11 @@ export default function ProtectedRoute({ children }) {
     return false;
   };
 
-  // Authenticated but no complete profile → redirect to create profile (only for new users)
-  if (!userHasCompleteProfile()) {
+  // Authenticated but no complete profile → redirect to create profile (only if profile is required)
+  if (requireProfile && !userHasCompleteProfile()) {
     return <Navigate to={`/profile/create?next=${encodeURIComponent(currentPath)}`} replace />;
   }
 
-  // Authenticated and has profile → allow access
+  // Authenticated (and has profile if required) → allow access
   return children;
 }
