@@ -100,7 +100,7 @@ function App() {
               path="/dashboard-employer" 
               element={
                 <ProtectedRoute>
-                  <DashboardPage />
+                  <EmployerDashboard />
                 </ProtectedRoute>
               } 
             />
