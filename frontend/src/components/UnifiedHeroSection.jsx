@@ -1,10 +1,105 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Briefcase, Zap, Users, TrendingUp, Activity } from 'lucide-react';
+import { MapPin, Briefcase, Zap, Users, TrendingUp, Activity, Plus } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import AuthModal from './AuthModal';
 
 export default function UnifiedHeroSection() {
   const navigate = useNavigate();
   const canvasRef = useRef(null);
+  const { isAuthenticated, hasRole, isGuest } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authIntent, setAuthIntent] = useState(null);
+
+  // Track analytics event
+  const trackEvent = async (eventName, metadata = {}) => {
+    try {
+      const anonymousId = localStorage.getItem('anonymous_id') || generateAnonymousId();
+      const userId = isAuthenticated ? localStorage.getItem('user_id') : null;
+      
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/analytics/events`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventName,
+          userId,
+          anonymousId: userId ? null : anonymousId,
+          lastIntent: metadata.intent,
+          metadata,
+          device: /Mobile/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+          referrer: document.referrer,
+          page: window.location.pathname
+        })
+      });
+    } catch (error) {
+      console.error('Analytics tracking failed:', error);
+    }
+  };
+
+  const generateAnonymousId = () => {
+    const id = 'anon_' + Math.random().toString(36).substr(2, 9) + Date.now();
+    localStorage.setItem('anonymous_id', id);
+    return id;
+  };
+
+  const handleFindWork = () => {
+    trackEvent('cta_find_work_clicked', { intent: 'find_work' });
+    localStorage.setItem('user_intent', 'find_work');
+    
+    if (!isAuthenticated) {
+      setAuthIntent('find_work');
+      setShowAuthModal(true);
+    } else if (hasRole('worker')) {
+      navigate('/dashboard-worker');
+    } else {
+      // User is employer, needs to add worker role
+      navigate('/work/start');
+    }
+  };
+
+  const handleHireTalent = () => {
+    trackEvent('cta_hire_talent_clicked', { intent: 'hire_talent' });
+    localStorage.setItem('user_intent', 'hire_talent');
+    
+    if (!isAuthenticated) {
+      setAuthIntent('hire_talent');
+      setShowAuthModal(true);
+    } else if (hasRole('employer')) {
+      navigate('/dashboard-employer');
+    } else {
+      // User is worker, needs to add employer role
+      navigate('/hire/start');
+    }
+  };
+
+  const handlePostProject = () => {
+    trackEvent('cta_post_project_clicked', { intent: 'post_project' });
+    localStorage.setItem('user_intent', 'post_project');
+    
+    if (!isAuthenticated) {
+      setAuthIntent('post_project');
+      setShowAuthModal(true);
+    } else if (hasRole('employer')) {
+      navigate('/post-project');
+    } else {
+      // User is worker, needs to add employer role
+      navigate('/post-project');
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setShowAuthModal(false);
+    const intent = localStorage.getItem('user_intent');
+    
+    // Redirect based on intent
+    if (intent === 'find_work') {
+      navigate('/dashboard-worker');
+    } else if (intent === 'hire_talent') {
+      navigate('/dashboard-employer');
+    } else if (intent === 'post_project') {
+      navigate('/post-project');
+    }
+  };
 
   // Animated network background
   useEffect(() => {
