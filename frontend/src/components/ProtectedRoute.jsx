@@ -3,7 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, hasProfile, loading } = useAuth();
+  const { isAuthenticated, user, loading, hasRole, isProfileComplete } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -24,8 +24,22 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to={`/auth/login?next=${encodeURIComponent(currentPath)}`} replace />;
   }
 
-  // Authenticated but no profile → redirect to create profile
-  if (!hasProfile) {
+  // Check if user has a complete profile for their primary role
+  const userHasCompleteProfile = () => {
+    if (!user || !user.roles || user.roles.length === 0) return false;
+    
+    // Check if any of their roles has a complete profile
+    if (user.roles.includes('worker') && user.worker_profile?.profileComplete) {
+      return true;
+    }
+    if (user.roles.includes('employer') && user.employer_profile?.profileComplete) {
+      return true;
+    }
+    return false;
+  };
+
+  // Authenticated but no complete profile → redirect to create profile (only for new users)
+  if (!userHasCompleteProfile()) {
     return <Navigate to={`/profile/create?next=${encodeURIComponent(currentPath)}`} replace />;
   }
 
