@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends, Response, Request
+from fastapi import APIRouter, HTTPException, status, Depends, Response, Request, Body
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
