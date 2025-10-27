@@ -155,49 +155,58 @@ export default function JobApplicationsPage() {
           )}
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-sm p-4">
-            <p className="text-sm text-gray-600 mb-1">Total</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
+        {/* Stats Cards - Only show if there are applications */}
+        {applications.length > 0 && (
+          <div className="grid grid-cols-5 gap-4 mb-6">
+            <div className="bg-white rounded-xl border-2 border-gray-200 p-4">
+              <p className="text-sm text-gray-600 mb-1">Total</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
+            </div>
+            <div className="bg-yellow-50 rounded-xl border-2 border-yellow-200 p-4">
+              <p className="text-sm text-yellow-800 mb-1">Pending</p>
+              <p className="text-2xl font-bold text-yellow-900">{stats.pending}</p>
+            </div>
+            <div className="bg-blue-50 rounded-xl border-2 border-blue-200 p-4">
+              <p className="text-sm text-blue-800 mb-1">Reviewed</p>
+              <p className="text-2xl font-bold text-blue-900">{stats.reviewed}</p>
+            </div>
+            <div className="bg-green-50 rounded-xl border-2 border-green-200 p-4">
+              <p className="text-sm text-green-800 mb-1">Accepted</p>
+              <p className="text-2xl font-bold text-green-900">{stats.accepted}</p>
+            </div>
+            <div className="bg-red-50 rounded-xl border-2 border-red-200 p-4">
+              <p className="text-sm text-red-800 mb-1">Rejected</p>
+              <p className="text-2xl font-bold text-red-900">{stats.rejected}</p>
+            </div>
           </div>
-          <div className="bg-yellow-50 rounded-lg shadow-sm p-4 border border-yellow-200">
-            <p className="text-sm text-yellow-800 mb-1">Pending</p>
-            <p className="text-2xl font-bold text-yellow-900">{stats.pending}</p>
-          </div>
-          <div className="bg-blue-50 rounded-lg shadow-sm p-4 border border-blue-200">
-            <p className="text-sm text-blue-800 mb-1">Reviewed</p>
-            <p className="text-2xl font-bold text-blue-900">{stats.reviewed}</p>
-          </div>
-          <div className="bg-green-50 rounded-lg shadow-sm p-4 border border-green-200">
-            <p className="text-sm text-green-800 mb-1">Accepted</p>
-            <p className="text-2xl font-bold text-green-900">{stats.accepted}</p>
-          </div>
-          <div className="bg-red-50 rounded-lg shadow-sm p-4 border border-red-200">
-            <p className="text-sm text-red-800 mb-1">Rejected</p>
-            <p className="text-2xl font-bold text-red-900">{stats.rejected}</p>
-          </div>
-        </div>
+        )}
 
-        {/* Filter Tabs */}
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-          <div className="flex gap-2 overflow-x-auto">
-            {[
-              { value: 'all', label: 'All' },
-              { value: 'pending', label: 'Pending' },
-              { value: 'reviewed', label: 'Reviewed' },
-              { value: 'accepted', label: 'Accepted' },
-              { value: 'rejected', label: 'Rejected' }
-            ].map(tab => (
-              <button
-                key={tab.value}
-                onClick={() => setFilter(tab.value)}
-                className={`px-4 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap ${
-                  filter === tab.value
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
+        {/* Filter Tabs - Only show if there are applications */}
+        {applications.length > 0 && (
+          <div className="bg-white rounded-xl border-2 border-gray-200 p-4 mb-6">
+            <div className="flex gap-2 overflow-x-auto">
+              {[
+                { value: 'all', label: 'All', count: stats.total },
+                { value: 'pending', label: 'Pending', count: stats.pending },
+                { value: 'reviewed', label: 'Reviewed', count: stats.reviewed },
+                { value: 'accepted', label: 'Accepted', count: stats.accepted },
+                { value: 'rejected', label: 'Rejected', count: stats.rejected }
+              ].map(tab => (
+                <button
+                  key={tab.value}
+                  onClick={() => setFilter(tab.value)}
+                  className={`px-4 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap ${
+                    filter === tab.value
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {tab.label} ({tab.count})
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
                 {tab.label}
               </button>
             ))}
