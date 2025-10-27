@@ -207,11 +207,6 @@ export default function JobApplicationsPage() {
             </div>
           </div>
         )}
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Applications List */}
         {loading ? (
