@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 import { UserSearch, Zap, Briefcase, MapPin, Star, DollarSign } from 'lucide-react';
 
 export default function TalentPage() {
@@ -118,7 +118,7 @@ export default function TalentPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}

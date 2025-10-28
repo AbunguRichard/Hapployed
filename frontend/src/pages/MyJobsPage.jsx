@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 import { ClipboardList, Send, Briefcase, Clock, DollarSign, CheckCircle, XCircle, Eye } from 'lucide-react';
 
 export default function MyJobsPage() {
@@ -241,7 +241,7 @@ export default function MyJobsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}

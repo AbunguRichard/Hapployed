@@ -4,7 +4,7 @@ import { useWorkMode } from '../context/WorkModeContext';
 import { useAuth } from '../context/AuthContext';
 import WorkerDashboard from './WorkerDashboard';
 import EmployerDashboard from './EmployerDashboard';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 
 export default function UnifiedDashboard() {
   const { mode, setMode } = useWorkMode();
@@ -37,7 +37,7 @@ export default function UnifiedDashboard() {
   if (mode === 'gig') {
     return (
       <>
-        <NavigationBar />
+        <DashboardHeader />
         <WorkerDashboard />
       </>
     );
@@ -46,7 +46,7 @@ export default function UnifiedDashboard() {
   if (mode === 'pro') {
     return (
       <>
-        <NavigationBar />
+        <DashboardHeader />
         <EmployerDashboard />
       </>
     );
@@ -55,7 +55,7 @@ export default function UnifiedDashboard() {
   // Default fallback - show mode selection
   return (
     <>
-      <NavigationBar />
+      <DashboardHeader />
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Choose Your Mode</h2>

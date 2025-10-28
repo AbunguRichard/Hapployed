@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Briefcase, MapPin, Clock, DollarSign, Eye, Edit, Trash2, CheckCircle, XCircle, Plus, Search, FileText, Users } from 'lucide-react';
 import { toast } from 'sonner';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 
 export default function ManageJobsPage() {
   const navigate = useNavigate();
@@ -162,7 +162,7 @@ export default function ManageJobsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <NavigationBar />
+      <DashboardHeader />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}

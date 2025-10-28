@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mic, MapPin, DollarSign, Clock, Zap, Camera, CheckCircle, Loader } from 'lucide-react';
 import { toast } from 'sonner';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -185,7 +185,7 @@ export default function QuickHirePostPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}

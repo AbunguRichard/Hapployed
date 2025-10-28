@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Zap, Target, ArrowLeft } from 'lucide-react';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
 
 export default function ApplicationFlowPage() {
@@ -23,7 +23,7 @@ export default function ApplicationFlowPage() {
   if (!opportunity) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <NavigationBar />
+        <DashboardHeader />
         <div className="max-w-2xl mx-auto px-4 py-12 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Opportunity not found</h2>
           <button
@@ -65,7 +65,7 @@ export default function ApplicationFlowPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-secondary text-white py-12 px-4">

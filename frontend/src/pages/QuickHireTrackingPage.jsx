@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { MapPin, Clock, DollarSign, User, Phone, MessageCircle, Star, CheckCircle, Navigation, Loader } from 'lucide-react';
 import { toast } from 'sonner';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -103,7 +103,7 @@ export default function QuickHireTrackingPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <NavigationBar />
+        <DashboardHeader />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <Loader className="w-12 h-12 text-orange-500 animate-spin mx-auto mb-4" />
@@ -117,7 +117,7 @@ export default function QuickHireTrackingPage() {
   if (!gig) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <NavigationBar />
+        <DashboardHeader />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <p className="text-gray-600">Gig not found</p>
@@ -132,7 +132,7 @@ export default function QuickHireTrackingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Status Header */}

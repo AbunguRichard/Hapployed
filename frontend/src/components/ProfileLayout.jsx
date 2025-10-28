@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Settings, CreditCard, Bell, Shield, RefreshCw, HelpCircle, LogOut } from 'lucide-react';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 import { useAuth } from '../context/AuthContext';
 
 export default function ProfileLayout({ children, currentSection }) {
@@ -25,7 +25,7 @@ export default function ProfileLayout({ children, currentSection }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

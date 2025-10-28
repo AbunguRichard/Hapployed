@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Briefcase, Plus, X, Mic, Check } from 'lucide-react';
 import { toast } from 'sonner';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -209,7 +209,7 @@ export default function MySkillsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       <div className="max-w-5xl mx-auto px-4 py-8">
         {/* Header */}

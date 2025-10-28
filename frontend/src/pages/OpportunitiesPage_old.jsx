@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, DollarSign, Clock, Briefcase, Star, ChevronDown, ChevronUp } from 'lucide-react';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
@@ -182,7 +182,7 @@ export default function OpportunitiesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-primary to-secondary text-white py-12 px-4">

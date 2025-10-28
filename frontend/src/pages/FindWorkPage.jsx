@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, DollarSign, Lightbulb, Trophy, Sparkles, Zap, Check, ChevronDown, ChevronUp } from 'lucide-react';
-import NavigationBar from '../components/NavigationBar';
+import DashboardHeader from '../components/DashboardHeader';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
@@ -145,7 +145,7 @@ export default function FindWorkPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <DashboardHeader />
       
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-blue-500 text-white py-16 px-4">
