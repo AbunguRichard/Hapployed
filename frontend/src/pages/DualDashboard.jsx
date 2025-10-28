@@ -550,22 +550,6 @@ export default function DualDashboard() {
         </div>
       </div>
 
-      {/* Mode Toggle */}
-      <div className="max-w-6xl mx-auto px-4 mt-6">
-        <Card>
-          <CardContent className="p-3 flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-2 text-sm">
-              <Badge className="bg-slate-900">Dual Dashboard</Badge>
-              <span className="text-muted-foreground">Switch between specialized environments</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant={mode === "gig" ? "default" : "secondary"} onClick={() => setMode("gig")} className="rounded-full">Gig Mode</Button>
-              <Button variant={mode === "project" ? "default" : "secondary"} onClick={() => setMode("project")} className="rounded-full">Project Mode</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Content */}
       <div className="max-w-6xl mx-auto px-4 mt-4 pb-10 space-y-4">
         {mode === "gig" ? <GigMode /> : <ProjectMode />}
