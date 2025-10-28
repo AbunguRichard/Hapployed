@@ -12,9 +12,21 @@ import {
 export default function NavigationBar() {
   const { mode, setMode } = useWorkMode();
   const { user, logout } = useAuth();
+  const { currentMode, switchMode, isDualRole } = useModeContext();
   const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRef = useRef(null);
+
+  const handleModeChange = async (newMode) => {
+    try {
+      await switchMode(newMode);
+      // Refresh the page to show new dashboard
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to switch mode:', error);
+      alert('Failed to switch mode. Please try again.');
+    }
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
