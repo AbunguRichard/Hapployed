@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useModeContext } from '../context/ModeContext';
 import { Navigate } from 'react-router-dom';
 import RecruiterDashboard from './RecruiterDashboard';
 import DualDashboard from './DualDashboard';
@@ -7,15 +8,16 @@ import DualDashboard from './DualDashboard';
 /**
  * SmartDashboard - Role-based dynamic dashboard routing
  * 
- * This component detects the user's role and renders the appropriate dashboard:
- * - Recruiter/Employer → RecruiterDashboard (job stats, applications, hiring tips)
- * - Talent/Worker → DualDashboard (Gig Mode / Project Mode)
+ * This component uses currentMode from ModeContext to render the appropriate dashboard:
+ * - Employer mode → RecruiterDashboard (job stats, applications, hiring tips)
+ * - Worker mode → DualDashboard (Gig Mode / Project Mode)
  */
 export default function SmartDashboard() {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { currentMode, loading: modeLoading } = useModeContext();
 
-  // Show loading state while checking auth
-  if (loading) {
+  // Show loading state while checking auth or mode
+  if (authLoading || modeLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
@@ -31,35 +33,11 @@ export default function SmartDashboard() {
     return <Navigate to="/auth/login" replace />;
   }
 
-  // Detect user role from user object
-  // Possible role fields: user.role, user.userType, user.roles array
-  const isRecruiter = 
-    user.role === 'Recruiter' || 
-    user.role === 'Employer' ||
-    user.userType === 'Recruiter' ||
-    user.userType === 'Employer' ||
-    (user.roles && (user.roles.includes('Recruiter') || user.roles.includes('Employer')));
-
-  const isWorker = 
-    user.role === 'Worker' || 
-    user.role === 'Talent' ||
-    user.userType === 'Worker' ||
-    user.userType === 'Talent' ||
-    (user.roles && (user.roles.includes('Worker') || user.roles.includes('Talent')));
-
-  // Check localStorage for last active mode (role persistence)
-  const lastMode = localStorage.getItem('user_active_mode');
-  
-  if (lastMode === 'recruiter' || (!lastMode && isRecruiter)) {
+  // Render dashboard based on current mode
+  if (currentMode === 'employer') {
     return <RecruiterDashboard />;
   }
   
-  if (lastMode === 'worker' || (!lastMode && isWorker)) {
-    return <DualDashboard />;
-  }
-
-  // Default: If no clear role, check if user has posted jobs (they're likely a recruiter)
-  // Or if they have applications (they're likely a worker)
-  // For now, default to DualDashboard for new users
+  // Default to worker dashboard (DualDashboard)
   return <DualDashboard />;
 }
