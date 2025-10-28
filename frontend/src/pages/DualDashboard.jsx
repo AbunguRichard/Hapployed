@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
+import NavigationBar from "@/components/NavigationBar";
 import {
   Activity,
   ArrowRight,
