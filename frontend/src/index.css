@@ -13,26 +13,34 @@
     
     /* Primary: Vibrant Purple */
     --primary: 270 85% 60%;
+    --primary-foreground: 0 0% 100%;
     --primary-glow: 270 85% 70%;
     --primary-dark: 270 75% 50%;
     
     /* Secondary: Light Purple */
     --secondary: 270 50% 90%;
+    --secondary-foreground: 270 85% 60%;
     --secondary-dark: 270 40% 80%;
     
     /* Accent: Green (from logo) */
     --accent: 150 80% 50%;
+    --accent-foreground: 0 0% 100%;
     --accent-glow: 150 80% 60%;
+    
+    /* Card */
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 20%;
+    --card-bg: 0 0% 100%;
     
     /* Status Colors */
     --success: 150 80% 50%;
     --warning: 45 100% 55%;
     --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
     
     /* Neutral */
     --muted: 220 10% 95%;
     --muted-foreground: 220 10% 45%;
-    --card-bg: 0 0% 100%;
     
     --border: 220 15% 90%;
     --input: 220 15% 95%;
