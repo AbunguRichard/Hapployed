@@ -128,27 +128,27 @@ export default function Homepage() {
       </div>
 
       {/* Stats Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">Platform Statistics</h2>
-          <div className="grid md:grid-cols-3 gap-12 text-center">
-            <div className="animate-on-scroll">
-              <div className="text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-3">
+          <h2 className="text-5xl font-bold text-center mb-20 text-gray-900">Platform Statistics</h2>
+          <div className="grid md:grid-cols-3 gap-16 max-w-5xl mx-auto">
+            <div className="animate-on-scroll text-center">
+              <div className="text-7xl font-extrabold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">
                 50K+
               </div>
-              <div className="text-xl text-gray-600">Professionals</div>
+              <div className="text-2xl text-gray-600 font-medium">Professionals</div>
             </div>
-            <div className="animate-on-scroll">
-              <div className="text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-3">
+            <div className="animate-on-scroll text-center">
+              <div className="text-7xl font-extrabold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">
                 2.8K+
               </div>
-              <div className="text-xl text-gray-600">Businesses</div>
+              <div className="text-2xl text-gray-600 font-medium">Businesses</div>
             </div>
-            <div className="animate-on-scroll">
-              <div className="text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-3">
+            <div className="animate-on-scroll text-center">
+              <div className="text-7xl font-extrabold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4">
                 98%
               </div>
-              <div className="text-xl text-gray-600">Success Rate</div>
+              <div className="text-2xl text-gray-600 font-medium">Success Rate</div>
             </div>
           </div>
         </div>
