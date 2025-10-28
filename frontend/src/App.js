@@ -117,6 +117,22 @@ function App() {
               path="/dashboard" 
               element={
                 <ProtectedRoute>
+                  <SmartDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard-recruiter" 
+              element={
+                <ProtectedRoute>
+                  <RecruiterDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard-talent" 
+              element={
+                <ProtectedRoute>
                   <DualDashboard />
                 </ProtectedRoute>
               } 
