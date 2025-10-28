@@ -485,6 +485,7 @@ function App() {
         </BrowserRouter>
       </div>
     </WorkModeProvider>
+  </ModeProvider>
   </AuthProvider>
 );
 }
