@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useWorkMode } from '../context/WorkModeContext';
+import { useModeContext } from '../context/ModeContext';
+import ModeToggle from './ModeToggle';
 import { 
   LayoutDashboard, Zap, Briefcase, UserSearch, 
   Calendar, Mail, Plus, ChevronDown, User, LogOut, Settings
