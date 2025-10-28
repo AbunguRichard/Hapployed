@@ -68,7 +68,11 @@ export default function DashboardHeader() {
     },
     { 
       name: 'My Jobs', 
-      path: '/manage-jobs',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'My Gigs', path: '/me/gigs' },
+        { name: 'My Projects', path: '/me/projects' }
+      ]
     },
     { 
       name: 'Messages', 
