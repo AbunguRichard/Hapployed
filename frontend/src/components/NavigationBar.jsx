@@ -39,11 +39,6 @@ export default function NavigationBar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleModeSwitch = (newMode) => {
-    setMode(newMode);
-    navigate(newMode === 'gig' ? '/gig/dashboard' : '/pro/dashboard');
-  };
-
   const toggleDropdown = (name) => {
     setOpenDropdown(openDropdown === name ? null : name);
   };
