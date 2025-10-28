@@ -20,6 +20,7 @@ import {
 
 export default function RecruiterDashboard() {
   const { user } = useAuth();
+  const { currentMode, switchMode, isDualRole } = useModeContext();
   const navigate = useNavigate();
   const [stats, setStats] = useState({
     activeJobs: 0,
@@ -33,6 +34,16 @@ export default function RecruiterDashboard() {
   const [recentApplications, setRecentApplications] = useState([]);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+  
+  const handleModeChange = async (newMode) => {
+    try {
+      await switchMode(newMode);
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to switch mode:', error);
+      alert('Failed to switch mode. Please try logging out and back in.');
+    }
+  };
 
   useEffect(() => {
     fetchDashboardData();
