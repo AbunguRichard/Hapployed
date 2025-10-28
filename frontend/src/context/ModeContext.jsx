@@ -126,6 +126,14 @@ export const ModeProvider = ({ children }) => {
    * Check if user has both roles (can switch modes)
    */
   const isDualRole = user && user.roles && user.roles.length > 1;
+  
+  // Debug logging
+  console.log('ModeContext Debug:', {
+    user,
+    roles: user?.roles,
+    isDualRole,
+    currentMode
+  });
 
   const value = {
     currentMode,
