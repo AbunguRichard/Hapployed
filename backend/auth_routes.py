@@ -333,8 +333,30 @@ async def logout(response: Response):
 
 @router.get("/me")
 async def get_current_user_info(user: dict = Depends(get_current_user)):
-    """Get current authenticated user information"""
-    return user
+    """Get current authenticated user information with mode and profile status"""
+    user_id = user["id"]
+    
+    # Fetch latest user data to ensure we have currentMode
+    user_doc = await users_collection.find_one({"_id": user_id})
+    if not user_doc:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Prepare response with all necessary fields
+    response = {
+        "id": user_id,
+        "email": user_doc.get("email"),
+        "name": user_doc.get("name"),
+        "roles": user_doc.get("roles", []),
+        "currentMode": user_doc.get("currentMode", user_doc.get("roles", ["worker"])[0] if user_doc.get("roles") else "worker"),
+        "worker_profile": user_doc.get("worker_profile"),
+        "employer_profile": user_doc.get("employer_profile"),
+        "profileComplete": {
+            "worker": user_doc.get("worker_profile", {}).get("profileComplete", False) if "worker" in user_doc.get("roles", []) else None,
+            "employer": user_doc.get("employer_profile", {}).get("profileComplete", False) if "employer" in user_doc.get("roles", []) else None
+        }
+    }
+    
+    return response
 
 @router.post("/add-role")
 async def add_secondary_role(
