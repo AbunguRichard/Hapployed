@@ -603,7 +603,7 @@
     0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-/* Role Cards - Enhanced Colors */
+/* Role Cards - Perfect Button Sizes */
 .role-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -614,7 +614,7 @@
 
 .role-card {
   background: rgba(255, 255, 255, 0.08);
-  padding: 40px 30px;
+  padding: 35px 25px; /* Reduced padding */
   border-radius: 20px;
   text-align: center;
   box-shadow: 
@@ -653,7 +653,7 @@
 }
 
 .role-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.4rem; /* Slightly reduced */
   margin-bottom: 15px;
   color: white;
   font-weight: 600;
@@ -661,27 +661,38 @@
 
 .role-card p {
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 25px;
+  margin-bottom: 20px; /* Reduced from 25px */
   font-size: 1rem;
   line-height: 1.5;
 }
 
+/* Button Container for consistent sizing */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* PERFECT BUTTON SIZES */
 .btn {
   display: inline-block;
-  padding: 15px 35px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  padding: 14px 28px; /* Reduced from 15px 35px */
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Reduced from 1.1rem */
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
-  min-width: 160px;
+  min-width: 140px; /* Reduced from 160px */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Reduced shadow */
+  height: 48px; /* Fixed height for consistency */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn::before {
@@ -702,7 +713,7 @@
 .btn:hover {
   transform: scale(1.05);
   box-shadow: 
-    0 8px 25px rgba(102, 126, 234, 0.5),
+    0 6px 20px rgba(0, 0, 0, 0.4), /* Reduced shadow */
     0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
