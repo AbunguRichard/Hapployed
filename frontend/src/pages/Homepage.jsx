@@ -83,13 +83,13 @@ export default function Homepage() {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-6 mb-24">
-              <button className="px-10 py-4 border-2 border-white/90 text-white text-lg rounded-xl font-medium hover:bg-white hover:text-[#0a1929] transition-all shadow-lg">
+            <div className="flex flex-wrap justify-center gap-4 mb-24">
+              <button className="px-6 py-2.5 border border-white/70 text-white text-base rounded-lg font-normal hover:bg-white/10 transition-all">
                 What we offer
               </button>
               <Link 
                 to="/auth/login"
-                className="px-10 py-4 border-2 border-white/90 text-white text-lg rounded-xl font-medium hover:bg-white hover:text-[#0a1929] transition-all shadow-lg"
+                className="px-6 py-2.5 border border-white/70 text-white text-base rounded-lg font-normal hover:bg-white/10 transition-all"
               >
                 Sign In / Sign Up
               </Link>
