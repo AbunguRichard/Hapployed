@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import DashboardHeader from '../components/DashboardHeader';
-import { Zap, MapPin, DollarSign, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { Zap, MapPin, DollarSign, Clock, CheckCircle, AlertCircle, Star, User, Award } from 'lucide-react';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
