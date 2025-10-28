@@ -506,6 +506,7 @@ function CrossModeInsights() {
 // --- Root Component ---
 export default function DualDashboard() {
   const [mode, setMode] = useState("gig");
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-white to-slate-50">
@@ -513,6 +514,13 @@ export default function DualDashboard() {
       <div className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
+            <button 
+              onClick={() => navigate('/')} 
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
             <div className="h-8 w-8 rounded-xl bg-slate-900 text-white grid place-items-center font-semibold">H</div>
             <div className="font-semibold">Hapployed OS</div>
           </div>
