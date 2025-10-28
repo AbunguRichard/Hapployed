@@ -207,26 +207,6 @@ export default function NavigationBar() {
             />
           )}
 
-          {/* Mode Toggle - Gig/Pro */}
-          <div className="flex items-center gap-1 bg-white border-2 border-black rounded-full p-1">
-            <button
-              onClick={() => handleModeSwitch('gig')}
-              className={`px-3 py-1 rounded-full text-sm font-semibold transition-colors ${
-                mode === 'gig' ? 'bg-purple-600 text-white' : 'bg-white text-gray-700'
-              }`}
-            >
-              ⚡ Gig
-            </button>
-            <button
-              onClick={() => handleModeSwitch('pro')}
-              className={`px-3 py-1 rounded-full text-sm font-semibold transition-colors ${
-                mode === 'pro' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
-              }`}
-            >
-              💼 Pro
-            </button>
-          </div>
-
           {/* Post Button */}
           <Link
             to={mode === 'gig' ? '/gig/post' : '/pro/post'}
