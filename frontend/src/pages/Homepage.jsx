@@ -35,68 +35,82 @@ export default function Homepage() {
       <Header />
       
       {/* Hero Section */}
-      <div className="relative bg-[#0a2540] overflow-hidden min-h-screen flex items-center">
-        {/* Network Pattern Background */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, rgba(0, 204, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(rgba(0, 204, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(45deg, transparent 48%, rgba(0, 204, 255, 0.15) 49%, rgba(0, 204, 255, 0.15) 51%, transparent 52%),
-              linear-gradient(-45deg, transparent 48%, rgba(0, 204, 255, 0.15) 49%, rgba(0, 204, 255, 0.15) 51%, transparent 52%)
-            `,
-            backgroundSize: '80px 80px, 80px 80px, 160px 160px, 160px 160px'
-          }}
-        />
+      <div className="relative bg-[#0a1929] overflow-hidden min-h-screen flex items-center">
+        {/* Animated network background */}
+        <div className="absolute inset-0">
+          {/* Grid pattern */}
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(0, 204, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 204, 255, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '80px 80px'
+            }}
+          />
+          
+          {/* Glowing geometric shapes */}
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 blur-3xl rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+          
+          {/* Glowing nodes */}
+          <div className="absolute top-1/4 right-1/4 w-3 h-3 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/80 animate-pulse" />
+          <div className="absolute bottom-1/3 left-1/5 w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/80 animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/80 animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-2/3 left-1/3 w-3 h-3 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/80 animate-pulse" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute top-1/3 left-2/3 w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/80 animate-pulse" style={{ animationDelay: '1s' }} />
+          
+          {/* Network lines */}
+          <svg className="absolute inset-0 w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg">
+            <line x1="25%" y1="25%" x2="75%" y2="75%" stroke="#00ccff" strokeWidth="1" className="animate-pulse" />
+            <line x1="75%" y1="25%" x2="25%" y2="75%" stroke="#00ccff" strokeWidth="1" className="animate-pulse" />
+            <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="#00ccff" strokeWidth="0.5" />
+            <line x1="0%" y1="50%" x2="100%" y2="50%" stroke="#00ccff" strokeWidth="0.5" />
+          </svg>
+        </div>
         
-        {/* Glowing nodes */}
-        <div className="absolute top-1/4 right-1/4 w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" />
-        <div className="absolute bottom-1/3 left-1/5 w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-2/3 left-1/3 w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" style={{ animationDelay: '0.5s' }} />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full z-10">
           <div className="text-center">
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight">
+            <h1 className="text-7xl sm:text-8xl lg:text-9xl font-bold text-white mb-6 tracking-tight leading-none">
               Work smarter.
             </h1>
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-light text-white mb-8 tracking-tight">
+            <h2 className="text-6xl sm:text-7xl lg:text-8xl font-light text-white mb-10 tracking-tight leading-none">
               Hire faster.
             </h2>
-            <p className="text-xl sm:text-2xl text-gray-300 max-w-4xl mx-auto mb-10 leading-relaxed">
+            <p className="text-xl sm:text-2xl text-white max-w-4xl mx-auto mb-12 leading-relaxed">
               The AI-powered platform that connects talent with projects in real-time
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 mb-20">
-              <button className="px-8 py-3.5 border-2 border-white/80 text-white rounded-xl font-medium hover:bg-white hover:text-[#0a2540] transition-all text-lg">
+            <div className="flex flex-wrap justify-center gap-6 mb-24">
+              <button className="px-10 py-4 border-2 border-white/90 text-white text-lg rounded-xl font-medium hover:bg-white hover:text-[#0a1929] transition-all shadow-lg">
                 What we offer
               </button>
               <Link 
                 to="/auth/login"
-                className="px-8 py-3.5 border-2 border-white/80 text-white rounded-xl font-medium hover:bg-white hover:text-[#0a2540] transition-all text-lg"
+                className="px-10 py-4 border-2 border-white/90 text-white text-lg rounded-xl font-medium hover:bg-white hover:text-[#0a1929] transition-all shadow-lg"
               >
                 Sign In / Sign Up
               </Link>
             </div>
 
             {/* Role Selection Cards */}
-            <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {/* For Talent Card */}
               <div className="relative group">
-                {/* Purple glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-600 rounded-3xl blur-lg opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                {/* Purple glow effect - stronger */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-600 rounded-[2rem] blur-xl opacity-80 group-hover:opacity-100 transition duration-500"></div>
                 
-                <div className="relative bg-white p-12 rounded-3xl shadow-2xl">
-                  <div className="text-6xl mb-6">🚀</div>
-                  <h3 className="text-3xl font-semibold mb-5 text-gray-900">For Talent</h3>
-                  <p className="text-gray-600 mb-10 text-lg leading-relaxed">
+                <div className="relative bg-gradient-to-br from-gray-50 to-white p-14 rounded-[2rem] shadow-2xl">
+                  <div className="text-7xl mb-8">🚀</div>
+                  <h3 className="text-3xl font-bold mb-6 text-gray-900">For Talent</h3>
+                  <p className="text-gray-600 mb-12 text-xl leading-relaxed">
                     Find gigs and projects that match your skills & schedule
                   </p>
                   <Link 
                     to="/opportunities" 
-                    className="inline-block px-12 py-4 bg-purple-600 text-white rounded-2xl font-semibold text-xl hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+                    className="inline-block px-14 py-5 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-2xl font-bold text-xl hover:from-purple-700 hover:to-purple-800 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
                     Find Work
                   </Link>
@@ -105,18 +119,18 @@ export default function Homepage() {
               
               {/* For Businesses Card */}
               <div className="relative group">
-                {/* Purple glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-600 rounded-3xl blur-lg opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                {/* Purple glow effect - stronger */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-600 rounded-[2rem] blur-xl opacity-80 group-hover:opacity-100 transition duration-500"></div>
                 
-                <div className="relative bg-white p-12 rounded-3xl shadow-2xl">
-                  <div className="text-6xl mb-6">💼</div>
-                  <h3 className="text-3xl font-semibold mb-5 text-gray-900">For Businesses</h3>
-                  <p className="text-gray-600 mb-10 text-lg leading-relaxed">
+                <div className="relative bg-gradient-to-br from-gray-50 to-white p-14 rounded-[2rem] shadow-2xl">
+                  <div className="text-7xl mb-8">💼</div>
+                  <h3 className="text-3xl font-bold mb-6 text-gray-900">For Businesses</h3>
+                  <p className="text-gray-600 mb-12 text-xl leading-relaxed">
                     Hire vetted professionals for any project size
                   </p>
                   <Link 
                     to="/find-workers" 
-                    className="inline-block px-12 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl font-semibold text-xl hover:from-orange-600 hover:to-red-600 transition-colors shadow-lg hover:shadow-xl"
+                    className="inline-block px-14 py-5 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl font-bold text-xl hover:from-orange-600 hover:to-red-600 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
                     Hire Talent
                   </Link>
