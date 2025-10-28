@@ -58,9 +58,22 @@ export default function Homepage() {
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-8">
               Hire faster.
             </h2>
-            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-16">
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
               The AI-powered platform that connects talent with projects in real-time
             </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mb-16">
+              <button className="px-6 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-[#002b3d] transition-colors">
+                What we offer
+              </button>
+              <Link 
+                to="/auth/login"
+                className="px-6 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-[#002b3d] transition-colors"
+              >
+                Sign In / Sign Up
+              </Link>
+            </div>
 
             {/* Role Selection Cards */}
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
