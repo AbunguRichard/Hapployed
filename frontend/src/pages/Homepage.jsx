@@ -40,7 +40,7 @@ export default function Homepage() {
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1664526937033-fe2c11f1be25?w=1920&q=80)',
+            backgroundImage: 'url(https://images.unsplash.com/photo-1660165458059-57cfb6cc87e5?w=1920&q=80)',
             backgroundBlendMode: 'overlay'
           }}
         />
