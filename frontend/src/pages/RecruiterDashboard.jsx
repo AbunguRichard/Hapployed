@@ -130,20 +130,6 @@ export default function RecruiterDashboard() {
       <NavigationBar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Mode Toggle - Visible at top of dashboard */}
-        {user && user.roles && user.roles.length > 1 && (
-          <div className="mb-6 flex items-center justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-            <div>
-              <p className="text-sm text-gray-600">You have access to both Employer and Talent modes</p>
-              <p className="text-xs text-gray-500 mt-1">Switch between modes to access different features</p>
-            </div>
-            <ModeToggle 
-              currentMode={currentMode || 'employer'}
-              onModeChange={handleModeChange}
-            />
-          </div>
-        )}
-        
         {/* Welcome Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
