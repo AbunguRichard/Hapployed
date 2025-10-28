@@ -26,28 +26,30 @@ import {
   Users2,
 } from "lucide-react";
 
-// --- Types ---
-type Gig = {
-  id: string
-  title: string
-  distanceMi: number
-  payUSD: number
-  durationHrs: number
-  startInHrs?: number
-  trending?: boolean
-  category: string
-};
+// --- Types (using JSDoc) ---
+/**
+ * @typedef {Object} Gig
+ * @property {string} id
+ * @property {string} title
+ * @property {number} distanceMi
+ * @property {number} payUSD
+ * @property {number} durationHrs
+ * @property {number} [startInHrs]
+ * @property {boolean} [trending]
+ * @property {string} category
+ */
 
-type Project = {
-  id: string
-  title: string
-  client: string
-  budgetUSD: number
-  spentUSD: number
-  health: "On Track" | "At Risk" | "Delayed"
-  progressPct: number
-  nextMilestone: string
-};
+/**
+ * @typedef {Object} Project
+ * @property {string} id
+ * @property {string} title
+ * @property {string} client
+ * @property {number} budgetUSD
+ * @property {number} spentUSD
+ * @property {"On Track" | "At Risk" | "Delayed"} health
+ * @property {number} progressPct
+ * @property {string} nextMilestone
+ */
 
 // --- Mock Data ---
 const mockGigs = [
