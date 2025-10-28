@@ -551,21 +551,7 @@ export default function DualDashboard() {
       </div>
 
       {/* Mode Toggle */}
-      <div className="max-w-6xl mx-auto px-4 mt-6 space-y-4">
-        {/* Dual Role Toggle - if user has both roles */}
-        {user && user.roles && user.roles.length > 1 && (
-          <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-            <div>
-              <p className="text-sm text-gray-600">You have access to both Employer and Talent modes</p>
-              <p className="text-xs text-gray-500 mt-1">Switch between modes to access different features</p>
-            </div>
-            <ModeToggle 
-              currentMode={currentMode || 'worker'}
-              onModeChange={handleModeChange}
-            />
-          </div>
-        )}
-        
+      <div className="max-w-6xl mx-auto px-4 mt-6">
         <Card>
           <CardContent className="p-3 flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-2 text-sm">
