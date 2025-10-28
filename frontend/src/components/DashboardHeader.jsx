@@ -12,9 +12,11 @@ export default function DashboardHeader() {
   const { user, logout } = useAuth();
   const [isQuickHireModalOpen, setIsQuickHireModalOpen] = useState(false);
   const [isQuickHireDropdownOpen, setIsQuickHireDropdownOpen] = useState(false);
+  const [isMyJobsDropdownOpen, setIsMyJobsDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const quickHireDropdownRef = useRef(null);
+  const myJobsDropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
