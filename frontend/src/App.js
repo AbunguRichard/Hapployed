@@ -10,6 +10,7 @@ import SignupPage from './pages/SignupPage';
 import UnifiedAuthPage from './pages/UnifiedAuthPage';
 import CreateProfilePage from './pages/CreateProfilePage';
 import DashboardPage from './pages/DashboardPage';
+import DualDashboard from './pages/DualDashboard';
 import OpportunitiesPage from './pages/OpportunitiesPage';
 import PostProjectPage from './pages/PostProjectPage';
 import FindWorkersPage from './pages/FindWorkersPage';
