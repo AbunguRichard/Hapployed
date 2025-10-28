@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import TopNav from '../components/TopNav';
+import NavigationBar from '../components/NavigationBar';
 import { Briefcase, MapPin, DollarSign, Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -117,7 +117,7 @@ export default function MyProjectsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
-      <TopNav />
+      <NavigationBar />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}

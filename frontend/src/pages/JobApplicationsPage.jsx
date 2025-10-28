@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import TopNav from '../components/TopNav';
+import NavigationBar from '../components/NavigationBar';
 import { 
   ArrowLeft, User, Mail, DollarSign, Calendar, FileText, 
   CheckCircle, XCircle, Clock, Eye, Star, Briefcase 
@@ -112,7 +112,7 @@ export default function JobApplicationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <TopNav />
+      <NavigationBar />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}

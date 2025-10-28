@@ -4,7 +4,7 @@ import {
   Check, Target, Star, DollarSign, Users, AlertCircle, Navigation, Phone, Map
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -94,7 +94,7 @@ export default function GigsNearMePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
+      <NavigationBar />
       
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Loading State */}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { FileText, Clock, CheckCircle, XCircle, AlertCircle, DollarSign, Calendar, MapPin, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -94,7 +94,7 @@ export default function MyApplicationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
+      <NavigationBar />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}

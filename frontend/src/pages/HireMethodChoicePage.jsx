@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, Users, Search, FileText, ArrowRight } from 'lucide-react';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 
 export default function HireMethodChoicePage() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <DashboardHeader />
+      <NavigationBar />
       
       <div className="max-w-6xl mx-auto px-4 py-16">
         {/* Welcome Message */}

@@ -7,7 +7,7 @@ import {
   Calendar, Mail, Phone, Globe, Shield
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 import BadgeDisplay from '../components/BadgeDisplay';
 
 export default function WorkerProfileDetailPage() {
@@ -63,7 +63,7 @@ export default function WorkerProfileDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-        <DashboardHeader />
+        <NavigationBar />
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-gray-300">Loading profile...</p>
@@ -78,7 +78,7 @@ export default function WorkerProfileDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <DashboardHeader />
+      <NavigationBar />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back Button */}

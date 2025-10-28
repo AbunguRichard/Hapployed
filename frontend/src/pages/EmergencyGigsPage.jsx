@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Zap, MapPin, Clock, DollarSign, AlertCircle } from 'lucide-react';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 import { toast } from 'sonner';
 
 export default function EmergencyGigsPage() {
@@ -101,7 +101,7 @@ export default function EmergencyGigsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
+      <NavigationBar />
       
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Header */}

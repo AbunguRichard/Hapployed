@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, MapPin, Clock, DollarSign, Users, TrendingUp, Filter, MessageCircle, ChevronDown, ChevronUp, Check, Zap, Shield, Target, Briefcase, FileText } from 'lucide-react';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
@@ -74,7 +74,7 @@ export default function OpportunitiesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
+      <NavigationBar />
       
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Loading State */}

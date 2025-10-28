@@ -6,7 +6,7 @@ import {
   CloudRain, Sun, Wind, Package, Bell, Sparkles, Activity, Radio
 } from 'lucide-react';
 import { toast } from 'sonner';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -268,7 +268,7 @@ export default function WorkerDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <DashboardHeader />
+      <NavigationBar />
       
       <section className="mx-auto max-w-7xl px-6 py-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

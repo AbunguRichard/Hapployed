@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, Wrench, Mic, Edit, ArrowRight } from 'lucide-react';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 
 export default function JobTypeSelectionPage() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
+      <NavigationBar />
       
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Header */}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, DollarSign, Clock, Briefcase, Star, ChevronDown, ChevronUp } from 'lucide-react';
-import DashboardHeader from '../components/DashboardHeader';
+import NavigationBar from '../components/NavigationBar';
 import { toast } from 'sonner';
 
 export default function FindWorkPage() {
@@ -159,7 +159,7 @@ export default function FindWorkPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader />
+      <NavigationBar />
       
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-primary to-secondary text-white py-12 px-4">
