@@ -483,11 +483,61 @@ export default function FindWorkersPage() {
                   });
                   setSelectedBadges([]);
                   setSearchQuery('');
+                  setActiveTab('gig');
                 }}
                 className="px-4 py-2 text-sm font-semibold text-purple-600 hover:text-purple-700 border-2 border-purple-300 rounded-lg hover:bg-purple-50 transition-all"
               >
                 Clear All Filters
               </button>
+            )}
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="mb-8">
+          <div className="bg-white rounded-xl border-2 border-gray-200 p-2 inline-flex gap-2 shadow-sm">
+            <button
+              onClick={() => {
+                setActiveTab('gig');
+                setFilters(prev => ({ ...prev, workType: 'gigs' }));
+              }}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'gig'
+                  ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <Zap className="w-5 h-5" />
+              Gig Workers
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('professional');
+                setFilters(prev => ({ ...prev, workType: 'projects' }));
+              }}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'professional'
+                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <Briefcase className="w-5 h-5" />
+              Professional Talent
+            </button>
+          </div>
+          
+          {/* Tab Description */}
+          <div className="mt-4">
+            {activeTab === 'gig' ? (
+              <p className="text-gray-600 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-orange-500" />
+                <span>Find on-demand workers for quick tasks, local gigs, and urgent needs</span>
+              </p>
+            ) : (
+              <p className="text-gray-600 flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-purple-600" />
+                <span>Discover skilled professionals for project-based work, with portfolios and proposals</span>
+              </p>
             )}
           </div>
         </div>
