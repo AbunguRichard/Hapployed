@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import time
 
 # Configuration
-BASE_URL = "https://hapployed-dashboard.preview.emergentagent.com/api"
+BASE_URL = "https://hapployed-nav-fix.preview.emergentagent.com/api"
 TEST_USER_ID = "worker-john-smith-123"
 TEST_GIG_ID = "plumbing-emergency-456"
 TEST_COMPANY_ID = "acme-corp-789"

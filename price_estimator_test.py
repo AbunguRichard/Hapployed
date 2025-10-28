@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://hapployed-dashboard.preview.emergentagent.com/api"
+BASE_URL = "https://hapployed-nav-fix.preview.emergentagent.com/api"
 
 class PriceEstimatorTester:
     def __init__(self):
