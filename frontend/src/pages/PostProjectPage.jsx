@@ -247,8 +247,11 @@ export default function PostProjectPage() {
         body: JSON.stringify(jobData)
       });
 
+      // Clone the response to avoid "body already used" error
+      const responseClone = response.clone();
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        const errorData = await responseClone.json().catch(() => ({ detail: 'Unknown error' }));
         console.error('Job posting failed:', response.status, errorData);
         throw new Error(errorData.detail || `Server error: ${response.status}`);
       }
