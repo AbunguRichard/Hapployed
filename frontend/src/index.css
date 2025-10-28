@@ -735,6 +735,24 @@
   100% { top: 100%; }
 }
 
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes floatWatermark {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(50px, 30px) rotate(5deg); }
+  50% { transform: translate(0, 60px) rotate(0deg); }
+  75% { transform: translate(-50px, 30px) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero h1 {
