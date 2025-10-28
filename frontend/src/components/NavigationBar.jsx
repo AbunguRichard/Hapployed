@@ -199,6 +199,14 @@ export default function NavigationBar() {
           {/* Spacer */}
           <div className="flex-1" />
 
+          {/* Dual Role Toggle - Employer/Talent (if user has both roles) */}
+          {isDualRole && currentMode && (
+            <ModeToggle 
+              currentMode={currentMode}
+              onModeChange={handleModeChange}
+            />
+          )}
+
           {/* Mode Toggle - Gig/Pro */}
           <div className="flex items-center gap-1 bg-white border-2 border-black rounded-full p-1">
             <button
