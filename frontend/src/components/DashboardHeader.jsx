@@ -51,8 +51,13 @@ export default function DashboardHeader() {
       path: '/dashboard',
     },
     { 
-      name: 'Find Work', 
-      path: '/opportunities',
+      name: 'Professional Work', 
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Browse Projects', path: '/opportunities' },
+        { name: 'Submit Proposal', path: '/pro/apply' },
+        { name: 'My Active Projects', path: '/me/projects' }
+      ]
     },
     { 
       name: 'Quick Hire', 
