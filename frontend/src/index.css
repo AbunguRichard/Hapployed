@@ -473,7 +473,7 @@
   text-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
 }
 
-/* Quick Hire Section - Enhanced */
+/* Quick Hire Section - Perfect Button Size */
 .quick-hire-section {
   background: rgba(255, 255, 255, 0.08);
   padding: 30px;
@@ -557,26 +557,28 @@
   box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
 }
 
+/* PERFECT BUTTON SIZE */
 .quick-hire-btn {
   background: linear-gradient(45deg, #4facfe, #00f2fe);
   color: white;
   border: none;
-  padding: 18px 40px;
+  padding: 16px 32px; /* Reduced from 18px 40px */
   border-radius: 50px;
-  font-weight: 700;
-  font-size: 1.2rem;
+  font-weight: 600; /* Changed from 700 */
+  font-size: 1.1rem; /* Reduced from 1.2rem */
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 
-    0 8px 25px rgba(79, 172, 254, 0.5),
+    0 6px 20px rgba(79, 172, 254, 0.4), /* Reduced shadow */
     0 0 0 1px rgba(255, 255, 255, 0.1);
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px; /* Reduced from 12px */
   position: relative;
   overflow: hidden;
-  min-width: 280px;
+  min-width: 240px; /* Reduced from 280px */
   justify-content: center;
+  height: 52px; /* Fixed height for consistency */
 }
 
 .quick-hire-btn::before {
@@ -597,7 +599,7 @@
 .quick-hire-btn:hover {
   transform: scale(1.05);
   box-shadow: 
-    0 12px 35px rgba(79, 172, 254, 0.7),
+    0 8px 25px rgba(79, 172, 254, 0.6), /* Reduced shadow */
     0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
