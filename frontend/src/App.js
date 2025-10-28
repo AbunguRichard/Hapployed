@@ -115,7 +115,7 @@ function App() {
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <DashboardPage />
+                  <DualDashboard />
                 </ProtectedRoute>
               } 
             />
