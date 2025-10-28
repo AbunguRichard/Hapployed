@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, DollarSign, Star, Briefcase, Clock, Shield, Mic, Sparkles, ChevronDown, ChevronUp, Award, CheckCircle, TrendingUp, Heart, X, ThumbsUp, List, Grid3x3, Map, Eye } from 'lucide-react';
+import { Search, MapPin, DollarSign, Star, Briefcase, Clock, Shield, Mic, Sparkles, ChevronDown, ChevronUp, Award, CheckCircle, TrendingUp, Heart, X, ThumbsUp, List, Grid3x3, Map, Eye, Zap, Users } from 'lucide-react';
 import DashboardHeader from '../components/DashboardHeader';
 import BadgeDisplay, { BadgeFilter } from '../components/BadgeDisplay';
 import { toast } from 'sonner';
@@ -11,6 +11,7 @@ export default function FindWorkersPage() {
   const navigate = useNavigate();
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('gig'); // 'gig' or 'professional'
 
   // Add fadeIn animation
   React.useEffect(() => {
