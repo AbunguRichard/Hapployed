@@ -35,57 +35,73 @@ export default function Homepage() {
       <Header />
       
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-purple-900 to-indigo-900 overflow-hidden">
-        {/* Futuristic Background Image */}
+      <div className="relative bg-[#002b3d] overflow-hidden min-h-screen flex items-center">
+        {/* Network Pattern Background */}
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40"
+          className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1660165458059-57cfb6cc87e5?w=1920&q=80)',
-            backgroundBlendMode: 'overlay'
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 L90 90 M90 10 L10 90 M50 0 L50 100 M0 50 L100 50' stroke='%2300ccff' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2' fill='%2300ccff'/%3E%3Ccircle cx='10' cy='10' r='2' fill='%2300ccff'/%3E%3Ccircle cx='90' cy='90' r='2' fill='%2300ccff'/%3E%3Ccircle cx='90' cy='10' r='2' fill='%2300ccff'/%3E%3Ccircle cx='10' cy='90' r='2' fill='%2300ccff'/%3E%3C/svg%3E")`,
+            backgroundSize: '100px 100px'
           }}
         />
         
-        {/* Gradient Overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-indigo-900/80 to-blue-900/70" />
+        {/* Glowing nodes */}
+        <div className="absolute top-1/4 right-1/4 w-4 h-4 bg-cyan-400 rounded-full blur-sm animate-pulse" />
+        <div className="absolute bottom-1/3 left-1/4 w-3 h-3 bg-cyan-400 rounded-full blur-sm animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-cyan-400 rounded-full blur-sm animate-pulse" style={{ animationDelay: '2s' }} />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center py-16 sm:py-24">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-4">
               Work smarter.
             </h1>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white mb-8 opacity-90">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-8">
               Hire faster.
             </h2>
-            <p className="text-lg sm:text-xl text-white opacity-80 max-w-2xl mx-auto mb-12">
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-16">
               The AI-powered platform that connects talent with projects in real-time
             </p>
 
             {/* Role Selection Cards */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-              <div className="animate-on-scroll bg-white/95 backdrop-blur-lg p-10 rounded-3xl shadow-2xl hover:transform hover:-translate-y-2 transition-all duration-300">
-                <h3 className="text-2xl font-semibold mb-4 text-gray-800">🚀 For Talent</h3>
-                <p className="text-gray-600 mb-6 text-lg">
-                  Find gigs and projects that match your skills & schedule
-                </p>
-                <Link 
-                  to="/opportunities" 
-                  className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-semibold text-lg hover:scale-105 transition-transform shadow-lg"
-                >
-                  Find Work
-                </Link>
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* For Talent Card */}
+              <div className="relative group animate-on-scroll">
+                {/* Purple glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-500 rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+                
+                <div className="relative bg-white p-10 rounded-3xl shadow-2xl">
+                  <div className="text-5xl mb-4">🚀</div>
+                  <h3 className="text-2xl font-semibold mb-4 text-gray-800">For Talent</h3>
+                  <p className="text-gray-600 mb-8 text-base">
+                    Find gigs and projects that match your skills & schedule
+                  </p>
+                  <Link 
+                    to="/opportunities" 
+                    className="inline-block px-10 py-4 bg-purple-600 text-white rounded-2xl font-semibold text-lg hover:bg-purple-700 transition-colors shadow-lg"
+                  >
+                    Find Work
+                  </Link>
+                </div>
               </div>
               
-              <div className="animate-on-scroll bg-white/95 backdrop-blur-lg p-10 rounded-3xl shadow-2xl hover:transform hover:-translate-y-2 transition-all duration-300">
-                <h3 className="text-2xl font-semibold mb-4 text-gray-800">💼 For Businesses</h3>
-                <p className="text-gray-600 mb-6 text-lg">
-                  Hire vetted professionals for any project size
-                </p>
-                <Link 
-                  to="/find-workers" 
-                  className="inline-block px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full font-semibold text-lg hover:scale-105 transition-transform shadow-lg"
-                >
-                  Hire Talent
-                </Link>
+              {/* For Businesses Card */}
+              <div className="relative group animate-on-scroll">
+                {/* Purple glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-500 rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+                
+                <div className="relative bg-white p-10 rounded-3xl shadow-2xl">
+                  <div className="text-5xl mb-4">💼</div>
+                  <h3 className="text-2xl font-semibold mb-4 text-gray-800">For Businesses</h3>
+                  <p className="text-gray-600 mb-8 text-base">
+                    Hire vetted professionals for any project size
+                  </p>
+                  <Link 
+                    to="/find-workers" 
+                    className="inline-block px-10 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl font-semibold text-lg hover:from-orange-600 hover:to-red-600 transition-colors shadow-lg"
+                  >
+                    Hire Talent
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
