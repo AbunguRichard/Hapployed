@@ -776,6 +776,18 @@
     width: 400px;
     height: 400px;
   }
+  .quick-hire-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-hire-btn {
+    min-width: 250px;
+    padding: 15px 30px;
+  }
+
+  .quick-hire-title h3 {
+    font-size: 1.6rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -795,5 +807,14 @@
     padding: 12px 25px;
     font-size: 1rem;
     min-width: 140px;
+  }
+
+  .quick-hire-section {
+    padding: 20px 15px;
+  }
+
+  .quick-hire-btn {
+    min-width: 220px;
+    font-size: 1.1rem;
   }
 }
