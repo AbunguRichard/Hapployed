@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { WorkModeProvider } from './context/WorkModeContext';
+import { ModeProvider } from './context/ModeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Homepage from './pages/Homepage';
 import WhatWeOfferPage from './pages/WhatWeOfferPage';
