@@ -426,3 +426,40 @@ async def update_profile(
     )
     
     return {"message": f"Successfully updated {profile_type} profile"}
+
+class ModeSwitchRequest(BaseModel):
+    currentMode: str = Field(..., pattern="^(worker|employer)$")
+
+@router.post("/mode")
+async def switch_mode(
+    mode_data: ModeSwitchRequest,
+    user: dict = Depends(get_current_user)
+):
+    """Switch user's current mode between worker and employer"""
+    user_id = user["id"]
+    new_mode = mode_data.currentMode
+    
+    # Check if user has the role they're trying to switch to
+    user_roles = user.get("roles", [])
+    if new_mode not in user_roles:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"User does not have {new_mode} role. Cannot switch to this mode."
+        )
+    
+    # Update currentMode and lastModeAt
+    await users_collection.update_one(
+        {"_id": user_id},
+        {
+            "$set": {
+                "currentMode": new_mode,
+                "lastModeAt": datetime.utcnow().isoformat(),
+                "updatedAt": datetime.utcnow().isoformat()
+            }
+        }
+    )
+    
+    return {
+        "message": f"Successfully switched to {new_mode} mode",
+        "currentMode": new_mode
+    }
