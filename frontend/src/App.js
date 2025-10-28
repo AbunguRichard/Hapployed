@@ -64,10 +64,11 @@ import './App.css';
 function App() {
   return (
     <AuthProvider>
-      <WorkModeProvider>
-        <div className="App">
-          <BrowserRouter>
-            <Routes>
+      <ModeProvider>
+        <WorkModeProvider>
+          <div className="App">
+            <BrowserRouter>
+              <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Homepage />} />
             <Route path="/what-we-offer" element={<WhatWeOfferPage />} />
