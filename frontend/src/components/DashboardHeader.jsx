@@ -29,6 +29,9 @@ export default function DashboardHeader() {
       if (quickHireDropdownRef.current && !quickHireDropdownRef.current.contains(event.target)) {
         setIsQuickHireDropdownOpen(false);
       }
+      if (professionalWorkDropdownRef.current && !professionalWorkDropdownRef.current.contains(event.target)) {
+        setIsProfessionalWorkDropdownOpen(false);
+      }
       if (myJobsDropdownRef.current && !myJobsDropdownRef.current.contains(event.target)) {
         setIsMyJobsDropdownOpen(false);
       }
