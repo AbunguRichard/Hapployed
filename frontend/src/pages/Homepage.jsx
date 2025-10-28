@@ -145,21 +145,27 @@ export default function Homepage() {
                 <div className="badge">🎉 Event Staff</div>
               </div>
               
-              <button className="quick-hire-btn" onClick={handleQuickHire}>
-                📍 Find Local Workers Now
-              </button>
+              <div className="button-container">
+                <button className="quick-hire-btn" onClick={handleQuickHire}>
+                  📍 Find Local Workers Now
+                </button>
+              </div>
             </div>
 
             <div className="role-cards">
               <div className="role-card">
                 <h3>For Talent</h3>
                 <p>Find gigs and projects that match your skills & schedule</p>
-                <Link to="/opportunities" className="btn btn-talent">Find Work</Link>
+                <div className="button-container">
+                  <Link to="/opportunities" className="btn btn-talent">Find Work</Link>
+                </div>
               </div>
               <div className="role-card">
                 <h3>For Businesses</h3>
                 <p>Hire vetted professionals for any project size</p>
-                <Link to="/find-workers" className="btn btn-business">Hire Talent</Link>
+                <div className="button-container">
+                  <Link to="/find-workers" className="btn btn-business">Hire Talent</Link>
+                </div>
               </div>
             </div>
           </div>
