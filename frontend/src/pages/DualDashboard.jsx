@@ -508,23 +508,8 @@ export default function DualDashboard() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-white to-slate-50">
-      {/* Top Bar */}
-      <div className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-xl bg-slate-900 text-white grid place-items-center font-semibold">H</div>
-            <div className="font-semibold">Hapployed OS</div>
-          </div>
-          <div className="hidden md:flex items-center gap-2">
-            <Input placeholder="Search gigs, projects, clients…" className="w-[320px]" />
-            <Button variant="secondary">Search</Button>
-          </div>
-          <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="gap-1"><DollarSign className="h-3 w-3" /> Earnings</Badge>
-            <div className="h-8 w-8 rounded-full bg-slate-200" />
-          </div>
-        </div>
-      </div>
+      {/* Navigation Bar */}
+      <NavigationBar />
 
       {/* Mode Toggle */}
       <div className="max-w-6xl mx-auto px-4 mt-6">
