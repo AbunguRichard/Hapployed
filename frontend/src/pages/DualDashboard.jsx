@@ -510,6 +510,18 @@ function CrossModeInsights() {
 export default function DualDashboard() {
   const [mode, setMode] = useState("gig");
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { currentMode, switchMode } = useModeContext();
+  
+  const handleModeChange = async (newMode) => {
+    try {
+      await switchMode(newMode);
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to switch mode:', error);
+      alert('Failed to switch mode. Please try logging out and back in.');
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-white to-slate-50">
