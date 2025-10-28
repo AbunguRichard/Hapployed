@@ -35,8 +35,20 @@ export default function Homepage() {
       <Header />
       
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative bg-gradient-to-br from-purple-900 to-indigo-900 overflow-hidden">
+        {/* Futuristic Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-40"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1664526937033-fe2c11f1be25?w=1920&q=80)',
+            backgroundBlendMode: 'overlay'
+          }}
+        />
+        
+        {/* Gradient Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-indigo-900/80 to-blue-900/70" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-16 sm:py-24">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
               Work smarter.
