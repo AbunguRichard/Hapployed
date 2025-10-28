@@ -100,29 +100,36 @@ export default function DashboardHeader() {
                   isActive(dropdownItem.path)
                 );
                 
+                // Determine which dropdown this is
+                const isQuickHire = item.name === 'Quick Hire';
+                const isMyJobs = item.name === 'My Jobs';
+                const dropdownOpen = isQuickHire ? isQuickHireDropdownOpen : isMyJobsDropdownOpen;
+                const setDropdownOpen = isQuickHire ? setIsQuickHireDropdownOpen : setIsMyJobsDropdownOpen;
+                const dropdownRefToUse = isQuickHire ? quickHireDropdownRef : myJobsDropdownRef;
+                
                 return (
-                  <div key={index} className="relative" ref={quickHireDropdownRef}>
+                  <div key={index} className="relative" ref={dropdownRefToUse}>
                     <button
-                      onClick={() => setIsQuickHireDropdownOpen(!isQuickHireDropdownOpen)}
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
                       className={`px-4 py-1.5 rounded-full transition-colors flex items-center gap-2 ${
                         isDropdownActive ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-700 hover:bg-gray-600'
                       }`}
                     >
                       <span className="text-sm font-medium text-white">{item.name}</span>
                       <div className="w-3.5 h-3.5 border border-white/40 rounded flex items-center justify-center">
-                        <ChevronDown className={`w-2.5 h-2.5 text-white transition-transform ${isQuickHireDropdownOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-2.5 h-2.5 text-white transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                       </div>
                     </button>
 
-                    {/* Quick Hire Dropdown */}
-                    {isQuickHireDropdownOpen && (
+                    {/* Dropdown Menu */}
+                    {dropdownOpen && (
                       <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                         {item.dropdownItems.map((dropdownItem) => (
                           <button
                             key={dropdownItem.path}
                             onClick={() => {
                               navigate(dropdownItem.path);
-                              setIsQuickHireDropdownOpen(false);
+                              setDropdownOpen(false);
                             }}
                             className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm font-medium text-gray-700"
                           >
