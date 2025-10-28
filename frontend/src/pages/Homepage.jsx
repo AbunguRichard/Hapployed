@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function Homepage() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Create dynamic particles
     const createParticles = () => {
@@ -42,8 +44,21 @@ export default function Homepage() {
 
     createParticles();
 
-    // Add animation to cards on load
+    // Add animations on load
     const cards = document.querySelectorAll('.role-card');
+    const quickHireSection = document.querySelector('.quick-hire-section');
+    
+    if (quickHireSection) {
+      quickHireSection.style.opacity = '0';
+      quickHireSection.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        quickHireSection.style.transition = 'all 0.6s ease';
+        quickHireSection.style.opacity = '1';
+        quickHireSection.style.transform = 'translateY(0)';
+      }, 200);
+    }
+
     cards.forEach((card, index) => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(30px) scale(0.9)';
@@ -52,8 +67,21 @@ export default function Homepage() {
         card.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         card.style.opacity = '1';
         card.style.transform = 'translateY(0) scale(1)';
-      }, index * 300);
+      }, index * 300 + 400);
     });
+
+    // Pulse animation for quick hire button
+    const quickHireBtn = document.querySelector('.quick-hire-btn');
+    if (quickHireBtn) {
+      const pulseInterval = setInterval(() => {
+        quickHireBtn.style.animation = 'pulse 2s ease-in-out';
+        setTimeout(() => {
+          quickHireBtn.style.animation = '';
+        }, 2000);
+      }, 8000);
+
+      return () => clearInterval(pulseInterval);
+    }
 
     // Mouse move parallax effect
     const handleMouseMove = (e) => {
@@ -72,6 +100,10 @@ export default function Homepage() {
     };
   }, []);
 
+  const handleQuickHire = () => {
+    navigate('/gigs-near-me');
+  };
+
   return (
     <div className="homepage-hero">
       <Header />
@@ -79,6 +111,7 @@ export default function Homepage() {
       <div className="hero-body">
         {/* Futuristic Background Elements */}
         <div className="cyber-grid"></div>
+        <div className="worker-watermark"></div>
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -95,6 +128,27 @@ export default function Homepage() {
             <p className="hero-subtitle">
               The AI-powered platform that connects talent with projects in real-time
             </p>
+
+            {/* Enhanced Quick Hire Section */}
+            <div className="quick-hire-section">
+              <div className="quick-hire-title">
+                <span>⚡</span>
+                <h3>Need Help Today?</h3>
+                <span>⚡</span>
+              </div>
+              <p className="quick-hire-subtitle">Find local workers available right now for immediate jobs</p>
+              
+              <div className="quick-hire-badges">
+                <div className="badge">🔧 Home Repair</div>
+                <div className="badge">🚚 Moving Help</div>
+                <div className="badge">💻 Tech Setup</div>
+                <div className="badge">🎉 Event Staff</div>
+              </div>
+              
+              <button className="quick-hire-btn" onClick={handleQuickHire}>
+                📍 Find Local Workers Now
+              </button>
+            </div>
 
             <div className="role-cards">
               <div className="role-card">
