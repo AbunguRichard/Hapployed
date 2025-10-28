@@ -155,29 +155,29 @@ export default function Homepage() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-gray-50 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">Why Choose Our Platform?</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="animate-on-scroll text-center p-8">
-              <div className="text-5xl mb-6">🎯</div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Smart Matching</h3>
-              <p className="text-gray-600">AI connects the right talent with the right projects instantly</p>
+          <h2 className="text-5xl font-bold text-center mb-20 text-gray-900">Why Choose Our Platform?</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 max-w-6xl mx-auto">
+            <div className="animate-on-scroll text-center">
+              <div className="text-6xl mb-6">🎯</div>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Smart Matching</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">AI connects the right talent with the right projects instantly</p>
             </div>
-            <div className="animate-on-scroll text-center p-8">
-              <div className="text-5xl mb-6">⚡</div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Real-Time Results</h3>
-              <p className="text-gray-600">Live updates, notifications, and instant hiring decisions</p>
+            <div className="animate-on-scroll text-center">
+              <div className="text-6xl mb-6">⚡</div>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Real-Time Results</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">Live updates, notifications, and instant hiring decisions</p>
             </div>
-            <div className="animate-on-scroll text-center p-8">
-              <div className="text-5xl mb-6">💸</div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Fair Pricing</h3>
-              <p className="text-gray-600">Transparent rates with no hidden fees for everyone</p>
+            <div className="animate-on-scroll text-center">
+              <div className="text-6xl mb-6">💸</div>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Fair Pricing</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">Transparent rates with no hidden fees for everyone</p>
             </div>
-            <div className="animate-on-scroll text-center p-8">
-              <div className="text-5xl mb-6">🔒</div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Trust & Safety</h3>
-              <p className="text-gray-600">Verified profiles and secure payment protection</p>
+            <div className="animate-on-scroll text-center">
+              <div className="text-6xl mb-6">🔒</div>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Trust & Safety</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">Verified profiles and secure payment protection</p>
             </div>
           </div>
         </div>
