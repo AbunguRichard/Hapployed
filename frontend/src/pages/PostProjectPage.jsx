@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle, Briefcase, Wrench, Mic, Edit3, Spar
 import { toast } from 'sonner';
 import VoiceCaptureModal from '../components/VoiceCaptureModal';
 import { useAuth } from '../context/AuthContext';
-import DualTrackNav from '../components/DualTrackNav';
+import TopNav from '../components/TopNav';
 
 export default function PostProjectPage() {
   const navigate = useNavigate();
@@ -629,7 +629,7 @@ export default function PostProjectPage() {
 
   return (
     <>
-      <DualTrackNav />
+      <TopNav />
       <div className="min-h-screen bg-gray-50">
       {/* Custom Navigation Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">

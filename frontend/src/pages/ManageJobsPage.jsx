@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import DualTrackNav from '../components/DualTrackNav';
+import TopNav from '../components/TopNav';
 import { 
   Briefcase, MapPin, Clock, DollarSign, Eye, Edit, Trash2, 
   CheckCircle, XCircle, Plus, Search, FileText, Users, 
@@ -505,7 +505,7 @@ export default function ManageJobsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DualTrackNav />
+      <TopNav />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Page Header */}

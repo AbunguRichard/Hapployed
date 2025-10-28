@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import DualTrackNav from '../components/DualTrackNav';
+import TopNav from '../components/TopNav';
 import { Zap, MapPin, DollarSign, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -102,7 +102,7 @@ export default function MyGigsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
-      <DualTrackNav />
+      <TopNav />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
