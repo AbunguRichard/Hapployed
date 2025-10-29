@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { safeFetch } from '../utils/safeFetch';
+import { xhrFetch } from '../utils/xhrFetch';
 
 const AuthContext = createContext(null);
 
