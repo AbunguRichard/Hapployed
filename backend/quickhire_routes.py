@@ -892,6 +892,405 @@ async def check_worker_response(gigId: str):
         # Return current status
         return {
             'status': invitation['status'],  # pending, accepted, declined
+
+
+# ============== NOTIFICATION SYSTEM ENDPOINTS ==============
+
+# Worker notifications endpoint
+@router.get("/notifications/worker/{workerId}")
+async def get_worker_notifications(workerId: str):
+    """
+    Get pending notifications for a worker
+    """
+    try:
+        # Find unread notifications for this worker
+        cursor = db['worker_notifications'].find({
+            'workerId': workerId,
+            'read': False
+        }).sort('createdAt', -1).limit(10)
+        
+        notifications = await cursor.to_list(length=10)
+        
+        return [serialize_gig(notif) for notif in notifications]
+    
+    except Exception as e:
+        print(f"Error fetching notifications: {str(e)}")
+        return []
+
+# Log notification event
+@router.post("/notifications/log")
+async def log_notification(data: dict):
+    """
+    Log that workers were notified about a gig
+    """
+    try:
+        log_entry = {
+            '_id': str(uuid.uuid4()),
+            'gigId': data.get('gigId'),
+            'workerIds': data.get('workerIds', []),
+            'timestamp': data.get('timestamp', datetime.utcnow().isoformat()),
+            'createdAt': datetime.utcnow().isoformat()
+        }
+        
+        await db['notification_logs'].insert_one(log_entry)
+        
+        return {'success': True}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to log notification: {str(e)}"
+        )
+
+# Send notification to worker
+@router.post("/notifications/worker")
+async def send_worker_notification(data: dict):
+    """
+    Create a notification for a worker
+    """
+    try:
+        notification = {
+            '_id': str(uuid.uuid4()),
+            'workerId': data.get('workerId'),
+            'type': data.get('type', 'GIG_OFFER'),
+            'payload': data.get('payload', {}),
+            'read': False,
+            'createdAt': datetime.utcnow().isoformat()
+        }
+        
+        await db['worker_notifications'].insert_one(notification)
+        
+        return {'success': True, 'notificationId': notification['_id']}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create notification: {str(e)}"
+        )
+
+# Send notification to client
+@router.post("/notifications/client")
+async def send_client_notification(data: dict):
+    """
+    Create a notification for a client
+    """
+    try:
+        notification = {
+            '_id': str(uuid.uuid4()),
+            'clientId': data.get('clientId'),
+            'type': data.get('type', 'WORKER_ACCEPTED'),
+            'gigId': data.get('gigId'),
+            'workerId': data.get('workerId'),
+            'workerName': data.get('workerName'),
+            'workerRating': data.get('workerRating'),
+            'read': False,
+            'createdAt': datetime.utcnow().isoformat()
+        }
+        
+        await db['client_notifications'].insert_one(notification)
+        
+        return {'success': True, 'notificationId': notification['_id']}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create notification: {str(e)}"
+        )
+
+# Cancel worker notifications
+@router.post("/notifications/cancel")
+async def cancel_worker_notifications(data: dict):
+    """
+    Cancel notifications for workers (when gig is accepted by someone)
+    """
+    try:
+        gig_id = data.get('gigId')
+        exclude_worker_id = data.get('excludeWorkerId')
+        
+        # Mark notifications as cancelled
+        result = await db['worker_notifications'].update_many(
+            {
+                'payload.gigId': gig_id,
+                'workerId': {'$ne': exclude_worker_id},
+                'read': False
+            },
+            {
+                '$set': {
+                    'read': True,
+                    'cancelled': True,
+                    'cancelledAt': datetime.utcnow().isoformat()
+                }
+            }
+        )
+        
+        return {'success': True, 'cancelled': result.modified_count}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to cancel notifications: {str(e)}"
+        )
+
+# Worker accepts gig endpoint
+@router.post("/gigs/accept")
+async def worker_accept_gig(data: dict):
+    """
+    Worker accepts a gig offer
+    """
+    try:
+        gig_id = data.get('gigId')
+        worker_id = data.get('workerId')
+        
+        if not gig_id or not worker_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Missing gigId or workerId"
+            )
+        
+        # Check if gig is still available
+        gig = await quickhire_gigs_collection.find_one({'_id': gig_id})
+        
+        if not gig:
+            return {'success': False, 'message': 'Gig not found'}
+        
+        if gig.get('status') not in ['Posted', 'Dispatching']:
+            return {'success': False, 'message': 'Gig no longer available'}
+        
+        # Get worker location (mock for now)
+        worker_location = {
+            'type': 'Point',
+            'coordinates': gig['location']['coordinates']  # Use gig location for demo
+        }
+        
+        # Use existing accept logic
+        try:
+            # Calculate distance and ETA
+            worker_coords = worker_location['coordinates']
+            gig_coords = gig['location']['coordinates']
+            distance = calculate_mock_distance(worker_coords, gig_coords)
+            eta = calculate_mock_eta(distance)
+            
+            # Create assignment
+            assignment_id = str(uuid.uuid4())
+            worker_profile = await worker_profiles_collection.find_one({'userId': worker_id})
+            
+            assignment = {
+                '_id': assignment_id,
+                'gigId': gig_id,
+                'workerId': worker_id,
+                'workerName': worker_profile.get('name', 'Worker') if worker_profile else 'Worker',
+                'workerProfile': {
+                    'name': worker_profile.get('name') if worker_profile else None,
+                    'rating': worker_profile.get('rating') if worker_profile else None,
+                    'profileImage': worker_profile.get('profileImage') if worker_profile else None
+                } if worker_profile else None,
+                'distance': distance,
+                'eta': eta,
+                'acceptedAt': datetime.utcnow().isoformat(),
+                'currentLocation': worker_location
+            }
+            
+            await quickhire_assignments_collection.insert_one(assignment)
+            
+            # Update gig to Matched status
+            await quickhire_gigs_collection.update_one(
+                {'_id': gig_id},
+                {
+                    '$set': {
+                        'status': 'Matched',
+                        'matchedAt': datetime.utcnow().isoformat(),
+                        'assignedWorkerId': worker_id,
+                        'assignmentId': assignment_id,
+                        'distance': distance,
+                        'eta': eta
+                    }
+                }
+            )
+            
+            # Auto-transition to On-Route
+            await quickhire_gigs_collection.update_one(
+                {'_id': gig_id},
+                {
+                    '$set': {
+                        'status': 'On-Route',
+                        'onRouteAt': datetime.utcnow().isoformat()
+                    }
+                }
+            )
+            
+            return {
+                'success': True,
+                'message': 'Gig accepted successfully!',
+                'gigId': gig_id,
+                'assignmentId': assignment_id
+            }
+            
+        except Exception as e:
+            print(f"Error accepting gig: {str(e)}")
+            return {'success': False, 'message': str(e)}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to accept gig: {str(e)}"
+        )
+
+# Worker declines gig endpoint
+@router.post("/gigs/decline")
+async def worker_decline_gig(data: dict):
+    """
+    Worker declines a gig offer
+    """
+    try:
+        gig_id = data.get('gigId')
+        worker_id = data.get('workerId')
+        reason = data.get('reason', 'not_interested')
+        
+        # Log the decline
+        decline_log = {
+            '_id': str(uuid.uuid4()),
+            'gigId': gig_id,
+            'workerId': worker_id,
+            'reason': reason,
+            'declinedAt': datetime.utcnow().isoformat()
+        }
+        
+        await db['gig_declines'].insert_one(decline_log)
+        
+        # Mark notification as read
+        await db['worker_notifications'].update_one(
+            {
+                'workerId': worker_id,
+                'payload.gigId': gig_id,
+                'read': False
+            },
+            {
+                '$set': {
+                    'read': True,
+                    'declined': True
+                }
+            }
+        )
+        
+        return {'success': True}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to decline gig: {str(e)}"
+        )
+
+# Get gig status (for client waiting interface)
+@router.get("/quickhire/gigs/{gigId}/status")
+async def get_gig_status_detailed(gigId: str):
+    """
+    Get detailed gig status for client waiting interface
+    """
+    try:
+        gig = await quickhire_gigs_collection.find_one({'_id': gigId})
+        
+        if not gig:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Gig not found"
+            )
+        
+        # Get notification log to see how many workers were notified
+        notification_log = await db['notification_logs'].find_one({'gigId': gigId})
+        workers_notified = len(notification_log.get('workerIds', [])) if notification_log else 0
+        
+        # Get assignment if matched
+        assignment = None
+        if gig.get('assignmentId'):
+            assignment = await quickhire_assignments_collection.find_one({'_id': gig['assignmentId']})
+            if assignment:
+                assignment = serialize_gig(assignment)
+        
+        gig_data = serialize_gig(gig)
+        gig_data['workersNotified'] = workers_notified
+        gig_data['assignment'] = assignment
+        
+        return gig_data
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get gig status: {str(e)}"
+        )
+
+# Cancel gig search
+@router.post("/quickhire/gigs/{gigId}/cancel")
+async def cancel_gig_search(gigId: str, data: dict):
+    """
+    Cancel gig search
+    """
+    try:
+        reason = data.get('reason', 'user_cancelled')
+        
+        # Update gig status to Cancelled
+        await quickhire_gigs_collection.update_one(
+            {'_id': gigId},
+            {
+                '$set': {
+                    'status': 'Cancelled',
+                    'cancelledAt': datetime.utcnow().isoformat(),
+                    'cancelReason': reason
+                }
+            }
+        )
+        
+        # Cancel all pending notifications
+        await db['worker_notifications'].update_many(
+            {'payload.gigId': gigId, 'read': False},
+            {'$set': {'read': True, 'cancelled': True}}
+        )
+        
+        return {'success': True}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to cancel gig: {str(e)}"
+        )
+
+# Reserve gig for worker (atomic operation)
+@router.post("/gigs/reserve")
+async def reserve_gig(data: dict):
+    """
+    Atomically reserve a gig for a worker
+    """
+    try:
+        gig_id = data.get('gigId')
+        worker_id = data.get('workerId')
+        reserved_until = data.get('reservedUntil')
+        
+        # Try to reserve the gig (atomic update)
+        result = await quickhire_gigs_collection.update_one(
+            {
+                '_id': gig_id,
+                'status': {'$in': ['Posted', 'Dispatching']},
+                'reservedBy': {'$exists': False}
+            },
+            {
+                '$set': {
+                    'reservedBy': worker_id,
+                    'reservedUntil': reserved_until,
+                    'reservedAt': datetime.utcnow().isoformat()
+                }
+            }
+        )
+        
+        if result.modified_count > 0:
+            return {'success': True}
+        else:
+            return {'success': False, 'message': 'Gig already reserved'}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to reserve gig: {str(e)}"
+        )
+
             'workerId': invitation.get('workerId'),
             'respondedAt': invitation.get('respondedAt')
         }
