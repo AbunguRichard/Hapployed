@@ -338,16 +338,22 @@ export default function PostProjectPage() {
         
         clearTimeout(timeoutId);
         
-        // Clone the response to avoid "body already used" error
-        const responseClone = response.clone();
+        // Read as text first to avoid "body already used" error
+        const responseText = await response.text();
+        let estimate;
         
-        if (!response.ok) {
-          const errorData = await responseClone.json().catch(() => ({ detail: 'Unknown error' }));
-          console.error('Price estimation failed:', response.status, errorData);
-          throw new Error(errorData.detail || `Server error: ${response.status}`);
+        try {
+          estimate = JSON.parse(responseText);
+        } catch (e) {
+          console.error('Failed to parse estimate response');
+          throw new Error('Invalid server response');
         }
         
-        const estimate = await response.json();
+        if (!response.ok) {
+          console.error('Price estimation failed:', response.status, estimate);
+          throw new Error(estimate.detail || `Server error: ${response.status}`);
+        }
+        
         console.log('Price estimate received:', estimate);
         setPriceEstimate(estimate);
         
