@@ -628,6 +628,440 @@ export default function WorkerDashboardPage() {
     </div>
   );
 
+  const renderApplications = () => {
+    const [activeTab, setActiveTab] = useState('submitted');
+    
+    const applications = {
+      drafts: [
+        { id: 1, title: 'Social Media Manager', savedAt: '2 hours ago', completion: 75 }
+      ],
+      submitted: [
+        { id: 1, job: 'Website Redesign', client: 'TechCorp', status: 'Viewed', appliedAt: '2 days ago', budget: '$500' },
+        { id: 2, job: 'Logo Design', client: 'StartupXYZ', status: 'Shortlisted', appliedAt: '1 day ago', budget: '$200' }
+      ],
+      interviews: [
+        { id: 1, job: 'Mobile App Development', client: 'FinTech Inc', date: 'Tomorrow, 3:00 PM', type: 'Video Call' }
+      ],
+      offers: [
+        { id: 1, job: 'Data Entry Project', client: 'DataCo', amount: '$150', deadline: '3 days', expiresIn: '24 hours' }
+      ]
+    };
+
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">📥 My Applications</h1>
+        
+        {/* Tabs */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="flex border-b border-gray-200">
+            {['drafts', 'submitted', 'interviews', 'offers'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`flex-1 px-6 py-4 font-semibold capitalize ${
+                  activeTab === tab
+                    ? 'border-b-2 border-purple-600 text-purple-600'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {tab} ({applications[tab].length})
+              </button>
+            ))}
+          </div>
+
+          <div className="p-6">
+            {/* Drafts Tab */}
+            {activeTab === 'drafts' && (
+              <div className="space-y-4">
+                {applications.drafts.map((draft) => (
+                  <div key={draft.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-bold text-lg">{draft.title}</h3>
+                      <span className="text-sm text-gray-600">Saved {draft.savedAt}</span>
+                    </div>
+                    <div className="mb-3">
+                      <div className="flex items-center justify-between text-sm mb-1">
+                        <span>Application Completion</span>
+                        <span className="font-semibold">{draft.completion}%</span>
+                      </div>
+                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-full bg-purple-600" style={{width: `${draft.completion}%`}}></div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                        Continue Application
+                      </button>
+                      <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        Delete Draft
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Submitted Tab */}
+            {activeTab === 'submitted' && (
+              <div className="space-y-4">
+                {applications.submitted.map((app) => (
+                  <div key={app.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-bold text-lg">{app.job}</h3>
+                        <p className="text-gray-600">Client: {app.client}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        app.status === 'Shortlisted' ? 'bg-green-100 text-green-700' :
+                        app.status === 'Viewed' ? 'bg-blue-100 text-blue-700' :
+                        'bg-gray-100 text-gray-700'
+                      }`}>
+                        {app.status}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <span>💰 {app.budget}</span>
+                      <span>📅 Applied {app.appliedAt}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                        View Application
+                      </button>
+                      <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        Withdraw
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Interviews Tab */}
+            {activeTab === 'interviews' && (
+              <div className="space-y-4">
+                {applications.interviews.map((interview) => (
+                  <div key={interview.id} className="p-4 border-2 border-orange-200 bg-orange-50 rounded-lg">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-bold text-lg">{interview.job}</h3>
+                        <p className="text-gray-600">Client: {interview.client}</p>
+                      </div>
+                      <span className="px-3 py-1 bg-orange-200 text-orange-800 rounded-full text-sm font-semibold">
+                        {interview.type}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-orange-700 font-semibold mb-3">
+                      <Calendar className="w-5 h-5" />
+                      <span>{interview.date}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                        Join Meeting
+                      </button>
+                      <button className="px-4 py-2 border border-orange-300 rounded-lg hover:bg-orange-100">
+                        Reschedule
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Offers Tab */}
+            {activeTab === 'offers' && (
+              <div className="space-y-4">
+                {applications.offers.map((offer) => (
+                  <div key={offer.id} className="p-4 border-2 border-green-200 bg-green-50 rounded-lg">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-bold text-lg">{offer.job}</h3>
+                        <p className="text-gray-600">Client: {offer.client}</p>
+                      </div>
+                      <span className="px-3 py-1 bg-red-200 text-red-800 rounded-full text-sm font-semibold">
+                        Expires in {offer.expiresIn}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm mb-3">
+                      <span className="font-bold text-green-700 text-lg">💰 {offer.amount}</span>
+                      <span className="text-gray-600">⏱️ Deadline: {offer.deadline}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
+                        Accept Offer
+                      </button>
+                      <button className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
+                        Negotiate
+                      </button>
+                      <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        Decline
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderCompletedWork = () => {
+    const completedJobs = [
+      { id: 1, title: 'E-commerce Website', client: 'ShopCo', completedDate: '1 week ago', earned: '$800', rating: 5, review: 'Excellent work! Very professional.' },
+      { id: 2, title: 'Logo Design', client: 'StartupXYZ', completedDate: '2 weeks ago', earned: '$200', rating: 5, review: 'Great designer, highly recommend!' },
+      { id: 3, title: 'Data Entry', client: 'DataCorp', completedDate: '3 weeks ago', earned: '$150', rating: 4, review: 'Good work, delivered on time.' }
+    ];
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">✅ Completed Work</h1>
+          <div className="text-right">
+            <div className="text-sm text-gray-600">Total Earned</div>
+            <div className="text-2xl font-bold text-green-600">$1,150</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          {completedJobs.map((job) => (
+            <div key={job.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <h3 className="font-bold text-xl mb-1">{job.title}</h3>
+                  <p className="text-gray-600">Client: {job.client}</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-green-600">{job.earned}</div>
+                  <div className="text-sm text-gray-600">{job.completedDate}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1 mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={`w-5 h-5 ${i < job.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
+                ))}
+                <span className="ml-2 font-semibold">{job.rating}/5</span>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                <p className="text-gray-700 italic">"{job.review}"</p>
+              </div>
+
+              <div className="flex gap-2">
+                <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                  View Details
+                </button>
+                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                  Request Testimonial
+                </button>
+                <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                  Work Again
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderMessages = () => {
+    const messages = [
+      { id: 1, from: 'TechCorp Inc', subject: 'Project Update Needed', preview: 'Hi, can you provide an update on the website redesign?', time: '10 min ago', unread: true, priority: true },
+      { id: 2, from: 'System', subject: 'New Job Match: Senior Developer', preview: 'We found a job that matches your skills...', time: '1 hour ago', unread: true, priority: false },
+      { id: 3, from: 'StartupXYZ', subject: 'Payment Released', preview: 'Your payment of $200 has been released...', time: '2 hours ago', unread: false, priority: false },
+      { id: 4, from: 'DataCorp', subject: 'Review Posted', preview: 'Client has posted a review for your completed work...', time: '1 day ago', unread: false, priority: false }
+    ];
+
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">💬 Messages</h1>
+
+        {/* Quick Templates */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="font-bold mb-4">📝 Quick Templates</h3>
+          <div className="flex flex-wrap gap-2">
+            <button className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200">
+              Application Message
+            </button>
+            <button className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200">
+              Status Update
+            </button>
+            <button className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200">
+              Payment Reminder
+            </button>
+            <button className="px-4 py-2 bg-orange-100 text-orange-700 rounded-lg hover:bg-orange-200">
+              Availability Notice
+            </button>
+          </div>
+        </div>
+
+        {/* Messages List */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="p-4 border-b border-gray-200 flex items-center gap-4">
+            <input 
+              type="text" 
+              placeholder="Search messages..." 
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+            />
+            <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+              Compose
+            </button>
+          </div>
+
+          <div className="divide-y divide-gray-200">
+            {messages.map((msg) => (
+              <div 
+                key={msg.id} 
+                className={`p-4 hover:bg-gray-50 cursor-pointer ${msg.unread ? 'bg-purple-50' : ''}`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="font-bold text-purple-700">{msg.from[0]}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className={`font-semibold ${msg.unread ? 'text-gray-900' : 'text-gray-700'}`}>
+                          {msg.from}
+                        </span>
+                        {msg.priority && (
+                          <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded">
+                            PRIORITY
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-sm text-gray-500">{msg.time}</span>
+                    </div>
+                    <div className={`font-medium mb-1 ${msg.unread ? 'text-gray-900' : 'text-gray-600'}`}>
+                      {msg.subject}
+                    </div>
+                    <div className="text-sm text-gray-500 truncate">
+                      {msg.preview}
+                    </div>
+                  </div>
+                  {msg.unread && (
+                    <div className="w-2 h-2 bg-purple-600 rounded-full flex-shrink-0 mt-2"></div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderResources = () => {
+    const resources = [
+      { title: 'Time Tracking Guide', category: 'Tutorial', icon: '📚' },
+      { title: 'Writing Better Proposals', category: 'Guide', icon: '✍️' },
+      { title: 'Tax Documentation for Freelancers', category: 'Legal', icon: '📄' },
+      { title: 'Communication Best Practices', category: 'Tips', icon: '💡' }
+    ];
+
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">🛠️ Resources</h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {resources.map((resource, idx) => (
+            <div key={idx} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer">
+              <div className="text-4xl mb-3">{resource.icon}</div>
+              <h3 className="font-bold text-lg mb-2">{resource.title}</h3>
+              <span className="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">
+                {resource.category}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="font-bold mb-4">🎓 Skill Development</h3>
+          <p className="text-gray-600 mb-4">Recommended courses based on your profile:</p>
+          <div className="space-y-3">
+            <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+              <div className="font-semibold mb-1">Advanced React Patterns</div>
+              <div className="text-sm text-gray-600">Increase your hourly rate by 20%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderSettings = () => {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">⚙️ Settings</h1>
+
+        {/* Profile Settings */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="font-bold text-lg mb-4">👤 Profile Settings</h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Display Name</label>
+              <input 
+                type="text" 
+                defaultValue={user?.name || ''} 
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Rate</label>
+              <input 
+                type="number" 
+                defaultValue="50" 
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Notification Settings */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="font-bold text-lg mb-4">🔔 Notification Settings</h3>
+          <div className="space-y-3">
+            {['New job matches', 'Application updates', 'Messages', 'Payment notifications'].map((item) => (
+              <label key={item} className="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" defaultChecked className="w-5 h-5 text-purple-600 rounded" />
+                <span>{item}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Availability Settings */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="font-bold text-lg mb-4">📅 Availability</h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600">
+                <option>Available for work</option>
+                <option>Partially available</option>
+                <option>Not available</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Working Hours</label>
+              <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600">
+                <option>Full-time (40+ hrs/week)</option>
+                <option>Part-time (20-40 hrs/week)</option>
+                <option>As needed (less than 20 hrs/week)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">
+          Save All Settings
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Left Sidebar */}
