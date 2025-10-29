@@ -51,20 +51,24 @@ class QuickHireNotifications {
     }
 
     async createGig(gigData) {
-        const response = await fetch(`${this.backendUrl}/api/quickhire/gigs`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(gigData)
-        });
+        try {
+            const response = await xhrFetch(`${this.backendUrl}/api/quickhire/gigs`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(gigData)
+            });
 
-        const responseClone = response.clone();
+            if (!response.ok) {
+                const errorMessage = response.data?.detail || response.data?.message || 'Failed to create gig';
+                throw new Error(errorMessage);
+            }
 
-        if (!response.ok) {
-            const errorData = await responseClone.json().catch(() => ({ detail: 'Unknown error' }));
-            throw new Error(errorData.detail || 'Failed to create gig');
+            return response.data;
+            
+        } catch (error) {
+            console.error('Error creating gig:', error);
+            throw error;
         }
-
-        return await response.json();
     }
 
     // 2. FIND NEARBY WORKERS WITH PUSH NOTIFICATION ELIGIBILITY
