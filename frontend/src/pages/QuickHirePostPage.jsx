@@ -77,44 +77,18 @@ export default function QuickHirePostPage() {
   }, []);
 
   const handleVoiceInput = () => {
+    if (!workflowRef.current) {
+      toast.error('Voice input system not ready');
+      return;
+    }
+
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       toast.error('Voice input not supported in your browser');
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-
-    recognition.onstart = () => {
-      setIsRecording(true);
-      toast.info('Listening... Speak now!');
-    };
-
-    recognition.onresult = (event) => {
-      const voiceText = event.results[0][0].transcript;
-      setTranscript(voiceText);
-      setFormData(prev => ({
-        ...prev,
-        description: voiceText
-      }));
-      toast.success('Voice captured!');
-    };
-
-    recognition.onerror = (event) => {
-      console.error('Speech recognition error:', event.error);
-      toast.error('Voice input failed');
-      setIsRecording(false);
-    };
-
-    recognition.onend = () => {
-      setIsRecording(false);
-    };
-
-    recognition.start();
+    // Use the workflow's voice recognition
+    workflowRef.current.toggleVoiceRecognition();
   };
 
   const handleSubmit = async (e) => {
