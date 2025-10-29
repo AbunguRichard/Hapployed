@@ -456,7 +456,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Epic Worker Dashboard API Endpoints"
     - "Epic Worker Dashboard - Frontend Implementation"
   stuck_tasks: 
     - "WorkerOnboardingPage - 3-Step Onboarding Flow"
