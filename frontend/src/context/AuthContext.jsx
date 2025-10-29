@@ -150,7 +150,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, name, role) => {
     try {
-      const response = await safeFetch(`${BACKEND_URL}/api/auth/register`, {
+      const response = await xhrFetch(`${BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
