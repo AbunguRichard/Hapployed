@@ -767,7 +767,7 @@ export default function WorkerDashboardPage() {
             )}
 
             {/* Offers Tab */}
-            {activeTab === 'offers' && (
+            {applicationsTab === 'offers' && (
               <div className="space-y-4">
                 {applications.offers.map((offer) => (
                   <div key={offer.id} className="p-4 border-2 border-green-200 bg-green-50 rounded-lg">
