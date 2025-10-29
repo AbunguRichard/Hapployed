@@ -151,9 +151,12 @@ export default function DashboardHeader() {
                               navigate(dropdownItem.path);
                               setDropdownOpen(false);
                             }}
-                            className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm font-medium text-gray-700"
+                            className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm font-medium text-gray-700 flex items-center gap-3"
                           >
-                            {dropdownItem.name}
+                            {dropdownItem.icon && (
+                              <span className="text-lg">{dropdownItem.icon}</span>
+                            )}
+                            <span>{dropdownItem.name}</span>
                           </button>
                         ))}
                       </div>
