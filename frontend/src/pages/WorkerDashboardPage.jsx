@@ -630,8 +630,6 @@ export default function WorkerDashboardPage() {
   );
 
   const renderApplications = () => {
-    const [activeTab, setActiveTab] = useState('submitted');
-    
     const applications = {
       drafts: [
         { id: 1, title: 'Social Media Manager', savedAt: '2 hours ago', completion: 75 }
@@ -658,9 +656,9 @@ export default function WorkerDashboardPage() {
             {['drafts', 'submitted', 'interviews', 'offers'].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => setApplicationsTab(tab)}
                 className={`flex-1 px-6 py-4 font-semibold capitalize ${
-                  activeTab === tab
+                  applicationsTab === tab
                     ? 'border-b-2 border-purple-600 text-purple-600'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
@@ -672,7 +670,7 @@ export default function WorkerDashboardPage() {
 
           <div className="p-6">
             {/* Drafts Tab */}
-            {activeTab === 'drafts' && (
+            {applicationsTab === 'drafts' && (
               <div className="space-y-4">
                 {applications.drafts.map((draft) => (
                   <div key={draft.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
