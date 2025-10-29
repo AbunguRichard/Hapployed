@@ -54,9 +54,9 @@ export default function DashboardHeader() {
       name: 'Professional Work', 
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Browse Projects', path: '/opportunities' },
-        { name: 'Submit Proposal', path: '/pro/apply' },
-        { name: 'My Active Projects', path: '/me/projects' }
+        { name: 'Find Projects', path: '/opportunities', icon: '🔍' },
+        { name: 'My Active Projects', path: '/me/projects', icon: '⚡' },
+        { name: 'My Proposals', path: '/proposals', icon: '📋' }
       ]
     },
     { 
