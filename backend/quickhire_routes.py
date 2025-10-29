@@ -732,3 +732,214 @@ async def close_hiring(gigId: str):
     return {'success': True, 'message': 'Hiring closed successfully'}
 
     return {'success': True, 'gigId': gig['_id']}
+
+# ============== UBER-LIKE WORKFLOW ENDPOINTS ==============
+
+# Find nearby workers (Uber-style matching)
+@router.post("/workers/nearby")
+async def find_nearby_workers(data: dict):
+    """
+    Find available workers nearby for Uber-like matching
+    Progressive radius: 2mi → 5mi → 15mi → marketplace
+    """
+    try:
+        gig_id = data.get('gigId')
+        category = data.get('category')
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        radius = data.get('radius', 5)
+        urgency = data.get('urgency', 'ASAP')
+        
+        if not latitude or not longitude:
+            return {'workers': []}
+        
+        # Find workers with matching skills
+        cursor = worker_profiles_collection.find({
+            'skills': {'$in': [category]}
+        })
+        
+        workers = await cursor.to_list(length=100)
+        
+        # Filter by distance and add distance/ETA info
+        gig_location = [longitude, latitude]
+        nearby_workers = []
+        
+        for worker in workers:
+            # Assume worker has a location (in real app, this would be live)
+            # For now, generate random locations within radius for demo
+            worker_lat = latitude + (random.random() - 0.5) * (radius / 69)
+            worker_lon = longitude + (random.random() - 0.5) * (radius / 69)
+            worker_location = [worker_lon, worker_lat]
+            
+            distance = calculate_mock_distance(gig_location, worker_location)
+            
+            if distance <= radius:
+                worker_data = serialize_gig(worker)
+                worker_data['distance'] = f"{distance:.1f} mi"
+                worker_data['eta'] = calculate_mock_eta(distance)
+                worker_data['responseTime'] = "Avg 5 min response"
+                worker_data['hourlyRate'] = worker.get('hourlyRate', 50)
+                nearby_workers.append(worker_data)
+        
+        # Sort by distance
+        nearby_workers.sort(key=lambda x: float(x['distance'].split()[0]))
+        
+        return {'workers': nearby_workers[:10]}  # Return top 10
+    
+    except Exception as e:
+        print(f"Error finding nearby workers: {str(e)}")
+        return {'workers': []}
+
+# Post to marketplace (fallback when no nearby workers)
+@router.post("/gigs/marketplace")
+async def post_to_marketplace(gig_data: dict):
+    """
+    Post gig to general marketplace when no nearby workers found
+    Returns broader list of workers from marketplace
+    """
+    try:
+        category = gig_data.get('category')
+        
+        # Find all workers with matching skills (no location filter)
+        cursor = worker_profiles_collection.find({
+            'skills': {'$in': [category]}
+        }).limit(20)
+        
+        workers = await cursor.to_list(length=20)
+        
+        # Enrich with mock data
+        marketplace_workers = []
+        for worker in workers:
+            worker_data = serialize_gig(worker)
+            worker_data['distance'] = "Remote"
+            worker_data['responseTime'] = "Usually responds in 1 hour"
+            worker_data['hourlyRate'] = worker.get('hourlyRate', 50)
+            marketplace_workers.append(worker_data)
+        
+        return {'workers': marketplace_workers}
+    
+    except Exception as e:
+        print(f"Error posting to marketplace: {str(e)}")
+        return {'workers': []}
+
+# Send gig invitation to worker
+@router.post("/gigs/invite")
+async def send_gig_invitation(data: dict):
+    """
+    Send gig invitation to specific worker
+    Creates a pending invitation that worker can accept/decline
+    """
+    try:
+        gig_id = data.get('gigId')
+        worker_id = data.get('workerId')
+        
+        if not gig_id or not worker_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Missing gigId or workerId"
+            )
+        
+        # Create invitation record
+        invitation_id = str(uuid.uuid4())
+        invitation = {
+            '_id': invitation_id,
+            'gigId': gig_id,
+            'workerId': worker_id,
+            'status': 'pending',  # pending, accepted, declined
+            'sentAt': datetime.utcnow().isoformat(),
+            'expiresAt': (datetime.utcnow() + timedelta(minutes=5)).isoformat()
+        }
+        
+        # Store invitation (you could create a separate collection for this)
+        await db['gig_invitations'].insert_one(invitation)
+        
+        # In a real app, this would send a push notification to the worker
+        
+        return {
+            'success': True,
+            'invitationId': invitation_id,
+            'message': 'Invitation sent to worker'
+        }
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to send invitation: {str(e)}"
+        )
+
+# Check worker response to invitation
+@router.get("/gigs/response/{gigId}")
+async def check_worker_response(gigId: str):
+    """
+    Check if worker has responded to gig invitation
+    Used for real-time polling
+    """
+    try:
+        # Find invitation for this gig
+        invitation = await db['gig_invitations'].find_one(
+            {'gigId': gigId},
+            sort=[('sentAt', -1)]  # Get most recent invitation
+        )
+        
+        if not invitation:
+            return {'status': 'no_invitation', 'message': 'No invitation found'}
+        
+        # Check if invitation expired
+        expires_at = datetime.fromisoformat(invitation['expiresAt'])
+        if datetime.utcnow() > expires_at:
+            return {'status': 'expired', 'message': 'Invitation expired'}
+        
+        # Return current status
+        return {
+            'status': invitation['status'],  # pending, accepted, declined
+            'workerId': invitation.get('workerId'),
+            'respondedAt': invitation.get('respondedAt')
+        }
+    
+    except Exception as e:
+        return {'status': 'error', 'message': str(e)}
+
+# Worker accepts/declines invitation
+@router.post("/gigs/{gigId}/respond")
+async def respond_to_invitation(gigId: str, data: dict):
+    """
+    Worker responds to gig invitation (accept/decline)
+    """
+    try:
+        worker_id = data.get('workerId')
+        response = data.get('response')  # 'accepted' or 'declined'
+        
+        if not worker_id or response not in ['accepted', 'declined']:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid request"
+            )
+        
+        # Find and update invitation
+        result = await db['gig_invitations'].update_one(
+            {'gigId': gigId, 'workerId': worker_id, 'status': 'pending'},
+            {
+                '$set': {
+                    'status': response,
+                    'respondedAt': datetime.utcnow().isoformat()
+                }
+            }
+        )
+        
+        if result.modified_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Invitation not found or already responded"
+            )
+        
+        return {
+            'success': True,
+            'message': f'Invitation {response}'
+        }
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to respond: {str(e)}"
+        )
+
