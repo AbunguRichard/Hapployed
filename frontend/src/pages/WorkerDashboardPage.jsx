@@ -148,121 +148,157 @@ export default function WorkerDashboardPage() {
         <p className="text-purple-100">Your command center for managing all your gigs</p>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-600 text-sm">Available Jobs</span>
-            <Briefcase className="w-5 h-5 text-purple-600" />
-          </div>
-          <div className="text-3xl font-bold text-gray-900">{stats.availableJobs}</div>
+      {/* Loading State */}
+      {loading && (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading your dashboard...</p>
         </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-600 text-sm">Active Gigs</span>
-            <Zap className="w-5 h-5 text-orange-500" />
-          </div>
-          <div className="text-3xl font-bold text-gray-900">{stats.activeGigs}</div>
-        </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-600 text-sm">Pending Applications</span>
-            <Inbox className="w-5 h-5 text-blue-500" />
-          </div>
-          <div className="text-3xl font-bold text-gray-900">{stats.pendingApplications}</div>
-        </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-600 text-sm">Weekly Earnings</span>
-            <DollarSign className="w-5 h-5 text-green-500" />
-          </div>
-          <div className="text-3xl font-bold text-gray-900">${stats.weeklyEarnings}</div>
-        </div>
-      </div>
+      )}
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h2 className="text-xl font-bold mb-4">🚀 Quick Actions</h2>
-        <div className="flex flex-wrap gap-3">
-          <button className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
-            Apply to Quick Matches
-          </button>
-          <button className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium">
-            Set Availability
-          </button>
-          <button className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium">
-            Update Profile
-          </button>
-        </div>
-      </div>
+      {!loading && (
+        <>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-gray-600 text-sm">Available Jobs</span>
+                <Briefcase className="w-5 h-5 text-purple-600" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900">{stats.availableJobs}</div>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-gray-600 text-sm">Active Gigs</span>
+                <Zap className="w-5 h-5 text-orange-500" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900">{stats.activeGigs}</div>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-gray-600 text-sm">Pending Applications</span>
+                <Inbox className="w-5 h-5 text-blue-500" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900">{stats.pendingApplications}</div>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-gray-600 text-sm">Weekly Earnings</span>
+                <DollarSign className="w-5 h-5 text-green-500" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900">${stats.weeklyEarnings}</div>
+            </div>
+          </div>
 
-      {/* Today's Schedule */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h2 className="text-xl font-bold mb-4">📅 Today's Schedule</h2>
-        <div className="space-y-3">
-          {todaySchedule.map((item, index) => (
-            <div key={index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-2 text-purple-600 font-semibold min-w-[100px]">
-                <Clock className="w-4 h-4" />
-                {item.time}
-              </div>
-              <div className="flex-1">
-                <div className="font-semibold text-gray-900">{item.title}</div>
-                <div className="text-sm text-gray-600">{item.duration}</div>
-              </div>
-              <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm">
-                Start
+          {/* Quick Actions */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <h2 className="text-xl font-bold mb-4">🚀 Quick Actions</h2>
+            <div className="flex flex-wrap gap-3">
+              <button 
+                onClick={() => setActiveSection('feed')}
+                className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium"
+              >
+                Browse Jobs
+              </button>
+              <button 
+                onClick={() => navigate('/my-applications')}
+                className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+              >
+                View Applications
+              </button>
+              <button 
+                onClick={() => navigate('/profile')}
+                className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+              >
+                Update Profile
               </button>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Recommended Jobs */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h2 className="text-xl font-bold mb-4">🎯 Recommended Jobs (AI-powered matches)</h2>
-        <div className="space-y-4">
-          {recommendedJobs.map((job) => (
-            <div key={job.id} className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
-              {job.priority && (
-                <span className="inline-block px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold mb-3">
-                  ⚡ QUICK HIRE
-                </span>
-              )}
-              <h3 className="text-lg font-bold text-gray-900 mb-2">📌 {job.title}</h3>
-              <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-3">
-                <span className="font-semibold text-green-600">💵 ${job.rate}/hr</span>
-                <span>⏱️ {job.duration} hours</span>
-                <span>🏠 {job.location}</span>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {job.skills.map((skill, idx) => (
-                  <span key={idx} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
-                    {skill}
-                  </span>
+          {/* Today's Schedule */}
+          {todaySchedule.length > 0 && (
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <h2 className="text-xl font-bold mb-4">📅 Today's Schedule</h2>
+              <div className="space-y-3">
+                {todaySchedule.map((item, index) => (
+                  <div key={index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-2 text-purple-600 font-semibold min-w-[100px]">
+                      <Clock className="w-4 h-4" />
+                      {item.time}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-gray-900">{item.title}</div>
+                      <div className="text-sm text-gray-600">{item.duration}</div>
+                    </div>
+                    <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm">
+                      Start
+                    </button>
+                  </div>
                 ))}
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="text-gray-600">⭐ {job.clientRating}/5 ({job.clientReviews} reviews)</span>
-                  <span className="font-semibold text-purple-600">🎯 {job.matchScore}% Match</span>
-                </div>
-                <div className="flex gap-2">
-                  <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
-                    Quick Apply
-                  </button>
-                  <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                    View Details
-                  </button>
-                </div>
-              </div>
             </div>
-          ))}
-        </div>
-      </div>
+          )}
+
+          {/* Recommended Jobs */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <h2 className="text-xl font-bold mb-4">🎯 Recommended Jobs (AI-powered matches)</h2>
+            {recommendedJobs.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+                <p>No recommended jobs at the moment</p>
+                <button 
+                  onClick={() => setActiveSection('feed')}
+                  className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                >
+                  Browse All Jobs
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {recommendedJobs.slice(0, 3).map((job) => (
+                  <div key={job.id} className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                    {job.priority && (
+                      <span className="inline-block px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold mb-3">
+                        ⚡ QUICK HIRE
+                      </span>
+                    )}
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">📌 {job.title}</h3>
+                    <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-3">
+                      <span className="font-semibold text-green-600">💵 ${job.rate}/hr</span>
+                      <span>⏱️ {job.duration} hours</span>
+                      <span>🏠 {job.location}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {job.skills.map((skill, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-gray-600">⭐ {job.clientRating}/5 ({job.clientReviews} reviews)</span>
+                        <span className="font-semibold text-purple-600">🎯 {job.matchScore}% Match</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+                          Quick Apply
+                        </button>
+                        <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 
