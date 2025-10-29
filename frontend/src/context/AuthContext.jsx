@@ -261,15 +261,19 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(profileData)
       });
 
-      // Clone response to avoid "body already used" error
-      const responseClone = response.clone();
+      // Read response as text first to avoid "body already used" error
+      const responseText = await response.text();
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        throw new Error('Invalid response from server');
+      }
       
       if (!response.ok) {
-        const errorData = await responseClone.json().catch(() => ({ detail: 'Failed to update profile' }));
-        throw new Error(errorData.detail || 'Failed to update profile');
+        throw new Error(data.detail || 'Failed to update profile');
       }
-
-      const data = await response.json();
 
       // Refresh user data
       await checkAuthStatus();
