@@ -553,63 +553,78 @@ export default function WorkerDashboardPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">⭐ My Profile & Reputation</h1>
       
-      {/* Reputation Score */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold mb-2">🌟 Reputation Score</h2>
-            <div className="text-5xl font-bold text-purple-600">{reputation.score}/5</div>
-          </div>
-          <Star className="w-24 h-24 text-yellow-400 fill-current" />
+      {loading && (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
         </div>
-        
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <div className="text-sm text-gray-600 mb-1">Reliability</div>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-green-500" style={{width: `${reputation.reliability}%`}}></div>
-              </div>
-              <span className="font-bold">{reputation.reliability}%</span>
-            </div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-600 mb-1">Communication</div>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500" style={{width: `${reputation.communication}%`}}></div>
-              </div>
-              <span className="font-bold">{reputation.communication}%</span>
-            </div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-600 mb-1">Quality</div>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-purple-500" style={{width: `${reputation.quality}%`}}></div>
-              </div>
-              <span className="font-bold">{reputation.quality}%</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
 
-      {/* Achievements */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h3 className="font-bold mb-4 flex items-center gap-2">
-          <Award className="w-5 h-5" />
-          🏆 Achievements
-        </h3>
-        <div className="grid grid-cols-2 gap-4">
-          {achievements.map((achievement, idx) => (
-            <div key={idx} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-              <div className="text-4xl mb-2">{achievement.icon}</div>
-              <div className="font-bold mb-1">{achievement.name}</div>
-              <div className="text-sm text-gray-600">{achievement.description}</div>
+      {!loading && (
+        <>
+          {/* Reputation Score */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-2">🌟 Reputation Score</h2>
+                <div className="text-5xl font-bold text-purple-600">{reputation.score > 0 ? reputation.score.toFixed(1) : 'N/A'}/5</div>
+                {reputation.score === 0 && (
+                  <p className="text-sm text-gray-600 mt-2">Complete gigs to build your reputation</p>
+                )}
+              </div>
+              <Star className="w-24 h-24 text-yellow-400 fill-current" />
             </div>
-          ))}
-        </div>
-      </div>
+            
+            {reputation.score > 0 && (
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <div className="text-sm text-gray-600 mb-1">Reliability</div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-green-500" style={{width: `${reputation.reliability}%`}}></div>
+                    </div>
+                    <span className="font-bold">{reputation.reliability}%</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-600 mb-1">Communication</div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-blue-500" style={{width: `${reputation.communication}%`}}></div>
+                    </div>
+                    <span className="font-bold">{reputation.communication}%</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-600 mb-1">Quality</div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-purple-500" style={{width: `${reputation.quality}%`}}></div>
+                    </div>
+                    <span className="font-bold">{reputation.quality}%</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Achievements */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <h3 className="font-bold mb-4 flex items-center gap-2">
+              <Award className="w-5 h-5" />
+              🏆 Achievements
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              {achievements.map((achievement, idx) => (
+                <div key={idx} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                  <div className="text-4xl mb-2">{achievement.icon}</div>
+                  <div className="font-bold mb-1">{achievement.name}</div>
+                  <div className="text-sm text-gray-600">{achievement.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 
