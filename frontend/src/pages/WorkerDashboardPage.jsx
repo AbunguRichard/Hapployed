@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Briefcase, Inbox, Zap, CheckCircle, 
-  MessageSquare, DollarSign, Star, Tool, Settings,
+  MessageSquare, DollarSign, Star, Wrench, Settings,
   Search, MapPin, Clock, Tag, Calendar, TrendingUp,
   Filter, Play, Pause, FileText, Award, Target
 } from 'lucide-react';
