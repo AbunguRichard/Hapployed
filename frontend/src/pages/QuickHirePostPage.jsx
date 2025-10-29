@@ -21,6 +21,7 @@ export default function QuickHirePostPage() {
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const workflowRef = useRef(null);
   
   const [formData, setFormData] = useState({
     category: '',
@@ -40,6 +41,17 @@ export default function QuickHirePostPage() {
     payPerPerson: '',
     groupMode: false
   });
+
+  // Initialize workflow
+  useEffect(() => {
+    workflowRef.current = new QuickHireWorkflow();
+    
+    return () => {
+      if (workflowRef.current) {
+        workflowRef.current.cleanup();
+      }
+    };
+  }, []);
 
   // Get current location
   useEffect(() => {
