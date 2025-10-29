@@ -249,13 +249,15 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(profileData)
       });
 
-      // Clone response before consuming it (for emergent monitoring)
-      const clonedResponse = response.clone();
-      const data = await clonedResponse.json();
+      // Clone response to avoid "body already used" error
+      const responseClone = response.clone();
       
       if (!response.ok) {
-        throw new Error(data.detail || 'Failed to update profile');
+        const errorData = await responseClone.json().catch(() => ({ detail: 'Failed to update profile' }));
+        throw new Error(errorData.detail || 'Failed to update profile');
       }
+
+      const data = await response.json();
 
       // Refresh user data
       await checkAuthStatus();
