@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://smart-gig-portal.preview.emergentagent.com/api"
+BASE_URL = "https://worker-hub-9.preview.emergentagent.com/api"
 
 class PriceEstimatorTester:
     def __init__(self):
