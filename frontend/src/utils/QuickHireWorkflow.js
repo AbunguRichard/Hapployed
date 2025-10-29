@@ -42,7 +42,7 @@ class QuickHireWorkflow {
 
     async createGig(formData) {
         try {
-            const response = await fetch(`${this.backendUrl}/api/quickhire/gigs`, {
+            const response = await xhrFetch(`${this.backendUrl}/api/quickhire/gigs`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,14 +50,12 @@ class QuickHireWorkflow {
                 body: JSON.stringify(formData)
             });
 
-            const responseClone = response.clone();
-
             if (!response.ok) {
-                const errorData = await responseClone.json().catch(() => ({ detail: 'Unknown error' }));
-                throw new Error(errorData.detail || 'Failed to create gig');
+                const errorMessage = response.data?.detail || response.data?.message || 'Failed to create gig';
+                throw new Error(errorMessage);
             }
 
-            const result = await response.json();
+            const result = response.data;
             return result;
             
         } catch (error) {
