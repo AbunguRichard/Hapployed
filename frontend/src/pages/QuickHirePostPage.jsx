@@ -147,12 +147,25 @@ export default function QuickHirePostPage() {
         groupMode: formData.gigType === 'Multiple' ? formData.groupMode : false
       };
 
-      // Use the Uber-like workflow for gig posting and matching
-      if (workflowRef.current) {
-        await workflowRef.current.postQuickHireGig(gigData);
-        toast.success('QuickHire request posted! Finding nearby workers...');
+      // Use the notification system for posting and matching
+      if (notificationSystemRef.current) {
+        const result = await notificationSystemRef.current.postAndNotifyGig(gigData);
+        
+        if (result.success) {
+          toast.success(`Posted! ${result.workersNotified} workers notified`);
+          
+          // Show client waiting interface
+          clientWaitingRef.current = new ClientWaitingInterface(result.gigId, user.id || user.email);
+        } else {
+          toast.warning(result.message || 'Expanding search for workers...');
+          
+          // Still show waiting interface
+          if (result.gigId) {
+            clientWaitingRef.current = new ClientWaitingInterface(result.gigId, user.id || user.email);
+          }
+        }
       } else {
-        // Fallback to original method if workflow not initialized
+        // Fallback to original method
         const response = await fetch(`${BACKEND_URL}/api/quickhire/gigs`, {
           method: 'POST',
           headers: {
