@@ -384,7 +384,27 @@ export default function WorkerDashboardPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">⚡ Active Gigs Hub</h1>
       
-      {activeGigs.map((gig) => (
+      {loading && (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+        </div>
+      )}
+
+      {!loading && activeGigs.length === 0 && (
+        <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-200 text-center">
+          <Zap className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+          <h3 className="text-xl font-bold mb-2">No Active Gigs</h3>
+          <p className="text-gray-600 mb-4">You don't have any active gigs at the moment</p>
+          <button 
+            onClick={() => setActiveSection('feed')}
+            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          >
+            Browse Available Jobs
+          </button>
+        </div>
+      )}
+      
+      {!loading && activeGigs.map((gig) => (
         <div key={gig.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -407,29 +427,31 @@ export default function WorkerDashboardPage() {
             </div>
           </div>
 
-          <div className="mb-6">
-            <h3 className="font-bold mb-4">🎯 Milestones:</h3>
-            <div className="space-y-3">
-              {gig.milestones.map((milestone, idx) => (
-                <div key={idx} className={`flex items-center gap-4 p-4 rounded-lg ${
-                  milestone.completed ? 'bg-green-50 border border-green-200' : 
-                  milestone.dueDate ? 'bg-orange-50 border border-orange-200' : 
-                  'bg-gray-50 border border-gray-200'
-                }`}>
-                  <span className="text-2xl">
-                    {milestone.completed ? '✓' : milestone.dueDate ? '➤' : '○'}
-                  </span>
-                  <div className="flex-1">
-                    <div className="font-semibold">{milestone.name}</div>
-                    {milestone.dueDate && (
-                      <div className="text-sm text-orange-600">Due: {milestone.dueDate}</div>
-                    )}
+          {gig.milestones && gig.milestones.length > 0 && (
+            <div className="mb-6">
+              <h3 className="font-bold mb-4">🎯 Milestones:</h3>
+              <div className="space-y-3">
+                {gig.milestones.map((milestone, idx) => (
+                  <div key={idx} className={`flex items-center gap-4 p-4 rounded-lg ${
+                    milestone.completed ? 'bg-green-50 border border-green-200' : 
+                    milestone.due_date ? 'bg-orange-50 border border-orange-200' : 
+                    'bg-gray-50 border border-gray-200'
+                  }`}>
+                    <span className="text-2xl">
+                      {milestone.completed ? '✓' : milestone.due_date ? '➤' : '○'}
+                    </span>
+                    <div className="flex-1">
+                      <div className="font-semibold">{milestone.name}</div>
+                      {milestone.due_date && (
+                        <div className="text-sm text-orange-600">Due: {milestone.due_date}</div>
+                      )}
+                    </div>
+                    <div className="font-bold text-green-600">${milestone.amount}</div>
                   </div>
-                  <div className="font-bold text-green-600">${milestone.amount}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex gap-3">
             <button className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium">
@@ -454,65 +476,76 @@ export default function WorkerDashboardPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">💰 My Earnings - Financial Command</h1>
       
-      {/* Financial Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600 mb-2">Available</div>
-          <div className="text-3xl font-bold text-green-600 mb-3">${earnings.available}</div>
-          <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
-            Withdraw
-          </button>
+      {loading && (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
         </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600 mb-2">Pending</div>
-          <div className="text-3xl font-bold text-orange-600">${earnings.pending}</div>
-          <div className="text-sm text-gray-600 mt-2">3 jobs</div>
-        </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600 mb-2">This Month</div>
-          <div className="text-3xl font-bold text-purple-600">${earnings.thisMonth}</div>
-        </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600 mb-2">Total Earned</div>
-          <div className="text-3xl font-bold text-gray-900">${earnings.totalEarned}</div>
-        </div>
-      </div>
+      )}
 
-      {/* Earnings Analytics */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h3 className="font-bold mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5" />
-          📊 Earnings Analytics
-        </h3>
-        <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-          <div className="text-center text-gray-500">
-            <TrendingUp className="w-12 h-12 mx-auto mb-2" />
-            <p>Charts would go here (Weekly/Monthly/Yearly view)</p>
+      {!loading && (
+        <>
+          {/* Financial Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="text-sm text-gray-600 mb-2">Available</div>
+              <div className="text-3xl font-bold text-green-600 mb-3">${earnings.available.toFixed(2)}</div>
+              <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
+                Withdraw
+              </button>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="text-sm text-gray-600 mb-2">Pending</div>
+              <div className="text-3xl font-bold text-orange-600">${earnings.pending.toFixed(2)}</div>
+              <div className="text-sm text-gray-600 mt-2">In review</div>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="text-sm text-gray-600 mb-2">This Month</div>
+              <div className="text-3xl font-bold text-purple-600">${earnings.thisMonth.toFixed(2)}</div>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="text-sm text-gray-600 mb-2">Total Earned</div>
+              <div className="text-3xl font-bold text-gray-900">${earnings.totalEarned.toFixed(2)}</div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Payment Methods */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h3 className="font-bold mb-4">💳 Payment Methods</h3>
-        <div className="flex gap-4">
-          <div className="flex-1 p-4 border-2 border-green-500 rounded-lg bg-green-50">
-            <div className="font-semibold">PayPal ✓</div>
-            <div className="text-sm text-gray-600">Primary method</div>
+          {/* Earnings Analytics */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <h3 className="font-bold mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5" />
+              📊 Earnings Analytics
+            </h3>
+            <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+              <div className="text-center text-gray-500">
+                <TrendingUp className="w-12 h-12 mx-auto mb-2" />
+                <p>Earnings chart will be displayed here</p>
+                <p className="text-sm mt-2">(Weekly/Monthly/Yearly view)</p>
+              </div>
+            </div>
           </div>
-          <div className="flex-1 p-4 border border-gray-300 rounded-lg">
-            <div className="font-semibold">Bank Transfer</div>
-            <div className="text-sm text-gray-600">Add account</div>
+
+          {/* Payment Methods */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <h3 className="font-bold mb-4">💳 Payment Methods</h3>
+            <div className="flex gap-4">
+              <div className="flex-1 p-4 border-2 border-green-500 rounded-lg bg-green-50">
+                <div className="font-semibold">PayPal ✓</div>
+                <div className="text-sm text-gray-600">Primary method</div>
+              </div>
+              <div className="flex-1 p-4 border border-gray-300 rounded-lg">
+                <div className="font-semibold">Bank Transfer</div>
+                <div className="text-sm text-gray-600">Add account</div>
+              </div>
+              <div className="flex-1 p-4 border border-gray-300 rounded-lg">
+                <div className="font-semibold">Crypto</div>
+                <div className="text-sm text-gray-600">Add wallet</div>
+              </div>
+            </div>
           </div>
-          <div className="flex-1 p-4 border border-gray-300 rounded-lg">
-            <div className="font-semibold">Crypto</div>
-            <div className="text-sm text-gray-600">Add wallet</div>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 
