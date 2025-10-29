@@ -484,7 +484,7 @@ function App() {
             <Route 
               path="/epic-worker-dashboard" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requireProfile={false}>
                   <WorkerDashboardPage />
                 </ProtectedRoute>
               } 
