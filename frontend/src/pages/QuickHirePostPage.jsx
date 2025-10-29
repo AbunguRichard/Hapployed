@@ -170,9 +170,6 @@ export default function QuickHirePostPage() {
       setTimeout(() => {
         navigate(`/quickhire/track/${result.id}`);
       }, 1500);
-          navigate(`/quickhire/track/${result.id}`);
-        }, 1500);
-      }
       
     } catch (error) {
       console.error('Error posting gig:', error);
