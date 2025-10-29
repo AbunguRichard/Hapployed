@@ -8,6 +8,8 @@ import {
   Filter, Play, Pause, FileText, Award, Target
 } from 'lucide-react';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+
 export default function WorkerDashboardPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -20,80 +22,110 @@ export default function WorkerDashboardPage() {
     category: 'any'
   });
 
-  // Mock data - replace with real API calls
-  const stats = {
-    availableJobs: 24,
-    activeGigs: 3,
-    pendingApplications: 5,
-    weeklyEarnings: 420
-  };
+  // State for real data
+  const [stats, setStats] = useState({
+    availableJobs: 0,
+    activeGigs: 0,
+    pendingApplications: 0,
+    weeklyEarnings: 0
+  });
+  const [todaySchedule, setTodaySchedule] = useState([]);
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
+  const [activeGigs, setActiveGigs] = useState([]);
+  const [earnings, setEarnings] = useState({
+    available: 0,
+    pending: 0,
+    thisMonth: 0,
+    totalEarned: 0
+  });
+  const [reputation, setReputation] = useState({
+    score: 0,
+    reliability: 0,
+    communication: 0,
+    quality: 0
+  });
+  const [achievements, setAchievements] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const todaySchedule = [
-    { time: '10:00 AM', title: 'Data Entry Project', duration: '2 hrs' },
-    { time: '2:00 PM', title: 'Social Media Posts', duration: '1 hr' }
-  ];
-
-  const recommendedJobs = [
-    {
-      id: 1,
-      priority: true,
-      title: 'Social Media Manager',
-      rate: 45,
-      duration: 2,
-      location: 'Remote',
-      skills: ['Canva', 'Instagram', 'Copywriting'],
-      clientRating: 4.9,
-      clientReviews: 127,
-      matchScore: 85
-    },
-    {
-      id: 2,
-      priority: false,
-      title: 'Web Developer Needed',
-      rate: 60,
-      duration: 4,
-      location: 'Remote',
-      skills: ['React', 'Node.js', 'MongoDB'],
-      clientRating: 4.7,
-      clientReviews: 89,
-      matchScore: 92
+  // Fetch all dashboard data
+  useEffect(() => {
+    if (user?.email) {
+      fetchDashboardData();
     }
-  ];
+  }, [user]);
 
-  const activeGigs = [
-    {
-      id: 1,
-      title: 'Website Redesign',
-      client: 'TechCorp Inc.',
-      clientRating: 4.8,
-      milestones: [
-        { name: 'Research & Planning', amount: 150, completed: true },
-        { name: 'Design Mockups', amount: 300, completed: false, dueDate: 'Tomorrow' },
-        { name: 'Final Implementation', amount: 450, completed: false }
-      ]
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const userId = user?.email || 'demo-user';
+
+      // Fetch all data in parallel
+      const [
+        statsRes,
+        scheduleRes,
+        jobsRes,
+        gigsRes,
+        earningsRes,
+        reputationRes,
+        achievementsRes
+      ] = await Promise.all([
+        fetch(`${BACKEND_URL}/api/worker-dashboard/stats/${userId}`),
+        fetch(`${BACKEND_URL}/api/worker-dashboard/schedule/${userId}`),
+        fetch(`${BACKEND_URL}/api/worker-dashboard/recommended-jobs/${userId}`),
+        fetch(`${BACKEND_URL}/api/worker-dashboard/active-gigs/${userId}`),
+        fetch(`${BACKEND_URL}/api/worker-dashboard/earnings/${userId}`),
+        fetch(`${BACKEND_URL}/api/worker-dashboard/reputation/${userId}`),
+        fetch(`${BACKEND_URL}/api/worker-dashboard/achievements/${userId}`)
+      ]);
+
+      if (statsRes.ok) {
+        const statsData = await statsRes.json();
+        setStats(statsData);
+      }
+
+      if (scheduleRes.ok) {
+        const scheduleData = await scheduleRes.json();
+        setTodaySchedule(scheduleData);
+      }
+
+      if (jobsRes.ok) {
+        const jobsData = await jobsRes.json();
+        setRecommendedJobs(jobsData);
+      }
+
+      if (gigsRes.ok) {
+        const gigsData = await gigsRes.json();
+        setActiveGigs(gigsData);
+      }
+
+      if (earningsRes.ok) {
+        const earningsData = await earningsRes.json();
+        setEarnings(earningsData);
+      }
+
+      if (reputationRes.ok) {
+        const reputationData = await reputationRes.json();
+        setReputation(reputationData);
+      }
+
+      if (achievementsRes.ok) {
+        const achievementsData = await achievementsRes.json();
+        setAchievements(achievementsData.length > 0 ? achievementsData : [
+          { name: 'Getting Started', icon: '🎯', description: 'Complete your first gig to unlock achievements' }
+        ]);
+      } else {
+        // Set default achievement if no data
+        setAchievements([
+          { name: 'Getting Started', icon: '🎯', description: 'Complete your first gig to unlock achievements' }
+        ]);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      setLoading(false);
     }
-  ];
-
-  const earnings = {
-    available: 1250,
-    pending: 750,
-    thisMonth: 2800,
-    totalEarned: 15420
   };
-
-  const reputation = {
-    score: 4.8,
-    reliability: 95,
-    communication: 92,
-    quality: 96
-  };
-
-  const achievements = [
-    { name: 'Quick Hirer', icon: '🚀', description: '5+ jobs completed same-day' },
-    { name: 'Five-Star Streak', icon: '⭐', description: '10 consecutive 5-star reviews' },
-    { name: 'Top Earner', icon: '💰', description: '$1k+ in a week' },
-    { name: 'Night Owl', icon: '🌙', description: '10+ after-hours gigs' }
-  ];
 
   const sidebarItems = [
     { id: 'home', name: 'Dashboard Home', icon: LayoutDashboard },
