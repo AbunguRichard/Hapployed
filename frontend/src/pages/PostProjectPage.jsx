@@ -247,16 +247,21 @@ export default function PostProjectPage() {
         body: JSON.stringify(jobData)
       });
 
-      // Clone the response to avoid "body already used" error
-      const responseClone = response.clone();
-
-      if (!response.ok) {
-        const errorData = await responseClone.json().catch(() => ({ detail: 'Unknown error' }));
-        console.error('Job posting failed:', response.status, errorData);
-        throw new Error(errorData.detail || `Server error: ${response.status}`);
+      // Read as text first to avoid "body already used" error
+      const responseText = await response.text();
+      let createdJob;
+      
+      try {
+        createdJob = JSON.parse(responseText);
+      } catch (e) {
+        console.error('Failed to parse response:', responseText);
+        throw new Error('Invalid server response');
       }
 
-      const createdJob = await response.json();
+      if (!response.ok) {
+        console.error('Job posting failed:', response.status, createdJob);
+        throw new Error(createdJob.detail || `Server error: ${response.status}`);
+      }
 
       toast.success(
         saveAsDraft 
