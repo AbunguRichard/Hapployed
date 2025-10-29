@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mic, MapPin, DollarSign, Clock, Zap, Camera, CheckCircle, Loader } from 'lucide-react';
 import { toast } from 'sonner';
 import DashboardHeader from '../components/DashboardHeader';
+import QuickHireWorkflow from '../utils/QuickHireWorkflow';
+import '../styles/QuickHireWorkflow.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
