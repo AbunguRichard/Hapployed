@@ -160,26 +160,36 @@ export default function QuickHirePostPage() {
         groupMode: formData.gigType === 'Multiple' ? formData.groupMode : false
       };
 
-      const response = await fetch(`${BACKEND_URL}/api/quickhire/gigs`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(gigData)
-      });
+      // Use the Uber-like workflow for gig posting and matching
+      if (workflowRef.current) {
+        await workflowRef.current.postQuickHireGig(gigData);
+        toast.success('QuickHire request posted! Finding nearby workers...');
+      } else {
+        // Fallback to original method if workflow not initialized
+        const response = await fetch(`${BACKEND_URL}/api/quickhire/gigs`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(gigData)
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to post gig');
+        const responseClone = response.clone();
+
+        if (!response.ok) {
+          const errorText = await responseClone.text();
+          throw new Error(errorText || 'Failed to post gig');
+        }
+
+        const result = await response.json();
+        
+        toast.success('QuickHire request posted! Finding nearby workers...');
+        
+        // Navigate to tracking page
+        setTimeout(() => {
+          navigate(`/quickhire/track/${result.id}`);
+        }, 1500);
       }
-
-      const result = await response.json();
-      
-      toast.success('QuickHire request posted! Finding nearby workers...');
-      
-      // Navigate to tracking page
-      setTimeout(() => {
-        navigate(`/quickhire/track/${result.id}`);
-      }, 1500);
       
     } catch (error) {
       console.error('Error posting gig:', error);
