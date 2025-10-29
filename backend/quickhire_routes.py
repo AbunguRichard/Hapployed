@@ -1297,13 +1297,6 @@ async def reserve_gig(data: dict):
             detail=f"Failed to reserve gig: {str(e)}"
         )
 
-            'workerId': invitation.get('workerId'),
-            'respondedAt': invitation.get('respondedAt')
-        }
-    
-    except Exception as e:
-        return {'status': 'error', 'message': str(e)}
-
 # Worker accepts/declines invitation
 @router.post("/gigs/{gigId}/respond")
 async def respond_to_invitation(gigId: str, data: dict):
