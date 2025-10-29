@@ -2,6 +2,8 @@
 // XMLHttpRequest is not intercepted by rrweb/monitoring scripts
 
 export const xhrFetch = (url, options = {}) => {
+  console.log('[xhrFetch] Request:', url, options);
+  
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const method = options.method || 'GET';
@@ -23,29 +25,38 @@ export const xhrFetch = (url, options = {}) => {
     
     // Handle response
     xhr.onload = function() {
+      console.log('[xhrFetch] Response status:', xhr.status);
+      console.log('[xhrFetch] Response text:', xhr.responseText);
+      
       let data;
       try {
         data = JSON.parse(xhr.responseText);
       } catch (e) {
+        console.error('[xhrFetch] JSON parse error:', e);
         data = xhr.responseText;
       }
       
-      resolve({
+      const response = {
         ok: xhr.status >= 200 && xhr.status < 300,
         status: xhr.status,
         statusText: xhr.statusText,
         data: data,
         text: () => Promise.resolve(xhr.responseText),
         json: () => Promise.resolve(data)
-      });
+      };
+      
+      console.log('[xhrFetch] Resolved response:', response);
+      resolve(response);
     };
     
     // Handle errors
     xhr.onerror = function() {
+      console.error('[xhrFetch] Network error');
       reject(new Error('Network request failed'));
     };
     
     xhr.ontimeout = function() {
+      console.error('[xhrFetch] Timeout');
       reject(new Error('Network request timed out'));
     };
     
