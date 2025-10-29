@@ -1105,13 +1105,14 @@ export default function WorkerDashboardPage() {
         <div className="max-w-7xl mx-auto p-8">
           {activeSection === 'home' && renderHome()}
           {activeSection === 'feed' && renderJobFeed()}
+          {activeSection === 'applications' && renderApplications()}
           {activeSection === 'active' && renderActiveGigs()}
+          {activeSection === 'completed' && renderCompletedWork()}
+          {activeSection === 'messages' && renderMessages()}
           {activeSection === 'earnings' && renderEarnings()}
           {activeSection === 'profile' && renderProfile()}
-          {!['home', 'feed', 'active', 'earnings', 'profile'].includes(activeSection) && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🚧</div>
-              <h2 className="text-2xl font-bold mb-2">Coming Soon</h2>
+          {activeSection === 'resources' && renderResources()}
+          {activeSection === 'settings' && renderSettings()}
               <p className="text-gray-600">This section is under construction</p>
             </div>
           )}
