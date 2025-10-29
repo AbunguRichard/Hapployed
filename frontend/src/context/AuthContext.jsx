@@ -161,13 +161,15 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
-      // Clone response before consuming it (for emergent monitoring)
-      const clonedResponse = response.clone();
-      const data = await clonedResponse.json();
+      // Clone response to avoid "body already used" error
+      const responseClone = response.clone();
       
       if (!response.ok) {
-        throw new Error(data.detail || 'Signup failed');
+        const errorData = await responseClone.json().catch(() => ({ detail: 'Signup failed' }));
+        throw new Error(errorData.detail || 'Signup failed');
       }
+
+      const data = await response.json();
 
       setAuthToken(data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
