@@ -1,4 +1,6 @@
 // UBER-LIKE NOTIFICATION & ACCEPTANCE WORKFLOW
+import { xhrFetch } from './xhrFetch';
+
 class QuickHireNotifications {
     constructor() {
         this.workerSockets = new Map();
