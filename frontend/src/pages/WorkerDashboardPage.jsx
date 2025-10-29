@@ -21,6 +21,7 @@ export default function WorkerDashboardPage() {
     duration: 'any',
     category: 'any'
   });
+  const [applicationsTab, setApplicationsTab] = useState('submitted');
 
   // State for real data
   const [stats, setStats] = useState({
