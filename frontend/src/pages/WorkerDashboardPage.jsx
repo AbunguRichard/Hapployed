@@ -736,7 +736,7 @@ export default function WorkerDashboardPage() {
             )}
 
             {/* Interviews Tab */}
-            {activeTab === 'interviews' && (
+            {applicationsTab === 'interviews' && (
               <div className="space-y-4">
                 {applications.interviews.map((interview) => (
                   <div key={interview.id} className="p-4 border-2 border-orange-200 bg-orange-50 rounded-lg">
