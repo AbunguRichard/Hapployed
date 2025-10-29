@@ -5,7 +5,10 @@ import { Mic, MapPin, DollarSign, Clock, Zap, Camera, CheckCircle, Loader } from
 import { toast } from 'sonner';
 import DashboardHeader from '../components/DashboardHeader';
 import QuickHireWorkflow from '../utils/QuickHireWorkflow';
+import QuickHireNotifications from '../utils/QuickHireNotifications';
+import ClientWaitingInterface from '../utils/ClientWaitingInterface';
 import '../styles/QuickHireWorkflow.css';
+import '../styles/QuickHireNotifications.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
