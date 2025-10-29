@@ -148,44 +148,28 @@ export default function QuickHirePostPage() {
         groupMode: formData.gigType === 'Multiple' ? formData.groupMode : false
       };
 
-      // Use the notification system for posting and matching
-      if (notificationSystemRef.current) {
-        const result = await notificationSystemRef.current.postAndNotifyGig(gigData);
-        
-        if (result.success) {
-          toast.success(`Posted! ${result.workersNotified} workers notified`);
-          
-          // Show client waiting interface
-          clientWaitingRef.current = new ClientWaitingInterface(result.gigId, user.id || user.email);
-        } else {
-          toast.warning(result.message || 'Expanding search for workers...');
-          
-          // Still show waiting interface
-          if (result.gigId) {
-            clientWaitingRef.current = new ClientWaitingInterface(result.gigId, user.id || user.email);
-          }
-        }
-      } else {
-        // Fallback to original method using xhrFetch
-        const response = await xhrFetch(`${BACKEND_URL}/api/quickhire/gigs`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(gigData)
-        });
+      // Post gig using xhrFetch (direct and reliable)
+      const response = await xhrFetch(`${BACKEND_URL}/api/quickhire/gigs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(gigData)
+      });
 
-        if (!response.ok) {
-          const errorMessage = response.data?.detail || response.data?.message || 'Failed to post gig';
-          throw new Error(errorMessage);
-        }
+      if (!response.ok) {
+        const errorMessage = response.data?.detail || response.data?.message || 'Failed to post gig';
+        throw new Error(errorMessage);
+      }
 
-        const result = response.data;
-        
-        toast.success('QuickHire request posted! Finding nearby workers...');
-        
-        // Navigate to tracking page
-        setTimeout(() => {
+      const result = response.data;
+      
+      toast.success('QuickHire request posted successfully!');
+      
+      // Navigate to tracking page
+      setTimeout(() => {
+        navigate(`/quickhire/track/${result.id}`);
+      }, 1500);
           navigate(`/quickhire/track/${result.id}`);
         }, 1500);
       }
