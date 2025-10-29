@@ -22,6 +22,7 @@ class BackendTester:
             "worker_features": {},
             "ai_matching": {},
             "job_posting": {},
+            "worker_dashboard": {},
             "summary": {"passed": 0, "failed": 0, "errors": []}
         }
         
