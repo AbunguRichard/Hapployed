@@ -1118,6 +1118,3 @@ export default function WorkerDashboardPage() {
     </div>
   );
 }
-    </div>
-  );
-}
