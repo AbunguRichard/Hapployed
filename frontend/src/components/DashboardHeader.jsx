@@ -64,9 +64,13 @@ export default function DashboardHeader() {
       hasDropdown: true,
       dropdownItems: [
         { name: 'Post QuickHire', path: '/quickhire/post' },
-        { name: 'Worker Dashboard', path: '/quickhire/worker' },
+        { name: 'Available Gigs', path: '/quickhire/worker' },
         { name: 'QuickHire Info', path: '/quickhire-info' }
       ]
+    },
+    { 
+      name: 'Worker Dashboard', 
+      path: '/epic-worker-dashboard',
     },
     { 
       name: 'Find Gigs', 
