@@ -7,6 +7,7 @@ import DashboardHeader from '../components/DashboardHeader';
 import QuickHireWorkflow from '../utils/QuickHireWorkflow';
 import QuickHireNotifications from '../utils/QuickHireNotifications';
 import ClientWaitingInterface from '../utils/ClientWaitingInterface';
+import { xhrFetch } from '../utils/xhrFetch';
 import '../styles/QuickHireWorkflow.css';
 import '../styles/QuickHireNotifications.css';
 
