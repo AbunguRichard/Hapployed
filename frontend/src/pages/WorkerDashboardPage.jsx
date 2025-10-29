@@ -136,7 +136,7 @@ export default function WorkerDashboardPage() {
     { id: 'messages', name: 'Messages', icon: MessageSquare },
     { id: 'earnings', name: 'My Earnings', icon: DollarSign },
     { id: 'profile', name: 'Profile & Reputation', icon: Star },
-    { id: 'resources', name: 'Resources', icon: Tool },
+    { id: 'resources', name: 'Resources', icon: Wrench },
     { id: 'settings', name: 'Settings', icon: Settings }
   ];
 
