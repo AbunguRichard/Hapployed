@@ -1,4 +1,6 @@
 // UBER-LIKE QUICKHIRE WORKFLOW SYSTEM
+import { xhrFetch } from './xhrFetch';
+
 class QuickHireWorkflow {
     constructor() {
         this.currentGig = null;
