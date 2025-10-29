@@ -98,6 +98,54 @@ def generate_mock_price(category: str, distance: float, urgency: str) -> float:
 
 def serialize_gig(gig) -> dict:
     """Serialize MongoDB document"""
+
+
+# Get nearby gigs for Uber-like matching
+@router.post("/gigs/nearby")
+async def get_nearby_gigs(data: dict):
+    """
+    Get gigs near a specific location for real-time matching
+    """
+    try:
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        radius = data.get('radius', 20)  # miles
+        available_now = data.get('availableNow', True)
+        
+        if not latitude or not longitude:
+            return {'gigs': []}
+        
+        # Find gigs within radius
+        cursor = quickhire_gigs_collection.find({
+            'status': {'$in': ['Posted', 'Dispatching']},
+        })
+        
+        gigs = await cursor.to_list(length=100)
+        
+        # Filter by distance
+        nearby_gigs = []
+        user_location = [longitude, latitude]
+        
+        for gig in gigs:
+            if 'location' in gig and 'coordinates' in gig['location']:
+                gig_location = gig['location']['coordinates']
+                distance = calculate_mock_distance(user_location, gig_location)
+                
+                if distance <= radius:
+                    gig_data = serialize_gig(gig)
+                    gig_data['distance'] = distance
+                    gig_data['immediate'] = gig.get('urgency') == 'ASAP'
+                    nearby_gigs.append(gig_data)
+        
+        # Sort by distance
+        nearby_gigs.sort(key=lambda x: x['distance'])
+        
+        return {'gigs': nearby_gigs[:20]}  # Return top 20
+    
+    except Exception as e:
+        print(f"Error getting nearby gigs: {str(e)}")
+        return {'gigs': []}
+
     if '_id' in gig:
         gig['id'] = gig.pop('_id')
     return gig
