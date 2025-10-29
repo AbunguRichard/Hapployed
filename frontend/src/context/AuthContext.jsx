@@ -165,15 +165,19 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
-      // Clone response to avoid "body already used" error
-      const responseClone = response.clone();
+      // Read response as text first to avoid "body already used" error
+      const responseText = await response.text();
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        throw new Error('Invalid response from server');
+      }
       
       if (!response.ok) {
-        const errorData = await responseClone.json().catch(() => ({ detail: 'Signup failed' }));
-        throw new Error(errorData.detail || 'Signup failed');
+        throw new Error(data.detail || 'Signup failed');
       }
-
-      const data = await response.json();
 
       setAuthToken(data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
