@@ -265,6 +265,14 @@ function App() {
               }
             />
             <Route
+              path="/proposals"
+              element={
+                <ProtectedRoute>
+                  <ProposalsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/find-workers"
               element={
                 <ProtectedRoute>
