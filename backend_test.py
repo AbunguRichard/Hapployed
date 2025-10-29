@@ -1862,6 +1862,299 @@ class BackendTester:
             except Exception as e:
                 self.log_result("worker_features", "Job Posting - Delete Job", False, None, str(e))
     
+    def test_epic_worker_dashboard_endpoints(self):
+        """Test Epic Worker Dashboard API endpoints"""
+        print("\n🎯 Testing Epic Worker Dashboard Endpoints...")
+        
+        test_user_id = "test-user-123"
+        
+        # Test 1: GET /api/worker-dashboard/stats/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/stats/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                required_fields = ["available_jobs", "active_gigs", "pending_applications", "weekly_earnings"]
+                
+                if all(field in data for field in required_fields):
+                    # Verify data types
+                    if (isinstance(data.get("available_jobs"), int) and
+                        isinstance(data.get("active_gigs"), int) and
+                        isinstance(data.get("pending_applications"), int) and
+                        isinstance(data.get("weekly_earnings"), (int, float))):
+                        self.log_result("worker_dashboard", "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}", True, data)
+                    else:
+                        self.log_result("worker_dashboard", "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}", False, data, 
+                                      f"Invalid data types: available_jobs={type(data.get('available_jobs'))}, active_gigs={type(data.get('active_gigs'))}, pending_applications={type(data.get('pending_applications'))}, weekly_earnings={type(data.get('weekly_earnings'))}")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("worker_dashboard", "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("worker_dashboard", "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}", False, None, str(e))
+        
+        # Test 2: GET /api/worker-dashboard/schedule/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/schedule/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check structure of schedule items if any exist
+                    if len(data) > 0:
+                        item = data[0]
+                        required_fields = ["id", "time", "title", "duration"]
+                        if all(field in item for field in required_fields):
+                            self.log_result("worker_dashboard", "Schedule - GET /api/worker-dashboard/schedule/{user_id}", True, 
+                                          {"schedule_items": len(data), "sample_item": item})
+                        else:
+                            missing_fields = [field for field in required_fields if field not in item]
+                            self.log_result("worker_dashboard", "Schedule - GET /api/worker-dashboard/schedule/{user_id}", False, data, 
+                                          f"Schedule item missing fields: {missing_fields}")
+                    else:
+                        self.log_result("worker_dashboard", "Schedule - GET /api/worker-dashboard/schedule/{user_id}", True, 
+                                      {"schedule_items": 0, "message": "Empty schedule (acceptable for new user)"})
+                else:
+                    self.log_result("worker_dashboard", "Schedule - GET /api/worker-dashboard/schedule/{user_id}", False, data, 
+                                  "Expected array of schedule items")
+            else:
+                self.log_result("worker_dashboard", "Schedule - GET /api/worker-dashboard/schedule/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Schedule - GET /api/worker-dashboard/schedule/{user_id}", False, None, str(e))
+        
+        # Test 3: GET /api/worker-dashboard/recommended-jobs/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/recommended-jobs/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check structure of job recommendations if any exist
+                    if len(data) > 0:
+                        job = data[0]
+                        required_fields = ["id", "title", "rate", "duration", "location", "skills", "match_score"]
+                        if all(field in job for field in required_fields):
+                            # Verify match score calculation
+                            if isinstance(job.get("match_score"), int) and 0 <= job.get("match_score") <= 100:
+                                self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", True, 
+                                              {"jobs_found": len(data), "sample_job": job})
+                            else:
+                                self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", False, data, 
+                                              f"Invalid match_score: {job.get('match_score')} (should be int 0-100)")
+                        else:
+                            missing_fields = [field for field in required_fields if field not in job]
+                            self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", False, data, 
+                                          f"Job recommendation missing fields: {missing_fields}")
+                    else:
+                        self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", True, 
+                                      {"jobs_found": 0, "message": "No job recommendations (acceptable)"})
+                else:
+                    self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", False, data, 
+                                  "Expected array of job recommendations")
+            else:
+                self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}", False, None, str(e))
+        
+        # Test 4: GET /api/worker-dashboard/active-gigs/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/active-gigs/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check structure of active gigs if any exist
+                    if len(data) > 0:
+                        gig = data[0]
+                        required_fields = ["id", "title", "client", "client_rating", "milestones"]
+                        if all(field in gig for field in required_fields):
+                            self.log_result("worker_dashboard", "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}", True, 
+                                          {"active_gigs": len(data), "sample_gig": gig})
+                        else:
+                            missing_fields = [field for field in required_fields if field not in gig]
+                            self.log_result("worker_dashboard", "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}", False, data, 
+                                          f"Active gig missing fields: {missing_fields}")
+                    else:
+                        self.log_result("worker_dashboard", "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}", True, 
+                                      {"active_gigs": 0, "message": "No active gigs (acceptable for new user)"})
+                else:
+                    self.log_result("worker_dashboard", "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}", False, data, 
+                                  "Expected array of active gigs")
+            else:
+                self.log_result("worker_dashboard", "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}", False, None, str(e))
+        
+        # Test 5: GET /api/worker-dashboard/earnings/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/earnings/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                required_fields = ["available", "pending", "this_month", "total_earned"]
+                
+                if all(field in data for field in required_fields):
+                    # Verify all are floats/numbers
+                    if all(isinstance(data.get(field), (int, float)) for field in required_fields):
+                        self.log_result("worker_dashboard", "Earnings - GET /api/worker-dashboard/earnings/{user_id}", True, data)
+                    else:
+                        invalid_types = {field: type(data.get(field)) for field in required_fields if not isinstance(data.get(field), (int, float))}
+                        self.log_result("worker_dashboard", "Earnings - GET /api/worker-dashboard/earnings/{user_id}", False, data, 
+                                      f"Invalid data types for earnings: {invalid_types}")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("worker_dashboard", "Earnings - GET /api/worker-dashboard/earnings/{user_id}", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("worker_dashboard", "Earnings - GET /api/worker-dashboard/earnings/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Earnings - GET /api/worker-dashboard/earnings/{user_id}", False, None, str(e))
+        
+        # Test 6: GET /api/worker-dashboard/reputation/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/reputation/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                required_fields = ["score", "reliability", "communication", "quality", "total_reviews"]
+                
+                if all(field in data for field in required_fields):
+                    # Verify data types and ranges
+                    if (isinstance(data.get("score"), (int, float)) and
+                        isinstance(data.get("reliability"), int) and
+                        isinstance(data.get("communication"), int) and
+                        isinstance(data.get("quality"), int) and
+                        isinstance(data.get("total_reviews"), int)):
+                        self.log_result("worker_dashboard", "Reputation - GET /api/worker-dashboard/reputation/{user_id}", True, data)
+                    else:
+                        self.log_result("worker_dashboard", "Reputation - GET /api/worker-dashboard/reputation/{user_id}", False, data, 
+                                      "Invalid data types for reputation fields")
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_result("worker_dashboard", "Reputation - GET /api/worker-dashboard/reputation/{user_id}", False, data, 
+                                  f"Missing required fields: {missing_fields}")
+            else:
+                self.log_result("worker_dashboard", "Reputation - GET /api/worker-dashboard/reputation/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Reputation - GET /api/worker-dashboard/reputation/{user_id}", False, None, str(e))
+        
+        # Test 7: GET /api/worker-dashboard/achievements/{user_id}
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/achievements/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Check structure of achievements if any exist
+                    if len(data) > 0:
+                        achievement = data[0]
+                        required_fields = ["id", "name", "icon", "description"]
+                        if all(field in achievement for field in required_fields):
+                            self.log_result("worker_dashboard", "Achievements - GET /api/worker-dashboard/achievements/{user_id}", True, 
+                                          {"achievements_count": len(data), "sample_achievement": achievement})
+                        else:
+                            missing_fields = [field for field in required_fields if field not in achievement]
+                            self.log_result("worker_dashboard", "Achievements - GET /api/worker-dashboard/achievements/{user_id}", False, data, 
+                                          f"Achievement missing fields: {missing_fields}")
+                    else:
+                        self.log_result("worker_dashboard", "Achievements - GET /api/worker-dashboard/achievements/{user_id}", True, 
+                                      {"achievements_count": 0, "message": "No achievements (acceptable for new user)"})
+                else:
+                    self.log_result("worker_dashboard", "Achievements - GET /api/worker-dashboard/achievements/{user_id}", False, data, 
+                                  "Expected array of achievements")
+            else:
+                self.log_result("worker_dashboard", "Achievements - GET /api/worker-dashboard/achievements/{user_id}", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Achievements - GET /api/worker-dashboard/achievements/{user_id}", False, None, str(e))
+        
+        # Test 8: POST /api/worker-dashboard/jobs/search
+        try:
+            # Test with basic filter payload
+            payload = {
+                "search": "",
+                "location": "any",
+                "budget": "any",
+                "duration": "any",
+                "category": "any"
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-dashboard/jobs/search", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (basic)", True, 
+                                  {"jobs_found": len(data)})
+                else:
+                    self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (basic)", False, data, 
+                                  "Expected array of jobs")
+            else:
+                self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (basic)", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (basic)", False, None, str(e))
+        
+        # Test 9: POST /api/worker-dashboard/jobs/search with filters
+        try:
+            # Test with search filters
+            payload = {
+                "search": "web development",
+                "location": "remote",
+                "budget": "$100-$500",
+                "duration": "any",
+                "category": "Web Development"
+            }
+            
+            response = requests.post(f"{BASE_URL}/worker-dashboard/jobs/search", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (filtered)", True, 
+                                  {"jobs_found": len(data), "filters_applied": payload})
+                else:
+                    self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (filtered)", False, data, 
+                                  "Expected array of jobs")
+            else:
+                self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (filtered)", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Job Search - POST /api/worker-dashboard/jobs/search (filtered)", False, None, str(e))
+        
+        # Test 10: Error handling - Invalid user ID
+        try:
+            response = requests.get(f"{BASE_URL}/worker-dashboard/stats/invalid-user-id-12345")
+            
+            # Should still return 200 with zero values for non-existent user
+            if response.status_code == 200:
+                data = response.json()
+                self.log_result("worker_dashboard", "Error Handling - Invalid User ID", True, 
+                              {"status_code": response.status_code, "message": "Properly handled invalid user ID", "data": data})
+            else:
+                self.log_result("worker_dashboard", "Error Handling - Invalid User ID", False, None, 
+                              f"Unexpected response for invalid user ID: HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("worker_dashboard", "Error Handling - Invalid User ID", False, None, str(e))
+
     def test_role_based_multi_hire(self):
         """Test Role-Based Multi-Hire feature implementation"""
         print("\n🎯 Testing Role-Based Multi-Hire Feature...")
