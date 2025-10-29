@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { safeFetch } from '../utils/safeFetch';
 
 const AuthContext = createContext(null);
 
