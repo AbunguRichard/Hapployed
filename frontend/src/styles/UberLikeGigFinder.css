@@ -1,0 +1,375 @@
+/* Uber-Like Gig Finder Styles */
+
+.gigs-feed-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.gig-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.gig-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.gig-card.urgent {
+    border: 2px solid #ff6b6b;
+    background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+}
+
+.urgent-flash {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.3), transparent);
+    animation: flashSlide 2s infinite;
+}
+
+@keyframes flashSlide {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.gig-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.gig-category {
+    background: #f0f0f0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.availability-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4facfe;
+}
+
+.gig-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #28a745;
+    margin-bottom: 8px;
+}
+
+.gig-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.gig-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.gig-client {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.client-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.client-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.client-location {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.gig-posted {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.match-score {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.match-percentage {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4facfe;
+    margin-bottom: 4px;
+}
+
+.match-details {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.gig-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-quick-apply,
+.btn-details {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-quick-apply {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+}
+
+.btn-quick-apply:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
+}
+
+.btn-details {
+    background: white;
+    border: 2px solid #e0e0e0;
+    color: #666;
+}
+
+.btn-details:hover {
+    border-color: #4facfe;
+    color: #4facfe;
+}
+
+/* No Gigs State */
+.no-gigs {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 16px;
+}
+
+.no-gigs-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.no-gigs h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.no-gigs p {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.btn-expand {
+    background: #4facfe;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-expand:hover {
+    background: #3a9bef;
+    transform: translateY(-2px);
+}
+
+/* Application Success Modal */
+.application-success {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.success-overlay {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    animation: slideUp 0.4s ease;
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: scaleIn 0.5s ease;
+}
+
+.success-content h3 {
+    font-size: 1.8rem;
+    color: #28a745;
+    margin-bottom: 12px;
+}
+
+.success-content p {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.success-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.success-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.success-actions button:first-child {
+    background: #e0e0e0;
+    color: #666;
+}
+
+.success-actions button:last-child {
+    background: #4facfe;
+    color: white;
+}
+
+.success-actions button:hover {
+    transform: translateY(-2px);
+}
+
+/* Filter Chips */
+.filter-chips {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    color: #666;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-chip:hover {
+    border-color: #4facfe;
+}
+
+.filter-chip.active {
+    background: #4facfe;
+    border-color: #4facfe;
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .gigs-feed-container {
+        padding: 12px;
+    }
+
+    .gig-card {
+        padding: 16px;
+    }
+
+    .gig-price {
+        font-size: 1.5rem;
+    }
+
+    .gig-title {
+        font-size: 1.1rem;
+    }
+
+    .gig-actions {
+        flex-direction: column;
+    }
+
+    .filter-chips {
+        justify-content: center;
+    }
+}
