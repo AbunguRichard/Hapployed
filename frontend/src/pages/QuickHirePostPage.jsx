@@ -166,8 +166,8 @@ export default function QuickHirePostPage() {
           }
         }
       } else {
-        // Fallback to original method
-        const response = await fetch(`${BACKEND_URL}/api/quickhire/gigs`, {
+        // Fallback to original method using xhrFetch
+        const response = await xhrFetch(`${BACKEND_URL}/api/quickhire/gigs`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -175,14 +175,12 @@ export default function QuickHirePostPage() {
           body: JSON.stringify(gigData)
         });
 
-        const responseClone = response.clone();
-
         if (!response.ok) {
-          const errorText = await responseClone.text();
-          throw new Error(errorText || 'Failed to post gig');
+          const errorMessage = response.data?.detail || response.data?.message || 'Failed to post gig';
+          throw new Error(errorMessage);
         }
 
-        const result = await response.json();
+        const result = response.data;
         
         toast.success('QuickHire request posted! Finding nearby workers...');
         
