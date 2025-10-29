@@ -45,13 +45,23 @@ export default function QuickHirePostPage() {
     groupMode: false
   });
 
-  // Initialize workflow
+  const notificationSystemRef = useRef(null);
+  const clientWaitingRef = useRef(null);
+
+  // Initialize workflow and notification system
   useEffect(() => {
     workflowRef.current = new QuickHireWorkflow();
+    notificationSystemRef.current = new QuickHireNotifications();
     
     return () => {
       if (workflowRef.current) {
         workflowRef.current.cleanup();
+      }
+      if (notificationSystemRef.current) {
+        notificationSystemRef.current.cleanup();
+      }
+      if (clientWaitingRef.current) {
+        clientWaitingRef.current.cleanup();
       }
     };
   }, []);
