@@ -452,6 +452,14 @@ function App() {
               } 
             />
             <Route 
+              path="/find-gigs" 
+              element={
+                <ProtectedRoute>
+                  <FindGigsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/me/projects" 
               element={
                 <ProtectedRoute>
