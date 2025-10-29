@@ -61,6 +61,7 @@ import MyGigsPage from './pages/MyGigsPage';
 import FindGigsPage from './pages/FindGigsPage';
 import MyProjectsPage from './pages/MyProjectsPage';
 import TalentPage from './pages/TalentPage';
+import WorkerDashboardPage from './pages/WorkerDashboardPage';
 import './App.css';
 
 function App() {
