@@ -480,6 +480,16 @@ function App() {
               } 
             />
             
+            {/* Epic Worker Dashboard */}
+            <Route 
+              path="/epic-worker-dashboard" 
+              element={
+                <ProtectedRoute>
+                  <WorkerDashboardPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
             {/* Catch all - redirect to home */}
