@@ -150,7 +150,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, name, role) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+      const response = await safeFetch(`${BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -159,22 +159,12 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
-      // Clone FIRST before any consumption (for Emergent monitoring compatibility)
-      const responseClone = response.clone();
-      
-      // Read from the clone to allow monitoring scripts to access original
-      const responseText = await responseClone.text();
-      
-      let data;
-      try {
-        data = JSON.parse(responseText);
-      } catch (e) {
-        throw new Error('Invalid response from server');
-      }
-      
       if (!response.ok) {
-        throw new Error(data.detail || 'Signup failed');
+        const errorMessage = response.data?.detail || response.data?.message || 'Signup failed';
+        throw new Error(errorMessage);
       }
+
+      const data = response.data;
 
       setAuthToken(data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
