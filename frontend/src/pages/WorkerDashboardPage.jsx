@@ -1113,11 +1113,11 @@ export default function WorkerDashboardPage() {
           {activeSection === 'profile' && renderProfile()}
           {activeSection === 'resources' && renderResources()}
           {activeSection === 'settings' && renderSettings()}
-              <p className="text-gray-600">This section is under construction</p>
-            </div>
-          )}
         </div>
       </div>
+    </div>
+  );
+}
     </div>
   );
 }
