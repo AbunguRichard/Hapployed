@@ -227,15 +227,19 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ role })
       });
 
-      // Clone response to avoid "body already used" error
-      const responseClone = response.clone();
+      // Read response as text first to avoid "body already used" error
+      const responseText = await response.text();
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        throw new Error('Invalid response from server');
+      }
       
       if (!response.ok) {
-        const errorData = await responseClone.json().catch(() => ({ detail: 'Failed to add role' }));
-        throw new Error(errorData.detail || 'Failed to add role');
+        throw new Error(data.detail || 'Failed to add role');
       }
-
-      const data = await response.json();
 
       // Refresh user data
       await checkAuthStatus();
