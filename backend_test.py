@@ -2468,7 +2468,10 @@ class BackendTester:
         print(f"👤 Test User ID: {TEST_USER_ID}")
         print("=" * 60)
         
-        # PRIORITY: Role-Based Multi-Hire Feature Tests
+        # PRIORITY: Epic Worker Dashboard API Tests
+        self.test_epic_worker_dashboard_endpoints()
+        
+        # Role-Based Multi-Hire Feature Tests
         self.test_role_based_multi_hire()
         
         # Worker Features Tests
