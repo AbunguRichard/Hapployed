@@ -341,8 +341,11 @@ export default function PostProjectPage() {
         
         clearTimeout(timeoutId);
         
-        // Read as text first to avoid "body already used" error
-        const responseText = await response.text();
+        // Clone FIRST before any consumption (for Emergent monitoring compatibility)
+        const responseClone = response.clone();
+        
+        // Read from the clone to allow monitoring scripts to access original
+        const responseText = await responseClone.text();
         let estimate;
         
         try {
