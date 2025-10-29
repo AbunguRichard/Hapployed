@@ -892,6 +892,12 @@ async def check_worker_response(gigId: str):
         # Return current status
         return {
             'status': invitation['status'],  # pending, accepted, declined
+            'workerId': invitation.get('workerId'),
+            'respondedAt': invitation.get('respondedAt')
+        }
+    
+    except Exception as e:
+        return {'status': 'error', 'message': str(e)}
 
 
 # ============== NOTIFICATION SYSTEM ENDPOINTS ==============
