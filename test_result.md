@@ -462,11 +462,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Epic Worker Dashboard - Frontend Implementation"
+    - "WorkerOnboardingPage - 3-Step Onboarding Flow"
+    - "EmployerDashboard - Employer-Specific Dashboard"
   stuck_tasks: 
     - "WorkerOnboardingPage - 3-Step Onboarding Flow"
     - "EmployerDashboard - Employer-Specific Dashboard"
-    - "Epic Worker Dashboard - Frontend Implementation"
   test_all: false
   test_priority: "high_first"
 
