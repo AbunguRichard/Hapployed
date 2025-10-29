@@ -453,8 +453,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "WorkerOnboardingPage - 3-Step Onboarding Flow"
-    - "EmployerDashboard - Employer-Specific Dashboard"
+    - "Epic Worker Dashboard API Endpoints"
+    - "Epic Worker Dashboard - Frontend Implementation"
   stuck_tasks: 
     - "WorkerOnboardingPage - 3-Step Onboarding Flow"
     - "EmployerDashboard - Employer-Specific Dashboard"
