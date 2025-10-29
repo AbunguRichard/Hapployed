@@ -701,7 +701,7 @@ export default function WorkerDashboardPage() {
             )}
 
             {/* Submitted Tab */}
-            {activeTab === 'submitted' && (
+            {applicationsTab === 'submitted' && (
               <div className="space-y-4">
                 {applications.submitted.map((app) => (
                   <div key={app.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
