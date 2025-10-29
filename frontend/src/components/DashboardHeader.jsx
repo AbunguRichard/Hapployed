@@ -69,10 +69,6 @@ export default function DashboardHeader() {
       ]
     },
     { 
-      name: 'Worker Dashboard', 
-      path: '/epic-worker-dashboard',
-    },
-    { 
       name: 'Find Gigs', 
       path: '/gigs-near-me',
     },
@@ -84,6 +80,7 @@ export default function DashboardHeader() {
       name: 'My Jobs', 
       hasDropdown: true,
       dropdownItems: [
+        { name: 'My Dashboard', path: '/epic-worker-dashboard', icon: '📊' },
         { name: 'My Gigs', path: '/me/gigs' },
         { name: 'My Projects', path: '/me/projects' }
       ]
