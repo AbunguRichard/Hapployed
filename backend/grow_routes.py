@@ -448,7 +448,7 @@ async def start_assessment(request: StartAssessmentRequest, user_id: str = Query
         
         return {
             "success": True,
-            "data": assessment.dict()
+            "data": convert_objectid(assessment.dict())
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
