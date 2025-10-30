@@ -556,7 +556,7 @@ async def create_post(request: CreatePostRequest, user_id: str = Query(...)):
         return {
             "success": True,
             "message": "Post created successfully",
-            "data": post.dict()
+            "data": convert_objectid(post.dict())
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
