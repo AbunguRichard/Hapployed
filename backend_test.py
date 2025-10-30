@@ -23,6 +23,7 @@ class BackendTester:
             "ai_matching": {},
             "job_posting": {},
             "worker_dashboard": {},
+            "wallet": {},
             "summary": {"passed": 0, "failed": 0, "errors": []}
         }
         
