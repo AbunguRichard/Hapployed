@@ -487,6 +487,8 @@ test_plan:
     - "EmployerDashboard - Employer-Specific Dashboard"
   test_all: false
   test_priority: "high_first"
+  completed_tasks:
+    - "My Work Pages - AI Match, Grow, Wallet Placeholder Pages"
 
 agent_communication:
   - agent: "main"
