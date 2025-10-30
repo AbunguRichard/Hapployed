@@ -492,9 +492,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Grow System Backend API Endpoints"
-    - "Advanced Search & Filters Backend API Endpoints"
-    - "Talent Verification System Backend API Endpoints"
+    - "Fix MongoDB ObjectId serialization issues in Grow System"
+    - "Fix MongoDB ObjectId serialization issues in Verification System"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
