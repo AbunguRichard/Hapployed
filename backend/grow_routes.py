@@ -589,7 +589,7 @@ async def upvote_post(post_id: str, user_id: str = Query(...)):
         
         return {
             "success": True,
-            "data": post
+            "data": convert_objectid(post)
         }
     except HTTPException:
         raise
