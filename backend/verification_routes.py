@@ -520,7 +520,7 @@ async def verify_identity(request: VerifyIdentityRequest, user_id: str = Query(.
         return {
             "success": True,
             "message": "Identity verified successfully" if check_result["success"] else "Identity verification failed",
-            "data": verification
+            "data": convert_objectid(verification)
         }
     except HTTPException:
         raise
