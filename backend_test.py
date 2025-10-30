@@ -2841,6 +2841,9 @@ class BackendTester:
         # Application System Tests
         self.test_application_system_endpoints()
         
+        # Wallet System Tests
+        self.test_wallet_system_endpoints()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
