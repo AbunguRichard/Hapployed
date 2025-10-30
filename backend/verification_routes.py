@@ -649,7 +649,7 @@ async def complete_verification(user_id: str = Query(...)):
         return {
             "success": True,
             "message": "Verification completed successfully",
-            "data": verification
+            "data": convert_objectid(verification)
         }
     except HTTPException:
         raise
