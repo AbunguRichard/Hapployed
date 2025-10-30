@@ -676,7 +676,7 @@ async def get_recommended_courses(user_id: str = Query(...), limit: int = Query(
         
         return {
             "success": True,
-            "data": courses
+            "data": convert_objectid(courses)
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
