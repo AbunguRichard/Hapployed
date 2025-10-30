@@ -357,7 +357,7 @@ async def enroll_in_course(course_id: str, user_id: str = Query(...)):
         return {
             "success": True,
             "message": "Successfully enrolled in course",
-            "data": progress.dict()
+            "data": convert_objectid(progress.dict())
         }
     except HTTPException:
         raise
