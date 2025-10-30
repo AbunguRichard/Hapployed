@@ -27,6 +27,9 @@ from analytics_routes import router as analytics_router
 from worker_dashboard_routes import router as worker_dashboard_router
 from wallet_routes import router as wallet_router
 from ai_match_routes import router as ai_match_router
+from grow_routes import router as grow_router
+from search_routes import router as search_router
+from verification_routes import router as verification_router
 
 
 ROOT_DIR = Path(__file__).parent
