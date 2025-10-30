@@ -493,6 +493,32 @@ function App() {
               } 
             />
             
+            {/* My Work Routes */}
+            <Route 
+              path="/my-work/ai-match" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <AIMatchPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/my-work/grow" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <GrowPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/my-work/wallet" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <WalletPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
             {/* Catch all - redirect to home */}
