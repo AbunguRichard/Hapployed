@@ -87,6 +87,7 @@ app.include_router(application_router)
 app.include_router(quickhire_router)
 app.include_router(analytics_router)
 app.include_router(worker_dashboard_router)
+app.include_router(wallet_router)
 
 app.add_middleware(
     CORSMiddleware,
