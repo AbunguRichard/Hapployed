@@ -657,9 +657,9 @@ async def get_user_analytics(user_id: str = Query(...)):
                     "total_assessments": len(assessments),
                     "passed_assessments": passed_assessments
                 },
-                "recent_activity": progress_list[:5],
+                "recent_activity": convert_objectid(progress_list[:5]),
                 "skill_progress": [],
-                "assessments": assessments[:5]
+                "assessments": convert_objectid(assessments[:5])
             }
         }
     except Exception as e:
