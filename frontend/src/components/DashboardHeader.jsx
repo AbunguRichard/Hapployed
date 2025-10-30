@@ -34,6 +34,9 @@ export default function DashboardHeader() {
       if (professionalWorkDropdownRef.current && !professionalWorkDropdownRef.current.contains(event.target)) {
         setIsProfessionalWorkDropdownOpen(false);
       }
+      if (myWorkDropdownRef.current && !myWorkDropdownRef.current.contains(event.target)) {
+        setIsMyWorkDropdownOpen(false);
+      }
       if (myJobsDropdownRef.current && !myJobsDropdownRef.current.contains(event.target)) {
         setIsMyJobsDropdownOpen(false);
       }
