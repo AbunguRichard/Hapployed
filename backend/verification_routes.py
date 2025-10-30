@@ -601,7 +601,7 @@ async def verify_skill(request: VerifySkillRequest, user_id: str = Query(...)):
         return {
             "success": True,
             "message": "Skill verification completed",
-            "data": verification
+            "data": convert_objectid(verification)
         }
     except HTTPException:
         raise
