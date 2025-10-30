@@ -451,7 +451,7 @@ async def upload_document(request: UploadDocumentRequest, user_id: str = Query(.
         return {
             "success": True,
             "message": "Document uploaded successfully",
-            "data": verification
+            "data": convert_objectid(verification)
         }
     except HTTPException:
         raise
