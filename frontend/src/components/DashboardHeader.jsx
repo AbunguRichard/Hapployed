@@ -13,11 +13,13 @@ export default function DashboardHeader() {
   const [isQuickHireModalOpen, setIsQuickHireModalOpen] = useState(false);
   const [isQuickHireDropdownOpen, setIsQuickHireDropdownOpen] = useState(false);
   const [isProfessionalWorkDropdownOpen, setIsProfessionalWorkDropdownOpen] = useState(false);
+  const [isMyWorkDropdownOpen, setIsMyWorkDropdownOpen] = useState(false);
   const [isMyJobsDropdownOpen, setIsMyJobsDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const quickHireDropdownRef = useRef(null);
   const professionalWorkDropdownRef = useRef(null);
+  const myWorkDropdownRef = useRef(null);
   const myJobsDropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
