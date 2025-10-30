@@ -7,7 +7,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://worker-hub-9.preview.emergentagent.com/api"
+BASE_URL = "https://worker-dashboard-1.preview.emergentagent.com/api"
 
 def test_voice_parsing():
     """Test AI Voice Parsing endpoint"""
