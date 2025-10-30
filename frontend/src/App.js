@@ -65,6 +65,7 @@ import WorkerDashboardPage from './pages/WorkerDashboardPage';
 import AIMatchPage from './pages/AIMatchPage';
 import GrowPage from './pages/GrowPage';
 import WalletPage from './pages/WalletPage';
+import SearchPage from './pages/SearchPage';
 import './App.css';
 
 function App() {
