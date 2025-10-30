@@ -495,7 +495,7 @@ async def submit_assessment(assessment_id: str, request: SubmitAssessmentRequest
         return {
             "success": True,
             "message": "Assessment passed!" if passed else "Assessment failed, keep learning!",
-            "data": assessment
+            "data": convert_objectid(assessment)
         }
     except HTTPException:
         raise
