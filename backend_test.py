@@ -3641,6 +3641,19 @@ class BackendTester:
         # Wallet System Tests
         self.test_wallet_system_endpoints()
         
+        # NEW SYSTEMS TESTING - Three Major Systems
+        print("\n🆕 TESTING THREE NEW BACKEND SYSTEMS")
+        print("=" * 60)
+        
+        # Grow System Tests
+        self.test_grow_system_endpoints()
+        
+        # Search System Tests
+        self.test_search_system_endpoints()
+        
+        # Verification System Tests
+        self.test_verification_system_endpoints()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
