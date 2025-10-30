@@ -314,7 +314,7 @@ async def get_courses(
         return {
             "success": True,
             "data": {
-                "courses": courses,
+                "courses": convert_objectid(courses),
                 "pagination": {
                     "current": page,
                     "pages": (total + limit - 1) // limit,
