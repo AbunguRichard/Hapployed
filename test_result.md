@@ -569,6 +569,8 @@ test_plan:
   completed_tasks:
     - "My Work Pages - AI Match, Grow, Wallet Placeholder Pages"
     - "Advanced Search & Filters Backend API Endpoints"
+    - "Grow System Frontend Implementation"
+    - "Advanced Search System Frontend Implementation"
 
 agent_communication:
   - agent: "main"
