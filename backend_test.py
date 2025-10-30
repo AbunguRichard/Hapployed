@@ -24,6 +24,9 @@ class BackendTester:
             "job_posting": {},
             "worker_dashboard": {},
             "wallet": {},
+            "grow": {},
+            "search": {},
+            "verification": {},
             "summary": {"passed": 0, "failed": 0, "errors": []}
         }
         
