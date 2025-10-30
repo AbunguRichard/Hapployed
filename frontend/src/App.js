@@ -62,6 +62,9 @@ import FindGigsPage from './pages/FindGigsPage';
 import MyProjectsPage from './pages/MyProjectsPage';
 import TalentPage from './pages/TalentPage';
 import WorkerDashboardPage from './pages/WorkerDashboardPage';
+import AIMatchPage from './pages/AIMatchPage';
+import GrowPage from './pages/GrowPage';
+import WalletPage from './pages/WalletPage';
 import './App.css';
 
 function App() {
