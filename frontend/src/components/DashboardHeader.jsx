@@ -77,6 +77,15 @@ export default function DashboardHeader() {
       path: '/find-workers',
     },
     { 
+      name: 'My Work', 
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'AI Match', path: '/my-work/ai-match', icon: '🤖' },
+        { name: 'Grow', path: '/my-work/grow', icon: '📚' },
+        { name: 'Wallet', path: '/my-work/wallet', icon: '💰' }
+      ]
+    },
+    { 
       name: 'My Jobs', 
       hasDropdown: true,
       dropdownItems: [
