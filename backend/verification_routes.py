@@ -679,7 +679,7 @@ async def get_verification_status(user_id: str = Query(...)):
         return {
             "success": True,
             "data": {
-                **verification,
+                **convert_objectid(verification),
                 "progress": progress,
                 "requirements": requirements,
                 "next_steps": next_steps
