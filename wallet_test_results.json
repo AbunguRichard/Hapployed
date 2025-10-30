@@ -1,0 +1,234 @@
+{
+  "wallet": {
+    "Get/Create Wallet - GET /api/wallet/": {
+      "success": true,
+      "response": {
+        "success": true,
+        "data": {
+          "_id": "demo-user-123",
+          "user_id": "demo-user-123",
+          "balance": {
+            "available": 0.0,
+            "pending": 0.0,
+            "reserved": 0.0
+          },
+          "currency": "USD",
+          "transactions": [],
+          "payment_methods": [],
+          "settings": {
+            "auto_cashout": false,
+            "cashout_threshold": 100.0,
+            "preferred_method": null,
+            "tax_settings": {
+              "tax_id": null,
+              "country": null
+            }
+          },
+          "limits": {
+            "daily_cashout": 5000.0,
+            "monthly_cashout": 20000.0,
+            "instant_cashout_fee": 1.5
+          },
+          "financial_products": {
+            "savings": {
+              "enabled": false,
+              "balance": 0.0,
+              "interest_rate": 2.5
+            },
+            "credit": {
+              "available": 0.0,
+              "used": 0.0,
+              "interest_rate": 12.5
+            }
+          },
+          "stats": {
+            "total_earned": 0.0,
+            "total_withdrawn": 0.0,
+            "total_fees": 0.0,
+            "last_cashout": null
+          },
+          "created_at": "2025-10-30T19:34:20.566000"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.037675"
+    },
+    "Calculate Fees - Instant Bank Transfer": {
+      "success": true,
+      "response": {
+        "success": true,
+        "data": {
+          "fee_amount": 1.5,
+          "net_amount": 98.5,
+          "rate": 1.5,
+          "type": "instant"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.078799"
+    },
+    "Calculate Fees - Standard PayPal": {
+      "success": true,
+      "response": {
+        "success": true,
+        "data": {
+          "fee_amount": 2.5,
+          "net_amount": 97.5,
+          "rate": 2.5,
+          "type": "standard"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.118814"
+    },
+    "Calculate Fees - Instant Credit Card": {
+      "success": true,
+      "response": {
+        "success": true,
+        "data": {
+          "fee_amount": 2.0,
+          "net_amount": 98.0,
+          "rate": 2.0,
+          "type": "instant"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.159537"
+    },
+    "Instant Cashout - Bank Transfer": {
+      "success": true,
+      "response": {
+        "status_code": 400,
+        "message": "Properly handled insufficient balance"
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.198712"
+    },
+    "Standard Cashout - PayPal": {
+      "success": true,
+      "response": {
+        "status_code": 400,
+        "message": "Properly handled insufficient balance"
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.234560"
+    },
+    "Savings Setup - No Initial Amount": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Savings account setup successfully",
+        "data": {
+          "success": true,
+          "savings_balance": 0.0,
+          "interest_rate": 2.5
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.276127"
+    },
+    "Credit Request - Equipment Purchase": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Credit request processed",
+        "data": {
+          "success": true,
+          "credit_used": 200.0,
+          "available_credit": 64800.0,
+          "repayment_date": "2025-11-29T19:37:58.314130+00:00"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.318590"
+    },
+    "Savings Setup - With Initial Amount": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Savings account setup successfully",
+        "data": {
+          "success": true,
+          "savings_balance": 100.0,
+          "interest_rate": 2.5
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.369434"
+    },
+    "Add Payment Method - Bank Account": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Payment method added successfully",
+        "data": {
+          "id": "807adfd1-104d-4d8c-b576-d2fc168469e0",
+          "type": "bank",
+          "is_default": true,
+          "verified": false,
+          "details": {
+            "bank_name": "Chase",
+            "account_last4": "5678",
+            "paypal_email": null,
+            "card_brand": null,
+            "card_last4": null,
+            "crypto_address": null
+          },
+          "added_at": "2025-10-30T19:37:58.402199+00:00"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.406791"
+    },
+    "Add Payment Method - PayPal": {
+      "success": true,
+      "response": {
+        "success": true,
+        "message": "Payment method added successfully",
+        "data": {
+          "id": "004a1d28-cd6f-421e-a1fb-923e33dda02d",
+          "type": "paypal",
+          "is_default": false,
+          "verified": false,
+          "details": {
+            "bank_name": null,
+            "account_last4": null,
+            "paypal_email": "user@paypal.com",
+            "card_brand": null,
+            "card_last4": null,
+            "crypto_address": null
+          },
+          "added_at": "2025-10-30T19:37:58.440474+00:00"
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.445318"
+    },
+    "Get Transaction History": {
+      "success": true,
+      "response": {
+        "transaction_count": 2,
+        "pagination": {
+          "current": 1,
+          "total": 1,
+          "total_transactions": 2
+        }
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.492215"
+    },
+    "Get Transaction History - Filtered by Type": {
+      "success": true,
+      "response": {
+        "filtered_transactions": 1
+      },
+      "error": null,
+      "timestamp": "2025-10-30T19:37:58.529228"
+    }
+  },
+  "summary": {
+    "passed": 13,
+    "failed": 0,
+    "errors": []
+  }
+}
