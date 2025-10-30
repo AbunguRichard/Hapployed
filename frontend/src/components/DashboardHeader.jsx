@@ -129,18 +129,22 @@ export default function DashboardHeader() {
                 const isQuickHire = item.name === 'Quick Hire';
                 const isMyJobs = item.name === 'My Jobs';
                 const isProfessionalWork = item.name === 'Professional Work';
+                const isMyWork = item.name === 'My Work';
                 
                 const dropdownOpen = isQuickHire ? isQuickHireDropdownOpen : 
                                     isMyJobs ? isMyJobsDropdownOpen :
-                                    isProfessionalWork ? isProfessionalWorkDropdownOpen : false;
+                                    isProfessionalWork ? isProfessionalWorkDropdownOpen :
+                                    isMyWork ? isMyWorkDropdownOpen : false;
                                     
                 const setDropdownOpen = isQuickHire ? setIsQuickHireDropdownOpen : 
                                        isMyJobs ? setIsMyJobsDropdownOpen :
-                                       isProfessionalWork ? setIsProfessionalWorkDropdownOpen : null;
+                                       isProfessionalWork ? setIsProfessionalWorkDropdownOpen :
+                                       isMyWork ? setIsMyWorkDropdownOpen : null;
                                        
                 const dropdownRefToUse = isQuickHire ? quickHireDropdownRef : 
                                         isMyJobs ? myJobsDropdownRef :
-                                        isProfessionalWork ? professionalWorkDropdownRef : null;
+                                        isProfessionalWork ? professionalWorkDropdownRef :
+                                        isMyWork ? myWorkDropdownRef : null;
                 
                 return (
                   <div key={index} className="relative" ref={dropdownRefToUse}>
