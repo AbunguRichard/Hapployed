@@ -766,7 +766,7 @@ async def review_verification(
         return {
             "success": True,
             "message": f"Verification {request.action}d successfully",
-            "data": verification
+            "data": convert_objectid(verification)
         }
     except HTTPException:
         raise
