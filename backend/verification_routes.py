@@ -5,8 +5,21 @@ from datetime import datetime, timedelta, timezone
 import uuid
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
+from bson import ObjectId
 
 router = APIRouter(prefix="/api/verification", tags=["Verification"])
+
+# Helper function to convert MongoDB ObjectId to string
+def convert_objectid(doc):
+    """Recursively convert ObjectId to string in document"""
+    if doc is None:
+        return None
+    if isinstance(doc, list):
+        return [convert_objectid(item) for item in doc]
+    if isinstance(doc, dict):
+        return {key: str(value) if isinstance(value, ObjectId) else convert_objectid(value) 
+                for key, value in doc.items()}
+    return doc
 
 # MongoDB connection
 MONGO_URL = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
