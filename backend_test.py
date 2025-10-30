@@ -771,6 +771,800 @@ class BackendTester:
         except Exception as e:
             self.log_result("ai_matching", "AI Price Estimator - Missing WorkType", False, None, str(e))
 
+    def test_grow_system_endpoints(self):
+        """Test Grow System API endpoints"""
+        print("\n📚 Testing Grow System Endpoints...")
+        
+        test_user_id = "grow-test-user-123"
+        test_course_id = None
+        test_assessment_id = None
+        test_post_id = None
+        
+        # Test 1: GET /api/grow/courses - Get courses with filters
+        try:
+            response = requests.get(f"{BASE_URL}/grow/courses")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    courses_data = data["data"]
+                    if ("courses" in courses_data and "pagination" in courses_data):
+                        self.log_result("grow", "Get Courses - GET /api/grow/courses", True, 
+                                      {"course_count": len(courses_data["courses"]), "pagination": courses_data["pagination"]})
+                    else:
+                        self.log_result("grow", "Get Courses - GET /api/grow/courses", False, data, 
+                                      "Missing courses or pagination fields")
+                else:
+                    self.log_result("grow", "Get Courses - GET /api/grow/courses", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("grow", "Get Courses - GET /api/grow/courses", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get Courses - GET /api/grow/courses", False, None, str(e))
+        
+        # Test 2: GET /api/grow/courses with filters
+        try:
+            response = requests.get(f"{BASE_URL}/grow/courses?category=Web Development&level=beginner&search=react")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    self.log_result("grow", "Get Courses with Filters", True, data)
+                else:
+                    self.log_result("grow", "Get Courses with Filters", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Get Courses with Filters", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get Courses with Filters", False, None, str(e))
+        
+        # Test 3: POST /api/grow/courses/{course_id}/enroll - Enroll in course
+        try:
+            # Use a mock course ID for testing
+            mock_course_id = "test-course-123"
+            response = requests.post(f"{BASE_URL}/grow/courses/{mock_course_id}/enroll?user_id={test_user_id}")
+            
+            # This might return 404 if course doesn't exist, which is expected
+            if response.status_code == 404:
+                self.log_result("grow", "Course Enrollment - Course Not Found", True, 
+                              {"status_code": response.status_code, "message": "Properly handled non-existent course"})
+            elif response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    self.log_result("grow", "Course Enrollment - Success", True, data)
+                else:
+                    self.log_result("grow", "Course Enrollment - Success", False, data, "Enrollment failed")
+            else:
+                self.log_result("grow", "Course Enrollment", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Course Enrollment", False, None, str(e))
+        
+        # Test 4: POST /api/grow/courses/{course_id}/complete-lesson - Complete lesson
+        try:
+            mock_course_id = "test-course-123"
+            payload = {
+                "lesson_id": "lesson-123",
+                "score": 85.5,
+                "time_spent": 1800
+            }
+            response = requests.post(f"{BASE_URL}/grow/courses/{mock_course_id}/complete-lesson?user_id={test_user_id}", json=payload)
+            
+            # This might return 404 if not enrolled, which is expected
+            if response.status_code == 404:
+                self.log_result("grow", "Complete Lesson - Not Enrolled", True, 
+                              {"status_code": response.status_code, "message": "Properly handled not enrolled"})
+            elif response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    self.log_result("grow", "Complete Lesson - Success", True, data)
+                else:
+                    self.log_result("grow", "Complete Lesson - Success", False, data, "Lesson completion failed")
+            else:
+                self.log_result("grow", "Complete Lesson", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Complete Lesson", False, None, str(e))
+        
+        # Test 5: POST /api/grow/assessments/start - Start assessment
+        try:
+            payload = {
+                "skill": "JavaScript",
+                "category": "Programming"
+            }
+            response = requests.post(f"{BASE_URL}/grow/assessments/start?user_id={test_user_id}", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    assessment_data = data["data"]
+                    if ("id" in assessment_data and "questions" in assessment_data):
+                        test_assessment_id = assessment_data["id"]
+                        self.log_result("grow", "Start Assessment", True, 
+                                      {"assessment_id": test_assessment_id, "question_count": len(assessment_data["questions"])})
+                    else:
+                        self.log_result("grow", "Start Assessment", False, data, "Missing assessment fields")
+                else:
+                    self.log_result("grow", "Start Assessment", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Start Assessment", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Start Assessment", False, None, str(e))
+        
+        # Test 6: POST /api/grow/assessments/{assessment_id}/submit - Submit assessment
+        try:
+            if test_assessment_id:
+                payload = {
+                    "answers": [0, 1, 2, 3, 0, 1, 2, 3, 0, 1],  # 10 answers
+                    "time_spent": 1200
+                }
+                response = requests.post(f"{BASE_URL}/grow/assessments/{test_assessment_id}/submit", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("success") and "data" in data):
+                        assessment_result = data["data"]
+                        if ("score" in assessment_result and "passed" in assessment_result):
+                            self.log_result("grow", "Submit Assessment", True, 
+                                          {"score": assessment_result["score"], "passed": assessment_result["passed"]})
+                        else:
+                            self.log_result("grow", "Submit Assessment", False, data, "Missing assessment result fields")
+                    else:
+                        self.log_result("grow", "Submit Assessment", False, data, "Invalid response format")
+                else:
+                    self.log_result("grow", "Submit Assessment", False, None, f"HTTP {response.status_code}")
+            else:
+                self.log_result("grow", "Submit Assessment", False, None, "No assessment ID available")
+                
+        except Exception as e:
+            self.log_result("grow", "Submit Assessment", False, None, str(e))
+        
+        # Test 7: GET /api/grow/community/posts - Get community posts
+        try:
+            response = requests.get(f"{BASE_URL}/grow/community/posts")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    posts_data = data["data"]
+                    if ("posts" in posts_data and "pagination" in posts_data):
+                        self.log_result("grow", "Get Community Posts", True, 
+                                      {"post_count": len(posts_data["posts"]), "pagination": posts_data["pagination"]})
+                    else:
+                        self.log_result("grow", "Get Community Posts", False, data, "Missing posts or pagination")
+                else:
+                    self.log_result("grow", "Get Community Posts", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Get Community Posts", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get Community Posts", False, None, str(e))
+        
+        # Test 8: POST /api/grow/community/posts - Create post
+        try:
+            payload = {
+                "content": "This is a test post about learning JavaScript. Any tips for beginners?",
+                "type": "question",
+                "category": "programming",
+                "title": "JavaScript Learning Tips"
+            }
+            response = requests.post(f"{BASE_URL}/grow/community/posts?user_id={test_user_id}", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    post_data = data["data"]
+                    if ("id" in post_data and "content" in post_data):
+                        test_post_id = post_data["id"]
+                        self.log_result("grow", "Create Community Post", True, 
+                                      {"post_id": test_post_id, "type": post_data["type"]})
+                    else:
+                        self.log_result("grow", "Create Community Post", False, data, "Missing post fields")
+                else:
+                    self.log_result("grow", "Create Community Post", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Create Community Post", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Create Community Post", False, None, str(e))
+        
+        # Test 9: POST /api/grow/community/posts/{post_id}/upvote - Upvote post
+        try:
+            if test_post_id:
+                response = requests.post(f"{BASE_URL}/grow/community/posts/{test_post_id}/upvote?user_id={test_user_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        self.log_result("grow", "Upvote Post", True, data)
+                    else:
+                        self.log_result("grow", "Upvote Post", False, data, "Upvote failed")
+                else:
+                    self.log_result("grow", "Upvote Post", False, None, f"HTTP {response.status_code}")
+            else:
+                self.log_result("grow", "Upvote Post", False, None, "No post ID available")
+                
+        except Exception as e:
+            self.log_result("grow", "Upvote Post", False, None, str(e))
+        
+        # Test 10: POST /api/grow/community/posts/{post_id}/comments - Add comment
+        try:
+            if test_post_id:
+                payload = {
+                    "content": "Great question! I recommend starting with basic syntax and then moving to DOM manipulation."
+                }
+                response = requests.post(f"{BASE_URL}/grow/community/posts/{test_post_id}/comments?user_id={test_user_id}", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        self.log_result("grow", "Add Comment", True, data)
+                    else:
+                        self.log_result("grow", "Add Comment", False, data, "Comment failed")
+                else:
+                    self.log_result("grow", "Add Comment", False, None, f"HTTP {response.status_code}")
+            else:
+                self.log_result("grow", "Add Comment", False, None, "No post ID available")
+                
+        except Exception as e:
+            self.log_result("grow", "Add Comment", False, None, str(e))
+        
+        # Test 11: GET /api/grow/progress/analytics - Get user analytics
+        try:
+            response = requests.get(f"{BASE_URL}/grow/progress/analytics?user_id={test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    analytics_data = data["data"]
+                    if ("overview" in analytics_data and "recent_activity" in analytics_data):
+                        self.log_result("grow", "Get User Analytics", True, analytics_data["overview"])
+                    else:
+                        self.log_result("grow", "Get User Analytics", False, data, "Missing analytics fields")
+                else:
+                    self.log_result("grow", "Get User Analytics", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Get User Analytics", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get User Analytics", False, None, str(e))
+        
+        # Test 12: GET /api/grow/recommendations/courses - Get course recommendations
+        try:
+            response = requests.get(f"{BASE_URL}/grow/recommendations/courses?user_id={test_user_id}&limit=5")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    recommendations = data["data"]
+                    if isinstance(recommendations, list):
+                        self.log_result("grow", "Get Course Recommendations", True, 
+                                      {"recommendation_count": len(recommendations)})
+                    else:
+                        self.log_result("grow", "Get Course Recommendations", False, data, "Invalid recommendations format")
+                else:
+                    self.log_result("grow", "Get Course Recommendations", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Get Course Recommendations", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get Course Recommendations", False, None, str(e))
+        
+        # Test 13: GET /api/grow/career-paths - Get career paths
+        try:
+            response = requests.get(f"{BASE_URL}/grow/career-paths")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    career_data = data["data"]
+                    if isinstance(career_data, dict):
+                        self.log_result("grow", "Get Career Paths - All", True, 
+                                      {"career_count": len(career_data)})
+                    else:
+                        self.log_result("grow", "Get Career Paths - All", False, data, "Invalid career paths format")
+                else:
+                    self.log_result("grow", "Get Career Paths - All", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Get Career Paths - All", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get Career Paths - All", False, None, str(e))
+        
+        # Test 14: GET /api/grow/career-paths with goal parameter
+        try:
+            response = requests.get(f"{BASE_URL}/grow/career-paths?goal=frontend")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    career_data = data["data"]
+                    if ("title" in career_data and "required_skills" in career_data):
+                        self.log_result("grow", "Get Career Paths - Frontend Goal", True, 
+                                      {"title": career_data["title"], "skills": career_data["required_skills"]})
+                    else:
+                        self.log_result("grow", "Get Career Paths - Frontend Goal", False, data, "Missing career path fields")
+                else:
+                    self.log_result("grow", "Get Career Paths - Frontend Goal", False, data, "Invalid response format")
+            else:
+                self.log_result("grow", "Get Career Paths - Frontend Goal", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("grow", "Get Career Paths - Frontend Goal", False, None, str(e))
+
+    def test_search_system_endpoints(self):
+        """Test Advanced Search & Filters System API endpoints"""
+        print("\n🔍 Testing Search System Endpoints...")
+        
+        # Test 1: GET /api/search/gigs - Search gigs with various filters
+        try:
+            response = requests.get(f"{BASE_URL}/search/gigs")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    search_data = data["data"]
+                    if ("gigs" in search_data and "pagination" in search_data):
+                        self.log_result("search", "Search Gigs - Basic", True, 
+                                      {"gig_count": len(search_data["gigs"]), "pagination": search_data["pagination"]})
+                    else:
+                        self.log_result("search", "Search Gigs - Basic", False, data, "Missing gigs or pagination")
+                else:
+                    self.log_result("search", "Search Gigs - Basic", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Search Gigs - Basic", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Search Gigs - Basic", False, None, str(e))
+        
+        # Test 2: GET /api/search/gigs with filters
+        try:
+            params = {
+                "q": "react developer",
+                "category": "Web Development",
+                "skills": "react,javascript",
+                "budget_min": 100,
+                "budget_max": 1000,
+                "sort_by": "budget_high",
+                "page": 1,
+                "limit": 10
+            }
+            response = requests.get(f"{BASE_URL}/search/gigs", params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    search_data = data["data"]
+                    if ("filters" in search_data):
+                        self.log_result("search", "Search Gigs - With Filters", True, 
+                                      {"applied_filters": search_data["filters"]})
+                    else:
+                        self.log_result("search", "Search Gigs - With Filters", False, data, "Missing filters")
+                else:
+                    self.log_result("search", "Search Gigs - With Filters", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Search Gigs - With Filters", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Search Gigs - With Filters", False, None, str(e))
+        
+        # Test 3: GET /api/search/talents - Search talents with filters
+        try:
+            response = requests.get(f"{BASE_URL}/search/talents")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    search_data = data["data"]
+                    if ("talents" in search_data and "pagination" in search_data):
+                        self.log_result("search", "Search Talents - Basic", True, 
+                                      {"talent_count": len(search_data["talents"]), "pagination": search_data["pagination"]})
+                    else:
+                        self.log_result("search", "Search Talents - Basic", False, data, "Missing talents or pagination")
+                else:
+                    self.log_result("search", "Search Talents - Basic", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Search Talents - Basic", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Search Talents - Basic", False, None, str(e))
+        
+        # Test 4: GET /api/search/talents with filters
+        try:
+            params = {
+                "q": "javascript developer",
+                "skills": "javascript,react",
+                "exp_min": 2,
+                "exp_max": 8,
+                "rate_min": 25,
+                "rate_max": 100,
+                "availability": "full-time",
+                "verification": "verified",
+                "rating_min": 4.0,
+                "sort_by": "rating"
+            }
+            response = requests.get(f"{BASE_URL}/search/talents", params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    search_data = data["data"]
+                    if ("filters" in search_data):
+                        self.log_result("search", "Search Talents - With Filters", True, 
+                                      {"applied_filters": search_data["filters"]})
+                    else:
+                        self.log_result("search", "Search Talents - With Filters", False, data, "Missing filters")
+                else:
+                    self.log_result("search", "Search Talents - With Filters", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Search Talents - With Filters", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Search Talents - With Filters", False, None, str(e))
+        
+        # Test 5: GET /api/search/suggestions - Get search suggestions
+        try:
+            response = requests.get(f"{BASE_URL}/search/suggestions?q=react&type=gigs")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    suggestions = data["data"]
+                    if isinstance(suggestions, list):
+                        self.log_result("search", "Get Search Suggestions - Gigs", True, 
+                                      {"suggestion_count": len(suggestions)})
+                    else:
+                        self.log_result("search", "Get Search Suggestions - Gigs", False, data, "Invalid suggestions format")
+                else:
+                    self.log_result("search", "Get Search Suggestions - Gigs", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Get Search Suggestions - Gigs", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Get Search Suggestions - Gigs", False, None, str(e))
+        
+        # Test 6: GET /api/search/suggestions for talents
+        try:
+            response = requests.get(f"{BASE_URL}/search/suggestions?q=javascript&type=talents")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    suggestions = data["data"]
+                    if isinstance(suggestions, list):
+                        self.log_result("search", "Get Search Suggestions - Talents", True, 
+                                      {"suggestion_count": len(suggestions)})
+                    else:
+                        self.log_result("search", "Get Search Suggestions - Talents", False, data, "Invalid suggestions format")
+                else:
+                    self.log_result("search", "Get Search Suggestions - Talents", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Get Search Suggestions - Talents", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Get Search Suggestions - Talents", False, None, str(e))
+        
+        # Test 7: GET /api/search/filters - Get available filters for gigs
+        try:
+            response = requests.get(f"{BASE_URL}/search/filters?type=gigs")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    filters_data = data["data"]
+                    if ("categories" in filters_data and "budget_ranges" in filters_data):
+                        self.log_result("search", "Get Search Filters - Gigs", True, 
+                                      {"categories": len(filters_data.get("categories", [])), 
+                                       "budget_ranges": len(filters_data.get("budget_ranges", []))})
+                    else:
+                        self.log_result("search", "Get Search Filters - Gigs", False, data, "Missing filter fields")
+                else:
+                    self.log_result("search", "Get Search Filters - Gigs", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Get Search Filters - Gigs", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Get Search Filters - Gigs", False, None, str(e))
+        
+        # Test 8: GET /api/search/filters - Get available filters for talents
+        try:
+            response = requests.get(f"{BASE_URL}/search/filters?type=talents")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    filters_data = data["data"]
+                    if ("skills" in filters_data and "hourly_rate_ranges" in filters_data):
+                        self.log_result("search", "Get Search Filters - Talents", True, 
+                                      {"skills": len(filters_data.get("skills", [])), 
+                                       "rate_ranges": len(filters_data.get("hourly_rate_ranges", []))})
+                    else:
+                        self.log_result("search", "Get Search Filters - Talents", False, data, "Missing filter fields")
+                else:
+                    self.log_result("search", "Get Search Filters - Talents", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Get Search Filters - Talents", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Get Search Filters - Talents", False, None, str(e))
+        
+        # Test 9: GET /api/search/advanced - AI-powered search
+        try:
+            params = {
+                "q": "react developer",
+                "skills": "react,javascript",
+                "user_id": "test-user-123"
+            }
+            response = requests.get(f"{BASE_URL}/search/advanced", params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    search_data = data["data"]
+                    if ("gigs" in search_data and "pagination" in search_data):
+                        # Check if AI relevance scores are added for authenticated user
+                        gigs = search_data["gigs"]
+                        has_ai_scores = any("ai_relevance_score" in gig for gig in gigs)
+                        self.log_result("search", "Advanced AI Search", True, 
+                                      {"gig_count": len(gigs), "has_ai_scores": has_ai_scores})
+                    else:
+                        self.log_result("search", "Advanced AI Search", False, data, "Missing gigs or pagination")
+                else:
+                    self.log_result("search", "Advanced AI Search", False, data, "Invalid response format")
+            else:
+                self.log_result("search", "Advanced AI Search", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("search", "Advanced AI Search", False, None, str(e))
+
+    def test_verification_system_endpoints(self):
+        """Test Talent Verification System API endpoints"""
+        print("\n🛡️ Testing Verification System Endpoints...")
+        
+        test_user_id = "verification-test-user-123"
+        test_verification_id = None
+        test_document_id = None
+        
+        # Test 1: POST /api/verification/start - Start verification
+        try:
+            payload = {
+                "level": "verified"
+            }
+            response = requests.post(f"{BASE_URL}/verification/start?user_id={test_user_id}", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    verification_data = data["data"]
+                    if ("id" in verification_data and "level" in verification_data):
+                        test_verification_id = verification_data["id"]
+                        self.log_result("verification", "Start Verification", True, 
+                                      {"verification_id": test_verification_id, "level": verification_data["level"]})
+                    else:
+                        self.log_result("verification", "Start Verification", False, data, "Missing verification fields")
+                else:
+                    self.log_result("verification", "Start Verification", False, data, "Invalid response format")
+            elif response.status_code == 400:
+                # Already exists - acceptable
+                self.log_result("verification", "Start Verification", True, 
+                              {"status_code": response.status_code, "message": "Verification already exists"})
+            else:
+                self.log_result("verification", "Start Verification", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Start Verification", False, None, str(e))
+        
+        # Test 2: POST /api/verification/documents - Upload document
+        try:
+            payload = {
+                "type": "id",
+                "file_url": "https://example.com/documents/id-card.jpg",
+                "file_name": "id-card.jpg",
+                "file_size": 1024000,
+                "mime_type": "image/jpeg"
+            }
+            response = requests.post(f"{BASE_URL}/verification/documents?user_id={test_user_id}", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    verification_data = data["data"]
+                    if ("documents" in verification_data and len(verification_data["documents"]) > 0):
+                        test_document_id = verification_data["documents"][-1]["id"]
+                        self.log_result("verification", "Upload Document", True, 
+                                      {"document_id": test_document_id, "document_count": len(verification_data["documents"])})
+                    else:
+                        self.log_result("verification", "Upload Document", False, data, "No documents found")
+                else:
+                    self.log_result("verification", "Upload Document", False, data, "Invalid response format")
+            elif response.status_code == 404:
+                self.log_result("verification", "Upload Document", True, 
+                              {"status_code": response.status_code, "message": "No verification process started"})
+            else:
+                self.log_result("verification", "Upload Document", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Upload Document", False, None, str(e))
+        
+        # Test 3: POST /api/verification/identity/verify - Verify identity
+        try:
+            if test_document_id:
+                payload = {
+                    "document_id": test_document_id
+                }
+                response = requests.post(f"{BASE_URL}/verification/identity/verify?user_id={test_user_id}", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        verification_data = data.get("data", {})
+                        identity_verified = verification_data.get("verifications", {}).get("identity", {}).get("verified", False)
+                        self.log_result("verification", "Verify Identity", True, 
+                                      {"identity_verified": identity_verified, "message": data.get("message")})
+                    else:
+                        self.log_result("verification", "Verify Identity", False, data, "Identity verification failed")
+                elif response.status_code == 404:
+                    self.log_result("verification", "Verify Identity", True, 
+                                  {"status_code": response.status_code, "message": "Document or verification not found"})
+                else:
+                    self.log_result("verification", "Verify Identity", False, None, f"HTTP {response.status_code}")
+            else:
+                self.log_result("verification", "Verify Identity", False, None, "No document ID available")
+                
+        except Exception as e:
+            self.log_result("verification", "Verify Identity", False, None, str(e))
+        
+        # Test 4: POST /api/verification/skills/verify - Verify skill via assessment
+        try:
+            payload = {
+                "skill": "JavaScript",
+                "method": "assessment"
+            }
+            response = requests.post(f"{BASE_URL}/verification/skills/verify?user_id={test_user_id}", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    verification_data = data.get("data", {})
+                    skills = verification_data.get("verifications", {}).get("skills", [])
+                    self.log_result("verification", "Verify Skill - Assessment", True, 
+                                  {"skill_count": len(skills), "message": data.get("message")})
+                else:
+                    self.log_result("verification", "Verify Skill - Assessment", False, data, "Skill verification failed")
+            elif response.status_code == 404:
+                self.log_result("verification", "Verify Skill - Assessment", True, 
+                              {"status_code": response.status_code, "message": "No verification process or assessment found"})
+            else:
+                self.log_result("verification", "Verify Skill - Assessment", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Verify Skill - Assessment", False, None, str(e))
+        
+        # Test 5: POST /api/verification/skills/verify - Verify skill via portfolio
+        try:
+            payload = {
+                "skill": "UI/UX Design",
+                "method": "portfolio"
+            }
+            response = requests.post(f"{BASE_URL}/verification/skills/verify?user_id={test_user_id}", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    verification_data = data.get("data", {})
+                    skills = verification_data.get("verifications", {}).get("skills", [])
+                    self.log_result("verification", "Verify Skill - Portfolio", True, 
+                                  {"skill_count": len(skills), "message": data.get("message")})
+                else:
+                    self.log_result("verification", "Verify Skill - Portfolio", False, data, "Skill verification failed")
+            elif response.status_code == 404:
+                self.log_result("verification", "Verify Skill - Portfolio", True, 
+                              {"status_code": response.status_code, "message": "No verification process found"})
+            else:
+                self.log_result("verification", "Verify Skill - Portfolio", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Verify Skill - Portfolio", False, None, str(e))
+        
+        # Test 6: POST /api/verification/complete - Complete verification
+        try:
+            response = requests.post(f"{BASE_URL}/verification/complete?user_id={test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    verification_data = data.get("data", {})
+                    status = verification_data.get("status")
+                    self.log_result("verification", "Complete Verification", True, 
+                                  {"status": status, "message": data.get("message")})
+                else:
+                    self.log_result("verification", "Complete Verification", False, data, "Verification completion failed")
+            elif response.status_code == 400:
+                self.log_result("verification", "Complete Verification", True, 
+                              {"status_code": response.status_code, "message": "Requirements not met (expected)"})
+            elif response.status_code == 404:
+                self.log_result("verification", "Complete Verification", True, 
+                              {"status_code": response.status_code, "message": "No verification process found"})
+            else:
+                self.log_result("verification", "Complete Verification", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Complete Verification", False, None, str(e))
+        
+        # Test 7: GET /api/verification/status - Get verification status
+        try:
+            response = requests.get(f"{BASE_URL}/verification/status?user_id={test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    status_data = data["data"]
+                    if ("status" in status_data and "progress" in status_data):
+                        self.log_result("verification", "Get Verification Status", True, 
+                                      {"status": status_data["status"], "progress": status_data["progress"]})
+                    else:
+                        self.log_result("verification", "Get Verification Status", False, data, "Missing status fields")
+                else:
+                    self.log_result("verification", "Get Verification Status", False, data, "Invalid response format")
+            else:
+                self.log_result("verification", "Get Verification Status", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Get Verification Status", False, None, str(e))
+        
+        # Test 8: GET /api/verification/admin/stats - Get admin statistics
+        try:
+            response = requests.get(f"{BASE_URL}/verification/admin/stats")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    stats_data = data["data"]
+                    if ("total" in stats_data and "pending" in stats_data):
+                        self.log_result("verification", "Get Admin Stats", True, 
+                                      {"total": stats_data["total"], "pending": stats_data["pending"]})
+                    else:
+                        self.log_result("verification", "Get Admin Stats", False, data, "Missing stats fields")
+                else:
+                    self.log_result("verification", "Get Admin Stats", False, data, "Invalid response format")
+            else:
+                self.log_result("verification", "Get Admin Stats", False, None, f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("verification", "Get Admin Stats", False, None, str(e))
+        
+        # Test 9: POST /api/verification/admin/review/{verification_id} - Admin review
+        try:
+            if test_verification_id:
+                payload = {
+                    "action": "approve",
+                    "notes": "All documents verified successfully"
+                }
+                response = requests.post(f"{BASE_URL}/verification/admin/review/{test_verification_id}?reviewer_id=admin-123", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        verification_data = data.get("data", {})
+                        status = verification_data.get("status")
+                        self.log_result("verification", "Admin Review Verification", True, 
+                                      {"status": status, "message": data.get("message")})
+                    else:
+                        self.log_result("verification", "Admin Review Verification", False, data, "Admin review failed")
+                elif response.status_code == 404:
+                    self.log_result("verification", "Admin Review Verification", True, 
+                                  {"status_code": response.status_code, "message": "Verification not found"})
+                else:
+                    self.log_result("verification", "Admin Review Verification", False, None, f"HTTP {response.status_code}")
+            else:
+                self.log_result("verification", "Admin Review Verification", False, None, "No verification ID available")
+                
+        except Exception as e:
+            self.log_result("verification", "Admin Review Verification", False, None, str(e))
+
     def test_wallet_system_endpoints(self):
         """Test Wallet System API endpoints"""
         print("\n💰 Testing Wallet System Endpoints...")
