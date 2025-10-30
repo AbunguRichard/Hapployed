@@ -621,7 +621,7 @@ async def add_comment(post_id: str, request: AddCommentRequest, user_id: str = Q
         return {
             "success": True,
             "message": "Comment added successfully",
-            "data": post
+            "data": convert_objectid(post)
         }
     except HTTPException:
         raise
