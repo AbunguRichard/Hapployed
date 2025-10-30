@@ -520,6 +520,16 @@ function App() {
               } 
             />
             
+            {/* Advanced Search Route */}
+            <Route 
+              path="/search" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <SearchPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
             {/* Catch all - redirect to home */}
