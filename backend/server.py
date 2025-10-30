@@ -25,6 +25,7 @@ from quickhire_routes import router as quickhire_router
 from auth_routes import router as auth_router
 from analytics_routes import router as analytics_router
 from worker_dashboard_routes import router as worker_dashboard_router
+from wallet_routes import router as wallet_router
 
 
 ROOT_DIR = Path(__file__).parent
