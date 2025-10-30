@@ -527,7 +527,7 @@ async def get_community_posts(
         return {
             "success": True,
             "data": {
-                "posts": posts,
+                "posts": convert_objectid(posts),
                 "pagination": {
                     "current": page,
                     "pages": (total + limit - 1) // limit,
