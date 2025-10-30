@@ -412,7 +412,7 @@ async def start_verification(request: StartVerificationRequest, user_id: str = Q
         return {
             "success": True,
             "message": "Verification process started",
-            "data": verification.dict()
+            "data": convert_objectid(verification.dict())
         }
     except HTTPException:
         raise
