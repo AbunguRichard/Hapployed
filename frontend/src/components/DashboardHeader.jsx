@@ -68,18 +68,10 @@ export default function DashboardHeader() {
       name: 'Quick Hire', 
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Post QuickHire', path: '/quickhire/post' },
-        { name: 'Available Gigs', path: '/quickhire/worker' },
-        { name: 'Track Gigs', path: '/me/gigs' }
-      ]
-    },
-    { 
-      name: 'Emergency Gigs', 
-      hasDropdown: true,
-      dropdownItems: [
-        { name: 'Find Emergency Gigs', path: '/emergency-gigs', icon: '🚨' },
-        { name: 'Gigs Near Me', path: '/gigs-near-me', icon: '📍' },
-        { name: 'Emergency Gigs Info', path: '/services/emergency-gigs', icon: 'ℹ️' }
+        { name: 'Post Quick Hire Task', path: '/quickhire/post' },
+        { name: 'Track Gigs', path: '/me/gigs' },
+        { name: 'Emergency Gigs', path: '/emergency-gigs' },
+        { name: 'Available Gigs', path: '/quickhire/worker' }
       ]
     },
     { 
