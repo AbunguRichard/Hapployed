@@ -267,6 +267,18 @@ backend:
         agent: "testing"
         comment: "❌ SMS GATEWAY SYSTEM PARTIAL FUNCTIONALITY - 17/20 endpoints working correctly. ✅ Working: POST /api/sms/webhook/incoming (create gig, status check, help command), POST /api/sms/send (mock SMS sending), GET /api/sms/analytics (all ranges: 7d, 24h, 30d), GET /api/sms/offline-gigs (with/without filters), GET /api/sms/history/{user_id} (pagination working), GET /api/sms/templates (all template categories), GET /api/sms/health (system health metrics), SMS parsing working (price extraction: $2500, duration extraction: 1 month, category detection: design from logo). ❌ Critical Issues: (1) SMS Webhook - Update Gig: Returns 'Gig not found or you don't have permission to update it' even for valid gig IDs created in same session. (2) SMS Webhook - Delete Gig: Same permission issue as update. (3) POST /api/sms/sync-gig/{gig_id}: Returns 500 error for both valid and invalid gig IDs. ROOT CAUSE: Gig synchronization between offline_gigs and main jobs collections has issues. The gigs are created in offline_gigs collection but sync to main jobs collection fails, causing update/delete operations to fail when looking in jobs collection. RECOMMENDATION: Fix sync_gig_to_main_database function and ensure proper user permission mapping between SMS users and job ownership."
 
+  - task: "Dual Persona Switch Backend Implementation"
+    implemented: true
+    working: true
+    file: "/app/backend/auth_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ DUAL PERSONA SWITCH BACKEND TESTING COMPLETE - All functionality working perfectly. Successfully tested: (1) ✅ Register Worker User: POST /api/auth/register with role='worker' successfully creates user with currentMode='worker' initialized to primary role. (2) ✅ Get User Info: GET /api/auth/me returns currentMode field set to 'worker' as expected. (3) ✅ Add Secondary Role: POST /api/auth/add-role with role='employer' successfully adds employer role, user now has both ['worker', 'employer'] roles. (4) ✅ Switch Mode Worker to Employer: POST /api/auth/mode with currentMode='employer' successfully switches mode, returns proper response with currentMode='employer'. (5) ✅ Verify Mode Switch: GET /api/auth/me confirms currentMode is now 'employer' after switch. (6) ✅ Switch Mode Employer to Worker: POST /api/auth/mode with currentMode='worker' successfully switches back to worker mode. (7) ✅ Unauthorized Role Switch Protection: Created user with only 'worker' role, attempted to switch to 'employer' mode without adding role first, properly returns 403 Forbidden error as expected. All 7 test cases passed with 0 failures. Backend implementation includes: currentMode field initialization during registration, mode switching with role validation, proper error handling for unauthorized switches. Dual Persona Switch system ready for production use."
+
 frontend:
   - task: "Grow System Frontend Implementation"
     implemented: true
