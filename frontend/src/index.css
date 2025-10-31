@@ -538,7 +538,7 @@
 }
 
 .badge {
-  background: linear-gradient(135deg, rgba(66, 88, 155, 0.5) 0%, rgba(75, 98, 165, 0.5) 100%) !important;
+  background: rgba(66, 88, 155, 0.5) !important;
   padding: 20px 32px !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
@@ -554,7 +554,7 @@
 }
 
 .badge:hover {
-  background: linear-gradient(135deg, rgba(66, 88, 155, 0.5) 0%, rgba(75, 98, 165, 0.5) 100%) !important;
+  background: rgba(66, 88, 155, 0.5) !important;
   padding: 20px 32px !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
