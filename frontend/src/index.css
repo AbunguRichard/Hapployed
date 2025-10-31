@@ -538,32 +538,23 @@
 }
 
 .badge {
-  background: rgba(255, 255, 255, 0.85);
+  background: #4a90e2;
   padding: 20px 32px;
   border-radius: 18px;
   font-size: 1.2rem;
   font-weight: 600;
-  color: rgba(230, 230, 230, 0.9);
-  border: 3px solid #4facfe;
-  backdrop-filter: blur(10px);
+  color: white;
+  border: none;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 
-    0 0 25px rgba(79, 172, 254, 0.6),
-    0 4px 15px rgba(0, 0, 0, 0.1);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .badge:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: #5fa3f5;
   transform: translateY(-2px);
-  box-shadow: 
-    0 0 30px rgba(79, 172, 254, 0.8),
-    0 6px 20px rgba(0, 0, 0, 0.15);
-  border-color: #5fb9ff;
 }
 
 /* PERFECT BUTTON SIZE */
