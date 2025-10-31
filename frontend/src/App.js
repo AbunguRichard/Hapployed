@@ -108,6 +108,16 @@ function App() {
             {/* Profile Creation - Requires Authentication */}
             <Route path="/profile/create" element={<CreateProfilePage />} />
             
+            {/* Home Page - Landing page after login */}
+            <Route 
+              path="/home" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <HomePage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* Dashboard Routes */}
             <Route 
               path="/dashboard-worker" 
