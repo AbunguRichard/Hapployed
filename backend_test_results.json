@@ -11,21 +11,21 @@
           "radius_miles": 25,
           "current_location": null,
           "status_message": "Available for plumbing emergencies in downtown area",
-          "available_until": "2025-10-31T21:03:04.361305",
-          "last_updated": "2025-10-31T13:03:04.392548"
+          "available_until": "2025-11-01T01:20:26.415821",
+          "last_updated": "2025-10-31T17:20:26.448722"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.413076"
+      "timestamp": "2025-10-31T17:20:26.464146"
     },
     "Available Now Toggle - Get Status": {
       "success": true,
       "response": {
         "user_id": "worker-john-smith-123",
         "available_now": true,
-        "available_until": "2025-10-31T21:03:04.361305",
+        "available_until": "2025-11-01T01:20:26.415821",
         "current_location": null,
-        "last_updated": "2025-10-31T13:03:04.392548",
+        "last_updated": "2025-10-31T17:20:26.448722",
         "radius_miles": 25,
         "status_message": "Available for plumbing emergencies in downtown area",
         "preferences": {
@@ -54,7 +54,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.449857"
+      "timestamp": "2025-10-31T17:20:26.501080"
     },
     "Available Now Toggle - Get Available Workers": {
       "success": true,
@@ -63,9 +63,9 @@
           {
             "user_id": "worker-john-smith-123",
             "available_now": true,
-            "available_until": "2025-10-31T21:03:04.361305",
+            "available_until": "2025-11-01T01:20:26.415821",
             "current_location": null,
-            "last_updated": "2025-10-31T13:03:04.392548",
+            "last_updated": "2025-10-31T17:20:26.448722",
             "radius_miles": 25,
             "status_message": "Available for plumbing emergencies in downtown area",
             "preferences": {
@@ -97,7 +97,7 @@
         "count": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.484524"
+      "timestamp": "2025-10-31T17:20:26.537086"
     },
     "Gamification - Check Achievements": {
       "success": true,
@@ -106,7 +106,7 @@
         "new_achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.529433"
+      "timestamp": "2025-10-31T17:20:26.583188"
     },
     "Gamification - Get Achievements": {
       "success": true,
@@ -114,7 +114,7 @@
         "achievements": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.605453"
+      "timestamp": "2025-10-31T17:20:26.624144"
     },
     "Worker Preferences - Save": {
       "success": true,
@@ -123,7 +123,7 @@
         "message": "Preferences saved"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.641615"
+      "timestamp": "2025-10-31T17:20:26.663258"
     },
     "Worker Preferences - Get": {
       "success": true,
@@ -152,7 +152,7 @@
         "residential_preferred": true
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.679711"
+      "timestamp": "2025-10-31T17:20:26.702049"
     },
     "Gig Chain - Complete Gig": {
       "success": true,
@@ -164,12 +164,12 @@
           "completed_gig_id": "plumbing-emergency-456",
           "bonus_multiplier": 1.5,
           "next_gig_priority": true,
-          "expires_at": "2025-10-31T17:03:04.720723",
-          "created_at": "2025-10-31T13:03:04.720732"
+          "expires_at": "2025-10-31T21:20:26.741432",
+          "created_at": "2025-10-31T17:20:26.741441"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.779165"
+      "timestamp": "2025-10-31T17:20:26.798506"
     },
     "Gig Chain - Get Status": {
       "success": true,
@@ -180,23 +180,31 @@
             "completed_gig_id": "plumbing-emergency-456",
             "bonus_multiplier": 1.5,
             "next_gig_priority": true,
-            "expires_at": "2025-10-31T17:03:04.720723",
-            "created_at": "2025-10-31T13:03:04.720732"
+            "expires_at": "2025-10-31T20:26:34.576564",
+            "created_at": "2025-10-31T16:26:34.576573"
+          },
+          {
+            "user_id": "worker-john-smith-123",
+            "completed_gig_id": "plumbing-emergency-456",
+            "bonus_multiplier": 1.5,
+            "next_gig_priority": true,
+            "expires_at": "2025-10-31T21:20:26.741432",
+            "created_at": "2025-10-31T17:20:26.741441"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.815828"
+      "timestamp": "2025-10-31T17:20:26.838132"
     },
     "Gig Squad - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Squad created! Workers can now apply to join",
-        "squad_id": "3c6ae62f-278d-49b0-8e39-757190691d7e"
+        "squad_id": "311db77c-1073-4378-9ac3-062d63c6dc02"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.869017"
+      "timestamp": "2025-10-31T17:20:26.887091"
     },
     "Gig Squad - Join": {
       "success": true,
@@ -205,7 +213,7 @@
         "message": "Application submitted to squad"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.905470"
+      "timestamp": "2025-10-31T17:20:26.923124"
     },
     "Gig Squad - Get Available": {
       "success": true,
@@ -567,21 +575,77 @@
             ],
             "status": "assembling",
             "created_at": "2025-10-31T13:03:04.850976"
+          },
+          {
+            "squad_id": "520a27c5-b421-4b9d-b2d3-d9ef4ddaa33c",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [
+              {
+                "user_id": "worker-john-smith-123",
+                "role": "Lead Plumber",
+                "status": "pending",
+                "applied_at": "2025-10-31T16:26:34.741570"
+              }
+            ],
+            "status": "assembling",
+            "created_at": "2025-10-31T16:26:34.697315"
+          },
+          {
+            "squad_id": "311db77c-1073-4378-9ac3-062d63c6dc02",
+            "gig_id": "plumbing-emergency-456",
+            "required_roles": [
+              {
+                "role": "Lead Plumber",
+                "count": 1
+              },
+              {
+                "role": "Assistant Plumber",
+                "count": 2
+              },
+              {
+                "role": "Electrician",
+                "count": 1
+              }
+            ],
+            "team_members": [
+              {
+                "user_id": "worker-john-smith-123",
+                "role": "Lead Plumber",
+                "status": "pending",
+                "applied_at": "2025-10-31T17:20:26.918746"
+              }
+            ],
+            "status": "assembling",
+            "created_at": "2025-10-31T17:20:26.870420"
           }
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.942984"
+      "timestamp": "2025-10-31T17:20:26.958020"
     },
     "Corporate Pass - Create": {
       "success": true,
       "response": {
         "success": true,
         "message": "Corporate pass activated",
-        "pass_id": "d6e2eb1e-9b46-4713-82b3-38a36e5b4b23"
+        "pass_id": "fc149973-312f-4db1-8353-f183f4a94a48"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.987028"
+      "timestamp": "2025-10-31T17:20:27.006435"
     },
     "Corporate Pass - Use Credit": {
       "success": true,
@@ -590,7 +654,7 @@
         "credits_remaining": 9
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:05.025422"
+      "timestamp": "2025-10-31T17:20:27.043525"
     },
     "Gig Insurance - Activate": {
       "success": true,
@@ -599,17 +663,17 @@
         "message": "Gig is now protected by Hapployed Insurance"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:05.065494"
+      "timestamp": "2025-10-31T17:20:27.087230"
     },
     "Gig Insurance - File Claim": {
       "success": true,
       "response": {
         "success": true,
         "message": "Claim filed. Our team will review within 24 hours",
-        "claim_id": "afed3442-402d-4da7-9b24-29764c09a7f4"
+        "claim_id": "d79ed3bd-b50b-4239-8beb-fee08d376283"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:05.110825"
+      "timestamp": "2025-10-31T17:20:27.131464"
     },
     "Profile Update - PUT /api/profile/update": {
       "success": true,
@@ -624,7 +688,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.361738"
+      "timestamp": "2025-10-31T17:22:30.432417"
     },
     "Profile Retrieval - GET /api/profile/{email}": {
       "success": true,
@@ -636,7 +700,7 @@
         "phone": "+1 (555) 123-4567"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.399317"
+      "timestamp": "2025-10-31T17:22:30.473120"
     },
     "Profile Update - Missing Email Validation": {
       "success": true,
@@ -645,7 +709,7 @@
         "message": "Properly validated missing email"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.440556"
+      "timestamp": "2025-10-31T17:22:30.551394"
     },
     "Profile Retrieval - Non-existent Profile": {
       "success": true,
@@ -654,12 +718,12 @@
         "message": "Properly returned 404 for non-existent profile"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.481717"
+      "timestamp": "2025-10-31T17:22:30.591876"
     },
     "Job Posting - Create Project Job": {
       "success": true,
       "response": {
-        "id": "c37ec488-dfd6-46ef-93ca-3d42c71ab2c8",
+        "id": "712bae5e-b6f2-42f9-80cb-407cb1b384c0",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -686,18 +750,18 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:04:41.519105",
-        "updatedAt": "2025-10-31T13:04:41.519110",
+        "createdAt": "2025-10-31T17:22:30.626816",
+        "updatedAt": "2025-10-31T17:22:30.626820",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.523266"
+      "timestamp": "2025-10-31T17:22:30.632502"
     },
     "Job Posting - Create Gig Job": {
       "success": true,
       "response": {
-        "id": "6acca5fd-bcf9-43e9-935a-9e14168aa596",
+        "id": "361b9a02-aaf0-427a-9f09-eb2cf242d62b",
         "userId": "test-user-456",
         "userEmail": "gig@example.com",
         "jobType": "gig",
@@ -726,19 +790,19 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:04:41.557232",
-        "updatedAt": "2025-10-31T13:04:41.557237",
+        "createdAt": "2025-10-31T17:22:30.666883",
+        "updatedAt": "2025-10-31T17:22:30.666888",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.562533"
+      "timestamp": "2025-10-31T17:22:30.671786"
     },
     "Job Posting - Get All Jobs": {
       "success": false,
       "response": null,
       "error": "HTTP 500: Internal Server Error",
-      "timestamp": "2025-10-31T13:04:41.600602"
+      "timestamp": "2025-10-31T17:22:30.710570"
     },
     "Job Posting - Get Jobs with Filters": {
       "success": true,
@@ -746,20 +810,20 @@
         "filtered_jobs_count": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.640015"
+      "timestamp": "2025-10-31T17:22:30.750769"
     },
     "Job Posting - Get Jobs by User ID": {
       "success": true,
       "response": {
-        "user_jobs_count": 19
+        "user_jobs_count": 27
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.679012"
+      "timestamp": "2025-10-31T17:22:30.787818"
     },
     "Job Posting - Get Specific Job": {
       "success": true,
       "response": {
-        "id": "c37ec488-dfd6-46ef-93ca-3d42c71ab2c8",
+        "id": "712bae5e-b6f2-42f9-80cb-407cb1b384c0",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -786,13 +850,13 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:04:41.519105",
-        "updatedAt": "2025-10-31T13:04:41.519110",
+        "createdAt": "2025-10-31T17:22:30.626816",
+        "updatedAt": "2025-10-31T17:22:30.626820",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.722154"
+      "timestamp": "2025-10-31T17:22:30.829683"
     },
     "Job Posting - Get Invalid Job ID": {
       "success": true,
@@ -801,12 +865,12 @@
         "message": "Properly returned 404 for invalid job ID"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.763486"
+      "timestamp": "2025-10-31T17:22:30.869963"
     },
     "Job Posting - Update Job": {
       "success": true,
       "response": {
-        "id": "c37ec488-dfd6-46ef-93ca-3d42c71ab2c8",
+        "id": "712bae5e-b6f2-42f9-80cb-407cb1b384c0",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -833,18 +897,18 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-31T13:04:41.519105",
-        "updatedAt": "2025-10-31T13:04:41.797690",
+        "createdAt": "2025-10-31T17:22:30.626816",
+        "updatedAt": "2025-10-31T17:22:30.902241",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.802412"
+      "timestamp": "2025-10-31T17:22:30.907667"
     },
     "Job Posting - Publish Job": {
       "success": true,
       "response": {
-        "id": "c37ec488-dfd6-46ef-93ca-3d42c71ab2c8",
+        "id": "712bae5e-b6f2-42f9-80cb-407cb1b384c0",
         "userId": "test-user-123",
         "userEmail": "test@example.com",
         "jobType": "project",
@@ -871,13 +935,13 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-31T13:04:41.519105",
-        "updatedAt": "2025-10-31T13:04:41.836025",
+        "createdAt": "2025-10-31T17:22:30.626816",
+        "updatedAt": "2025-10-31T17:22:30.945709",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.841048"
+      "timestamp": "2025-10-31T17:22:30.950175"
     },
     "Job Posting - Delete Job": {
       "success": true,
@@ -886,7 +950,7 @@
         "message": "Job deleted successfully"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.875966"
+      "timestamp": "2025-10-31T17:22:30.987590"
     },
     "Job Posting - Verify Job Deletion": {
       "success": true,
@@ -894,52 +958,13 @@
         "message": "Job properly deleted - returns 404 when accessed"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.908711"
+      "timestamp": "2025-10-31T17:22:31.025075"
     },
     "Worker Profile - Create Profile": {
-      "success": true,
-      "response": {
-        "id": "ac949de9-194f-4e17-b6cf-a535f317a1dd",
-        "userId": "worker-test-123",
-        "email": "worker@example.com",
-        "name": "John Doe",
-        "phone": null,
-        "bio": "Experienced full-stack developer",
-        "skills": [
-          "React",
-          "Node.js",
-          "Python"
-        ],
-        "experience": "senior",
-        "availability": "fulltime",
-        "hourlyRate": 75.0,
-        "location": {
-          "city": "San Francisco",
-          "state": "CA",
-          "country": "USA"
-        },
-        "portfolio": [],
-        "education": [],
-        "certifications": [],
-        "languages": [],
-        "workHistory": [],
-        "isAvailable": true,
-        "badges": [
-          "pro-verified"
-        ],
-        "categories": [
-          "Web Development",
-          "Mobile Development"
-        ],
-        "profileImage": null,
-        "rating": null,
-        "reviewCount": 0,
-        "completedJobs": 0,
-        "createdAt": "2025-10-31T13:04:41.946149",
-        "updatedAt": "2025-10-31T13:04:41.946154"
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:41.957666"
+      "success": false,
+      "response": null,
+      "error": "HTTP 400: {\"detail\":\"Profile already exists for this user\"}",
+      "timestamp": "2025-10-31T17:22:31.066154"
     },
     "Worker Profile - Duplicate Prevention": {
       "success": true,
@@ -948,47 +973,47 @@
         "message": "Properly prevented duplicate profile"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.994256"
+      "timestamp": "2025-10-31T17:22:31.104899"
     },
     "Worker Profile - Search by Skills": {
+      "success": true,
+      "response": {
+        "profiles_found": 5,
+        "matching_profiles": 5
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:31.149184"
+    },
+    "Worker Profile - Search by Location": {
+      "success": true,
+      "response": {
+        "profiles_found": 4
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:31.188117"
+    },
+    "Worker Profile - Search by Rate Range": {
+      "success": true,
+      "response": {
+        "profiles_found": 5,
+        "in_range_profiles": 5
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:31.248325"
+    },
+    "Worker Profile - Search by Badges": {
       "success": true,
       "response": {
         "profiles_found": 4,
         "matching_profiles": 4
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.031113"
-    },
-    "Worker Profile - Search by Location": {
-      "success": true,
-      "response": {
-        "profiles_found": 3
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.067240"
-    },
-    "Worker Profile - Search by Rate Range": {
-      "success": true,
-      "response": {
-        "profiles_found": 4,
-        "in_range_profiles": 4
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.104982"
-    },
-    "Worker Profile - Search by Badges": {
-      "success": true,
-      "response": {
-        "profiles_found": 3,
-        "matching_profiles": 3
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.148018"
+      "timestamp": "2025-10-31T17:22:31.289434"
     },
     "Worker Profile - Get by User ID": {
       "success": true,
       "response": {
-        "id": "ac949de9-194f-4e17-b6cf-a535f317a1dd",
+        "id": "4e1050bf-2857-4a13-860a-888e1ceaf77b",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1024,11 +1049,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-31T13:04:41.946149",
-        "updatedAt": "2025-10-31T13:04:41.946154"
+        "createdAt": "2025-10-31T16:28:33.164781",
+        "updatedAt": "2025-10-31T16:28:33.164786"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.226103"
+      "timestamp": "2025-10-31T17:22:31.325649"
     },
     "Worker Profile - Get Non-existent User": {
       "success": true,
@@ -1037,103 +1062,12 @@
         "message": "Properly returned 404 for non-existent user"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.267557"
-    },
-    "Worker Profile - Get by Profile ID": {
-      "success": true,
-      "response": {
-        "id": "ac949de9-194f-4e17-b6cf-a535f317a1dd",
-        "userId": "worker-test-123",
-        "email": "worker@example.com",
-        "name": "John Doe",
-        "phone": null,
-        "bio": "Experienced full-stack developer",
-        "skills": [
-          "React",
-          "Node.js",
-          "Python"
-        ],
-        "experience": "senior",
-        "availability": "fulltime",
-        "hourlyRate": 75.0,
-        "location": {
-          "city": "San Francisco",
-          "state": "CA",
-          "country": "USA"
-        },
-        "portfolio": [],
-        "education": [],
-        "certifications": [],
-        "languages": [],
-        "workHistory": [],
-        "isAvailable": true,
-        "badges": [
-          "pro-verified"
-        ],
-        "categories": [
-          "Web Development",
-          "Mobile Development"
-        ],
-        "profileImage": null,
-        "rating": null,
-        "reviewCount": 0,
-        "completedJobs": 0,
-        "createdAt": "2025-10-31T13:04:41.946149",
-        "updatedAt": "2025-10-31T13:04:41.946154"
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.302920"
-    },
-    "Worker Profile - Update by Profile ID": {
-      "success": true,
-      "response": {
-        "id": "ac949de9-194f-4e17-b6cf-a535f317a1dd",
-        "userId": "worker-test-123",
-        "email": "worker@example.com",
-        "name": "John Doe",
-        "phone": null,
-        "bio": "Updated bio: Senior full-stack developer with expertise in React and Python",
-        "skills": [
-          "React",
-          "Node.js",
-          "Python",
-          "TypeScript"
-        ],
-        "experience": "senior",
-        "availability": "fulltime",
-        "hourlyRate": 85.0,
-        "location": {
-          "city": "San Francisco",
-          "state": "CA",
-          "country": "USA"
-        },
-        "portfolio": [],
-        "education": [],
-        "certifications": [],
-        "languages": [],
-        "workHistory": [],
-        "isAvailable": true,
-        "badges": [
-          "pro-verified"
-        ],
-        "categories": [
-          "Web Development",
-          "Mobile Development"
-        ],
-        "profileImage": null,
-        "rating": null,
-        "reviewCount": 0,
-        "completedJobs": 0,
-        "createdAt": "2025-10-31T13:04:41.946149",
-        "updatedAt": "2025-10-31T13:04:42.336031"
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.340918"
+      "timestamp": "2025-10-31T17:22:31.363611"
     },
     "Worker Profile - Update by User ID": {
       "success": true,
       "response": {
-        "id": "ac949de9-194f-4e17-b6cf-a535f317a1dd",
+        "id": "4e1050bf-2857-4a13-860a-888e1ceaf77b",
         "userId": "worker-test-123",
         "email": "worker@example.com",
         "name": "John Doe",
@@ -1142,8 +1076,7 @@
         "skills": [
           "React",
           "Node.js",
-          "Python",
-          "TypeScript"
+          "Python"
         ],
         "experience": "senior",
         "availability": "fulltime",
@@ -1170,37 +1103,11 @@
         "rating": null,
         "reviewCount": 0,
         "completedJobs": 0,
-        "createdAt": "2025-10-31T13:04:41.946149",
-        "updatedAt": "2025-10-31T13:04:42.388739"
+        "createdAt": "2025-10-31T16:28:33.164781",
+        "updatedAt": "2025-10-31T17:22:31.395918"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.393291"
-    },
-    "Worker Profile - Toggle Availability": {
-      "success": true,
-      "response": {
-        "isAvailable": false,
-        "message": "Availability toggled successfully"
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.432060"
-    },
-    "Worker Profile - Delete Profile": {
-      "success": true,
-      "response": {
-        "status_code": 204,
-        "message": "Profile deleted successfully"
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.464521"
-    },
-    "Worker Profile - Verify Profile Deletion": {
-      "success": true,
-      "response": {
-        "message": "Profile properly deleted - returns 404 when accessed"
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:42.499537"
+      "timestamp": "2025-10-31T17:22:31.400654"
     }
   },
   "ai_matching": {
@@ -1212,42 +1119,41 @@
           "match_score": 86,
           "confidence": "medium",
           "strengths": [
-            "Emergency repair expertise",
-            "Available now for urgent response",
+            "Plumbing expertise",
+            "Emergency repair experience",
+            "San Francisco coverage",
             "Weekend availability",
-            "Local to San Francisco",
-            "5 years plumbing experience",
             "High rating (4.8) with 127 completed gigs",
-            "Pipe repair/installation skills relevant to burst pipe"
+            "Available now for urgent dispatch"
           ],
           "concerns": [
-            "License status not explicitly confirmed; gig requires a licensed plumber",
-            "Budget ($150) may be low for emergency burst\u2011pipe service in SF; potential rate mismatch"
+            "License status not specified; gig requires a licensed plumber",
+            "Budget ($150) may be low for emergency burst pipe service in San Francisco"
           ],
-          "recommendation": "Strong match pending license verification. The worker has direct emergency plumbing experience, is available immediately, covers San Francisco, and works weekends\u2014ideal for a burst pipe. Confirm current plumbing license and discuss emergency rates/scope given the $150 budget. If licensed and budget expectations align, proceed.",
+          "recommendation": "Strong match for an urgent burst pipe in San Francisco. The worker\u2019s skills, availability (including weekends), and past performance fit the gig well. Confirm active plumbing license and align on emergency call-out pricing and materials. If license is verified and budget expectations are aligned, proceed.",
           "key_insights": [
-            "All core requirements except explicit license confirmation are met (emergency response, weekend availability, location).",
-            "Immediate availability aligns well with the gig\u2019s urgency for a burst pipe.",
-            "High volume of completed gigs and a 4.8 rating indicate reliability under pressure.",
-            "Local presence in San Francisco enables faster on\u2011site response.",
-            "If license is verified, this becomes a near-perfect fit; budget may require negotiation."
+            "Meets 2 of 3 stated requirements (Emergency response, Weekend availability); license verification pending",
+            "5 years of experience and pipe installation background suit burst pipe repairs",
+            "High completion count and 4.8 rating suggest reliability under time pressure",
+            "Preferred areas include San Francisco, minimizing travel time for an emergency",
+            "Available now, aligning with the gig\u2019s urgency"
           ]
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:22.373333"
+      "timestamp": "2025-10-31T17:20:50.351571"
     },
     "AI Suggest Gigs": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-31T13:03:22.429108"
+      "timestamp": "2025-10-31T17:20:50.408370"
     },
     "AI Forecast Demand": {
       "success": false,
       "response": null,
       "error": "HTTP 422",
-      "timestamp": "2025-10-31T13:03:22.466752"
+      "timestamp": "2025-10-31T17:20:50.442555"
     },
     "AI Voice Parsing - Professional Project": {
       "success": true,
@@ -1263,42 +1169,40 @@
         "urgency": "normal",
         "type": "regular",
         "skills": [
-          "Web Development",
-          "E-commerce",
+          "E-commerce Development",
+          "Payment Integration",
           "HTML",
           "CSS",
           "JavaScript",
           "Responsive Design",
-          "Payment Gateway Integration",
-          "Shopify",
-          "WooCommerce"
+          "SEO",
+          "Backend Development"
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:39.114229"
+      "timestamp": "2025-10-31T17:21:04.881019"
     },
     "AI Voice Parsing - Local Gig": {
       "success": true,
       "response": {
-        "title": "Urgent plumber for kitchen sink leak at 5 PM",
+        "title": "Urgent kitchen sink leak repair today 5 PM",
         "description": "I need a plumber today at 5 PM to fix a leak in my kitchen sink. It's urgent.",
         "category": "Maintenance & Repairs",
         "duration": "",
         "location": "on-site",
-        "specificLocation": "Kitchen sink",
-        "minBudget": "80",
+        "specificLocation": "kitchen sink",
+        "minBudget": "60",
         "maxBudget": "200",
         "urgency": "urgent",
         "type": "emergency",
         "skills": [
           "Plumbing",
-          "Leak detection",
-          "Sink repair",
-          "Pipe fitting"
+          "Leak Repair",
+          "Sink Repair"
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:52.464184"
+      "timestamp": "2025-10-31T17:21:19.127367"
     },
     "AI Voice Parsing - Empty Transcript": {
       "success": true,
@@ -1307,7 +1211,7 @@
         "message": "Properly handled empty transcript"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:52.518805"
+      "timestamp": "2025-10-31T17:21:19.182241"
     },
     "AI Voice Parsing - Missing WorkType": {
       "success": true,
@@ -1316,32 +1220,32 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:52.556017"
+      "timestamp": "2025-10-31T17:21:19.249934"
     },
     "AI Price Estimator - Web Development Project": {
       "success": true,
       "response": {
-        "minPrice": 6000,
-        "maxPrice": 12000,
-        "suggestedPrice": 9000,
-        "explanation": "A modern e-commerce build with secure payment integration over ~3 weeks typically requires a mid-to-senior developer. At global remote rates of roughly $50\u2013$100/hour for 120\u2013140 hours, a fair range is $6k\u2013$12k; $9k balances build, integration, and QA with no urgency premium.",
+        "minPrice": 4500,
+        "maxPrice": 9000,
+        "suggestedPrice": 7000,
+        "explanation": "Building a modern e-commerce site with secure payment integration typically requires a mid-to-senior developer or small team. At ~3 weeks (about 120 hours), global market rates of $45\u2013$75/hr place a fair budget between $4.5k and $9k; normal urgency and remote work keep pricing moderate. The $7k recommendation balances quality (checkout, gateway integration, responsive UI, basic admin) without overpaying for a fully custom platform.",
         "factors": {
           "skill_factor": 45,
           "urgency_factor": 0,
-          "location_factor": 15,
-          "market_factor": 40
+          "location_factor": 20,
+          "market_factor": 35
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:07.275546"
+      "timestamp": "2025-10-31T17:21:45.206931"
     },
     "AI Price Estimator - Urgent Local Gig": {
       "success": true,
       "response": {
-        "minPrice": 180,
+        "minPrice": 220,
         "maxPrice": 450,
-        "suggestedPrice": 300,
-        "explanation": "Urgent, on-site plumbing in downtown Chicago typically commands a premium over standard service-call rates due to same-day need and travel/parking constraints. A licensed plumber\u2019s local rate plus a 20\u201340% urgency premium and minor parts (e.g., supply line, P-trap gasket, or faucet cartridge) puts a fair total around $300. Simple fixes could land near $180, while after-hours or part replacement complexity can push toward $450.",
+        "suggestedPrice": 320,
+        "explanation": "Urgent on-site plumbing in downtown Chicago commands a premium due to licensed trade rates, travel/parking, and same-day response. This range covers a service call plus 1\u20132 hours of labor and basic parts; after-hours or faucet/pipe replacement would trend toward the upper end.",
         "factors": {
           "skill_factor": 35,
           "urgency_factor": 30,
@@ -1350,24 +1254,24 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:22.796683"
+      "timestamp": "2025-10-31T17:22:00.323222"
     },
     "AI Price Estimator - Other Category": {
       "success": true,
       "response": {
-        "minPrice": 1000,
-        "maxPrice": 5000,
+        "minPrice": 1200,
+        "maxPrice": 4000,
         "suggestedPrice": 2500,
-        "explanation": "With normal urgency and remote execution, pricing follows global market rates. For a general, non-specialized project of moderate scope, $1,000\u2013$5,000 is typical; $2,500 is a fair midpoint covering planning, execution, and a revision cycle without an urgency premium. Current demand is steady with ample global supply, keeping rates moderate unless specialized expertise is required.",
+        "explanation": "With normal urgency and a remote setup, global market rates apply. Assuming a mid-skill, moderate-scope project requiring ~20\u201350 hours at $50\u2013$80/hr, a fair range is $1,200\u2013$4,000 with no rush premium. Remote competition moderates the top end, while protecting for professional quality sets a reasonable floor.",
         "factors": {
-          "skill_factor": 35,
-          "urgency_factor": 5,
+          "skill_factor": 50,
+          "urgency_factor": 10,
           "location_factor": 20,
-          "market_factor": 40
+          "market_factor": 20
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.248229"
+      "timestamp": "2025-10-31T17:22:30.238460"
     },
     "AI Price Estimator - Missing WorkType": {
       "success": true,
@@ -1376,14 +1280,14 @@
         "message": "Properly validated missing workType"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:41.310850"
+      "timestamp": "2025-10-31T17:22:30.351510"
     }
   },
   "job_posting": {
     "Multi-Role Project Creation": {
       "success": true,
       "response": {
-        "id": "0f0b8a5b-807a-4907-aa72-e9cae35b4a5e",
+        "id": "27e26652-3be0-4bc0-8d98-2c0cfc606ac6",
         "userId": "test-user-123",
         "userEmail": "hirer@test.com",
         "jobType": "project",
@@ -1410,12 +1314,12 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:03:04.154960",
-        "updatedAt": "2025-10-31T13:03:04.154966",
+        "createdAt": "2025-10-31T17:20:26.216700",
+        "updatedAt": "2025-10-31T17:20:26.216705",
         "hiringType": "Multi-Role",
         "roles": [
           {
-            "roleId": "724895f4-0181-4163-a88a-b438f1945445",
+            "roleId": "4d63e1b1-d048-435c-9c46-1794d8e5b215",
             "roleName": "Frontend Developer",
             "numberOfPeople": 2,
             "requiredSkills": [
@@ -1431,7 +1335,7 @@
             "status": "Open"
           },
           {
-            "roleId": "bcd24a70-f94b-4454-9881-9c7b53135bf0",
+            "roleId": "2d0e8c7d-2fb7-41ff-a388-86a5ced94e95",
             "roleName": "Backend Developer",
             "numberOfPeople": 1,
             "requiredSkills": [
@@ -1447,7 +1351,7 @@
             "status": "Open"
           },
           {
-            "roleId": "19a11ac4-e13f-458e-bb6a-a08750074766",
+            "roleId": "96ff4106-b9fb-426f-b4bc-62bcfc6772dc",
             "roleName": "UI/UX Designer",
             "numberOfPeople": 1,
             "requiredSkills": [
@@ -1464,12 +1368,12 @@
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.165892"
+      "timestamp": "2025-10-31T17:20:26.232025"
     },
     "Single Hire Project Creation": {
       "success": true,
       "response": {
-        "id": "943855f0-fc94-4842-963b-9dddd5e3d944",
+        "id": "a512b781-7b47-4fac-ae3e-578c870268a7",
         "userId": "test-user-123",
         "userEmail": "hirer@test.com",
         "jobType": "project",
@@ -1495,24 +1399,24 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:03:04.198761",
-        "updatedAt": "2025-10-31T13:03:04.198767",
+        "createdAt": "2025-10-31T17:20:26.263217",
+        "updatedAt": "2025-10-31T17:20:26.263221",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.204311"
+      "timestamp": "2025-10-31T17:20:26.268002"
     },
     "Retrieve Jobs with Role Fields": {
       "success": false,
       "response": null,
       "error": "HTTP 500: Internal Server Error",
-      "timestamp": "2025-10-31T13:03:04.246455"
+      "timestamp": "2025-10-31T17:20:26.304820"
     },
     "Retrieve Single Job with Role Info": {
       "success": true,
       "response": {
-        "id": "0f0b8a5b-807a-4907-aa72-e9cae35b4a5e",
+        "id": "27e26652-3be0-4bc0-8d98-2c0cfc606ac6",
         "userId": "test-user-123",
         "userEmail": "hirer@test.com",
         "jobType": "project",
@@ -1539,12 +1443,12 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:03:04.154960",
-        "updatedAt": "2025-10-31T13:03:04.154966",
+        "createdAt": "2025-10-31T17:20:26.216700",
+        "updatedAt": "2025-10-31T17:20:26.216705",
         "hiringType": "Multi-Role",
         "roles": [
           {
-            "roleId": "724895f4-0181-4163-a88a-b438f1945445",
+            "roleId": "4d63e1b1-d048-435c-9c46-1794d8e5b215",
             "roleName": "Frontend Developer",
             "numberOfPeople": 2,
             "requiredSkills": [
@@ -1560,7 +1464,7 @@
             "status": "Open"
           },
           {
-            "roleId": "bcd24a70-f94b-4454-9881-9c7b53135bf0",
+            "roleId": "2d0e8c7d-2fb7-41ff-a388-86a5ced94e95",
             "roleName": "Backend Developer",
             "numberOfPeople": 1,
             "requiredSkills": [
@@ -1576,7 +1480,7 @@
             "status": "Open"
           },
           {
-            "roleId": "19a11ac4-e13f-458e-bb6a-a08750074766",
+            "roleId": "96ff4106-b9fb-426f-b4bc-62bcfc6772dc",
             "roleName": "UI/UX Designer",
             "numberOfPeople": 1,
             "requiredSkills": [
@@ -1593,12 +1497,12 @@
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.285993"
+      "timestamp": "2025-10-31T17:20:26.342989"
     },
     "Update Job with Roles": {
       "success": true,
       "response": {
-        "id": "0f0b8a5b-807a-4907-aa72-e9cae35b4a5e",
+        "id": "27e26652-3be0-4bc0-8d98-2c0cfc606ac6",
         "userId": "test-user-123",
         "userEmail": "hirer@test.com",
         "jobType": "project",
@@ -1625,12 +1529,12 @@
         "attachments": [],
         "applications": [],
         "views": 1,
-        "createdAt": "2025-10-31T13:03:04.154960",
-        "updatedAt": "2025-10-31T13:03:04.317925",
+        "createdAt": "2025-10-31T17:20:26.216700",
+        "updatedAt": "2025-10-31T17:20:26.374927",
         "hiringType": "Multi-Role",
         "roles": [
           {
-            "roleId": "b7ef66b5-b49c-4a84-a4ff-4df4ba96a5ad",
+            "roleId": "1fdff2e6-f640-434e-836c-fd2bdf8a6d8d",
             "roleName": "Frontend Developer",
             "numberOfPeople": 3,
             "requiredSkills": [
@@ -1647,12 +1551,12 @@
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.322483"
+      "timestamp": "2025-10-31T17:20:26.379644"
     },
     "Backward Compatibility Test": {
       "success": true,
       "response": {
-        "id": "41c6c60c-ead5-4e5d-89cd-6fa7a8146803",
+        "id": "42d5956e-04cb-452c-945a-26b92b1ab99c",
         "userId": "test-user-123",
         "userEmail": "hirer@test.com",
         "jobType": "gig",
@@ -1669,38 +1573,38 @@
         "attachments": [],
         "applications": [],
         "views": 0,
-        "createdAt": "2025-10-31T13:03:04.355750",
-        "updatedAt": "2025-10-31T13:03:04.355754",
+        "createdAt": "2025-10-31T17:20:26.410026",
+        "updatedAt": "2025-10-31T17:20:26.410029",
         "hiringType": "Single",
         "roles": []
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.360784"
+      "timestamp": "2025-10-31T17:20:26.415254"
     },
     "Application Test - Create Worker Profile": {
       "success": true,
       "response": {
-        "worker_id": "fa244e53-7e3a-4a10-ba3f-a761fd441fc7",
-        "user_id": "app-test-worker-1761915882"
+        "worker_id": "7345728e-956d-4657-b405-b83dc2a54925",
+        "user_id": "app-test-worker-1761931351"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.536952"
+      "timestamp": "2025-10-31T17:22:31.446050"
     },
     "Application Test - Create Job": {
       "success": true,
       "response": {
-        "job_id": "ffcae4fb-197a-470e-bcb7-1f06b3386e65",
+        "job_id": "8b9c7fda-05b2-4cef-a484-7e579c12ff96",
         "title": "React Application Development"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.572438"
+      "timestamp": "2025-10-31T17:22:31.484562"
     },
     "Application System - Submit Application": {
       "success": true,
       "response": {
-        "id": "0f47381a-5805-4208-97bc-a2d0a4593b1b",
-        "jobId": "ffcae4fb-197a-470e-bcb7-1f06b3386e65",
-        "workerId": "app-test-worker-1761915882",
+        "id": "15878142-66c6-420d-a7b6-f9bfec0e37f9",
+        "jobId": "8b9c7fda-05b2-4cef-a484-7e579c12ff96",
+        "workerId": "app-test-worker-1761931351",
         "workerEmail": "appworker@example.com",
         "workerName": "Application Test Worker",
         "workerProfile": {
@@ -1729,11 +1633,11 @@
         "availableStartDate": "2024-01-15",
         "status": "pending",
         "hirerNotes": null,
-        "createdAt": "2025-10-31T13:04:42.608881",
-        "updatedAt": "2025-10-31T13:04:42.608885"
+        "createdAt": "2025-10-31T17:22:31.517884",
+        "updatedAt": "2025-10-31T17:22:31.517889"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.659945"
+      "timestamp": "2025-10-31T17:22:31.532698"
     },
     "Application System - Duplicate Prevention": {
       "success": true,
@@ -1742,7 +1646,7 @@
         "message": "Properly prevented duplicate application"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.698521"
+      "timestamp": "2025-10-31T17:22:31.569401"
     },
     "Application System - Invalid Job ID": {
       "success": true,
@@ -1751,7 +1655,7 @@
         "message": "Properly returned 404 for invalid job"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.733297"
+      "timestamp": "2025-10-31T17:22:31.604594"
     },
     "Application System - Get Job Applications": {
       "success": true,
@@ -1760,7 +1664,7 @@
         "enriched_data": true
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.773157"
+      "timestamp": "2025-10-31T17:22:31.682469"
     },
     "Application System - Get Job Applications with Status Filter": {
       "success": true,
@@ -1768,7 +1672,7 @@
         "filtered_applications": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.853193"
+      "timestamp": "2025-10-31T17:22:31.720825"
     },
     "Application System - Get Worker Applications": {
       "success": true,
@@ -1777,14 +1681,14 @@
         "enriched_data": true
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.894098"
+      "timestamp": "2025-10-31T17:22:31.755502"
     },
     "Application System - Get Single Application": {
       "success": true,
       "response": {
-        "id": "0f47381a-5805-4208-97bc-a2d0a4593b1b",
-        "jobId": "ffcae4fb-197a-470e-bcb7-1f06b3386e65",
-        "workerId": "app-test-worker-1761915882",
+        "id": "15878142-66c6-420d-a7b6-f9bfec0e37f9",
+        "jobId": "8b9c7fda-05b2-4cef-a484-7e579c12ff96",
+        "workerId": "app-test-worker-1761931351",
         "workerEmail": "appworker@example.com",
         "workerName": "Application Test Worker",
         "workerProfile": {
@@ -1813,11 +1717,11 @@
         "availableStartDate": "2024-01-15",
         "status": "pending",
         "hirerNotes": null,
-        "createdAt": "2025-10-31T13:04:42.608881",
-        "updatedAt": "2025-10-31T13:04:42.608885"
+        "createdAt": "2025-10-31T17:22:31.517884",
+        "updatedAt": "2025-10-31T17:22:31.517889"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.936912"
+      "timestamp": "2025-10-31T17:22:31.794165"
     },
     "Application System - Get Invalid Application": {
       "success": true,
@@ -1826,14 +1730,14 @@
         "message": "Properly returned 404 for invalid application"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:42.974089"
+      "timestamp": "2025-10-31T17:22:31.832577"
     },
     "Application System - Update Status to Reviewed": {
       "success": true,
       "response": {
-        "id": "0f47381a-5805-4208-97bc-a2d0a4593b1b",
-        "jobId": "ffcae4fb-197a-470e-bcb7-1f06b3386e65",
-        "workerId": "app-test-worker-1761915882",
+        "id": "15878142-66c6-420d-a7b6-f9bfec0e37f9",
+        "jobId": "8b9c7fda-05b2-4cef-a484-7e579c12ff96",
+        "workerId": "app-test-worker-1761931351",
         "workerEmail": "appworker@example.com",
         "workerName": "Application Test Worker",
         "workerProfile": {
@@ -1856,18 +1760,18 @@
         "availableStartDate": "2024-01-15",
         "status": "reviewed",
         "hirerNotes": "Good candidate, reviewing portfolio",
-        "createdAt": "2025-10-31T13:04:42.608881",
-        "updatedAt": "2025-10-31T13:04:43.007293"
+        "createdAt": "2025-10-31T17:22:31.517884",
+        "updatedAt": "2025-10-31T17:22:31.864045"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.013078"
+      "timestamp": "2025-10-31T17:22:31.869525"
     },
     "Application System - Update Status to Accepted": {
       "success": true,
       "response": {
-        "id": "0f47381a-5805-4208-97bc-a2d0a4593b1b",
-        "jobId": "ffcae4fb-197a-470e-bcb7-1f06b3386e65",
-        "workerId": "app-test-worker-1761915882",
+        "id": "15878142-66c6-420d-a7b6-f9bfec0e37f9",
+        "jobId": "8b9c7fda-05b2-4cef-a484-7e579c12ff96",
+        "workerId": "app-test-worker-1761931351",
         "workerEmail": "appworker@example.com",
         "workerName": "Application Test Worker",
         "workerProfile": {
@@ -1890,11 +1794,11 @@
         "availableStartDate": "2024-01-15",
         "status": "accepted",
         "hirerNotes": "Excellent candidate, offer extended",
-        "createdAt": "2025-10-31T13:04:42.608881",
-        "updatedAt": "2025-10-31T13:04:43.049802"
+        "createdAt": "2025-10-31T17:22:31.517884",
+        "updatedAt": "2025-10-31T17:22:31.903075"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.056287"
+      "timestamp": "2025-10-31T17:22:31.909183"
     },
     "Application System - Get Application Stats": {
       "success": true,
@@ -1906,7 +1810,7 @@
         "rejected": 0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.095147"
+      "timestamp": "2025-10-31T17:22:31.948638"
     },
     "Application System - Withdraw Application": {
       "success": true,
@@ -1915,7 +1819,7 @@
         "message": "Application withdrawn successfully"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.130780"
+      "timestamp": "2025-10-31T17:22:32.005829"
     },
     "Application System - Verify Application Deletion": {
       "success": true,
@@ -1923,7 +1827,7 @@
         "message": "Application properly deleted - returns 404 when accessed"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.164507"
+      "timestamp": "2025-10-31T17:22:32.043028"
     },
     "Application System - Verify Count Decrease": {
       "success": true,
@@ -1932,20 +1836,20 @@
         "message": "Application count properly decreased"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.203977"
+      "timestamp": "2025-10-31T17:22:32.121985"
     }
   },
   "worker_dashboard": {
     "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}": {
       "success": true,
       "response": {
-        "available_jobs": 19,
+        "available_jobs": 28,
         "active_gigs": 0,
         "pending_applications": 0,
         "weekly_earnings": 0.0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.730570"
+      "timestamp": "2025-10-31T17:20:25.814224"
     },
     "Schedule - GET /api/worker-dashboard/schedule/{user_id}": {
       "success": true,
@@ -1954,14 +1858,14 @@
         "message": "Empty schedule (acceptable for new user)"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.773118"
+      "timestamp": "2025-10-31T17:20:25.855085"
     },
     "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}": {
       "success": true,
       "response": {
         "jobs_found": 10,
         "sample_job": {
-          "id": "d45fe7ac-79f2-4798-b8f1-ae9ca9689226",
+          "id": "fa4afd6f-026c-4e10-9d2f-4dce71ad3965",
           "priority": false,
           "title": "Full Stack Web Application Development",
           "rate": 50.0,
@@ -1975,7 +1879,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.823604"
+      "timestamp": "2025-10-31T17:20:25.897408"
     },
     "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}": {
       "success": true,
@@ -1984,7 +1888,7 @@
         "message": "No active gigs (acceptable for new user)"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.865333"
+      "timestamp": "2025-10-31T17:20:25.944240"
     },
     "Earnings - GET /api/worker-dashboard/earnings/{user_id}": {
       "success": true,
@@ -1995,7 +1899,7 @@
         "total_earned": 0.0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.909863"
+      "timestamp": "2025-10-31T17:20:25.986134"
     },
     "Reputation - GET /api/worker-dashboard/reputation/{user_id}": {
       "success": true,
@@ -2007,7 +1911,7 @@
         "total_reviews": 0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.950095"
+      "timestamp": "2025-10-31T17:20:26.028685"
     },
     "Achievements - GET /api/worker-dashboard/achievements/{user_id}": {
       "success": true,
@@ -2016,15 +1920,15 @@
         "message": "No achievements (acceptable for new user)"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:03.992023"
+      "timestamp": "2025-10-31T17:20:26.065331"
     },
     "Job Search - POST /api/worker-dashboard/jobs/search (basic)": {
       "success": true,
       "response": {
-        "jobs_found": 19
+        "jobs_found": 28
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.030267"
+      "timestamp": "2025-10-31T17:20:26.104777"
     },
     "Job Search - POST /api/worker-dashboard/jobs/search (filtered)": {
       "success": true,
@@ -2039,7 +1943,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.075186"
+      "timestamp": "2025-10-31T17:20:26.141592"
     },
     "Error Handling - Invalid User ID": {
       "success": true,
@@ -2047,14 +1951,14 @@
         "status_code": 200,
         "message": "Properly handled invalid user ID",
         "data": {
-          "available_jobs": 19,
+          "available_jobs": 28,
           "active_gigs": 0,
           "pending_applications": 0,
           "weekly_earnings": 0.0
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:03:04.116727"
+      "timestamp": "2025-10-31T17:20:26.180874"
     }
   },
   "wallet": {
@@ -2066,9 +1970,9 @@
           "_id": "demo-user-123",
           "user_id": "demo-user-123",
           "balance": {
-            "available": 225.0,
+            "available": 400.0,
             "pending": 0.0,
-            "reserved": 25.0
+            "reserved": 50.0
           },
           "currency": "USD",
           "transactions": [
@@ -2196,6 +2100,56 @@
               },
               "created_at": "2025-10-30T21:24:50.689000",
               "completed_at": "2025-10-30T21:24:50.689000"
+            },
+            {
+              "id": "910410b3-9964-440f-bf54-a65b84dd7651",
+              "type": "cashout",
+              "amount": 25.0,
+              "currency": "USD",
+              "description": "Standard cashout to paypal",
+              "status": "pending",
+              "method": "paypal",
+              "fee": {
+                "amount": 0.62,
+                "type": "percentage",
+                "rate": 2.5
+              },
+              "net_amount": 24.38,
+              "metadata": {
+                "bank_name": null,
+                "account_last4": null,
+                "paypal_email": "user@example.com",
+                "card_brand": null,
+                "crypto_wallet": null,
+                "instant": false
+              },
+              "created_at": "2025-10-31T13:04:43.408000",
+              "completed_at": null
+            },
+            {
+              "id": "9ffa3ab1-ffdf-4ab6-98d0-5d645c4315e6",
+              "type": "deposit",
+              "amount": 200.0,
+              "currency": "USD",
+              "description": "Credit advance for: Equipment purchase",
+              "status": "completed",
+              "method": "credit",
+              "fee": {
+                "amount": 0.0,
+                "type": "percentage",
+                "rate": 0.0
+              },
+              "net_amount": null,
+              "metadata": {
+                "bank_name": null,
+                "account_last4": null,
+                "paypal_email": null,
+                "card_brand": null,
+                "crypto_wallet": null,
+                "instant": false
+              },
+              "created_at": "2025-10-31T13:04:43.483000",
+              "completed_at": "2025-10-31T13:04:43.483000"
             }
           ],
           "payment_methods": [
@@ -2243,6 +2197,21 @@
                 "crypto_address": null
               },
               "added_at": "2025-10-30T21:24:50.727000"
+            },
+            {
+              "id": "420b1e43-9cd8-49bd-8a94-7f19cbad14af",
+              "type": "bank",
+              "is_default": false,
+              "verified": false,
+              "details": {
+                "bank_name": "Chase",
+                "account_last4": "5678",
+                "paypal_email": null,
+                "card_brand": null,
+                "card_last4": null,
+                "crypto_address": null
+              },
+              "added_at": "2025-10-31T13:04:43.522000"
             }
           ],
           "settings": {
@@ -2267,7 +2236,7 @@
             },
             "credit": {
               "available": 0.0,
-              "used": 400.0,
+              "used": 600.0,
               "interest_rate": 12.5
             }
           },
@@ -2281,7 +2250,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.256946"
+      "timestamp": "2025-10-31T17:22:32.184686"
     },
     "Calculate Fees - Instant Bank Transfer": {
       "success": true,
@@ -2295,7 +2264,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.295126"
+      "timestamp": "2025-10-31T17:22:32.223224"
     },
     "Calculate Fees - Standard PayPal": {
       "success": true,
@@ -2309,7 +2278,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.336209"
+      "timestamp": "2025-10-31T17:22:32.260100"
     },
     "Instant Cashout - Bank Transfer": {
       "success": true,
@@ -2318,7 +2287,7 @@
         "message": "Properly handled insufficient balance"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.375003"
+      "timestamp": "2025-10-31T17:22:32.296891"
     },
     "Standard Cashout - PayPal": {
       "success": true,
@@ -2328,7 +2297,7 @@
         "data": {
           "success": true,
           "transaction": {
-            "id": "910410b3-9964-440f-bf54-a65b84dd7651",
+            "id": "ac399e43-3f27-4fed-9595-910d106b2fee",
             "type": "cashout",
             "amount": 25.0,
             "currency": "USD",
@@ -2349,16 +2318,16 @@
               "crypto_wallet": null,
               "instant": false
             },
-            "created_at": "2025-10-31T13:04:43.408510+00:00",
+            "created_at": "2025-10-31T17:22:32.329084+00:00",
             "completed_at": null
           },
           "fee": 0.62,
           "net_amount": 24.38,
-          "estimated_arrival": "2025-11-03T13:04:43.409417+00:00"
+          "estimated_arrival": "2025-11-03T17:22:32.329903+00:00"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.413138"
+      "timestamp": "2025-10-31T17:22:32.374741"
     },
     "Savings Setup - No Initial Amount": {
       "success": true,
@@ -2372,7 +2341,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.450128"
+      "timestamp": "2025-10-31T17:22:32.414506"
     },
     "Credit Request - Equipment Purchase": {
       "success": true,
@@ -2381,13 +2350,13 @@
         "message": "Credit request processed",
         "data": {
           "success": true,
-          "credit_used": 600.0,
-          "available_credit": 64400.0,
-          "repayment_date": "2025-11-30T13:04:43.484448+00:00"
+          "credit_used": 800.0,
+          "available_credit": 64200.0,
+          "repayment_date": "2025-11-30T17:22:32.446942+00:00"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.488530"
+      "timestamp": "2025-10-31T17:22:32.450477"
     },
     "Add Payment Method - Bank Account": {
       "success": true,
@@ -2395,7 +2364,7 @@
         "success": true,
         "message": "Payment method added successfully",
         "data": {
-          "id": "420b1e43-9cd8-49bd-8a94-7f19cbad14af",
+          "id": "3ba51c1f-78a7-4f7c-aebe-cd1be7100715",
           "type": "bank",
           "is_default": false,
           "verified": false,
@@ -2407,32 +2376,32 @@
             "card_last4": null,
             "crypto_address": null
           },
-          "added_at": "2025-10-31T13:04:43.522987+00:00"
+          "added_at": "2025-10-31T17:22:32.482555+00:00"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.529181"
+      "timestamp": "2025-10-31T17:22:32.486997"
     },
     "Get Transaction History": {
       "success": true,
       "response": {
-        "transaction_count": 7,
+        "transaction_count": 9,
         "pagination": {
           "current": 1,
           "total": 1,
-          "total_transactions": 7
+          "total_transactions": 9
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.569522"
+      "timestamp": "2025-10-31T17:22:32.525073"
     },
     "Get Transaction History - Filtered by Type": {
       "success": true,
       "response": {
-        "filtered_transactions": 3
+        "filtered_transactions": 4
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.608783"
+      "timestamp": "2025-10-31T17:22:32.562037"
     }
   },
   "grow": {
@@ -2447,7 +2416,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.650922"
+      "timestamp": "2025-10-31T17:22:32.609119"
     },
     "Get Courses with Filters": {
       "success": true,
@@ -2463,7 +2432,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.690803"
+      "timestamp": "2025-10-31T17:22:32.644328"
     },
     "Course Enrollment - Course Not Found": {
       "success": true,
@@ -2472,7 +2441,7 @@
         "message": "Properly handled non-existent course"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.729900"
+      "timestamp": "2025-10-31T17:22:32.680196"
     },
     "Complete Lesson - Not Enrolled": {
       "success": true,
@@ -2481,16 +2450,16 @@
         "message": "Properly handled not enrolled"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.806027"
+      "timestamp": "2025-10-31T17:22:32.712908"
     },
     "Start Assessment": {
       "success": true,
       "response": {
-        "assessment_id": "d50fca2d-e54b-4df6-8fa0-3130d36f69d7",
+        "assessment_id": "303d4bd5-e895-4e35-ac6c-90f9a849d7ce",
         "question_count": 10
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.851761"
+      "timestamp": "2025-10-31T17:22:32.764310"
     },
     "Submit Assessment": {
       "success": true,
@@ -2499,37 +2468,37 @@
         "passed": true
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.890189"
+      "timestamp": "2025-10-31T17:22:32.802587"
     },
     "Get Community Posts": {
       "success": true,
       "response": {
-        "post_count": 1,
+        "post_count": 2,
         "pagination": {
           "current": 1,
           "pages": 1,
-          "total": 1
+          "total": 2
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.930679"
+      "timestamp": "2025-10-31T17:22:32.846555"
     },
     "Create Community Post": {
       "success": true,
       "response": {
-        "post_id": "0fd9e233-262b-4d3e-9dfc-c6991a25c172",
+        "post_id": "8003e67a-726b-4606-bd19-911f224a388e",
         "type": "question"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:43.973268"
+      "timestamp": "2025-10-31T17:22:32.890731"
     },
     "Upvote Post": {
       "success": true,
       "response": {
         "success": true,
         "data": {
-          "_id": "6904b3ebbd8ebba254ad22d9",
-          "id": "0fd9e233-262b-4d3e-9dfc-c6991a25c172",
+          "_id": "6904f0582c7dddf648371edf",
+          "id": "8003e67a-726b-4606-bd19-911f224a388e",
           "author_id": "grow-test-user-123",
           "title": "JavaScript Learning Tips",
           "content": "This is a test post about learning JavaScript. Any tips for beginners?",
@@ -2547,12 +2516,12 @@
           "is_pinned": false,
           "is_expert_post": false,
           "view_count": 0,
-          "created_at": "2025-10-31T13:04:43.963000",
-          "updated_at": "2025-10-31T13:04:43.963000"
+          "created_at": "2025-10-31T17:22:32.879000",
+          "updated_at": "2025-10-31T17:22:32.879000"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.013624"
+      "timestamp": "2025-10-31T17:22:32.925300"
     },
     "Add Comment": {
       "success": true,
@@ -2560,8 +2529,8 @@
         "success": true,
         "message": "Comment added successfully",
         "data": {
-          "_id": "6904b3ebbd8ebba254ad22d9",
-          "id": "0fd9e233-262b-4d3e-9dfc-c6991a25c172",
+          "_id": "6904f0582c7dddf648371edf",
+          "id": "8003e67a-726b-4606-bd19-911f224a388e",
           "author_id": "grow-test-user-123",
           "title": "JavaScript Learning Tips",
           "content": "This is a test post about learning JavaScript. Any tips for beginners?",
@@ -2577,23 +2546,23 @@
           "downvotes": [],
           "comments": [
             {
-              "id": "b578ecb2-4e19-4805-9ee0-811b65933a4c",
+              "id": "e1a3f52a-5a29-4767-ac39-423888f129f0",
               "author_id": "grow-test-user-123",
               "content": "Great question! I recommend starting with basic syntax and then moving to DOM manipulation.",
               "upvotes": [],
-              "created_at": "2025-10-31T13:04:44.046000",
+              "created_at": "2025-10-31T17:22:32.959000",
               "is_expert_answer": false
             }
           ],
           "is_pinned": false,
           "is_expert_post": false,
           "view_count": 0,
-          "created_at": "2025-10-31T13:04:43.963000",
-          "updated_at": "2025-10-31T13:04:43.963000"
+          "created_at": "2025-10-31T17:22:32.879000",
+          "updated_at": "2025-10-31T17:22:32.879000"
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.050994"
+      "timestamp": "2025-10-31T17:22:32.964632"
     },
     "Get User Analytics": {
       "success": true,
@@ -2601,11 +2570,11 @@
         "total_points": 0,
         "completed_courses": 0,
         "in_progress_courses": 0,
-        "total_assessments": 2,
-        "passed_assessments": 2
+        "total_assessments": 3,
+        "passed_assessments": 3
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.089353"
+      "timestamp": "2025-10-31T17:22:33.000300"
     },
     "Get Course Recommendations": {
       "success": true,
@@ -2613,7 +2582,7 @@
         "recommendation_count": 0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.126589"
+      "timestamp": "2025-10-31T17:22:33.038875"
     },
     "Get Career Paths - All": {
       "success": true,
@@ -2621,7 +2590,7 @@
         "career_count": 2
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.163897"
+      "timestamp": "2025-10-31T17:22:33.074948"
     },
     "Get Career Paths - Frontend Goal": {
       "success": true,
@@ -2635,23 +2604,15 @@
         ]
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.199363"
+      "timestamp": "2025-10-31T17:22:33.110276"
     }
   },
   "search": {
     "Search Gigs - Basic": {
-      "success": true,
-      "response": {
-        "gig_count": 0,
-        "pagination": {
-          "current": 1,
-          "pages": 0,
-          "total": 0,
-          "has_more": false
-        }
-      },
-      "error": null,
-      "timestamp": "2025-10-31T13:04:44.247004"
+      "success": false,
+      "response": null,
+      "error": "HTTP 500",
+      "timestamp": "2025-10-31T17:22:33.150785"
     },
     "Search Gigs - With Filters": {
       "success": true,
@@ -2665,7 +2626,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.283377"
+      "timestamp": "2025-10-31T17:22:33.188910"
     },
     "Search Talents - Basic": {
       "success": true,
@@ -2679,7 +2640,7 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.321378"
+      "timestamp": "2025-10-31T17:22:33.227284"
     },
     "Search Talents - With Filters": {
       "success": true,
@@ -2694,15 +2655,15 @@
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.364156"
+      "timestamp": "2025-10-31T17:22:33.264604"
     },
     "Get Search Suggestions - Gigs": {
       "success": true,
       "response": {
-        "suggestion_count": 4
+        "suggestion_count": 5
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.401453"
+      "timestamp": "2025-10-31T17:22:33.305754"
     },
     "Get Search Suggestions - Talents": {
       "success": true,
@@ -2710,16 +2671,16 @@
         "suggestion_count": 4
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.439928"
+      "timestamp": "2025-10-31T17:22:33.382918"
     },
     "Get Search Filters - Gigs": {
       "success": true,
       "response": {
-        "categories": 0,
+        "categories": 4,
         "budget_ranges": 4
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.520044"
+      "timestamp": "2025-10-31T17:22:33.418825"
     },
     "Get Search Filters - Talents": {
       "success": true,
@@ -2728,7 +2689,7 @@
         "rate_ranges": 4
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.602192"
+      "timestamp": "2025-10-31T17:22:33.455835"
     },
     "Advanced AI Search": {
       "success": true,
@@ -2737,7 +2698,7 @@
         "has_ai_scores": false
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.641469"
+      "timestamp": "2025-10-31T17:22:33.492202"
     }
   },
   "verification": {
@@ -2748,16 +2709,16 @@
         "message": "Verification already exists"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.691991"
+      "timestamp": "2025-10-31T17:22:33.535567"
     },
     "Upload Document": {
       "success": true,
       "response": {
-        "document_id": "c29f809e-fdad-4bc6-8dfe-ea00053b2d12",
-        "document_count": 2
+        "document_id": "4523aa75-ca73-44ef-a8af-60fb05dda08b",
+        "document_count": 3
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:44.726583"
+      "timestamp": "2025-10-31T17:22:33.573657"
     },
     "Verify Identity": {
       "success": true,
@@ -2766,7 +2727,7 @@
         "message": "Identity verified successfully"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:45.770203"
+      "timestamp": "2025-10-31T17:22:34.615658"
     },
     "Verify Skill - Assessment": {
       "success": true,
@@ -2775,13 +2736,13 @@
         "message": "Skill verification completed"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:45.810627"
+      "timestamp": "2025-10-31T17:22:34.652906"
     },
     "Verify Skill - Portfolio": {
       "success": false,
       "response": null,
       "error": "HTTP 500",
-      "timestamp": "2025-10-31T13:04:45.848135"
+      "timestamp": "2025-10-31T17:22:34.690101"
     },
     "Complete Verification": {
       "success": true,
@@ -2790,7 +2751,7 @@
         "message": "Requirements not met (expected)"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:45.884882"
+      "timestamp": "2025-10-31T17:22:34.728051"
     },
     "Get Verification Status": {
       "success": true,
@@ -2799,7 +2760,7 @@
         "progress": 20
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:45.922960"
+      "timestamp": "2025-10-31T17:22:34.765301"
     },
     "Get Admin Stats": {
       "success": true,
@@ -2808,54 +2769,54 @@
         "pending": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:45.962253"
+      "timestamp": "2025-10-31T17:22:34.805351"
     },
     "Admin Review Verification": {
       "success": false,
       "response": null,
       "error": "No verification ID available",
-      "timestamp": "2025-10-31T13:04:45.962284"
+      "timestamp": "2025-10-31T17:22:34.805378"
     }
   },
   "sms_gateway": {
     "SMS Webhook - Create Gig": {
       "success": true,
       "response": {
-        "response": "\u2705 Gig created successfully! ID: bd2ae9a7. Title: Web development $500 2 weeks. Price: $500.0. It will be live shortly.",
-        "gig_id": "bd2ae9a7"
+        "response": "\u2705 Gig created successfully! ID: 1e40607b. Title: Web development $500 2 weeks. Price: $500.0. It will be live shortly.",
+        "gig_id": "1e40607b"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.056688"
+      "timestamp": "2025-10-31T17:22:34.858000"
     },
     "SMS Webhook - Update Gig": {
       "success": false,
       "response": {
         "success": true,
         "message": "SMS processed",
-        "response": "\u274c Gig bd2ae9a7 not found or you don't have permission to update it."
+        "response": "\u274c Gig 1e40607b not found or you don't have permission to update it."
       },
       "error": "Update response not as expected",
-      "timestamp": "2025-10-31T13:04:46.093586"
+      "timestamp": "2025-10-31T17:22:34.896005"
     },
     "SMS Webhook - Delete Gig": {
       "success": false,
       "response": {
         "success": true,
         "message": "SMS processed",
-        "response": "\u274c Gig bd2ae9a7 not found or you don't have permission to delete it."
+        "response": "\u274c Gig 1e40607b not found or you don't have permission to delete it."
       },
       "error": "Delete response not as expected",
-      "timestamp": "2025-10-31T13:04:46.128901"
+      "timestamp": "2025-10-31T17:22:34.932069"
     },
     "SMS Webhook - Status Check": {
       "success": true,
       "response": {
         "success": true,
         "message": "SMS processed",
-        "response": "\ud83d\udcca Your Status:\nActive Gigs: 1\nCompleted: 0\nTotal Earnings: $0\nView details: app.hapployed.com/dashboard"
+        "response": "\ud83d\udcca Your Status:\nActive Gigs: 7\nCompleted: 0\nTotal Earnings: $0\nView details: app.hapployed.com/dashboard"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.169388"
+      "timestamp": "2025-10-31T17:22:34.968865"
     },
     "SMS Webhook - Help Command": {
       "success": true,
@@ -2865,7 +2826,7 @@
         "response": "\ud83c\udd98 HAPPLOYED SMS HELP:\n\n\ud83d\udcdd CREATE GIG:\n\"Web development $500 2 weeks\"\n\"Logo design $150\"\n\"Content writing $200\"\n\n\u270f\ufe0f UPDATE GIG:\n\"Update gig ABC123 price $600\"\n\n\ud83d\uddd1\ufe0f DELETE GIG:\n\"Delete gig ABC123\"\n\n\ud83d\udcca CHECK STATUS:\n\"Status\"\n\n\ud83d\udca1 TIPS:\n- Include price with $ sign\n- Mention duration (days/weeks/months)\n- Keep descriptions concise\n\nNeed help? Visit hapployed.com"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.207957"
+      "timestamp": "2025-10-31T17:22:35.007020"
     },
     "Manual SMS Send": {
       "success": true,
@@ -2873,11 +2834,11 @@
         "phone_number": "+1234567890",
         "message": "Test message from Hapployed SMS Gateway",
         "provider": "mock",
-        "message_id": "7693d268-165d-439a-b26a-fd3556bde106",
+        "message_id": "bf5207b9-94d5-4e47-b7be-c3db9ca3a848",
         "status": "sent"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.245893"
+      "timestamp": "2025-10-31T17:22:35.042929"
     },
     "SMS Analytics - 7d Default": {
       "success": true,
@@ -2885,7 +2846,7 @@
         "analytics_count": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.282441"
+      "timestamp": "2025-10-31T17:22:35.078966"
     },
     "SMS Analytics - 24h": {
       "success": true,
@@ -2894,7 +2855,7 @@
         "data_count": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.342924"
+      "timestamp": "2025-10-31T17:22:35.115311"
     },
     "SMS Analytics - 30d": {
       "success": true,
@@ -2903,20 +2864,20 @@
         "data_count": 1
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.380311"
+      "timestamp": "2025-10-31T17:22:35.150382"
     },
     "Get Offline Gigs - All": {
       "success": true,
       "response": {
-        "gig_count": 1,
+        "gig_count": 7,
         "pagination": {
           "current": 1,
           "pages": 1,
-          "total": 1
+          "total": 7
         }
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.419549"
+      "timestamp": "2025-10-31T17:22:35.185949"
     },
     "Get Offline Gigs - pending_sync": {
       "success": true,
@@ -2925,22 +2886,22 @@
         "gig_count": 0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.457841"
+      "timestamp": "2025-10-31T17:22:35.224361"
     },
     "Get Offline Gigs - published": {
       "success": true,
       "response": {
         "status": "published",
-        "gig_count": 1
+        "gig_count": 7
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.538058"
+      "timestamp": "2025-10-31T17:22:35.262129"
     },
     "Manual Gig Sync": {
       "success": false,
       "response": null,
       "error": "HTTP 500",
-      "timestamp": "2025-10-31T13:04:46.613974"
+      "timestamp": "2025-10-31T17:22:35.358194"
     },
     "Manual Gig Sync - Invalid ID": {
       "success": true,
@@ -2949,7 +2910,7 @@
         "message": "Properly handled invalid gig ID"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.652392"
+      "timestamp": "2025-10-31T17:22:35.397233"
     },
     "User SMS History": {
       "success": true,
@@ -2958,7 +2919,7 @@
         "command_count": 0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.689975"
+      "timestamp": "2025-10-31T17:22:35.432863"
     },
     "Get SMS Templates": {
       "success": true,
@@ -2972,54 +2933,54 @@
         "create_gig_count": 5
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.726993"
+      "timestamp": "2025-10-31T17:22:35.468082"
     },
     "System Health Check": {
       "success": true,
       "response": {
         "is_running": true,
-        "pending_responses": 6,
+        "pending_responses": 16,
         "pending_gigs": 0,
         "failed_gigs": 0
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.766481"
+      "timestamp": "2025-10-31T17:22:35.503714"
     },
     "SMS Parsing - Price Extraction": {
       "success": true,
       "response": {
         "parsed_price": "$2500",
-        "response": "\u2705 Gig created successfully! ID: 299aa585. Title: Mobile app development $2500 4 weeks React. Price: $2500.0. It will be live shortly."
+        "response": "\u2705 Gig created successfully! ID: 5fab29d9. Title: Mobile app development $2500 4 weeks React. Price: $2500.0. It will be live shortly."
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.806360"
+      "timestamp": "2025-10-31T17:22:35.543960"
     },
     "SMS Parsing - Duration Extraction": {
       "success": true,
       "response": {
         "parsed_duration": "1 month",
-        "response": "\u2705 Gig created successfully! ID: 37a61dd8. Title: Content writing 5 articles 1 month deadline. Price: $N/A. It will be live shortly."
+        "response": "\u2705 Gig created successfully! ID: ab5c76c5. Title: Content writing 5 articles 1 month deadline. Price: $N/A. It will be live shortly."
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.844393"
+      "timestamp": "2025-10-31T17:22:35.580451"
     },
     "SMS Parsing - Category Detection": {
       "success": true,
       "response": {
         "detected_category": "design",
-        "response": "\u2705 Gig created successfully! ID: f9d50f4f. Title: Logo design startup company modern minimalist style. Price: $N/A. It will be live shortly."
+        "response": "\u2705 Gig created successfully! ID: 9cf71297. Title: Logo design startup company modern minimalist style. Price: $N/A. It will be live shortly."
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.884298"
+      "timestamp": "2025-10-31T17:22:35.664051"
     },
     "Error Handling - Invalid SMS Format": {
       "success": true,
       "response": {
-        "response": "\u2705 Gig created successfully! ID: f1139fe0. Title: xyz. Price: $N/A. It will be live shortly.",
+        "response": "\u2705 Gig created successfully! ID: fdd05bf5. Title: xyz. Price: $N/A. It will be live shortly.",
         "message": "Handled unclear SMS gracefully"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.923213"
+      "timestamp": "2025-10-31T17:22:35.706072"
     },
     "Error Handling - Missing From Field": {
       "success": true,
@@ -3028,17 +2989,89 @@
         "message": "Properly validated missing From field"
       },
       "error": null,
-      "timestamp": "2025-10-31T13:04:46.959374"
+      "timestamp": "2025-10-31T17:22:35.741946"
+    }
+  },
+  "dual_persona": {
+    "Register Worker User": {
+      "success": true,
+      "response": {
+        "user_id": "9bafa44f-2a2b-422d-9c09-e4eeb889f0e7",
+        "roles": [
+          "worker"
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.012991"
+    },
+    "Get User Info - Verify CurrentMode": {
+      "success": true,
+      "response": {
+        "currentMode": "worker",
+        "roles": [
+          "worker"
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.051487"
+    },
+    "Add Secondary Role - Employer": {
+      "success": true,
+      "response": {
+        "roles": [
+          "worker",
+          "employer"
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.126726"
+    },
+    "Switch Mode - Worker to Employer": {
+      "success": true,
+      "response": {
+        "message": "Successfully switched to employer mode",
+        "currentMode": "employer"
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.164447"
+    },
+    "Verify Mode Switch - Employer": {
+      "success": true,
+      "response": {
+        "currentMode": "employer"
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.201416"
+    },
+    "Switch Mode - Employer to Worker": {
+      "success": true,
+      "response": {
+        "message": "Successfully switched to worker mode",
+        "currentMode": "worker"
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.238853"
+    },
+    "Switch to Unauthorized Role - 403 Error": {
+      "success": true,
+      "response": {
+        "status_code": 403,
+        "message": "Properly blocked unauthorized role switch"
+      },
+      "error": null,
+      "timestamp": "2025-10-31T17:22:36.544980"
     }
   },
   "summary": {
     "passed": 143,
-    "failed": 9,
+    "failed": 11,
     "errors": [
       "Retrieve Jobs with Role Fields: HTTP 500: Internal Server Error",
       "AI Suggest Gigs: HTTP 422",
       "AI Forecast Demand: HTTP 422",
       "Job Posting - Get All Jobs: HTTP 500: Internal Server Error",
+      "Worker Profile - Create Profile: HTTP 400: {\"detail\":\"Profile already exists for this user\"}",
+      "Search Gigs - Basic: HTTP 500",
       "Verify Skill - Portfolio: HTTP 500",
       "Admin Review Verification: No verification ID available",
       "SMS Webhook - Update Gig: Update response not as expected",
