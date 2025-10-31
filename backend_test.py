@@ -4423,6 +4423,9 @@ class BackendTester:
         # SMS Gateway System Tests
         self.test_sms_gateway_system()
         
+        # Dual Persona Switch Tests
+        self.test_dual_persona_switch()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
