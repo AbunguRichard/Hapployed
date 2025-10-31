@@ -52,6 +52,10 @@ export default function DashboardHeader() {
 
   const navItems = [
     { 
+      name: 'Home', 
+      path: '/home',
+    },
+    { 
       name: 'Dashboard', 
       path: '/dashboard',
     },
