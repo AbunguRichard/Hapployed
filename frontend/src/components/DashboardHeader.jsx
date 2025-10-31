@@ -56,10 +56,6 @@ export default function DashboardHeader() {
       path: '/home',
     },
     { 
-      name: 'Dashboard', 
-      path: '/dashboard',
-    },
-    { 
       name: 'Professional Work', 
       hasDropdown: true,
       dropdownItems: [
