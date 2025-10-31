@@ -531,6 +531,16 @@ function App() {
               } 
             />
             
+            {/* SMS Dashboard Route */}
+            <Route 
+              path="/admin/sms-dashboard" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <SMSDashboardPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
             {/* Catch all - redirect to home */}
