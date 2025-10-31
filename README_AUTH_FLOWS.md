@@ -37,7 +37,7 @@ sudo supervisorctl restart backend
 ```bash
 cd /app/frontend
 # Backend URL is configured in .env
-# REACT_APP_BACKEND_URL=https://worker-dashboard-1.preview.emergentagent.com
+# REACT_APP_BACKEND_URL=https://dual-persona-4.preview.emergentagent.com
 sudo supervisorctl restart frontend
 ```
 

@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://worker-dashboard-1.preview.emergentagent.com/api"
+BASE_URL = "https://dual-persona-4.preview.emergentagent.com/api"
 
 class WalletTester:
     def __init__(self):

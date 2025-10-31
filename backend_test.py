@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import time
 
 # Configuration
-BASE_URL = "https://worker-dashboard-1.preview.emergentagent.com/api"
+BASE_URL = "https://dual-persona-4.preview.emergentagent.com/api"
 TEST_USER_ID = "worker-john-smith-123"
 TEST_GIG_ID = "plumbing-emergency-456"
 TEST_COMPANY_ID = "acme-corp-789"
