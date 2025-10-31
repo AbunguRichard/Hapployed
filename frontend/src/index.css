@@ -555,6 +555,17 @@
 
 .badge:hover {
   background: linear-gradient(135deg, rgba(66, 88, 155, 0.5) 0%, rgba(75, 98, 165, 0.5) 100%);
+  padding: 20px 32px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  border: 2px solid #4facfe;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   box-shadow: 0 0 20px rgba(79, 172, 254, 0.6);
 }
 
