@@ -70,7 +70,16 @@ export default function DashboardHeader() {
       dropdownItems: [
         { name: 'Post QuickHire', path: '/quickhire/post' },
         { name: 'Available Gigs', path: '/quickhire/worker' },
-        { name: 'QuickHire Info', path: '/quickhire-info' }
+        { name: 'Track Gigs', path: '/me/gigs' }
+      ]
+    },
+    { 
+      name: 'Emergency Gigs', 
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Find Emergency Gigs', path: '/emergency-gigs', icon: '🚨' },
+        { name: 'Gigs Near Me', path: '/gigs-near-me', icon: '📍' },
+        { name: 'Emergency Gigs Info', path: '/services/emergency-gigs', icon: 'ℹ️' }
       ]
     },
     { 
