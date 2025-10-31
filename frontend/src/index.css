@@ -545,7 +545,6 @@
   font-weight: 600;
   color: white;
   border: none;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -553,8 +552,7 @@
 }
 
 .badge:hover {
-  background: #5fa3f5;
-  transform: translateY(-2px);
+  background: #4a90e2;
 }
 
 /* PERFECT BUTTON SIZE */
