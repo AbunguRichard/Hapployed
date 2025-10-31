@@ -67,6 +67,8 @@ import GrowPage from './pages/GrowPage';
 import WalletPage from './pages/WalletPage';
 import SearchPage from './pages/SearchPage';
 import SMSDashboardPage from './pages/SMSDashboardPage';
+import VerificationPage from './pages/VerificationPage';
+import HomePage from './pages/HomePage';
 import './App.css';
 
 function App() {
