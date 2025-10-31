@@ -4221,6 +4221,9 @@ class BackendTester:
         # Verification System Tests
         self.test_verification_system_endpoints()
         
+        # SMS Gateway System Tests
+        self.test_sms_gateway_system()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
