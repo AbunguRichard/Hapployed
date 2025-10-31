@@ -66,6 +66,7 @@ import AIMatchPage from './pages/AIMatchPage';
 import GrowPage from './pages/GrowPage';
 import WalletPage from './pages/WalletPage';
 import SearchPage from './pages/SearchPage';
+import SMSDashboardPage from './pages/SMSDashboardPage';
 import './App.css';
 
 function App() {
