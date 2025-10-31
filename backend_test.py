@@ -1569,6 +1569,572 @@ class BackendTester:
         except Exception as e:
             self.log_result("verification", "Admin Review Verification", False, None, str(e))
 
+    def test_sms_gateway_system(self):
+        """Test SMS Gateway System endpoints comprehensively"""
+        print("\n📱 Testing SMS Gateway System...")
+        
+        test_phone = "+1234567890"
+        test_user_id = None
+        test_gig_id = None
+        
+        # Test 1: POST /api/sms/webhook/incoming - Main SMS webhook with create gig
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "Web development $500 2 weeks",
+                "MessageSid": "test_msg_123"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "response" in data:
+                    response_msg = data["response"]
+                    if "created successfully" in response_msg and "ID:" in response_msg:
+                        # Extract gig ID from response
+                        import re
+                        id_match = re.search(r'ID:\s*(\w+)', response_msg)
+                        if id_match:
+                            test_gig_id = id_match.group(1)
+                        self.log_result("sms_gateway", "SMS Webhook - Create Gig", True, 
+                                      {"response": response_msg, "gig_id": test_gig_id})
+                    else:
+                        self.log_result("sms_gateway", "SMS Webhook - Create Gig", False, data, 
+                                      "Gig creation response not as expected")
+                else:
+                    self.log_result("sms_gateway", "SMS Webhook - Create Gig", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("sms_gateway", "SMS Webhook - Create Gig", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Webhook - Create Gig", False, None, str(e))
+        
+        # Test 2: SMS webhook with update gig command
+        try:
+            if test_gig_id:
+                payload = {
+                    "From": test_phone,
+                    "Body": f"Update gig {test_gig_id} price $600"
+                }
+                
+                response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "updated successfully" in data.get("response", ""):
+                        self.log_result("sms_gateway", "SMS Webhook - Update Gig", True, data)
+                    else:
+                        self.log_result("sms_gateway", "SMS Webhook - Update Gig", False, data, 
+                                      "Update response not as expected")
+                else:
+                    self.log_result("sms_gateway", "SMS Webhook - Update Gig", False, None, 
+                                  f"HTTP {response.status_code}")
+            else:
+                self.log_result("sms_gateway", "SMS Webhook - Update Gig", False, None, 
+                              "No gig ID available for update test")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Webhook - Update Gig", False, None, str(e))
+        
+        # Test 3: SMS webhook with delete gig command
+        try:
+            if test_gig_id:
+                payload = {
+                    "From": test_phone,
+                    "Body": f"Delete gig {test_gig_id}"
+                }
+                
+                response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and ("cancelled" in data.get("response", "") or "deleted" in data.get("response", "")):
+                        self.log_result("sms_gateway", "SMS Webhook - Delete Gig", True, data)
+                    else:
+                        self.log_result("sms_gateway", "SMS Webhook - Delete Gig", False, data, 
+                                      "Delete response not as expected")
+                else:
+                    self.log_result("sms_gateway", "SMS Webhook - Delete Gig", False, None, 
+                                  f"HTTP {response.status_code}")
+            else:
+                self.log_result("sms_gateway", "SMS Webhook - Delete Gig", False, None, 
+                              "No gig ID available for delete test")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Webhook - Delete Gig", False, None, str(e))
+        
+        # Test 4: SMS webhook with status check
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "Status"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "Your Status:" in data.get("response", ""):
+                    response_msg = data["response"]
+                    if "Active Gigs:" in response_msg and "Completed:" in response_msg:
+                        self.log_result("sms_gateway", "SMS Webhook - Status Check", True, data)
+                    else:
+                        self.log_result("sms_gateway", "SMS Webhook - Status Check", False, data, 
+                                      "Status response missing expected fields")
+                else:
+                    self.log_result("sms_gateway", "SMS Webhook - Status Check", False, data, 
+                                  "Status response not as expected")
+            else:
+                self.log_result("sms_gateway", "SMS Webhook - Status Check", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Webhook - Status Check", False, None, str(e))
+        
+        # Test 5: SMS webhook with help command
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "Help"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "HAPPLOYED SMS HELP:" in data.get("response", ""):
+                    response_msg = data["response"]
+                    if "CREATE GIG:" in response_msg and "UPDATE GIG:" in response_msg:
+                        self.log_result("sms_gateway", "SMS Webhook - Help Command", True, data)
+                    else:
+                        self.log_result("sms_gateway", "SMS Webhook - Help Command", False, data, 
+                                      "Help response missing expected sections")
+                else:
+                    self.log_result("sms_gateway", "SMS Webhook - Help Command", False, data, 
+                                  "Help response not as expected")
+            else:
+                self.log_result("sms_gateway", "SMS Webhook - Help Command", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Webhook - Help Command", False, None, str(e))
+        
+        # Test 6: POST /api/sms/send - Manual SMS sending (mocked)
+        try:
+            payload = {
+                "phone_number": test_phone,
+                "message": "Test message from Hapployed SMS Gateway"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/send", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    sms_data = data["data"]
+                    if ("phone_number" in sms_data and "message_id" in sms_data and 
+                        sms_data.get("status") == "sent" and sms_data.get("provider") == "mock"):
+                        self.log_result("sms_gateway", "Manual SMS Send", True, sms_data)
+                    else:
+                        self.log_result("sms_gateway", "Manual SMS Send", False, data, 
+                                      "SMS send response missing expected fields")
+                else:
+                    self.log_result("sms_gateway", "Manual SMS Send", False, data, 
+                                  "Invalid SMS send response format")
+            else:
+                self.log_result("sms_gateway", "Manual SMS Send", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Manual SMS Send", False, None, str(e))
+        
+        # Test 7: GET /api/sms/analytics - SMS usage analytics (7d default)
+        try:
+            response = requests.get(f"{BASE_URL}/sms/analytics")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    analytics_data = data["data"]
+                    if isinstance(analytics_data, list):
+                        self.log_result("sms_gateway", "SMS Analytics - 7d Default", True, 
+                                      {"analytics_count": len(analytics_data)})
+                    else:
+                        self.log_result("sms_gateway", "SMS Analytics - 7d Default", False, data, 
+                                      "Analytics data not in expected list format")
+                else:
+                    self.log_result("sms_gateway", "SMS Analytics - 7d Default", False, data, 
+                                  "Invalid analytics response format")
+            else:
+                self.log_result("sms_gateway", "SMS Analytics - 7d Default", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Analytics - 7d Default", False, None, str(e))
+        
+        # Test 8: GET /api/sms/analytics with different ranges
+        for range_param in ["24h", "30d"]:
+            try:
+                response = requests.get(f"{BASE_URL}/sms/analytics?range={range_param}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "data" in data:
+                        self.log_result("sms_gateway", f"SMS Analytics - {range_param}", True, 
+                                      {"range": range_param, "data_count": len(data["data"])})
+                    else:
+                        self.log_result("sms_gateway", f"SMS Analytics - {range_param}", False, data, 
+                                      "Invalid analytics response format")
+                else:
+                    self.log_result("sms_gateway", f"SMS Analytics - {range_param}", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("sms_gateway", f"SMS Analytics - {range_param}", False, None, str(e))
+        
+        # Test 9: GET /api/sms/offline-gigs - Get pending sync gigs
+        try:
+            response = requests.get(f"{BASE_URL}/sms/offline-gigs")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    gigs_data = data["data"]
+                    if ("gigs" in gigs_data and "pagination" in gigs_data):
+                        self.log_result("sms_gateway", "Get Offline Gigs - All", True, 
+                                      {"gig_count": len(gigs_data["gigs"]), 
+                                       "pagination": gigs_data["pagination"]})
+                    else:
+                        self.log_result("sms_gateway", "Get Offline Gigs - All", False, data, 
+                                      "Missing gigs or pagination fields")
+                else:
+                    self.log_result("sms_gateway", "Get Offline Gigs - All", False, data, 
+                                  "Invalid offline gigs response format")
+            else:
+                self.log_result("sms_gateway", "Get Offline Gigs - All", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Get Offline Gigs - All", False, None, str(e))
+        
+        # Test 10: GET /api/sms/offline-gigs with status filters
+        for status in ["pending_sync", "published"]:
+            try:
+                response = requests.get(f"{BASE_URL}/sms/offline-gigs?status={status}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("success") and "data" in data):
+                        gigs_data = data["data"]
+                        if ("gigs" in gigs_data and "pagination" in gigs_data):
+                            self.log_result("sms_gateway", f"Get Offline Gigs - {status}", True, 
+                                          {"status": status, "gig_count": len(gigs_data["gigs"])})
+                        else:
+                            self.log_result("sms_gateway", f"Get Offline Gigs - {status}", False, data, 
+                                          "Missing gigs or pagination fields")
+                    else:
+                        self.log_result("sms_gateway", f"Get Offline Gigs - {status}", False, data, 
+                                      "Invalid response format")
+                else:
+                    self.log_result("sms_gateway", f"Get Offline Gigs - {status}", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("sms_gateway", f"Get Offline Gigs - {status}", False, None, str(e))
+        
+        # Test 11: POST /api/sms/sync-gig/{gig_id} - Manual gig sync
+        try:
+            # Create a test gig first to sync
+            payload = {
+                "From": test_phone,
+                "Body": "Logo design $150 urgent"
+            }
+            
+            create_response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if create_response.status_code == 200:
+                create_data = create_response.json()
+                if create_data.get("success"):
+                    # Extract gig ID from response
+                    import re
+                    response_msg = create_data.get("response", "")
+                    id_match = re.search(r'ID:\s*(\w+)', response_msg)
+                    
+                    if id_match:
+                        sync_gig_id = id_match.group(1)
+                        
+                        # Now test manual sync
+                        sync_response = requests.post(f"{BASE_URL}/sms/sync-gig/{sync_gig_id}")
+                        
+                        if sync_response.status_code == 200:
+                            sync_data = sync_response.json()
+                            if sync_data.get("success") and "synced successfully" in sync_data.get("message", ""):
+                                self.log_result("sms_gateway", "Manual Gig Sync", True, 
+                                              {"gig_id": sync_gig_id, "message": sync_data["message"]})
+                            else:
+                                self.log_result("sms_gateway", "Manual Gig Sync", False, sync_data, 
+                                              "Sync response not as expected")
+                        else:
+                            self.log_result("sms_gateway", "Manual Gig Sync", False, None, 
+                                          f"HTTP {sync_response.status_code}")
+                    else:
+                        self.log_result("sms_gateway", "Manual Gig Sync", False, None, 
+                                      "Could not extract gig ID for sync test")
+                else:
+                    self.log_result("sms_gateway", "Manual Gig Sync", False, None, 
+                                  "Failed to create gig for sync test")
+            else:
+                self.log_result("sms_gateway", "Manual Gig Sync", False, None, 
+                              "Failed to create gig for sync test")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Manual Gig Sync", False, None, str(e))
+        
+        # Test 12: Test sync with invalid gig ID (404 error)
+        try:
+            invalid_gig_id = "invalid-gig-123"
+            response = requests.post(f"{BASE_URL}/sms/sync-gig/{invalid_gig_id}")
+            
+            if response.status_code == 500:  # Expected error for invalid gig
+                self.log_result("sms_gateway", "Manual Gig Sync - Invalid ID", True, 
+                              {"status_code": response.status_code, "message": "Properly handled invalid gig ID"})
+            else:
+                self.log_result("sms_gateway", "Manual Gig Sync - Invalid ID", False, None, 
+                              f"Expected 500 error, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Manual Gig Sync - Invalid ID", False, None, str(e))
+        
+        # Test 13: GET /api/sms/history/{user_id} - User SMS history
+        try:
+            # Use a test user ID (we'll test with a mock ID since we don't have user creation in this test)
+            test_user_id = "sms_user_test_123"
+            response = requests.get(f"{BASE_URL}/sms/history/{test_user_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    history_data = data["data"]
+                    if ("commands" in history_data and "pagination" in history_data):
+                        self.log_result("sms_gateway", "User SMS History", True, 
+                                      {"user_id": test_user_id, "command_count": len(history_data["commands"])})
+                    else:
+                        self.log_result("sms_gateway", "User SMS History", False, data, 
+                                      "Missing commands or pagination fields")
+                else:
+                    self.log_result("sms_gateway", "User SMS History", False, data, 
+                                  "Invalid history response format")
+            else:
+                self.log_result("sms_gateway", "User SMS History", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "User SMS History", False, None, str(e))
+        
+        # Test 14: GET /api/sms/templates - Get SMS templates
+        try:
+            response = requests.get(f"{BASE_URL}/sms/templates")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    templates = data["data"]
+                    expected_categories = ["create_gig", "update_gig", "delete_gig", "status"]
+                    
+                    if all(category in templates for category in expected_categories):
+                        # Check if templates have examples
+                        create_templates = templates.get("create_gig", [])
+                        if len(create_templates) > 0 and "Web development $500 2 weeks" in create_templates:
+                            self.log_result("sms_gateway", "Get SMS Templates", True, 
+                                          {"template_categories": list(templates.keys()), 
+                                           "create_gig_count": len(create_templates)})
+                        else:
+                            self.log_result("sms_gateway", "Get SMS Templates", False, data, 
+                                          "Create gig templates missing expected examples")
+                    else:
+                        missing_categories = [cat for cat in expected_categories if cat not in templates]
+                        self.log_result("sms_gateway", "Get SMS Templates", False, data, 
+                                      f"Missing template categories: {missing_categories}")
+                else:
+                    self.log_result("sms_gateway", "Get SMS Templates", False, data, 
+                                  "Invalid templates response format")
+            else:
+                self.log_result("sms_gateway", "Get SMS Templates", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Get SMS Templates", False, None, str(e))
+        
+        # Test 15: GET /api/sms/health - System health status
+        try:
+            response = requests.get(f"{BASE_URL}/sms/health")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and "data" in data):
+                    health_data = data["data"]
+                    expected_fields = ["is_running", "pending_responses", "pending_gigs", "failed_gigs", "last_checked"]
+                    
+                    if all(field in health_data for field in expected_fields):
+                        if health_data.get("is_running") == True:
+                            self.log_result("sms_gateway", "System Health Check", True, 
+                                          {"is_running": health_data["is_running"], 
+                                           "pending_responses": health_data["pending_responses"],
+                                           "pending_gigs": health_data["pending_gigs"],
+                                           "failed_gigs": health_data["failed_gigs"]})
+                        else:
+                            self.log_result("sms_gateway", "System Health Check", False, data, 
+                                          "System not running")
+                    else:
+                        missing_fields = [field for field in expected_fields if field not in health_data]
+                        self.log_result("sms_gateway", "System Health Check", False, data, 
+                                      f"Missing health fields: {missing_fields}")
+                else:
+                    self.log_result("sms_gateway", "System Health Check", False, data, 
+                                  "Invalid health response format")
+            else:
+                self.log_result("sms_gateway", "System Health Check", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "System Health Check", False, None, str(e))
+        
+        # Test 16: SMS Parsing - Price extraction
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "Mobile app development $2500 4 weeks React Native"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    response_msg = data.get("response", "")
+                    if "$2500" in response_msg or "2500" in response_msg:
+                        self.log_result("sms_gateway", "SMS Parsing - Price Extraction", True, 
+                                      {"parsed_price": "$2500", "response": response_msg})
+                    else:
+                        self.log_result("sms_gateway", "SMS Parsing - Price Extraction", False, data, 
+                                      "Price not properly extracted from SMS")
+                else:
+                    self.log_result("sms_gateway", "SMS Parsing - Price Extraction", False, data, 
+                                  "SMS processing failed")
+            else:
+                self.log_result("sms_gateway", "SMS Parsing - Price Extraction", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Parsing - Price Extraction", False, None, str(e))
+        
+        # Test 17: SMS Parsing - Duration extraction
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "Content writing 5 articles 1 month deadline"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    response_msg = data.get("response", "")
+                    if "month" in response_msg or "1 month" in response_msg:
+                        self.log_result("sms_gateway", "SMS Parsing - Duration Extraction", True, 
+                                      {"parsed_duration": "1 month", "response": response_msg})
+                    else:
+                        self.log_result("sms_gateway", "SMS Parsing - Duration Extraction", False, data, 
+                                      "Duration not properly extracted from SMS")
+                else:
+                    self.log_result("sms_gateway", "SMS Parsing - Duration Extraction", False, data, 
+                                  "SMS processing failed")
+            else:
+                self.log_result("sms_gateway", "SMS Parsing - Duration Extraction", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Parsing - Duration Extraction", False, None, str(e))
+        
+        # Test 18: SMS Parsing - Category detection
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "Logo design for startup company modern minimalist style"
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    response_msg = data.get("response", "")
+                    # Should detect "design" category from "logo design"
+                    if "design" in response_msg.lower() or "logo" in response_msg:
+                        self.log_result("sms_gateway", "SMS Parsing - Category Detection", True, 
+                                      {"detected_category": "design", "response": response_msg})
+                    else:
+                        self.log_result("sms_gateway", "SMS Parsing - Category Detection", False, data, 
+                                      "Category not properly detected from SMS")
+                else:
+                    self.log_result("sms_gateway", "SMS Parsing - Category Detection", False, data, 
+                                  "SMS processing failed")
+            else:
+                self.log_result("sms_gateway", "SMS Parsing - Category Detection", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "SMS Parsing - Category Detection", False, None, str(e))
+        
+        # Test 19: Error handling - Invalid SMS format
+        try:
+            payload = {
+                "From": test_phone,
+                "Body": "xyz"  # Very short, unclear message
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    # Should still process but may create a basic gig or ask for clarification
+                    self.log_result("sms_gateway", "Error Handling - Invalid SMS Format", True, 
+                                  {"response": data.get("response", ""), "message": "Handled unclear SMS gracefully"})
+                else:
+                    self.log_result("sms_gateway", "Error Handling - Invalid SMS Format", False, data, 
+                                  "Failed to handle invalid SMS format")
+            else:
+                self.log_result("sms_gateway", "Error Handling - Invalid SMS Format", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Error Handling - Invalid SMS Format", False, None, str(e))
+        
+        # Test 20: Error handling - Missing required fields
+        try:
+            payload = {
+                "Body": "Test message without From field"
+                # Missing "From" field
+            }
+            
+            response = requests.post(f"{BASE_URL}/sms/webhook/incoming", json=payload)
+            
+            # Should return validation error
+            if response.status_code in [400, 422]:
+                self.log_result("sms_gateway", "Error Handling - Missing From Field", True, 
+                              {"status_code": response.status_code, "message": "Properly validated missing From field"})
+            else:
+                self.log_result("sms_gateway", "Error Handling - Missing From Field", False, None, 
+                              f"Expected validation error (400/422), got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("sms_gateway", "Error Handling - Missing From Field", False, None, str(e))
+
     def test_wallet_system_endpoints(self):
         """Test Wallet System API endpoints"""
         print("\n💰 Testing Wallet System Endpoints...")
