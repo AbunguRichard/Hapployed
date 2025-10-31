@@ -172,6 +172,7 @@ async def register(user_data: UserRegister):
         "password_hash": get_password_hash(user_data.password),
         "name": user_data.name,
         "roles": [user_data.role],
+        "currentMode": user_data.role,  # Initialize currentMode to primary role
         "createdAt": datetime.utcnow().isoformat(),
         "updatedAt": datetime.utcnow().isoformat()
     }
