@@ -310,6 +310,34 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
+  const switchMode = async (newMode) => {
+    try {
+      const token = getAuthToken();
+      const response = await fetch(`${BACKEND_URL}/api/auth/mode`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ currentMode: newMode })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to switch mode');
+      }
+
+      const data = await response.json();
+      
+      // Refresh user data to get updated currentMode
+      await checkAuthStatus();
+      
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const value = {
     isAuthenticated,
     user,
@@ -324,6 +352,7 @@ export const AuthProvider = ({ children }) => {
     hasRole,
     isProfileComplete,
     refreshAccessToken,
+    switchMode,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
