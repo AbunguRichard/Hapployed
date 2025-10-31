@@ -597,6 +597,7 @@ test_plan:
     - "Grow System Frontend Implementation"
     - "Advanced Search System Frontend Implementation"
     - "SMS Gateway System Backend API Endpoints"
+    - "Dual Persona Switch Backend Implementation"
 
 agent_communication:
   - agent: "main"
