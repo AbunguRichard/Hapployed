@@ -27,6 +27,7 @@ class BackendTester:
             "grow": {},
             "search": {},
             "verification": {},
+            "sms_gateway": {},
             "summary": {"passed": 0, "failed": 0, "errors": []}
         }
         
