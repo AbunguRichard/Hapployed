@@ -28,6 +28,7 @@ class BackendTester:
             "search": {},
             "verification": {},
             "sms_gateway": {},
+            "dual_persona": {},
             "summary": {"passed": 0, "failed": 0, "errors": []}
         }
         
