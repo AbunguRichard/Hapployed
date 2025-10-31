@@ -543,6 +543,16 @@ function App() {
               } 
             />
             
+            {/* Verification Route */}
+            <Route 
+              path="/verification" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <VerificationPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* SMS Dashboard Route */}
             <Route 
               path="/admin/sms-dashboard" 
