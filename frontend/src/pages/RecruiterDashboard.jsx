@@ -107,11 +107,6 @@ export default function RecruiterDashboard() {
           padding: '1.5rem 1rem',
           overflowY: 'auto'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2rem', padding: '0 0.5rem' }}>
-            <i className="fas fa-handshake" style={{ fontSize: '1.8rem' }}></i>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: '700' }}>Hapployed</h1>
-          </div>
-
           <SidebarSection title="MAIN">
             <SidebarLink icon="home" label="Dashboard" active={activeNav === 'dashboard'} onClick={() => setActiveNav('dashboard')} />
             <SidebarLink icon="briefcase" label="Jobs" active={activeNav === 'jobs'} onClick={() => setActiveNav('jobs')} />
