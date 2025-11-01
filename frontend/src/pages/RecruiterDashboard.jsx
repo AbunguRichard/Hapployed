@@ -97,19 +97,15 @@ export default function RecruiterDashboard() {
     <div style={{ backgroundColor: '#f5f7fb', minHeight: '100vh' }}>
       <DashboardHeader />
       
-      <div style={{ display: 'flex', paddingTop: '70px' }}>
+      <div style={{ display: 'flex', minHeight: 'calc(100vh - 70px)' }}>
         {/* Sidebar */}
         <div style={{
           width: '260px',
+          minWidth: '260px',
           background: 'linear-gradient(180deg, #4361ee 0%, #3f37c9 100%)',
           color: 'white',
           padding: '1.5rem 1rem',
-          minHeight: 'calc(100vh - 70px)',
-          position: 'fixed',
-          left: 0,
-          top: '70px',
-          overflowY: 'auto',
-          zIndex: 100
+          overflowY: 'auto'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2rem', padding: '0 0.5rem' }}>
             <i className="fas fa-handshake" style={{ fontSize: '1.8rem' }}></i>
@@ -139,7 +135,7 @@ export default function RecruiterDashboard() {
         </div>
 
         {/* Main Content */}
-        <div style={{ marginLeft: '260px', flex: 1, padding: '2rem', width: 'calc(100% - 260px)' }}>
+        <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', maxHeight: 'calc(100vh - 70px)' }}>
           {/* Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <h1 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#212529' }}>Recruiter Dashboard</h1>
