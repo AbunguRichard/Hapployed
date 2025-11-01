@@ -97,7 +97,7 @@ export default function RecruiterDashboard() {
     <div style={{ backgroundColor: '#f5f7fb', minHeight: '100vh' }}>
       <DashboardHeader />
       
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', paddingTop: '70px' }}>
         {/* Sidebar */}
         <div style={{
           width: '260px',
@@ -108,7 +108,8 @@ export default function RecruiterDashboard() {
           position: 'fixed',
           left: 0,
           top: '70px',
-          overflowY: 'auto'
+          overflowY: 'auto',
+          zIndex: 100
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2rem', padding: '0 0.5rem' }}>
             <i className="fas fa-handshake" style={{ fontSize: '1.8rem' }}></i>
