@@ -115,7 +115,7 @@ export default function WorkerDashboardPage() {
         </div>
 
         {/* Main Content */}
-        <div style={{ marginLeft: '260px', flex: 1, padding: '2rem', width: 'calc(100% - 260px)' }}>
+        <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', maxHeight: 'calc(100vh - 70px)' }}>
           {/* Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <h1 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#212529' }}>Talent Dashboard</h1>
