@@ -154,7 +154,9 @@ export default function WorkerDashboardPage() {
                 </div>
                 <div>
                   <div style={{ fontSize: '0.9rem', fontWeight: '600' }}>{user?.name || 'Talent'}</div>
-                  <div style={{ fontSize: '0.8rem', color: '#6c757d' }}>Recruiter</div>
+                  <div style={{ fontSize: '0.8rem', color: '#6c757d' }}>
+                    {user?.currentMode === 'worker' ? 'Talent' : 'Recruiter'}
+                  </div>
                 </div>
               </div>
             </div>
