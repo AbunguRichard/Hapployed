@@ -119,12 +119,12 @@ function App() {
               } 
             />
             
-            {/* Modern Recruiter Dashboard */}
+            {/* Recruiter Dashboard with Sidebar */}
             <Route 
               path="/recruiter-dashboard" 
               element={
                 <ProtectedRoute requireProfile={false}>
-                  <ModernRecruiterDashboard />
+                  <RecruiterDashboard />
                 </ProtectedRoute>
               } 
             />
