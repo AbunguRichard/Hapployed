@@ -75,8 +75,9 @@ export default function WorkerDashboardPage() {
 
   return (
     <div style={{ backgroundColor: '#f5f7fb', minHeight: '100vh' }}>
-      <DashboardHeader />\n      
-      <div style={{ display: 'flex', paddingTop: '70px' }}>
+      <DashboardHeader />
+      
+      <div style={{ display: 'flex', minHeight: 'calc(100vh - 70px)' }}>
         {/* Sidebar */}
         <div style={{
           width: '260px',
