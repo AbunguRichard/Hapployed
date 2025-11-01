@@ -87,15 +87,39 @@ export default function UnifiedHeroSection() {
     }
   };
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = async () => {
     setShowAuthModal(false);
-    const intent = localStorage.getItem('user_intent');
     
-    // Redirect based on intent
+    // Get the logged-in user's data
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/me`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (response.ok) {
+          const userData = await response.json();
+          const currentMode = userData.currentMode || (userData.roles?.[0] === 'employer' ? 'employer' : 'worker');
+          
+          // Redirect to appropriate dashboard based on current mode
+          if (currentMode === 'employer') {
+            navigate('/recruiter-dashboard');
+          } else {
+            navigate('/epic-worker-dashboard');
+          }
+          return;
+        }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    }
+    
+    // Fallback to intent-based redirect if fetching user data fails
+    const intent = localStorage.getItem('user_intent');
     if (intent === 'find_work') {
-      navigate('/dashboard-worker');
+      navigate('/epic-worker-dashboard');
     } else if (intent === 'hire_talent') {
-      navigate('/dashboard-employer');
+      navigate('/recruiter-dashboard');
     } else if (intent === 'post_project') {
       navigate('/post-project');
     }
