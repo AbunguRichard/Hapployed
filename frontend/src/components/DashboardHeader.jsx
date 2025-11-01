@@ -47,6 +47,12 @@ export default function DashboardHeader() {
   }, []);
 
   const isActive = (path) => {
+    // Home tab should be active for /home, /recruiter-dashboard, and /epic-worker-dashboard
+    if (path === '/home') {
+      return location.pathname === '/home' || 
+             location.pathname === '/recruiter-dashboard' || 
+             location.pathname === '/epic-worker-dashboard';
+    }
     return location.pathname === path;
   };
 
