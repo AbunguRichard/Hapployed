@@ -81,15 +81,11 @@ export default function WorkerDashboardPage() {
         {/* Sidebar */}
         <div style={{
           width: '260px',
+          minWidth: '260px',
           background: 'linear-gradient(180deg, #4361ee 0%, #3f37c9 100%)',
           color: 'white',
           padding: '1.5rem 1rem',
-          minHeight: 'calc(100vh - 70px)',
-          position: 'fixed',
-          left: 0,
-          top: '70px',
-          overflowY: 'auto',
-          zIndex: 100
+          overflowY: 'auto'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2rem', padding: '0 0.5rem' }}>
             <i className="fas fa-handshake" style={{ fontSize: '1.8rem' }}></i>
