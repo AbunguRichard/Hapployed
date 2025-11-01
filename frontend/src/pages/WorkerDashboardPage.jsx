@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Briefcase, Inbox, Zap, CheckCircle, 
   MessageSquare, DollarSign, Star, Wrench, Settings,
-  Search, MapPin, Clock, Tag, Calendar, TrendingUp,
-  Filter, Play, Pause, FileText, Award, Target
+  Clock, Calendar, TrendingUp, Filter, Award
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
