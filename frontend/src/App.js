@@ -579,6 +579,40 @@ function App() {
               } 
             />
             
+            {/* Sidebar Navigation Routes */}
+            <Route 
+              path="/jobs" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <JobsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/candidates" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <CandidatesPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/interviews" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <InterviewsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/settings" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <SettingsPage />
+                </ProtectedRoute>
+              } 
+            />
+            
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
             {/* Catch all - redirect to home */}
