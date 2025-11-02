@@ -108,24 +108,24 @@ export default function RecruiterDashboard() {
           overflowY: 'auto'
         }}>
           <SidebarSection title="MAIN">
-            <SidebarLink icon="home" label="Dashboard" active={activeNav === 'dashboard'} onClick={() => setActiveNav('dashboard')} />
-            <SidebarLink icon="briefcase" label="Jobs" active={activeNav === 'jobs'} onClick={() => setActiveNav('jobs')} />
-            <SidebarLink icon="users" label="Candidates" active={activeNav === 'candidates'} onClick={() => setActiveNav('candidates')} />
-            <SidebarLink icon="calendar-alt" label="Interviews" active={activeNav === 'interviews'} onClick={() => setActiveNav('interviews')} />
-            <SidebarLink icon="envelope" label="Messages" active={activeNav === 'messages'} onClick={() => setActiveNav('messages')} />
+            <SidebarLink icon="home" label="Dashboard" active={activeNav === 'dashboard'} onClick={() => { setActiveNav('dashboard'); navigate('/recruiter-dashboard'); }} />
+            <SidebarLink icon="briefcase" label="Jobs" active={activeNav === 'jobs'} onClick={() => { setActiveNav('jobs'); navigate('/jobs'); }} />
+            <SidebarLink icon="users" label="Candidates" active={activeNav === 'candidates'} onClick={() => { setActiveNav('candidates'); navigate('/candidates'); }} />
+            <SidebarLink icon="calendar-alt" label="Interviews" active={activeNav === 'interviews'} onClick={() => { setActiveNav('interviews'); navigate('/interviews'); }} />
+            <SidebarLink icon="envelope" label="Messages" active={activeNav === 'messages'} onClick={() => { setActiveNav('messages'); navigate('/messages'); }} />
           </SidebarSection>
 
           <SidebarSection title="MANAGE">
-            <SidebarLink icon="sliders-h" label="Manage Menu" />
-            <SidebarLink icon="star" label="Interviewer Ratings" />
-            <SidebarLink icon="print" label="Prints" />
-            <SidebarLink icon="cog" label="Settings" />
+            <SidebarLink icon="sliders-h" label="Manage Menu" onClick={() => navigate('/manage')} />
+            <SidebarLink icon="star" label="Interviewer Ratings" onClick={() => navigate('/ratings')} />
+            <SidebarLink icon="print" label="Prints" onClick={() => navigate('/prints')} />
+            <SidebarLink icon="cog" label="Settings" onClick={() => navigate('/settings')} />
           </SidebarSection>
 
           <SidebarSection title="ORGANIZATION">
-            <SidebarLink icon="credit-card" label="Payments" />
-            <SidebarLink icon="user-cog" label="Accounts" />
-            <SidebarLink icon="hubspot" label="Hub" />
+            <SidebarLink icon="credit-card" label="Payments" onClick={() => navigate('/payments')} />
+            <SidebarLink icon="user-cog" label="Accounts" onClick={() => navigate('/accounts')} />
+            <SidebarLink icon="hubspot" label="Hub" onClick={() => navigate('/hub')} />
           </SidebarSection>
         </div>
 
