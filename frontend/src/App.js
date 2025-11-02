@@ -71,7 +71,6 @@ import VerificationPage from './pages/VerificationPage';
 import JobsPage from './pages/JobsPage';
 import CandidatesPage from './pages/CandidatesPage';
 import InterviewsPage from './pages/InterviewsPage';
-import SettingsPage from './pages/SettingsPage';
 import HomePage from './pages/HomePage';
 import DashboardRedirect from './components/DashboardRedirect';
 import ModernRecruiterDashboard from './pages/ModernRecruiterDashboard';
