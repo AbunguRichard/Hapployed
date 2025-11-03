@@ -59,7 +59,7 @@ export default function MyGigsPage() {
           <div className="flex items-center gap-3 text-sm text-gray-600">
             <span className="flex items-center gap-1">
               <MapPin className="w-4 h-4" />
-              {gig.location}
+              {typeof gig.location === 'object' ? (gig.location?.type || gig.location?.address || 'N/A') : (gig.location || 'N/A')}
             </span>
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
