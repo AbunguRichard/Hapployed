@@ -124,7 +124,7 @@ export default function JobsPage() {
                   </span>
                 </div>
                 <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                  <span>📍 {job.location || 'Remote'}</span>
+                  <span>📍 {typeof job.location === 'object' ? (job.location?.type || job.location?.address || 'Remote') : (job.location || 'Remote')}</span>
                   <span>💰 ${job.budget || 'Negotiable'}</span>
                   <span>📅 {new Date(job.createdAt).toLocaleDateString()}</span>
                 </div>
