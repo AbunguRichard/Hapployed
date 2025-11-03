@@ -632,6 +632,30 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            <Route 
+              path="/payments" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <PaymentsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/accounts" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <AccountsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/hub" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <HubPage />
+                </ProtectedRoute>
+              } 
+            />
             
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
