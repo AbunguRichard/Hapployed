@@ -118,7 +118,6 @@ export default function RecruiterDashboard() {
           <SidebarSection title="MANAGE">
             <SidebarLink icon="sliders-h" label="Manage Menu" onClick={() => navigate('/manage')} />
             <SidebarLink icon="star" label="Interviewer Ratings" onClick={() => navigate('/ratings')} />
-            <SidebarLink icon="print" label="Prints" onClick={() => navigate('/prints')} />
             <SidebarLink icon="cog" label="Settings" onClick={() => navigate('/settings')} />
           </SidebarSection>
 
