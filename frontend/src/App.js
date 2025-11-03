@@ -613,6 +613,22 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            <Route 
+              path="/manage" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <ManageMenuPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/ratings" 
+              element={
+                <ProtectedRoute requireProfile={false}>
+                  <InterviewerRatingsPage />
+                </ProtectedRoute>
+              } 
+            />
             
             {/* ========== END DUAL-TRACK ROUTES ========== */}
             
