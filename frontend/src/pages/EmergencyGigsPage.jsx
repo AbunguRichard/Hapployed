@@ -173,7 +173,7 @@ export default function EmergencyGigsPage() {
                       <div className="flex flex-wrap gap-4 text-sm">
                         <div className="flex items-center gap-2 text-gray-700">
                           <MapPin className="w-4 h-4 text-primary" />
-                          <span>{gig.location}</span>
+                          <span>{typeof gig.location === 'object' ? (gig.location?.type || gig.location?.address || 'N/A') : (gig.location || 'N/A')}</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-700">
                           <DollarSign className="w-4 h-4 text-green-600" />
