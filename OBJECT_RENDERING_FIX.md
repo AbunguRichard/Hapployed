@@ -75,7 +75,7 @@ When React tried to render the object directly in JSX, it threw an error because
 {typeof worker.location === 'object' ? (worker.location?.type || worker.location?.address || 'N/A') : (worker.location || 'N/A')}
 ```
 
-### 5. `/app/frontend/src/pages/FindWorkersPage.jsx`
+### 6. `/app/frontend/src/pages/FindWorkersPage.jsx`
 **Three instances fixed** (Lines 911, 1052, 1137):
 ```javascript
 // Before (all three instances)
