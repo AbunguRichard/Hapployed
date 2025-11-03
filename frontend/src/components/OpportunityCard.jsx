@@ -79,7 +79,7 @@ export default function OpportunityCard({ opportunity, onApply, index }) {
                 </div>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
                   <MapPin className="w-3 h-3" />
-                  {opportunity.location}
+                  {typeof opportunity.location === 'object' ? (opportunity.location?.type || opportunity.location?.address || 'N/A') : (opportunity.location || 'N/A')}
                 </p>
               </div>
             </div>
