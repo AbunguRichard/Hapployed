@@ -29,7 +29,17 @@ When React tried to render the object directly in JSX, it threw an error because
 <span>📍 {typeof job.location === 'object' ? (job.location?.type || job.location?.address || 'Remote') : (job.location || 'Remote')}</span>
 ```
 
-### 2. `/app/frontend/src/pages/MyGigsPage.jsx`
+### 2. `/app/frontend/src/components/OpportunityCard.jsx` ⭐ **KEY FIX**
+**Line 82** - Fixed opportunity location rendering (this was the main culprit):
+```javascript
+// Before
+{opportunity.location}
+
+// After
+{typeof opportunity.location === 'object' ? (opportunity.location?.type || opportunity.location?.address || 'N/A') : (opportunity.location || 'N/A')}
+```
+
+### 3. `/app/frontend/src/pages/MyGigsPage.jsx`
 **Line 60-62** - Fixed gig location rendering:
 ```javascript
 // Before
