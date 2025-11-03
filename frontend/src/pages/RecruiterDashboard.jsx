@@ -112,7 +112,6 @@ export default function RecruiterDashboard() {
             <SidebarLink icon="briefcase" label="Jobs" active={activeNav === 'jobs'} onClick={() => { setActiveNav('jobs'); navigate('/jobs'); }} />
             <SidebarLink icon="users" label="Candidates" active={activeNav === 'candidates'} onClick={() => { setActiveNav('candidates'); navigate('/candidates'); }} />
             <SidebarLink icon="calendar-alt" label="Interviews" active={activeNav === 'interviews'} onClick={() => { setActiveNav('interviews'); navigate('/interviews'); }} />
-            <SidebarLink icon="envelope" label="Messages" active={activeNav === 'messages'} onClick={() => { setActiveNav('messages'); navigate('/messages'); }} />
           </SidebarSection>
 
           <SidebarSection title="MANAGE">
