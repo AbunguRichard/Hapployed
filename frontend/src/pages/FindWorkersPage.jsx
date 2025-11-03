@@ -908,7 +908,7 @@ export default function FindWorkersPage() {
                         </div>
                         <div className="flex items-center gap-1.5 text-gray-600">
                           <MapPin className="w-4 h-4" />
-                          <span className="text-xs">{worker.location}</span>
+                          <span className="text-xs">{typeof worker.location === 'object' ? (worker.location?.type || worker.location?.address || 'N/A') : (worker.location || 'N/A')}</span>
                         </div>
                       </div>
 
