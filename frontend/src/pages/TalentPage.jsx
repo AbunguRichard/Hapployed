@@ -69,7 +69,7 @@ export default function TalentPage() {
           <h3 className="text-xl font-bold text-gray-900 mb-1">{worker.name}</h3>
           <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
             <MapPin className="w-4 h-4" />
-            {worker.location}
+            {typeof worker.location === 'object' ? (worker.location?.type || worker.location?.address || 'N/A') : (worker.location || 'N/A')}
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-yellow-500">
