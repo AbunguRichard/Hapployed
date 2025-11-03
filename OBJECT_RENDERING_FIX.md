@@ -65,7 +65,7 @@ When React tried to render the object directly in JSX, it threw an error because
 <span>{typeof gig.location === 'object' ? (gig.location?.type || gig.location?.address || 'N/A') : (gig.location || 'N/A')}</span>
 ```
 
-### 4. `/app/frontend/src/pages/TalentPage.jsx`
+### 5. `/app/frontend/src/pages/TalentPage.jsx`
 **Line 72** - Fixed worker location rendering:
 ```javascript
 // Before
