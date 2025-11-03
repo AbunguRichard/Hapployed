@@ -55,7 +55,7 @@ When React tried to render the object directly in JSX, it threw an error because
 </span>
 ```
 
-### 3. `/app/frontend/src/pages/EmergencyGigsPage.jsx`
+### 4. `/app/frontend/src/pages/EmergencyGigsPage.jsx`
 **Line 176** - Fixed emergency gig location rendering:
 ```javascript
 // Before
