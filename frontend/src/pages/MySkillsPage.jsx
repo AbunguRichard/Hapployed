@@ -24,6 +24,7 @@ const PREDEFINED_SKILLS = [
 
 export default function MySkillsPage() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [customSkill, setCustomSkill] = useState('');
   const [voiceEnabled, setVoiceEnabled] = useState(false);
