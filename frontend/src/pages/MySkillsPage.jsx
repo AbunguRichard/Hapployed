@@ -201,6 +201,23 @@ export default function MySkillsPage() {
       }
 
       toast.success('Skills saved successfully!');
+      
+      // Navigate to next step based on user role
+      setTimeout(() => {
+        const isWorker = user?.roles?.includes('worker') || user?.currentMode === 'worker';
+        const isRecruiter = user?.roles?.includes('employer') || user?.currentMode === 'employer';
+        
+        if (isWorker) {
+          // Navigate to worker onboarding for multi-step profile completion
+          navigate('/worker/onboarding');
+        } else if (isRecruiter) {
+          // Navigate to recruiter dashboard
+          navigate('/recruiter-dashboard');
+        } else {
+          // Default to epic worker dashboard
+          navigate('/epic-worker-dashboard');
+        }
+      }, 1000); // Small delay to show success message
     } catch (error) {
       console.error('Error saving skills:', error);
       toast.error(error.message || 'Failed to save skills');
