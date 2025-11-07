@@ -122,7 +122,7 @@ async def register(user_data: UserRegister):
     Creates user account with hashed password and initial profile
     """
     try:
-        supabase_client = get_supabase_client()
+        supabase_client = get_supabase_admin()  # Use admin client to bypass RLS
         
         # Check if user already exists
         existing_user = supabase_client.table('users').select('id').eq('email', user_data.email).execute()
