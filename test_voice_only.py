@@ -7,7 +7,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://talentswitch.preview.emergentagent.com/api"
+BASE_URL = "https://supabase-migration-9.preview.emergentagent.com/api"
 
 def test_voice_parsing():
     """Test AI Voice Parsing endpoint"""

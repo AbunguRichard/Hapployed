@@ -37,7 +37,7 @@ sudo supervisorctl restart backend
 ```bash
 cd /app/frontend
 # Backend URL is configured in .env
-# REACT_APP_BACKEND_URL=https://talentswitch.preview.emergentagent.com
+# REACT_APP_BACKEND_URL=https://supabase-migration-9.preview.emergentagent.com
 sudo supervisorctl restart frontend
 ```
 
