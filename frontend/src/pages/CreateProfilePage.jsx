@@ -337,7 +337,12 @@ export default function CreateProfilePage() {
         profileData.experience = formData.experience;
         profileData.portfolio = formData.portfolio;
       } else {
-        profileData.physicalCapability = formData.physicalCapability;
+        // Combine physical capabilities with custom capabilities
+        const allCapabilities = [
+          ...formData.physicalCapability,
+          ...formData.customCapabilities.map((cap, idx) => `custom_${idx}_${cap}`)
+        ];
+        profileData.physicalCapability = allCapabilities;
         profileData.hasVehicle = formData.hasVehicle;
         profileData.maxDistance = formData.maxDistance;
         profileData.availability = formData.availability.join(',');
