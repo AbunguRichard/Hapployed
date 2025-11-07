@@ -122,10 +122,11 @@ async def register(user_data: UserRegister):
     Creates user account with hashed password and initial profile
     """
     try:
-        supabase_client = get_supabase_client()
+        # Use admin client to bypass RLS for registration
+        supabase_admin = get_supabase_admin()
         
         # Check if user already exists
-        existing_user = supabase_client.table('users').select('id').eq('email', user_data.email).execute()
+        existing_user = supabase_admin.table('users').select('id').eq('email', user_data.email).execute()
         
         if existing_user.data and len(existing_user.data) > 0:
             raise HTTPException(
@@ -154,7 +155,7 @@ async def register(user_data: UserRegister):
         }
         
         # Insert user into database
-        result = supabase_client.table('users').insert(new_user).execute()
+        result = supabase_admin.table('users').insert(new_user).execute()
         
         if not result.data or len(result.data) == 0:
             raise HTTPException(
@@ -180,7 +181,7 @@ async def register(user_data: UserRegister):
                 "created_at": datetime.utcnow().isoformat(),
                 "updated_at": datetime.utcnow().isoformat()
             }
-            supabase_client.table('worker_profiles').insert(worker_profile).execute()
+            supabase_admin.table('worker_profiles').insert(worker_profile).execute()
         
         # Generate tokens
         access_token = create_access_token(data={"sub": user_id})
