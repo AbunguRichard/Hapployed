@@ -349,10 +349,7 @@ export default function CreateProfilePage() {
         profileData.workPreference = formData.workPreference.join(',');
       }
 
-      // Update profile using new auth system
-      await updateProfile('worker', profileData);
-      
-      // Also save to backend worker profile API (for search/matching)
+      // Save to backend worker profile API (for search/matching)
       if (user) {
         // Combine all skills including custom ones
         const allSkills = [
