@@ -150,7 +150,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, name, role) => {
     try {
-      const response = await xhrFetch(`${BACKEND_URL}/api/auth/register`, {
+      const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -159,8 +159,10 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const errorMessage = response.data?.detail || response.data?.message || 'Signup failed';
+        const errorMessage = data?.detail || data?.message || 'Signup failed';
         
         // If email already registered, offer to cleanup
         if (errorMessage.includes('already registered')) {
@@ -169,8 +171,6 @@ export const AuthProvider = ({ children }) => {
         
         throw new Error(errorMessage);
       }
-
-      const data = response.data;
 
       setAuthToken(data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
