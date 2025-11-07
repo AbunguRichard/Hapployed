@@ -20,8 +20,10 @@ from jobs_routes_supabase import router as jobs_router
 from worker_features_routes import router as worker_features_router
 from ai_matching_routes import router as ai_matching_router
 from voice_ai_routes import router as voice_ai_router
-from badge_routes import router as badge_router
-from profile_routes import router as profile_router
+# SUPABASE MIGRATION: Using Supabase version for badge_routes
+from badge_routes_supabase import router as badge_router
+# SUPABASE MIGRATION: Using Supabase version for profile_routes
+from profile_routes_supabase import router as profile_router
 from job_posting_routes import router as job_posting_router
 # SUPABASE MIGRATION: Using Supabase version for worker_profile_routes
 from worker_profile_routes_supabase import router as worker_profile_router
