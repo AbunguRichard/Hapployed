@@ -36,7 +36,8 @@ from worker_profile_routes_supabase import router as worker_profile_router
 from messaging_routes_supabase import router as messaging_router
 # SUPABASE MIGRATION: Using Supabase version for application_routes
 from application_routes_supabase import router as application_router
-from quickhire_routes import router as quickhire_router
+# SUPABASE MIGRATION: Using Supabase version for quickhire_routes
+from quickhire_routes_supabase import router as quickhire_router
 # SUPABASE MIGRATION: Using Supabase version for auth_routes
 from auth_routes_supabase import router as auth_router
 # SUPABASE MIGRATION: Using Supabase version for analytics_routes
