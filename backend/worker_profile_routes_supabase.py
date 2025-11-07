@@ -89,6 +89,9 @@ async def create_worker_profile(profile: WorkerProfileCreate):
                 "availability": profile.availability,
                 "hourly_rate": profile.hourlyRate or 0.0,
                 "location": profile.location,
+                "portfolio": profile.portfolio,
+                "categories": profile.categories,
+                "profile_image": profile.profileImage,
                 "is_available": profile.isAvailable,
                 "updated_at": datetime.utcnow().isoformat()
             }
