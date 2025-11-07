@@ -114,7 +114,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await xhrFetch(`${BACKEND_URL}/api/auth/login`, {
+      const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -123,12 +123,11 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
 
-      if (!response.ok) {
-        const errorMessage = response.data?.detail || response.data?.message || 'Login failed';
-        throw new Error(errorMessage);
-      }
+      const data = await response.json();
 
-      const data = response.data;
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.message || 'Login failed');
+      }
 
       setAuthToken(data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
