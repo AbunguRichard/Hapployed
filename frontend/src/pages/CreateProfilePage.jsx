@@ -28,6 +28,7 @@ export default function CreateProfilePage() {
     experience: '',
     // General worker fields
     physicalCapability: [],
+    customCapabilities: [], // NEW: Store custom capabilities
     hasVehicle: false,
     maxDistance: '10',
     availability: [],
@@ -39,6 +40,8 @@ export default function CreateProfilePage() {
   // NEW: States for custom skill addition
   const [showProfessionalInput, setShowProfessionalInput] = useState(false);
   const [showGeneralInput, setShowGeneralInput] = useState(false);
+  const [showOthersInput, setShowOthersInput] = useState(false); // NEW: For "Others" capability
+  const [othersInputText, setOthersInputText] = useState(''); // NEW: For textarea input
   const [professionalSkillInput, setProfessionalSkillInput] = useState('');
   const [generalSkillInput, setGeneralSkillInput] = useState('');
   const [skillSuggestions, setSkillSuggestions] = useState([]);
