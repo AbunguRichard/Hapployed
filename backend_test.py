@@ -1143,8 +1143,8 @@ class BackendTester:
         try:
             payload = {
                 "clientId": test_client_id,
-                "clientName": "John Smith",
-                "clientEmail": "john.smith@example.com",
+                "clientName": "Quickhire Test Client",
+                "clientEmail": test_client_email,
                 "category": "Plumber",
                 "description": "Emergency plumbing repair needed - burst pipe in kitchen",
                 "location": {
