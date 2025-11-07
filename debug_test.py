@@ -8,7 +8,7 @@ import json
 import uuid
 from datetime import datetime, timedelta
 
-BASE_URL = "https://supabase-migration-9.preview.emergentagent.com/api"
+BASE_URL = "https://hapployed-migrate.preview.emergentagent.com/api"
 TEST_USER_ID = "worker-john-smith-123"
 TEST_GIG_ID = "plumbing-emergency-456"
 TEST_COMPANY_ID = "acme-corp-789"

@@ -23,7 +23,7 @@ echo "⚠️  This will DELETE the account completely."
 echo ""
 
 # Get backend URL from environment
-BACKEND_URL="https://supabase-migration-9.preview.emergentagent.com"
+BACKEND_URL="https://hapployed-migrate.preview.emergentagent.com"
 
 echo "Step 1: Deleting via API endpoint..."
 API_RESPONSE=$(curl -s -X DELETE "${BACKEND_URL}/api/auth/cleanup-incomplete/${EMAIL}")

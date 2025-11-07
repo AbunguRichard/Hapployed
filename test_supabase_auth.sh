@@ -2,7 +2,7 @@
 
 # Test Supabase Registration and Login
 
-BACKEND_URL="https://supabase-migration-9.preview.emergentagent.com/api"
+BACKEND_URL="https://hapployed-migrate.preview.emergentagent.com/api"
 TIMESTAMP=$(date +%s)
 TEST_EMAIL="test${TIMESTAMP}@hapployed.com"
 TEST_PASSWORD="TestPass123!"
