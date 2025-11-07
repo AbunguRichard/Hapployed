@@ -11,7 +11,7 @@ import uuid
 
 from supabase_client import get_supabase_admin
 
-router = APIRouter(prefix="/api/applications", tags=["Applications"])
+router = APIRouter(prefix="/applications", tags=["Applications"])
 
 class ApplicationCreate(BaseModel):
     job_id: str
