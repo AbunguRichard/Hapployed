@@ -217,10 +217,11 @@ async def login(credentials: UserLogin):
     Authenticate user and return JWT tokens
     """
     try:
-        supabase_client = get_supabase_client()
+        # Use admin client to bypass RLS for login
+        supabase_admin = get_supabase_admin()
         
         # Get user by email
-        response = supabase_client.table('users').select('*').eq('email', credentials.email).execute()
+        response = supabase_admin.table('users').select('*').eq('email', credentials.email).execute()
         
         if not response.data or len(response.data) == 0:
             raise HTTPException(
@@ -245,7 +246,7 @@ async def login(credentials: UserLogin):
             )
         
         # Update last login
-        supabase_client.table('users').update({
+        supabase_admin.table('users').update({
             "last_login": datetime.utcnow().isoformat()
         }).eq('id', user["id"]).execute()
         
