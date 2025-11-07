@@ -9,6 +9,10 @@ from pydantic import BaseModel, Field
 from typing import List
 import uuid
 from datetime import datetime
+
+# Import Supabase client
+from supabase_client import supabase, get_supabase_client
+
 from sos_voice_routes import router as sos_router
 from settings_routes import router as settings_router
 from jobs_routes import router as jobs_router
@@ -36,10 +40,18 @@ from sms_routes import router as sms_router
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
+# MongoDB connection (LEGACY - will be deprecated)
+mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[os.environ.get('DB_NAME', 'test_database')]
+
+# Supabase connection (NEW)
+try:
+    supabase_client = get_supabase_client()
+    print("✅ Supabase database connected successfully")
+except Exception as e:
+    print(f"⚠️ Warning: Supabase connection failed: {e}")
+    supabase_client = None
 
 # Create the main app without a prefix
 app = FastAPI()
