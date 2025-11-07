@@ -323,9 +323,9 @@ async def refresh_token(request: RefreshTokenRequest):
             user=user_response
         )
         
-    except jwt.ExpiredSignatureError:
+    except ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Refresh token has expired")
-    except jwt.JWTError:
+    except InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Token refresh failed: {str(e)}")
