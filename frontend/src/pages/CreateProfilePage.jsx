@@ -354,14 +354,21 @@ export default function CreateProfilePage() {
       
       // Also save to backend worker profile API (for search/matching)
       if (user) {
+        // Combine all skills including custom ones
+        const allSkills = [
+          ...formData.skills, 
+          ...formData.customSkills,
+          ...formData.customCapabilities // Add custom capabilities as skills too
+        ];
+        
         const workerProfileData = {
           userId: user.id || user.email,
           email: user.email,
           name: formData.fullName,
           phone: formData.phone,
           bio: formData.bio,
-          skills: [...formData.skills, ...formData.customSkills],
-          experience: userType === 'professional' ? formData.experience : 'entry',
+          skills: allSkills,
+          experience: userType === 'professional' ? formData.experience : 'Entry',
           availability: formData.workPreference?.join(',') || 'flexible',
           hourlyRate: null, // Can be set later in profile settings
           location: {
