@@ -1,19 +1,18 @@
-from fastapi import APIRouter, HTTPException
+"""
+Jobs Routes - Supabase PostgreSQL Version
+Handles job posting, listing, updates, and deletion
+"""
+
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 import uuid
-import os
-from motor.motor_asyncio import AsyncIOMotorClient
+
+# Import Supabase client
+from supabase_client import get_supabase_admin
 
 router = APIRouter(prefix="/api/jobs", tags=["Jobs"])
-
-# Import shared MongoDB connection
-MONGO_URL = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
-DB_NAME = os.getenv('DB_NAME', 'test_database')
-client = AsyncIOMotorClient(MONGO_URL)
-db = client[DB_NAME]
-jobs_collection = db.jobs
 
 # Models
 class JobPost(BaseModel):
@@ -35,175 +34,230 @@ class JobPost(BaseModel):
     user_id: str
     user_name: Optional[str] = None
 
+class JobUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    category: Optional[str] = None
+    amount: Optional[str] = None
+    location: Optional[str] = None
+    status: Optional[str] = None
+
 @router.post("/post")
 async def post_job(job: JobPost):
-    """Post a new job"""
+    """Post a new job to Supabase"""
     try:
+        supabase = get_supabase_admin()
+        
         job_id = str(uuid.uuid4())
         
-        # Determine which feed this should go to
-        feed_type = 'gigs' if job.mode == 'emergency' else 'opportunities'
+        # Determine job type and status
+        job_type = 'gig' if job.mode == 'emergency' else 'project'
         
         job_data = {
             "id": job_id,
+            "user_id": job.user_id,
             "title": job.title,
             "description": job.description,
+            "job_type": job_type,
+            "status": "published",
+            "hiring_type": "Single",
             "category": job.category,
-            "budget": {
-                "amount": job.amount,
-                "type": "Fixed" if not "/" in job.amount else "Hourly"
-            },
-            "location": job.location,
-            "workModel": job.workModel,
-            "startDate": job.startDate,
-            "endDate": job.endDate,
+            "budget": float(job.amount) if job.amount else None,
             "duration": job.duration,
-            "equipment": job.equipment,
-            "mode": job.mode,
-            "feed_type": feed_type,
-            "urgent": job.mode == 'emergency',
-            "user_id": job.user_id,
-            "user_name": job.user_name or "Anonymous",
-            "posted_at": datetime.now().isoformat(),
-            "status": "active",
+            "location": {"address": job.location, "type": job.workModel},
+            "skills_required": [],
+            "urgency": "high" if job.mode == 'emergency' else "normal",
             "views": 0,
-            "applications": 0,
-            "accepting": 0,
-            "hired": 0,
-            
-            # For gigs near me
-            "distance": "N/A",  # Will be calculated based on user location
-            "eta": "N/A",
-            "availableNow": job.mode == 'emergency',
-            "startTime": job.timeWindow or "ASAP" if job.mode == 'emergency' else job.startDate,
-            "expiresIn": "24 hours" if job.mode == 'emergency' else None,
-            
-            # Client info (from posting user)
-            "client": {
-                "name": job.user_name or "Anonymous User",
-                "rating": 0.0,
-                "reviews": 0,
-                "totalHired": "0 times",
-                "location": job.location,
-                "verified": False,
-                "responseRate": "New poster",
-                "avgResponseTime": "N/A",
-                "phoneVerified": False
-            },
-            
-            # For opportunities
-            "experienceLevel": "All levels",
-            "skills": [job.category],
-            "proposals": 0,
-            "lastViewed": None,
-            "matchScore": 0,
-            "ctaText": "Apply Now",
-            
-            # Requirements
-            "requirements": {
-                "mustHave": equipment if job.equipment else ["Available to start"],
-                "niceToHave": []
-            },
-            
-            # Payment
-            "payment": {
-                "method": "To be discussed",
-                "verified": False
-            },
-            
-            "visibility": job.visibility,
-            "interviewRequired": job.interviewRequired,
-            "radius": job.radius
+            "application_count": 0,
+            "specific_location": job.location,
+            "work_type": job.workModel,
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat(),
+            "published_at": datetime.utcnow().isoformat()
         }
         
-        # Insert into MongoDB
-        await jobs_collection.insert_one(job_data)
+        result = supabase.table('jobs').insert(job_data).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create job"
+            )
         
         return {
             "success": True,
+            "jobId": job_id,
             "message": "Job posted successfully",
-            "job_id": job_id,
-            "feed_type": feed_type
+            "job": result.data[0]
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to post job: {str(e)}"
+        )
+
+@router.get("/list")
+async def list_jobs(
+    category: Optional[str] = None,
+    user_id: Optional[str] = None,
+    status: Optional[str] = None,
+    limit: int = 50,
+    offset: int = 0
+):
+    """List jobs with optional filters"""
+    try:
+        supabase = get_supabase_admin()
+        
+        query = supabase.table('jobs').select('*')
+        
+        # Apply filters
+        if category:
+            query = query.eq('category', category)
+        if user_id:
+            query = query.eq('user_id', user_id)
+        if status:
+            query = query.eq('status', status)
+        else:
+            query = query.eq('status', 'published')  # Default to published jobs
+        
+        # Apply pagination
+        query = query.range(offset, offset + limit - 1)
+        
+        # Order by created_at descending
+        query = query.order('created_at', desc=True)
+        
+        result = query.execute()
+        
+        return {
+            "success": True,
+            "jobs": result.data if result.data else [],
+            "count": len(result.data) if result.data else 0
         }
         
     except Exception as e:
-        print(f"Error posting job: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to list jobs: {str(e)}"
+        )
 
-@router.get("/opportunities")
-async def get_opportunities(limit: int = 10, skip: int = 0):
-    """Get all opportunities (regular projects)"""
+@router.get("/{job_id}")
+async def get_job(job_id: str):
+    """Get a specific job by ID"""
     try:
-        jobs = await jobs_collection.find(
-            {"feed_type": "opportunities", "status": "active"}
-        ).sort("posted_at", -1).skip(skip).limit(limit).to_list(length=limit)
+        supabase = get_supabase_admin()
         
-        # Remove MongoDB _id field
-        for job in jobs:
-            job.pop('_id', None)
+        result = supabase.table('jobs').select('*').eq('id', job_id).execute()
         
-        return {"jobs": jobs, "total": await jobs_collection.count_documents({"feed_type": "opportunities", "status": "active"})}
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Job not found"
+            )
+        
+        # Increment view count
+        supabase.table('jobs').update({
+            "views": result.data[0]['views'] + 1
+        }).eq('id', job_id).execute()
+        
+        return {
+            "success": True,
+            "job": result.data[0]
+        }
+        
+    except HTTPException:
+        raise
     except Exception as e:
-        print(f"Error fetching opportunities: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get job: {str(e)}"
+        )
 
-@router.get("/gigs")
-async def get_gigs(limit: int = 10, skip: int = 0):
-    """Get all gigs (emergency/quickhire)"""
+@router.patch("/{job_id}")
+async def update_job(job_id: str, updates: JobUpdate):
+    """Update a job"""
     try:
-        jobs = await jobs_collection.find(
-            {"feed_type": "gigs", "status": "active"}
-        ).sort("posted_at", -1).skip(skip).limit(limit).to_list(length=limit)
+        supabase = get_supabase_admin()
         
-        # Remove MongoDB _id field
-        for job in jobs:
-            job.pop('_id', None)
+        # Build update dict
+        update_data = updates.dict(exclude_unset=True, exclude_none=True)
         
-        return {"jobs": jobs, "total": await jobs_collection.count_documents({"feed_type": "gigs", "status": "active"})}
+        if not update_data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No updates provided"
+            )
+        
+        # Add updated_at
+        update_data['updated_at'] = datetime.utcnow().isoformat()
+        
+        result = supabase.table('jobs').update(update_data).eq('id', job_id).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Job not found"
+            )
+        
+        return {
+            "success": True,
+            "message": "Job updated successfully",
+            "job": result.data[0]
+        }
+        
+    except HTTPException:
+        raise
     except Exception as e:
-        print(f"Error fetching gigs: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update job: {str(e)}"
+        )
 
-@router.get("/my-posts/{user_id}")
-async def get_user_posts(user_id: str):
-    """Get all jobs posted by a user"""
-    try:
-        jobs = await jobs_collection.find(
-            {"user_id": user_id}
-        ).sort("posted_at", -1).to_list(length=None)
-        
-        # Remove MongoDB _id field
-        for job in jobs:
-            job.pop('_id', None)
-        
-        return {"jobs": jobs}
-    except Exception as e:
-        print(f"Error fetching user posts: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.delete("/delete/{job_id}")
+@router.delete("/{job_id}")
 async def delete_job(job_id: str):
     """Delete a job"""
     try:
-        result = await jobs_collection.delete_one({"id": job_id})
-        if result.deleted_count == 0:
-            raise HTTPException(status_code=404, detail="Job not found")
-        return {"success": True, "message": "Job deleted successfully"}
+        supabase = get_supabase_admin()
+        
+        result = supabase.table('jobs').delete().eq('id', job_id).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Job not found"
+            )
+        
+        return {
+            "success": True,
+            "message": "Job deleted successfully"
+        }
+        
+    except HTTPException:
+        raise
     except Exception as e:
-        print(f"Error deleting job: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.put("/update/{job_id}")
-async def update_job(job_id: str, updates: dict):
-    """Update a job"""
-    try:
-        result = await jobs_collection.update_one(
-            {"id": job_id},
-            {"$set": updates}
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete job: {str(e)}"
         )
-        if result.matched_count == 0:
-            raise HTTPException(status_code=404, detail="Job not found")
-        return {"success": True, "message": "Job updated successfully"}
+
+@router.get("/user/{user_id}")
+async def get_user_jobs(user_id: str):
+    """Get all jobs posted by a specific user"""
+    try:
+        supabase = get_supabase_admin()
+        
+        result = supabase.table('jobs').select('*').eq('user_id', user_id).order('created_at', desc=True).execute()
+        
+        return {
+            "success": True,
+            "jobs": result.data if result.data else [],
+            "count": len(result.data) if result.data else 0
+        }
+        
     except Exception as e:
-        print(f"Error updating job: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get user jobs: {str(e)}"
+        )

@@ -1,357 +1,131 @@
+"""
+Application Routes - Supabase PostgreSQL Version
+Handles job applications (create, list, update status)
+"""
+
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
 import uuid
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
 
-router = APIRouter(prefix="/api")
+from supabase_client import get_supabase_admin
 
-# MongoDB connection
-MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
-client = AsyncIOMotorClient(MONGO_URL)
-db = client[os.environ.get('DB_NAME', 'test_database')]
-applications_collection = db['applications']
-jobs_collection = db['jobs']
-worker_profiles_collection = db['worker_profiles']
+router = APIRouter(prefix="/api/applications", tags=["Applications"])
 
-# Pydantic models
 class ApplicationCreate(BaseModel):
-    jobId: str
-    workerId: str
-    workerEmail: str
-    coverLetter: Optional[str] = None
-    proposedRate: Optional[float] = None
-    availableStartDate: Optional[str] = None
+    job_id: str
+    worker_id: str
+    cover_letter: Optional[str] = None
+    proposed_rate: Optional[float] = None
+    available_date: Optional[str] = None
 
 class ApplicationUpdate(BaseModel):
-    status: str  # 'pending', 'reviewed', 'accepted', 'rejected'
-    hirerNotes: Optional[str] = None
+    status: Optional[str] = None
+    hirer_notes: Optional[str] = None
 
-class ApplicationResponse(BaseModel):
-    id: str
-    jobId: str
-    workerId: str
-    workerEmail: str
-    workerName: Optional[str] = None
-    workerProfile: Optional[dict] = None
-    jobTitle: Optional[str] = None
-    jobDetails: Optional[dict] = None
-    coverLetter: Optional[str] = None
-    proposedRate: Optional[float] = None
-    availableStartDate: Optional[str] = None
-    status: str
-    hirerNotes: Optional[str] = None
-    createdAt: str
-    updatedAt: str
-
-# Helper functions
-def serialize_application(app) -> dict:
-    app['id'] = app.pop('_id')
-    app['createdAt'] = app.get('createdAt', datetime.utcnow().isoformat())
-    app['updatedAt'] = app.get('updatedAt', datetime.utcnow().isoformat())
-    return app
-
-# Submit application
-@router.post("/applications", response_model=ApplicationResponse, status_code=status.HTTP_201_CREATED)
-async def submit_application(application: ApplicationCreate):
-    """
-    Submit a job application
-    """
-    # Check if job exists
-    job = await jobs_collection.find_one({'_id': application.jobId})
-    if not job:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Job not found"
-        )
-    
-    # Check if already applied
-    existing = await applications_collection.find_one({
-        'jobId': application.jobId,
-        'workerId': application.workerId
-    })
-    if existing:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="You have already applied to this job"
-        )
-    
-    # Get worker profile
-    worker_profile = await worker_profiles_collection.find_one({'userId': application.workerId})
-    
-    application_id = str(uuid.uuid4())
-    application_dict = application.dict()
-    application_dict['_id'] = application_id
-    application_dict['status'] = 'pending'
-    application_dict['hirerNotes'] = None
-    application_dict['workerName'] = worker_profile.get('name') if worker_profile else None
-    application_dict['createdAt'] = datetime.utcnow().isoformat()
-    application_dict['updatedAt'] = datetime.utcnow().isoformat()
-    
+@router.post("")
+async def create_application(application: ApplicationCreate):
+    """Create a new job application"""
     try:
-        await applications_collection.insert_one(application_dict)
+        supabase = get_supabase_admin()
         
-        # Update job with application count
-        await jobs_collection.update_one(
-            {'_id': application.jobId},
-            {
-                '$push': {'applications': {'applicationId': application_id, 'workerId': application.workerId}},
-                '$inc': {'applicationCount': 1}
-            }
-        )
+        # Check if application already exists
+        existing = supabase.table('applications').select('id').eq('job_id', application.job_id).eq('worker_id', application.worker_id).execute()
         
-        created_app = await applications_collection.find_one({'_id': application_id})
+        if existing.data and len(existing.data) > 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="You have already applied for this job"
+            )
         
-        # Attach job details
-        created_app['jobTitle'] = job.get('title')
-        created_app['jobDetails'] = {
-            'title': job.get('title'),
-            'category': job.get('category'),
-            'budget': job.get('budget')
+        app_id = str(uuid.uuid4())
+        
+        app_data = {
+            "id": app_id,
+            "job_id": application.job_id,
+            "worker_id": application.worker_id,
+            "cover_letter": application.cover_letter,
+            "proposed_rate": application.proposed_rate,
+            "available_date": application.available_date,
+            "status": "pending",
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat()
         }
         
-        # Attach worker profile summary
-        if worker_profile:
-            created_app['workerProfile'] = {
-                'name': worker_profile.get('name'),
-                'skills': worker_profile.get('skills', []),
-                'hourlyRate': worker_profile.get('hourlyRate'),
-                'rating': worker_profile.get('rating'),
-                'completedJobs': worker_profile.get('completedJobs', 0)
-            }
+        result = supabase.table('applications').insert(app_data).execute()
         
-        return serialize_application(created_app)
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create application"
+            )
+        
+        return {"success": True, "application": result.data[0]}
+        
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to submit application: {str(e)}"
+            detail=f"Failed to create application: {str(e)}"
         )
 
-# Get applications for a job
-@router.get("/jobs/{jobId}/applications", response_model=List[ApplicationResponse])
-async def get_job_applications(jobId: str, status: Optional[str] = None):
-    """
-    Get all applications for a specific job
-    """
-    query = {'jobId': jobId}
-    if status:
-        query['status'] = status
-    
+@router.get("/job/{job_id}")
+async def get_job_applications(job_id: str):
+    """Get all applications for a job"""
     try:
-        cursor = applications_collection.find(query).sort('createdAt', -1)
-        applications = await cursor.to_list(length=100)
+        supabase = get_supabase_admin()
         
-        # Enrich with worker and job details
-        enriched_apps = []
-        for app in applications:
-            # Get worker profile
-            worker_profile = await worker_profiles_collection.find_one({'userId': app['workerId']})
-            if worker_profile:
-                app['workerProfile'] = {
-                    'name': worker_profile.get('name'),
-                    'skills': worker_profile.get('skills', []),
-                    'hourlyRate': worker_profile.get('hourlyRate'),
-                    'rating': worker_profile.get('rating'),
-                    'completedJobs': worker_profile.get('completedJobs', 0),
-                    'profileImage': worker_profile.get('profileImage')
-                }
-            
-            # Get job details
-            job = await jobs_collection.find_one({'_id': app['jobId']})
-            if job:
-                app['jobDetails'] = {
-                    'title': job.get('title'),
-                    'category': job.get('category'),
-                    'budget': job.get('budget')
-                }
-            
-            enriched_apps.append(serialize_application(app))
+        result = supabase.table('applications').select('*').eq('job_id', job_id).order('created_at', desc=True).execute()
         
-        return enriched_apps
+        return {"success": True, "applications": result.data if result.data else []}
+        
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to fetch applications: {str(e)}"
+            detail=f"Failed to get applications: {str(e)}"
         )
 
-# Get worker's applications
-@router.get("/workers/{workerId}/applications", response_model=List[ApplicationResponse])
-async def get_worker_applications(workerId: str, status: Optional[str] = None):
-    """
-    Get all applications submitted by a worker
-    """
-    query = {'workerId': workerId}
-    if status:
-        query['status'] = status
-    
+@router.get("/worker/{worker_id}")
+async def get_worker_applications(worker_id: str):
+    """Get all applications by a worker"""
     try:
-        cursor = applications_collection.find(query).sort('createdAt', -1)
-        applications = await cursor.to_list(length=100)
+        supabase = get_supabase_admin()
         
-        # Enrich with job details
-        enriched_apps = []
-        for app in applications:
-            job = await jobs_collection.find_one({'_id': app['jobId']})
-            if job:
-                app['jobTitle'] = job.get('title')
-                app['jobDetails'] = {
-                    'title': job.get('title'),
-                    'category': job.get('category'),
-                    'budget': job.get('budget'),
-                    'location': job.get('location'),
-                    'status': job.get('status')
-                }
-            enriched_apps.append(serialize_application(app))
+        result = supabase.table('applications').select('*').eq('worker_id', worker_id).order('created_at', desc=True).execute()
         
-        return enriched_apps
+        return {"success": True, "applications": result.data if result.data else []}
+        
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to fetch worker applications: {str(e)}"
+            detail=f"Failed to get applications: {str(e)}"
         )
 
-# Get single application
-@router.get("/applications/{applicationId}", response_model=ApplicationResponse)
-async def get_application(applicationId: str):
-    """
-    Get specific application details
-    """
-    application = await applications_collection.find_one({'_id': applicationId})
-    
-    if not application:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Application not found"
-        )
-    
-    # Enrich with details
-    worker_profile = await worker_profiles_collection.find_one({'userId': application['workerId']})
-    if worker_profile:
-        application['workerProfile'] = {
-            'name': worker_profile.get('name'),
-            'skills': worker_profile.get('skills', []),
-            'hourlyRate': worker_profile.get('hourlyRate'),
-            'rating': worker_profile.get('rating'),
-            'completedJobs': worker_profile.get('completedJobs', 0)
-        }
-    
-    job = await jobs_collection.find_one({'_id': application['jobId']})
-    if job:
-        application['jobDetails'] = {
-            'title': job.get('title'),
-            'category': job.get('category'),
-            'budget': job.get('budget')
-        }
-    
-    return serialize_application(application)
-
-# Update application status
-@router.patch("/applications/{applicationId}", response_model=ApplicationResponse)
-async def update_application(applicationId: str, update: ApplicationUpdate):
-    """
-    Update application status (for hirers)
-    """
-    application = await applications_collection.find_one({'_id': applicationId})
-    
-    if not application:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Application not found"
-        )
-    
-    update_data = update.dict()
-    update_data['updatedAt'] = datetime.utcnow().isoformat()
-    
+@router.patch("/{application_id}")
+async def update_application(application_id: str, updates: ApplicationUpdate):
+    """Update application status"""
     try:
-        await applications_collection.update_one(
-            {'_id': applicationId},
-            {'$set': update_data}
-        )
+        supabase = get_supabase_admin()
         
-        updated_app = await applications_collection.find_one({'_id': applicationId})
+        update_data = updates.dict(exclude_unset=True, exclude_none=True)
+        update_data['updated_at'] = datetime.utcnow().isoformat()
         
-        # Enrich with details
-        worker_profile = await worker_profiles_collection.find_one({'userId': updated_app['workerId']})
-        if worker_profile:
-            updated_app['workerProfile'] = {
-                'name': worker_profile.get('name'),
-                'skills': worker_profile.get('skills', []),
-                'hourlyRate': worker_profile.get('hourlyRate'),
-                'rating': worker_profile.get('rating')
-            }
+        result = supabase.table('applications').update(update_data).eq('id', application_id).execute()
         
-        job = await jobs_collection.find_one({'_id': updated_app['jobId']})
-        if job:
-            updated_app['jobDetails'] = {
-                'title': job.get('title'),
-                'category': job.get('category')
-            }
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Application not found"
+            )
         
-        return serialize_application(updated_app)
+        return {"success": True, "application": result.data[0]}
+        
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to update application: {str(e)}"
-        )
-
-# Withdraw application
-@router.delete("/applications/{applicationId}", status_code=status.HTTP_204_NO_CONTENT)
-async def withdraw_application(applicationId: str):
-    """
-    Withdraw/delete an application
-    """
-    application = await applications_collection.find_one({'_id': applicationId})
-    
-    if not application:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Application not found"
-        )
-    
-    try:
-        # Remove from applications collection
-        await applications_collection.delete_one({'_id': applicationId})
-        
-        # Remove from job's applications array
-        await jobs_collection.update_one(
-            {'_id': application['jobId']},
-            {
-                '$pull': {'applications': {'applicationId': applicationId}},
-                '$inc': {'applicationCount': -1}
-            }
-        )
-        
-        return None
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to withdraw application: {str(e)}"
-        )
-
-# Get application stats for a job
-@router.get("/jobs/{jobId}/applications/stats")
-async def get_application_stats(jobId: str):
-    """
-    Get application statistics for a job
-    """
-    try:
-        total = await applications_collection.count_documents({'jobId': jobId})
-        pending = await applications_collection.count_documents({'jobId': jobId, 'status': 'pending'})
-        reviewed = await applications_collection.count_documents({'jobId': jobId, 'status': 'reviewed'})
-        accepted = await applications_collection.count_documents({'jobId': jobId, 'status': 'accepted'})
-        rejected = await applications_collection.count_documents({'jobId': jobId, 'status': 'rejected'})
-        
-        return {
-            'total': total,
-            'pending': pending,
-            'reviewed': reviewed,
-            'accepted': accepted,
-            'rejected': rejected
-        }
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get application stats: {str(e)}"
         )
