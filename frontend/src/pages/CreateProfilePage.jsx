@@ -396,14 +396,14 @@ export default function CreateProfilePage() {
             }
           );
 
+          const responseData = await response.json();
+          
           if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.error('Failed to save worker profile to backend:', errorData);
-            throw new Error(errorData.detail || 'Failed to save profile');
+            console.error('Failed to save worker profile to backend:', responseData);
+            throw new Error(responseData.detail || 'Failed to save profile');
           }
           
-          const savedProfile = await response.json();
-          console.log('Worker profile saved successfully:', savedProfile);
+          console.log('Worker profile saved successfully:', responseData);
         } catch (apiError) {
           console.error('Error saving to worker profile API:', apiError);
           // Throw the error so user knows what went wrong
