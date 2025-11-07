@@ -118,6 +118,36 @@ export default function CreateProfilePage() {
     }));
   };
 
+  // NEW: Handle adding custom capabilities from "Others" textarea
+  const handleAddCustomCapabilities = () => {
+    if (!othersInputText.trim()) return;
+    
+    // Split by newlines and filter empty lines
+    const newCapabilities = othersInputText
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0);
+    
+    if (newCapabilities.length === 0) return;
+    
+    setFormData(prev => ({
+      ...prev,
+      customCapabilities: [...prev.customCapabilities, ...newCapabilities]
+    }));
+    
+    setOthersInputText('');
+    setShowOthersInput(false);
+    toast.success(`Added ${newCapabilities.length} custom ${newCapabilities.length === 1 ? 'capability' : 'capabilities'}`);
+  };
+
+  // NEW: Remove a custom capability
+  const handleRemoveCustomCapability = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      customCapabilities: prev.customCapabilities.filter((_, i) => i !== index)
+    }));
+  };
+
   const handleAvailabilityToggle = (availId) => {
     setFormData(prev => ({
       ...prev,
