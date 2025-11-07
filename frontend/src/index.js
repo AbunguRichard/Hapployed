@@ -1,3 +1,6 @@
+// MUST BE FIRST - Override fetch before any other code runs
+import './utils/globalFetchOverride';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
