@@ -12,7 +12,7 @@ import math
 
 from supabase_client import get_supabase_admin
 
-router = APIRouter(prefix="/api/quickhire")
+router = APIRouter(prefix="/quickhire")
 
 # ============================================================================
 # MODELS
