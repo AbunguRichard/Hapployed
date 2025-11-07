@@ -15,7 +15,8 @@ from supabase_client import supabase, get_supabase_client
 
 from sos_voice_routes import router as sos_router
 from settings_routes import router as settings_router
-from jobs_routes import router as jobs_router
+# SUPABASE MIGRATION: Using Supabase version for jobs_routes
+from jobs_routes_supabase import router as jobs_router
 from worker_features_routes import router as worker_features_router
 from ai_matching_routes import router as ai_matching_router
 from voice_ai_routes import router as voice_ai_router
@@ -25,7 +26,8 @@ from job_posting_routes import router as job_posting_router
 # SUPABASE MIGRATION: Using Supabase version for worker_profile_routes
 from worker_profile_routes_supabase import router as worker_profile_router
 from messaging_routes import router as messaging_router
-from application_routes import router as application_router
+# SUPABASE MIGRATION: Using Supabase version for application_routes
+from application_routes_supabase import router as application_router
 from quickhire_routes import router as quickhire_router
 # SUPABASE MIGRATION: Using Supabase version for auth_routes
 from auth_routes_supabase import router as auth_router
