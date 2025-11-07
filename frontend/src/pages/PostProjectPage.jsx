@@ -338,11 +338,8 @@ export default function PostProjectPage() {
         
         clearTimeout(timeoutId);
         
-        // Clone FIRST before any consumption (for Emergent monitoring compatibility)
-        const responseClone = response.clone();
-        
-        // Read from the clone to allow monitoring scripts to access original
-        const responseText = await responseClone.text();
+        // Read response directly without cloning
+        const responseText = await response.text();
         let estimate;
         
         try {
