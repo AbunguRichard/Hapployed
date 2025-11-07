@@ -357,3 +357,39 @@ async def logout():
     Logout user (client should remove tokens)
     """
     return {"message": "Successfully logged out"}
+
+@router.delete("/cleanup-incomplete/{email}")
+async def cleanup_incomplete_registration(email: str):
+    """
+    Delete incomplete registration to allow re-registration
+    Use this if a user's registration was interrupted
+    """
+    try:
+        supabase_admin = get_supabase_admin()
+        
+        # Find user by email
+        user_response = supabase_admin.table('users').select('id').eq('email', email).execute()
+        
+        if not user_response.data or len(user_response.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        
+        user_id = user_response.data[0]['id']
+        
+        # Delete worker profile first (foreign key constraint)
+        supabase_admin.table('worker_profiles').delete().eq('user_id', user_id).execute()
+        
+        # Delete user
+        supabase_admin.table('users').delete().eq('id', user_id).execute()
+        
+        return {"message": f"User {email} deleted successfully. Can now re-register."}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Cleanup failed: {str(e)}"
+        )
