@@ -42,7 +42,8 @@ from worker_dashboard_routes import router as worker_dashboard_router
 from wallet_routes_supabase import router as wallet_router
 from ai_match_routes import router as ai_match_router
 from grow_routes import router as grow_router
-from search_routes import router as search_router
+# SUPABASE MIGRATION: Using Supabase version for search_routes
+from search_routes_supabase import router as search_router
 from verification_routes import router as verification_router
 from sms_routes import router as sms_router
 
