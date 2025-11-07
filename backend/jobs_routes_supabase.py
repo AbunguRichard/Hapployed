@@ -1,79 +1,115 @@
 """
 Jobs Routes - Supabase PostgreSQL Version
-Handles job posting, listing, updates, and deletion
+Complete job posting system with CRUD operations
 """
 
 from fastapi import APIRouter, HTTPException, status
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
+import json
 
-# Import Supabase client
 from supabase_client import get_supabase_admin
 
-router = APIRouter(prefix="/api/jobs", tags=["Jobs"])
+router = APIRouter(prefix="/jobs", tags=["Jobs"])
 
-# Models
-class JobPost(BaseModel):
+# ============================================================================
+# MODELS
+# ============================================================================
+
+class RoleDefinition(BaseModel):
+    roleId: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    roleName: str
+    numberOfPeople: int = 1
+    requiredSkills: List[str] = []
+    payPerPerson: float
+    experienceLevel: str = "Intermediate"
+    workLocation: str = "Remote"
+    applicants: int = 0
+    hired: int = 0
+    status: str = "open"
+
+class JobCreate(BaseModel):
+    userId: str
     title: str
     description: str
+    jobType: str = "project"  # 'project' or 'gig'
     category: str
-    amount: str
-    visibility: str = 'public'
-    location: str
-    workModel: str = 'remote'
-    startDate: Optional[str] = None
-    endDate: Optional[str] = None
-    interviewRequired: bool = False
-    radius: str = '10'
-    timeWindow: Optional[str] = None
+    budget: Optional[float] = None
     duration: Optional[str] = None
-    equipment: List[str] = []
-    mode: str = 'regular'  # 'regular' or 'emergency'
-    user_id: str
-    user_name: Optional[str] = None
+    location: Optional[dict] = None  # {address: str, type: str}
+    skillsRequired: List[str] = []
+    experienceLevel: Optional[str] = None
+    urgency: str = "normal"
+    specificLocation: Optional[str] = None
+    workType: Optional[str] = "remote"
+    hiringType: str = "Single"  # 'Single' or 'Multi-Role'
+    roles: List[RoleDefinition] = []
 
 class JobUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
     category: Optional[str] = None
-    amount: Optional[str] = None
-    location: Optional[str] = None
+    budget: Optional[float] = None
+    duration: Optional[str] = None
+    location: Optional[dict] = None
     status: Optional[str] = None
+    hiringType: Optional[str] = None
+    roles: Optional[List[RoleDefinition]] = None
 
-@router.post("/post")
-async def post_job(job: JobPost):
-    """Post a new job to Supabase"""
+class JobResponse(BaseModel):
+    id: str
+    user_id: str
+    title: str
+    description: Optional[str]
+    job_type: str
+    status: str
+    hiring_type: str
+    category: Optional[str]
+    budget: Optional[float]
+    duration: Optional[str]
+    location: Optional[dict]
+    skills_required: List[str]
+    views: int
+    application_count: int
+    created_at: str
+    updated_at: str
+    published_at: Optional[str]
+
+# ============================================================================
+# ROUTES
+# ============================================================================
+
+@router.post("/jobs", status_code=status.HTTP_201_CREATED)
+async def create_job(job: JobCreate):
+    """Create a new job posting"""
     try:
         supabase = get_supabase_admin()
         
         job_id = str(uuid.uuid4())
         
-        # Determine job type and status
-        job_type = 'gig' if job.mode == 'emergency' else 'project'
-        
         job_data = {
             "id": job_id,
-            "user_id": job.user_id,
+            "user_id": job.userId,
             "title": job.title,
             "description": job.description,
-            "job_type": job_type,
-            "status": "published",
-            "hiring_type": "Single",
+            "job_type": job.jobType,
+            "status": "draft",
+            "hiring_type": job.hiringType,
             "category": job.category,
-            "budget": float(job.amount) if job.amount else None,
+            "budget": job.budget,
             "duration": job.duration,
-            "location": {"address": job.location, "type": job.workModel},
-            "skills_required": [],
-            "urgency": "high" if job.mode == 'emergency' else "normal",
+            "location": json.dumps(job.location) if job.location else None,
+            "skills_required": job.skillsRequired,
+            "experience_level": job.experienceLevel,
+            "urgency": job.urgency,
             "views": 0,
             "application_count": 0,
-            "specific_location": job.location,
-            "work_type": job.workModel,
-            "created_at": datetime.utcnow().isoformat(),
-            "updated_at": datetime.utcnow().isoformat(),
-            "published_at": datetime.utcnow().isoformat()
+            "specific_location": job.specificLocation,
+            "work_type": job.workType,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
         }
         
         result = supabase.table('jobs').insert(job_data).execute()
@@ -84,11 +120,37 @@ async def post_job(job: JobPost):
                 detail="Failed to create job"
             )
         
+        created_job = result.data[0]
+        
+        # Create role definitions if Multi-Role hiring
+        if job.hiringType == "Multi-Role" and job.roles:
+            role_data = []
+            for role in job.roles:
+                role_data.append({
+                    "id": str(uuid.uuid4()),
+                    "job_id": job_id,
+                    "role_id": role.roleId,
+                    "role_name": role.roleName,
+                    "number_of_people": role.numberOfPeople,
+                    "required_skills": role.requiredSkills,
+                    "pay_per_person": role.payPerPerson,
+                    "experience_level": role.experienceLevel,
+                    "work_location": role.workLocation,
+                    "applicants": 0,
+                    "hired": 0,
+                    "status": "open",
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                    "updated_at": datetime.now(timezone.utc).isoformat()
+                })
+            
+            if role_data:
+                supabase.table('role_definitions').insert(role_data).execute()
+        
         return {
             "success": True,
             "jobId": job_id,
-            "message": "Job posted successfully",
-            "job": result.data[0]
+            "message": "Job created successfully",
+            "job": created_job
         }
         
     except HTTPException:
@@ -96,14 +158,14 @@ async def post_job(job: JobPost):
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to post job: {str(e)}"
+            detail=f"Failed to create job: {str(e)}"
         )
 
-@router.get("/list")
+@router.get("/jobs")
 async def list_jobs(
-    category: Optional[str] = None,
-    user_id: Optional[str] = None,
+    jobType: Optional[str] = None,
     status: Optional[str] = None,
+    category: Optional[str] = None,
     limit: int = 50,
     offset: int = 0
 ):
@@ -114,27 +176,34 @@ async def list_jobs(
         query = supabase.table('jobs').select('*')
         
         # Apply filters
-        if category:
-            query = query.eq('category', category)
-        if user_id:
-            query = query.eq('user_id', user_id)
+        if jobType:
+            query = query.eq('job_type', jobType)
         if status:
             query = query.eq('status', status)
         else:
-            query = query.eq('status', 'published')  # Default to published jobs
+            query = query.eq('status', 'published')  # Default to published
+        if category:
+            query = query.eq('category', category)
         
-        # Apply pagination
-        query = query.range(offset, offset + limit - 1)
-        
-        # Order by created_at descending
-        query = query.order('created_at', desc=True)
+        # Apply pagination and ordering
+        query = query.range(offset, offset + limit - 1).order('created_at', desc=True)
         
         result = query.execute()
         
+        jobs = result.data if result.data else []
+        
+        # Parse JSON fields
+        for job in jobs:
+            if job.get('location') and isinstance(job['location'], str):
+                try:
+                    job['location'] = json.loads(job['location'])
+                except:
+                    pass
+        
         return {
             "success": True,
-            "jobs": result.data if result.data else [],
-            "count": len(result.data) if result.data else 0
+            "jobs": jobs,
+            "count": len(jobs)
         }
         
     except Exception as e:
@@ -143,13 +212,43 @@ async def list_jobs(
             detail=f"Failed to list jobs: {str(e)}"
         )
 
-@router.get("/{job_id}")
-async def get_job(job_id: str):
-    """Get a specific job by ID"""
+@router.get("/jobs/user/{userId}")
+async def get_user_jobs(userId: str):
+    """Get all jobs posted by a specific user"""
     try:
         supabase = get_supabase_admin()
         
-        result = supabase.table('jobs').select('*').eq('id', job_id).execute()
+        result = supabase.table('jobs').select('*').eq('user_id', userId).order('created_at', desc=True).execute()
+        
+        jobs = result.data if result.data else []
+        
+        # Parse JSON fields
+        for job in jobs:
+            if job.get('location') and isinstance(job['location'], str):
+                try:
+                    job['location'] = json.loads(job['location'])
+                except:
+                    pass
+        
+        return {
+            "success": True,
+            "jobs": jobs,
+            "count": len(jobs)
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get user jobs: {str(e)}"
+        )
+
+@router.get("/jobs/{jobId}")
+async def get_job(jobId: str):
+    """Get a specific job by ID and increment view count"""
+    try:
+        supabase = get_supabase_admin()
+        
+        result = supabase.table('jobs').select('*').eq('id', jobId).execute()
         
         if not result.data or len(result.data) == 0:
             raise HTTPException(
@@ -157,14 +256,30 @@ async def get_job(job_id: str):
                 detail="Job not found"
             )
         
+        job = result.data[0]
+        
         # Increment view count
         supabase.table('jobs').update({
-            "views": result.data[0]['views'] + 1
-        }).eq('id', job_id).execute()
+            "views": job['views'] + 1
+        }).eq('id', jobId).execute()
+        
+        job['views'] = job['views'] + 1
+        
+        # Parse JSON location
+        if job.get('location') and isinstance(job['location'], str):
+            try:
+                job['location'] = json.loads(job['location'])
+            except:
+                pass
+        
+        # Get role definitions if Multi-Role
+        if job.get('hiring_type') == 'Multi-Role':
+            roles_result = supabase.table('role_definitions').select('*').eq('job_id', jobId).execute()
+            job['roles'] = roles_result.data if roles_result.data else []
         
         return {
             "success": True,
-            "job": result.data[0]
+            "job": job
         }
         
     except HTTPException:
@@ -175,8 +290,8 @@ async def get_job(job_id: str):
             detail=f"Failed to get job: {str(e)}"
         )
 
-@router.patch("/{job_id}")
-async def update_job(job_id: str, updates: JobUpdate):
+@router.patch("/jobs/{jobId}")
+async def update_job(jobId: str, updates: JobUpdate):
     """Update a job"""
     try:
         supabase = get_supabase_admin()
@@ -190,16 +305,62 @@ async def update_job(job_id: str, updates: JobUpdate):
                 detail="No updates provided"
             )
         
-        # Add updated_at
-        update_data['updated_at'] = datetime.utcnow().isoformat()
+        # Handle special fields
+        if 'location' in update_data:
+            update_data['location'] = json.dumps(update_data['location'])
         
-        result = supabase.table('jobs').update(update_data).eq('id', job_id).execute()
+        # Convert camelCase to snake_case
+        field_mapping = {
+            'hiringType': 'hiring_type',
+            'skillsRequired': 'skills_required'
+        }
+        
+        converted_data = {}
+        for key, value in update_data.items():
+            db_key = field_mapping.get(key, key)
+            converted_data[db_key] = value
+        
+        # Remove roles from main update (handled separately)
+        roles_data = converted_data.pop('roles', None)
+        
+        converted_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+        
+        result = supabase.table('jobs').update(converted_data).eq('id', jobId).execute()
         
         if not result.data or len(result.data) == 0:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Job not found"
             )
+        
+        # Update roles if provided
+        if roles_data is not None:
+            # Delete existing roles
+            supabase.table('role_definitions').delete().eq('job_id', jobId).execute()
+            
+            # Insert new roles
+            if roles_data:
+                role_records = []
+                for role in roles_data:
+                    role_records.append({
+                        "id": str(uuid.uuid4()),
+                        "job_id": jobId,
+                        "role_id": role.get('roleId', str(uuid.uuid4())),
+                        "role_name": role['roleName'],
+                        "number_of_people": role.get('numberOfPeople', 1),
+                        "required_skills": role.get('requiredSkills', []),
+                        "pay_per_person": role['payPerPerson'],
+                        "experience_level": role.get('experienceLevel', 'Intermediate'),
+                        "work_location": role.get('workLocation', 'Remote'),
+                        "applicants": role.get('applicants', 0),
+                        "hired": role.get('hired', 0),
+                        "status": role.get('status', 'open'),
+                        "created_at": datetime.now(timezone.utc).isoformat(),
+                        "updated_at": datetime.now(timezone.utc).isoformat()
+                    })
+                
+                if role_records:
+                    supabase.table('role_definitions').insert(role_records).execute()
         
         return {
             "success": True,
@@ -215,13 +376,13 @@ async def update_job(job_id: str, updates: JobUpdate):
             detail=f"Failed to update job: {str(e)}"
         )
 
-@router.delete("/{job_id}")
-async def delete_job(job_id: str):
+@router.delete("/jobs/{jobId}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_job(jobId: str):
     """Delete a job"""
     try:
         supabase = get_supabase_admin()
         
-        result = supabase.table('jobs').delete().eq('id', job_id).execute()
+        result = supabase.table('jobs').delete().eq('id', jobId).execute()
         
         if not result.data or len(result.data) == 0:
             raise HTTPException(
@@ -229,10 +390,7 @@ async def delete_job(job_id: str):
                 detail="Job not found"
             )
         
-        return {
-            "success": True,
-            "message": "Job deleted successfully"
-        }
+        return None
         
     except HTTPException:
         raise
@@ -242,22 +400,65 @@ async def delete_job(job_id: str):
             detail=f"Failed to delete job: {str(e)}"
         )
 
-@router.get("/user/{user_id}")
-async def get_user_jobs(user_id: str):
-    """Get all jobs posted by a specific user"""
+@router.post("/jobs/{jobId}/publish")
+async def publish_job(jobId: str):
+    """Publish a draft job"""
     try:
         supabase = get_supabase_admin()
         
-        result = supabase.table('jobs').select('*').eq('user_id', user_id).order('created_at', desc=True).execute()
+        result = supabase.table('jobs').update({
+            "status": "published",
+            "published_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }).eq('id', jobId).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Job not found"
+            )
         
         return {
             "success": True,
-            "jobs": result.data if result.data else [],
-            "count": len(result.data) if result.data else 0
+            "message": "Job published successfully",
+            "job": result.data[0]
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get user jobs: {str(e)}"
+            detail=f"Failed to publish job: {str(e)}"
+        )
+
+@router.post("/jobs/{jobId}/close")
+async def close_job(jobId: str):
+    """Close an active job"""
+    try:
+        supabase = get_supabase_admin()
+        
+        result = supabase.table('jobs').update({
+            "status": "closed",
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }).eq('id', jobId).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Job not found"
+            )
+        
+        return {
+            "success": True,
+            "message": "Job closed successfully",
+            "job": result.data[0]
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to close job: {str(e)}"
         )
