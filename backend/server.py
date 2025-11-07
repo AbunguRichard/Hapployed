@@ -49,7 +49,8 @@ from grow_routes import router as grow_router
 from search_routes_supabase import router as search_router
 # SUPABASE MIGRATION: Using Supabase version for verification_routes
 from verification_routes_supabase import router as verification_router
-from sms_routes import router as sms_router
+# SUPABASE MIGRATION: Using Supabase version for sms_routes
+from sms_routes_supabase import router as sms_router
 
 
 ROOT_DIR = Path(__file__).parent
