@@ -1098,9 +1098,46 @@ class BackendTester:
         la_coords = {"lat": 34.0522, "lon": -118.2437}  # Los Angeles
         chicago_coords = {"lat": 41.8781, "lon": -87.6298}  # Chicago
         
-        test_client_id = str(uuid.uuid4())
-        test_worker_id = str(uuid.uuid4())
+        # Create test users first (required for foreign key constraints)
+        test_timestamp = int(time.time())
+        test_client_email = f"quickhire.client.{test_timestamp}@test.com"
+        test_worker_email = f"quickhire.worker.{test_timestamp}@test.com"
+        
+        test_client_id = None
+        test_worker_id = None
         created_gig_id = None
+        
+        # Register client user
+        try:
+            client_payload = {
+                "email": test_client_email,
+                "password": "TestPass123!",
+                "name": "Quickhire Test Client",
+                "role": "employer"
+            }
+            response = requests.post(f"{BASE_URL}/auth/register", json=client_payload)
+            if response.status_code == 201:
+                test_client_id = response.json()["user"]["id"]
+                print(f"✅ Created test client: {test_client_id}")
+        except Exception as e:
+            print(f"⚠️ Failed to create test client: {e}")
+            return
+        
+        # Register worker user
+        try:
+            worker_payload = {
+                "email": test_worker_email,
+                "password": "TestPass123!",
+                "name": "Quickhire Test Worker",
+                "role": "worker"
+            }
+            response = requests.post(f"{BASE_URL}/auth/register", json=worker_payload)
+            if response.status_code == 201:
+                test_worker_id = response.json()["user"]["id"]
+                print(f"✅ Created test worker: {test_worker_id}")
+        except Exception as e:
+            print(f"⚠️ Failed to create test worker: {e}")
+            return
         
         # Test 1: POST /api/quickhire/gigs - Create a new quickhire gig
         try:
