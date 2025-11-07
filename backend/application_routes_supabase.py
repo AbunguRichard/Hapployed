@@ -103,6 +103,30 @@ async def get_worker_applications(worker_id: str):
             detail=f"Failed to get applications: {str(e)}"
         )
 
+@router.get("/{application_id}")
+async def get_single_application(application_id: str):
+    """Get a single application by ID"""
+    try:
+        supabase = get_supabase_admin()
+        
+        result = supabase.table('applications').select('*').eq('id', application_id).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Application not found"
+            )
+        
+        return {"success": True, "application": result.data[0]}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get application: {str(e)}"
+        )
+
 @router.patch("/{application_id}")
 async def update_application(application_id: str, updates: ApplicationUpdate):
     """Update application status"""
@@ -128,4 +152,74 @@ async def update_application(application_id: str, updates: ApplicationUpdate):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to update application: {str(e)}"
+        )
+
+@router.delete("/{application_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_application(application_id: str):
+    """Delete/withdraw an application"""
+    try:
+        supabase = get_supabase_admin()
+        
+        # Get application first to decrement job count
+        app_result = supabase.table('applications').select('job_id').eq('id', application_id).execute()
+        
+        if not app_result.data or len(app_result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Application not found"
+            )
+        
+        job_id = app_result.data[0]['job_id']
+        
+        # Delete application
+        result = supabase.table('applications').delete().eq('id', application_id).execute()
+        
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Application not found"
+            )
+        
+        # Decrement application count
+        job = supabase.table('jobs').select('application_count').eq('id', job_id).execute()
+        if job.data and len(job.data) > 0:
+            new_count = max(0, job.data[0]['application_count'] - 1)
+            supabase.table('jobs').update({"application_count": new_count}).eq('id', job_id).execute()
+        
+        return None
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete application: {str(e)}"
+        )
+
+@router.get("/jobs/{job_id}/stats")
+async def get_application_stats(job_id: str):
+    """Get application statistics for a job"""
+    try:
+        supabase = get_supabase_admin()
+        
+        # Get all applications for the job
+        result = supabase.table('applications').select('status').eq('job_id', job_id).execute()
+        
+        applications = result.data if result.data else []
+        
+        # Calculate stats
+        stats = {
+            "total": len(applications),
+            "pending": sum(1 for app in applications if app.get('status') == 'pending'),
+            "reviewed": sum(1 for app in applications if app.get('status') == 'reviewed'),
+            "accepted": sum(1 for app in applications if app.get('status') == 'accepted'),
+            "rejected": sum(1 for app in applications if app.get('status') == 'rejected')
+        }
+        
+        return {"success": True, "stats": stats}
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get application stats: {str(e)}"
         )
