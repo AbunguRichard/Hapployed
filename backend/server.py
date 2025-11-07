@@ -18,7 +18,8 @@ from sos_voice_routes_supabase import router as sos_router
 from settings_routes import router as settings_router
 # SUPABASE MIGRATION: Using Supabase version for jobs_routes
 from jobs_routes_supabase import router as jobs_router
-from worker_features_routes import router as worker_features_router
+# SUPABASE MIGRATION: Using Supabase version for worker_features_routes
+from worker_features_routes_supabase import router as worker_features_router
 # SUPABASE MIGRATION: Using Supabase version for ai_matching_routes
 from ai_matching_routes_supabase import router as ai_matching_router
 # SUPABASE MIGRATION: Using Supabase version for voice_ai_routes
