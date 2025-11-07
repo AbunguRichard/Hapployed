@@ -14,7 +14,7 @@ import os
 import uuid
 
 # Import Supabase client
-from supabase_client import supabase, get_supabase_client
+from supabase_client import supabase, get_supabase_client, get_supabase_admin
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 security = HTTPBearer()
