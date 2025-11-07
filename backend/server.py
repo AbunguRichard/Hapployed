@@ -45,7 +45,8 @@ from worker_dashboard_routes_supabase import router as worker_dashboard_router
 from wallet_routes_supabase import router as wallet_router
 # SUPABASE MIGRATION: Using Supabase version for ai_match_routes
 from ai_match_routes_supabase import router as ai_match_router
-from grow_routes import router as grow_router
+# SUPABASE MIGRATION: Using Supabase version for grow_routes
+from grow_routes_supabase import router as grow_router
 # SUPABASE MIGRATION: Using Supabase version for search_routes
 from search_routes_supabase import router as search_router
 # SUPABASE MIGRATION: Using Supabase version for verification_routes
