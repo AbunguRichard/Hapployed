@@ -41,13 +41,28 @@ export const xhrFetch = (url, options = {}) => {
         status: xhr.status,
         statusText: xhr.statusText,
         data: data,
+        headers: {
+          get: (name) => xhr.getResponseHeader(name)
+        },
         text: () => Promise.resolve(xhr.responseText),
         json: () => Promise.resolve(data),
         // Add clone() method to prevent errors if called
         clone: function() {
-          console.warn('[xhrFetch] clone() called - returning same response (XHR does not support clone)');
-          return this;
-        }
+          // Return a new response object with same data
+          return {
+            ok: this.ok,
+            status: this.status,
+            statusText: this.statusText,
+            data: this.data,
+            headers: this.headers,
+            text: () => Promise.resolve(xhr.responseText),
+            json: () => Promise.resolve(data),
+            clone: () => this.clone()
+          };
+        },
+        // Also handle body property if checked
+        body: null,
+        bodyUsed: true
       };
       
       console.log('[xhrFetch] Resolved response:', response);
