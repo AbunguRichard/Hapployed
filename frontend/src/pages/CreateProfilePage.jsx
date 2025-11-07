@@ -376,7 +376,7 @@ export default function CreateProfilePage() {
             state: '',
             country: 'USA'
           },
-          portfolio: formData.portfolio ? [{ title: 'Portfolio', link: formData.portfolio }] : [],
+          portfolio: formData.portfolio || null,
           categories: userType === 'professional' 
             ? ['Professional Services'] 
             : formData.physicalCapability || ['General Labor'],
