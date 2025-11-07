@@ -3,7 +3,17 @@
 # Cleanup Incomplete Registration Helper Script
 # Use this if you have an email that's stuck as "already registered" but you can't login
 
-BACKEND_URL="https://talentswitch.preview.emergentagent.com/api"
+# Try to get backend URL from environment, fallback to localhost
+BACKEND_URL="${REACT_APP_BACKEND_URL:-http://localhost:8001}/api"
+
+# If running in production, try the actual URL
+if [ -f "/app/frontend/.env" ]; then
+    source /app/frontend/.env
+    BACKEND_URL="${REACT_APP_BACKEND_URL}/api"
+fi
+
+echo "Using backend URL: $BACKEND_URL"
+echo ""
 
 if [ -z "$1" ]; then
     echo "Usage: ./cleanup_email.sh <email_address>"
