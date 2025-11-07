@@ -439,8 +439,10 @@ export default function CreateProfilePage() {
         }
       }, 500);
     } catch (err) {
-      setError('Failed to create profile. Please try again.');
-      toast.error('Failed to create profile');
+      console.error('Profile creation error:', err);
+      const errorMessage = err.message || 'Failed to create profile. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
