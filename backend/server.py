@@ -22,14 +22,17 @@ from voice_ai_routes import router as voice_ai_router
 from badge_routes import router as badge_router
 from profile_routes import router as profile_router
 from job_posting_routes import router as job_posting_router
-from worker_profile_routes import router as worker_profile_router
+# SUPABASE MIGRATION: Using Supabase version for worker_profile_routes
+from worker_profile_routes_supabase import router as worker_profile_router
 from messaging_routes import router as messaging_router
 from application_routes import router as application_router
 from quickhire_routes import router as quickhire_router
-from auth_routes import router as auth_router
+# SUPABASE MIGRATION: Using Supabase version for auth_routes
+from auth_routes_supabase import router as auth_router
 from analytics_routes import router as analytics_router
 from worker_dashboard_routes import router as worker_dashboard_router
-from wallet_routes import router as wallet_router
+# SUPABASE MIGRATION: Using Supabase version for wallet_routes
+from wallet_routes_supabase import router as wallet_router
 from ai_match_routes import router as ai_match_router
 from grow_routes import router as grow_router
 from search_routes import router as search_router
