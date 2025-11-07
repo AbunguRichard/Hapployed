@@ -381,7 +381,6 @@ export default function CreateProfilePage() {
             ? ['Professional Services'] 
             : formData.physicalCapability || ['General Labor'],
           isAvailable: true,
-          badges: [],
         };
 
         try {
