@@ -216,7 +216,7 @@ async def login(credentials: UserLogin):
     Authenticate user and return JWT tokens
     """
     try:
-        supabase_client = get_supabase_client()
+        supabase_client = get_supabase_admin()  # Use admin client to bypass RLS
         
         # Get user by email
         response = supabase_client.table('users').select('*').eq('email', credentials.email).execute()
