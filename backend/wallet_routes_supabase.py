@@ -12,7 +12,7 @@ import json
 
 from supabase_client import get_supabase_admin
 
-router = APIRouter(prefix="/api/wallet", tags=["Wallet"])
+router = APIRouter(prefix="/wallet", tags=["Wallet"])
 
 # ============================================================================
 # MODELS
