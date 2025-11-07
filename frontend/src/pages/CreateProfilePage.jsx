@@ -985,7 +985,91 @@ export default function CreateProfilePage() {
                       </button>
                     );
                   })}
+                  
+                  {/* Others button */}
+                  <button
+                    type="button"
+                    onClick={() => setShowOthersInput(!showOthersInput)}
+                    className={`p-4 rounded-lg border-2 transition-all flex items-center gap-3 ${
+                      showOthersInput || formData.customCapabilities.length > 0
+                        ? 'border-accent bg-accent/10'
+                        : 'border-border hover:border-accent'
+                    }`}
+                  >
+                    <Plus className={`w-6 h-6 ${
+                      showOthersInput || formData.customCapabilities.length > 0 ? 'text-accent' : 'text-muted-foreground'
+                    }`} />
+                    <span className={`text-sm font-medium ${
+                      showOthersInput || formData.customCapabilities.length > 0 ? 'text-accent' : 'text-foreground'
+                    }`}>Others</span>
+                    {formData.customCapabilities.length > 0 && (
+                      <span className="ml-auto bg-accent text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                        {formData.customCapabilities.length}
+                      </span>
+                    )}
+                  </button>
                 </div>
+
+                {/* Others input textarea */}
+                {showOthersInput && (
+                  <div className="mt-4 p-4 bg-muted/50 rounded-lg border border-border">
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Add your custom capabilities (one per line)
+                    </label>
+                    <textarea
+                      value={othersInputText}
+                      onChange={(e) => setOthersInputText(e.target.value)}
+                      placeholder="Example:&#10;I can paint walls&#10;I can install shelves&#10;I can assemble furniture"
+                      rows={5}
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                    />
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        type="button"
+                        onClick={handleAddCustomCapabilities}
+                        disabled={!othersInputText.trim()}
+                        className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Add Capabilities
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowOthersInput(false);
+                          setOthersInputText('');
+                        }}
+                        className="px-4 py-2 border border-border rounded-lg hover:bg-muted"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Display added custom capabilities */}
+                {formData.customCapabilities.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-sm font-medium text-foreground mb-2">Custom Capabilities:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.customCapabilities.map((capability, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent/10 text-accent rounded-full text-sm border border-accent/30"
+                        >
+                          {capability}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveCustomCapability(index)}
+                            className="hover:bg-accent/20 rounded-full p-0.5"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div>
