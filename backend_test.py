@@ -4716,8 +4716,11 @@ class BackendTester:
         # Application System Tests
         self.test_application_system_endpoints()
         
-        # Wallet System Tests
-        self.test_wallet_system_endpoints()
+        # Wallet System Tests (MongoDB version)
+        # self.test_wallet_system_endpoints()
+        
+        # Wallet System Supabase Migration Tests
+        self.test_wallet_system_supabase()
         
         # NEW SYSTEMS TESTING - Three Major Systems
         print("\n🆕 TESTING THREE NEW BACKEND SYSTEMS")
