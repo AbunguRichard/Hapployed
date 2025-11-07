@@ -15,7 +15,8 @@ from supabase_client import supabase, get_supabase_client
 
 # SUPABASE MIGRATION: Using Supabase version for sos_voice_routes
 from sos_voice_routes_supabase import router as sos_router
-from settings_routes import router as settings_router
+# SUPABASE MIGRATION: Using Supabase version for settings_routes
+from settings_routes_supabase import router as settings_router
 # SUPABASE MIGRATION: Using Supabase version for jobs_routes
 from jobs_routes_supabase import router as jobs_router
 # SUPABASE MIGRATION: Using Supabase version for worker_features_routes
