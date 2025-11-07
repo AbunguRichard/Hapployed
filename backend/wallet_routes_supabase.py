@@ -1,6 +1,6 @@
 """
-Wallet Routes - Supabase PostgreSQL Version
-Comprehensive wallet management system with transactions, cashouts, savings, and credit
+Wallet Routes - Supabase PostgreSQL Version (Normalized Schema)
+Comprehensive wallet management system adapted for normalized Supabase tables
 """
 
 from fastapi import APIRouter, HTTPException, status, Depends
@@ -8,42 +8,14 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Literal
 from datetime import datetime, timedelta, timezone
 import uuid
-import json
 
 from supabase_client import get_supabase_admin
 
-router = APIRouter(prefix="/wallet", tags=["Wallet"])
+router = APIRouter(prefix="/api/wallet", tags=["Wallet"])
 
 # ============================================================================
 # MODELS
 # ============================================================================
-
-class TransactionMetadata(BaseModel):
-    bank_name: Optional[str] = None
-    account_last4: Optional[str] = None
-    paypal_email: Optional[str] = None
-    card_brand: Optional[str] = None
-    crypto_wallet: Optional[str] = None
-    instant: bool = False
-
-class TransactionFee(BaseModel):
-    amount: float = 0.0
-    type: Literal["percentage", "fixed"] = "percentage"
-    rate: float = 0.0
-
-class Transaction(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    type: Literal["deposit", "withdrawal", "transfer", "payment", "cashout", "fee", "interest", "refund"]
-    amount: float
-    currency: str = "USD"
-    description: Optional[str] = None
-    status: Literal["pending", "completed", "failed", "cancelled"] = "pending"
-    method: Literal["bank_transfer", "paypal", "credit_card", "debit_card", "crypto", "wallet_balance", "savings", "credit"]
-    fee: TransactionFee = TransactionFee()
-    net_amount: Optional[float] = None
-    metadata: TransactionMetadata = TransactionMetadata()
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    completed_at: Optional[datetime] = None
 
 class PaymentMethodDetails(BaseModel):
     bank_name: Optional[str] = None
@@ -53,55 +25,6 @@ class PaymentMethodDetails(BaseModel):
     card_last4: Optional[str] = None
     crypto_address: Optional[str] = None
 
-class PaymentMethod(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    type: Literal["bank", "paypal", "card", "crypto"]
-    is_default: bool = False
-    verified: bool = False
-    details: PaymentMethodDetails = PaymentMethodDetails()
-    added_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-class Balance(BaseModel):
-    available: float = 0.0
-    pending: float = 0.0
-    reserved: float = 0.0
-
-class TaxSettings(BaseModel):
-    tax_id: Optional[str] = None
-    country: Optional[str] = None
-
-class WalletSettings(BaseModel):
-    auto_cashout: bool = False
-    cashout_threshold: float = 100.0
-    preferred_method: Optional[str] = None
-    tax_settings: TaxSettings = TaxSettings()
-
-class WalletLimits(BaseModel):
-    daily_cashout: float = 5000.0
-    monthly_cashout: float = 20000.0
-    instant_cashout_fee: float = 1.5
-
-class SavingsProduct(BaseModel):
-    enabled: bool = False
-    balance: float = 0.0
-    interest_rate: float = 2.5
-
-class CreditProduct(BaseModel):
-    available: float = 0.0
-    used: float = 0.0
-    interest_rate: float = 12.5
-
-class FinancialProducts(BaseModel):
-    savings: SavingsProduct = SavingsProduct()
-    credit: CreditProduct = CreditProduct()
-
-class WalletStats(BaseModel):
-    total_earned: float = 0.0
-    total_withdrawn: float = 0.0
-    total_fees: float = 0.0
-    last_cashout: Optional[datetime] = None
-
-# Request Models
 class CashoutRequest(BaseModel):
     amount: float
     method: Literal["bank_transfer", "paypal", "credit_card", "debit_card"]
@@ -162,35 +85,50 @@ class WalletService:
     
     @staticmethod
     async def get_or_create_wallet(user_id: str) -> Dict:
-        """Get wallet or create if doesn't exist"""
+        """Get wallet or create if doesn't exist - works with normalized schema"""
         supabase = get_supabase_admin()
         
         # Try to get existing wallet
         result = supabase.table('wallets').select('*').eq('user_id', user_id).execute()
         
         if result.data and len(result.data) > 0:
-            return result.data[0]
+            wallet = result.data[0]
+            
+            # Get transactions
+            trans_result = supabase.table('transactions').select('*').eq('wallet_id', wallet['id']).order('created_at', desc=True).limit(100).execute()
+            wallet['transactions'] = trans_result.data if trans_result.data else []
+            
+            # Get payment methods
+            pm_result = supabase.table('payment_methods').select('*').eq('user_id', user_id).execute()
+            wallet['payment_methods'] = pm_result.data if pm_result.data else []
+            
+            return wallet
         
         # Create new wallet
         wallet_id = str(uuid.uuid4())
         wallet_data = {
             "id": wallet_id,
             "user_id": user_id,
-            "balance": json.dumps(Balance().dict()),
-            "currency": "USD",
-            "transactions": json.dumps([]),
-            "payment_methods": json.dumps([]),
-            "settings": json.dumps(WalletSettings().dict()),
-            "limits": json.dumps(WalletLimits().dict()),
-            "financial_products": json.dumps(FinancialProducts().dict()),
-            "stats": json.dumps(WalletStats().dict()),
-            "created_at": datetime.now(timezone.utc).isoformat()
+            "balance": 0.0,
+            "available_balance": 0.0,
+            "pending_balance": 0.0,
+            "total_earned": 0.0,
+            "credit_limit": 65000.0,
+            "credit_used": 0.0,
+            "savings_enabled": False,
+            "savings_balance": 0.0,
+            "savings_interest_rate": 2.5,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
         }
         
         insert_result = supabase.table('wallets').insert(wallet_data).execute()
         
         if insert_result.data and len(insert_result.data) > 0:
-            return insert_result.data[0]
+            wallet = insert_result.data[0]
+            wallet['transactions'] = []
+            wallet['payment_methods'] = []
+            return wallet
         
         raise HTTPException(status_code=500, detail="Failed to create wallet")
 
@@ -202,34 +140,55 @@ wallet_service = WalletService()
 
 def get_current_user_id():
     """Mock function - replace with actual JWT auth"""
-    # Using a valid UUID format for Supabase
-    return "550e8400-e29b-41d4-a716-446655440000"
+    return "demo-user-123"
 
 @router.get("/")
 async def get_wallet(user_id: str = Depends(get_current_user_id)):
-    """Get wallet overview"""
+    """Get wallet overview with transactions and payment methods"""
     try:
         wallet = await wallet_service.get_or_create_wallet(user_id)
         
-        # Parse JSON fields
-        if isinstance(wallet.get('balance'), str):
-            wallet['balance'] = json.loads(wallet['balance'])
-        if isinstance(wallet.get('transactions'), str):
-            wallet['transactions'] = json.loads(wallet['transactions'])
-        if isinstance(wallet.get('payment_methods'), str):
-            wallet['payment_methods'] = json.loads(wallet['payment_methods'])
-        if isinstance(wallet.get('settings'), str):
-            wallet['settings'] = json.loads(wallet['settings'])
-        if isinstance(wallet.get('limits'), str):
-            wallet['limits'] = json.loads(wallet['limits'])
-        if isinstance(wallet.get('financial_products'), str):
-            wallet['financial_products'] = json.loads(wallet['financial_products'])
-        if isinstance(wallet.get('stats'), str):
-            wallet['stats'] = json.loads(wallet['stats'])
-        
+        # Format response to match MongoDB structure for frontend compatibility
         return {
             "success": True,
-            "data": wallet
+            "data": {
+                **wallet,
+                "balance": {
+                    "available": float(wallet.get('available_balance', 0)),
+                    "pending": float(wallet.get('pending_balance', 0)),
+                    "reserved": 0.0
+                },
+                "currency": "USD",
+                "settings": {
+                    "auto_cashout": False,
+                    "cashout_threshold": 100.0,
+                    "preferred_method": None,
+                    "tax_settings": {}
+                },
+                "limits": {
+                    "daily_cashout": 5000.0,
+                    "monthly_cashout": 20000.0,
+                    "instant_cashout_fee": 1.5
+                },
+                "financial_products": {
+                    "savings": {
+                        "enabled": wallet.get('savings_enabled', False),
+                        "balance": float(wallet.get('savings_balance', 0)),
+                        "interest_rate": float(wallet.get('savings_interest_rate', 2.5))
+                    },
+                    "credit": {
+                        "available": float(wallet.get('credit_limit', 65000)) - float(wallet.get('credit_used', 0)),
+                        "used": float(wallet.get('credit_used', 0)),
+                        "interest_rate": 12.5
+                    }
+                },
+                "stats": {
+                    "total_earned": float(wallet.get('total_earned', 0)),
+                    "total_withdrawn": 0.0,
+                    "total_fees": 0.0,
+                    "last_cashout": None
+                }
+            }
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -257,66 +216,55 @@ async def instant_cashout(request: CashoutRequest, user_id: str = Depends(get_cu
         supabase = get_supabase_admin()
         wallet = await wallet_service.get_or_create_wallet(user_id)
         
-        # Parse JSON fields
-        balance = json.loads(wallet['balance']) if isinstance(wallet['balance'], str) else wallet['balance']
-        transactions = json.loads(wallet['transactions']) if isinstance(wallet['transactions'], str) else wallet['transactions']
-        stats = json.loads(wallet['stats']) if isinstance(wallet['stats'], str) else wallet['stats']
-        limits = json.loads(wallet['limits']) if isinstance(wallet['limits'], str) else wallet['limits']
+        available_balance = float(wallet.get('available_balance', 0))
         
         # Check balance
-        if balance['available'] < request.amount:
+        if available_balance < request.amount:
             raise HTTPException(status_code=400, detail="Insufficient balance")
         
         # Check daily limit
         today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
         today_cashouts = sum(
-            t['amount'] for t in transactions
-            if t['type'] == 'cashout' and 
-            datetime.fromisoformat(t['created_at'].replace("Z", "+00:00")) >= today and
-            t['status'] == 'completed'
+            float(t.get('amount', 0)) for t in wallet.get('transactions', [])
+            if t.get('transaction_type') == 'cashout' and 
+            datetime.fromisoformat(t.get('created_at', '').replace("Z", "+00:00") if t.get('created_at') else datetime.now(timezone.utc).isoformat()) >= today and
+            t.get('status') == 'completed'
         )
         
-        if today_cashouts + request.amount > limits['daily_cashout']:
+        if today_cashouts + request.amount > 5000:
             raise HTTPException(status_code=400, detail="Daily cashout limit exceeded")
         
         # Calculate fees
         fee_calc = wallet_service.calculate_cashout_fee(request.amount, request.method, True)
         
         # Create transaction
-        transaction = Transaction(
-            type="cashout",
-            amount=request.amount,
-            method=request.method,
-            fee=TransactionFee(
-                amount=fee_calc["fee_amount"],
-                type="percentage",
-                rate=fee_calc["rate"]
-            ),
-            net_amount=fee_calc["net_amount"],
-            status="completed",
-            metadata=TransactionMetadata(**request.method_details.dict(), instant=True),
-            description=f"Instant cashout to {request.method}",
-            completed_at=datetime.now(timezone.utc)
-        )
+        trans_id = str(uuid.uuid4())
+        transaction_data = {
+            "id": trans_id,
+            "wallet_id": wallet['id'],
+            "transaction_type": "cashout",
+            "amount": request.amount,
+            "description": f"Instant cashout to {request.method}",
+            "status": "completed",
+            "payment_method": request.method,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
         
-        # Update wallet
-        balance['available'] -= request.amount
-        transactions.append(transaction.dict())
-        stats['total_withdrawn'] += request.amount
-        stats['total_fees'] += fee_calc["fee_amount"]
-        stats['last_cashout'] = datetime.now(timezone.utc).isoformat()
+        supabase.table('transactions').insert(transaction_data).execute()
         
+        # Update wallet balance
+        new_balance = available_balance - request.amount
         supabase.table('wallets').update({
-            "balance": json.dumps(balance),
-            "transactions": json.dumps(transactions),
-            "stats": json.dumps(stats)
-        }).eq('user_id', user_id).execute()
+            "available_balance": new_balance,
+            "balance": new_balance,
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }).eq('id', wallet['id']).execute()
         
         return {
             "success": True,
             "message": "Instant cashout processed successfully",
             "data": {
-                "transaction": transaction.dict(),
+                "transaction": transaction_data,
                 "fee": fee_calc["fee_amount"],
                 "net_amount": fee_calc["net_amount"]
             }
@@ -333,11 +281,9 @@ async def standard_cashout(request: CashoutRequest, user_id: str = Depends(get_c
         supabase = get_supabase_admin()
         wallet = await wallet_service.get_or_create_wallet(user_id)
         
-        # Parse JSON fields
-        balance = json.loads(wallet['balance']) if isinstance(wallet['balance'], str) else wallet['balance']
-        transactions = json.loads(wallet['transactions']) if isinstance(wallet['transactions'], str) else wallet['transactions']
+        available_balance = float(wallet.get('available_balance', 0))
         
-        if balance['available'] < request.amount:
+        if available_balance < request.amount:
             raise HTTPException(status_code=400, detail="Insufficient balance")
         
         # Calculate fees
@@ -345,30 +291,29 @@ async def standard_cashout(request: CashoutRequest, user_id: str = Depends(get_c
         fee_calc = {"fee_amount": 0, "net_amount": request.amount, "rate": 0, "type": "standard"} if is_pro_user else wallet_service.calculate_cashout_fee(request.amount, request.method, False)
         
         # Create transaction
-        transaction = Transaction(
-            type="cashout",
-            amount=request.amount,
-            method=request.method,
-            fee=TransactionFee(
-                amount=fee_calc["fee_amount"],
-                type="percentage",
-                rate=fee_calc["rate"]
-            ),
-            net_amount=fee_calc["net_amount"],
-            status="pending",
-            metadata=TransactionMetadata(**request.method_details.dict(), instant=False),
-            description=f"Standard cashout to {request.method}"
-        )
+        trans_id = str(uuid.uuid4())
+        transaction_data = {
+            "id": trans_id,
+            "wallet_id": wallet['id'],
+            "transaction_type": "cashout",
+            "amount": request.amount,
+            "description": f"Standard cashout to {request.method}",
+            "status": "pending",
+            "payment_method": request.method,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
         
-        # Move amount to reserved
-        balance['available'] -= request.amount
-        balance['reserved'] += request.amount
-        transactions.append(transaction.dict())
+        supabase.table('transactions').insert(transaction_data).execute()
+        
+        # Move amount to pending
+        new_available = available_balance - request.amount
+        new_pending = float(wallet.get('pending_balance', 0)) + request.amount
         
         supabase.table('wallets').update({
-            "balance": json.dumps(balance),
-            "transactions": json.dumps(transactions)
-        }).eq('user_id', user_id).execute()
+            "available_balance": new_available,
+            "pending_balance": new_pending,
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }).eq('id', wallet['id']).execute()
         
         estimated_arrival = datetime.now(timezone.utc) + timedelta(days=3)
         
@@ -376,7 +321,7 @@ async def standard_cashout(request: CashoutRequest, user_id: str = Depends(get_c
             "success": True,
             "message": "Standard cashout initiated",
             "data": {
-                "transaction": transaction.dict(),
+                "transaction": transaction_data,
                 "fee": fee_calc["fee_amount"],
                 "net_amount": fee_calc["net_amount"],
                 "estimated_arrival": estimated_arrival.isoformat()
@@ -394,43 +339,46 @@ async def setup_savings(request: SavingsSetupRequest, user_id: str = Depends(get
         supabase = get_supabase_admin()
         wallet = await wallet_service.get_or_create_wallet(user_id)
         
-        # Parse JSON fields
-        balance = json.loads(wallet['balance']) if isinstance(wallet['balance'], str) else wallet['balance']
-        financial_products = json.loads(wallet['financial_products']) if isinstance(wallet['financial_products'], str) else wallet['financial_products']
-        transactions = json.loads(wallet['transactions']) if isinstance(wallet['transactions'], str) else wallet['transactions']
+        available_balance = float(wallet.get('available_balance', 0))
         
-        if request.initial_amount > 0 and balance['available'] < request.initial_amount:
+        if request.initial_amount > 0 and available_balance < request.initial_amount:
             raise HTTPException(status_code=400, detail="Insufficient balance")
         
-        financial_products['savings']['enabled'] = True
+        update_data = {"savings_enabled": True}
         
         if request.initial_amount > 0:
-            balance['available'] -= request.initial_amount
-            financial_products['savings']['balance'] += request.initial_amount
+            # Transfer to savings
+            new_available = available_balance - request.initial_amount
+            new_savings = float(wallet.get('savings_balance', 0)) + request.initial_amount
+            
+            update_data["available_balance"] = new_available
+            update_data["balance"] = new_available
+            update_data["savings_balance"] = new_savings
             
             # Record transaction
-            transaction = Transaction(
-                type="transfer",
-                amount=request.initial_amount,
-                method="wallet_balance",
-                description="Transfer to savings account",
-                status="completed",
-                completed_at=datetime.now(timezone.utc)
-            )
-            transactions.append(transaction.dict())
+            trans_id = str(uuid.uuid4())
+            transaction_data = {
+                "id": trans_id,
+                "wallet_id": wallet['id'],
+                "transaction_type": "transfer",
+                "amount": request.initial_amount,
+                "description": "Transfer to savings account",
+                "status": "completed",
+                "payment_method": "wallet_balance",
+                "created_at": datetime.now(timezone.utc).isoformat()
+            }
+            supabase.table('transactions').insert(transaction_data).execute()
         
-        supabase.table('wallets').update({
-            "balance": json.dumps(balance),
-            "financial_products": json.dumps(financial_products),
-            "transactions": json.dumps(transactions)
-        }).eq('user_id', user_id).execute()
+        update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+        
+        result = supabase.table('wallets').update(update_data).eq('id', wallet['id']).execute()
         
         return {
             "success": True,
             "message": "Savings account setup successfully",
             "data": {
-                "savings_balance": financial_products['savings']['balance'],
-                "interest_rate": financial_products['savings']['interest_rate']
+                "savings_balance": float(update_data.get('savings_balance', wallet.get('savings_balance', 0))),
+                "interest_rate": float(wallet.get('savings_interest_rate', 2.5))
             }
         }
     except HTTPException:
@@ -445,43 +393,45 @@ async def request_credit(request: CreditRequest, user_id: str = Depends(get_curr
         supabase = get_supabase_admin()
         wallet = await wallet_service.get_or_create_wallet(user_id)
         
-        # Parse JSON fields
-        balance = json.loads(wallet['balance']) if isinstance(wallet['balance'], str) else wallet['balance']
-        financial_products = json.loads(wallet['financial_products']) if isinstance(wallet['financial_products'], str) else wallet['financial_products']
-        transactions = json.loads(wallet['transactions']) if isinstance(wallet['transactions'], str) else wallet['transactions']
-        stats = json.loads(wallet['stats']) if isinstance(wallet['stats'], str) else wallet['stats']
-        
         # Simple credit score calculation
         credit_score = 650  # Base score
-        if len(transactions) > 10:
+        transactions_count = len(wallet.get('transactions', []))
+        if transactions_count > 10:
             credit_score += 50
-        if stats['total_earned'] > 1000:
+        total_earned = float(wallet.get('total_earned', 0))
+        if total_earned > 1000:
             credit_score += 30
         
         max_credit = credit_score * 100
-        current_used = financial_products['credit']['used']
+        current_used = float(wallet.get('credit_used', 0))
         
         if request.amount > (max_credit - current_used):
             raise HTTPException(status_code=400, detail="Credit limit exceeded")
         
-        financial_products['credit']['used'] += request.amount
-        balance['available'] += request.amount
-        
-        transaction = Transaction(
-            type="deposit",
-            amount=request.amount,
-            method="credit",
-            description=f"Credit advance for: {request.purpose}",
-            status="completed",
-            completed_at=datetime.now(timezone.utc)
-        )
-        transactions.append(transaction.dict())
+        # Update wallet
+        new_credit_used = current_used + request.amount
+        new_available = float(wallet.get('available_balance', 0)) + request.amount
         
         supabase.table('wallets').update({
-            "balance": json.dumps(balance),
-            "financial_products": json.dumps(financial_products),
-            "transactions": json.dumps(transactions)
-        }).eq('user_id', user_id).execute()
+            "credit_used": new_credit_used,
+            "available_balance": new_available,
+            "balance": new_available,
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }).eq('id', wallet['id']).execute()
+        
+        # Create transaction
+        trans_id = str(uuid.uuid4())
+        transaction_data = {
+            "id": trans_id,
+            "wallet_id": wallet['id'],
+            "transaction_type": "deposit",
+            "amount": request.amount,
+            "description": f"Credit advance for: {request.purpose}",
+            "status": "completed",
+            "payment_method": "credit",
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        supabase.table('transactions').insert(transaction_data).execute()
         
         repayment_date = datetime.now(timezone.utc) + timedelta(days=30)
         
@@ -489,8 +439,8 @@ async def request_credit(request: CreditRequest, user_id: str = Depends(get_curr
             "success": True,
             "message": "Credit request processed",
             "data": {
-                "credit_used": financial_products['credit']['used'],
-                "available_credit": max_credit - financial_products['credit']['used'],
+                "credit_used": new_credit_used,
+                "available_credit": max_credit - new_credit_used,
                 "repayment_date": repayment_date.isoformat()
             }
         }
@@ -504,31 +454,31 @@ async def add_payment_method(request: AddPaymentMethodRequest, user_id: str = De
     """Add payment method"""
     try:
         supabase = get_supabase_admin()
-        wallet = await wallet_service.get_or_create_wallet(user_id)
         
-        # Parse JSON fields
-        payment_methods = json.loads(wallet['payment_methods']) if isinstance(wallet['payment_methods'], str) else wallet['payment_methods']
+        # Get existing payment methods
+        existing = supabase.table('payment_methods').select('*').eq('user_id', user_id).execute()
+        is_first = not existing.data or len(existing.data) == 0
         
-        payment_method = PaymentMethod(
-            type=request.type,
-            details=request.details,
-            verified=False
-        )
+        # Create payment method
+        pm_id = str(uuid.uuid4())
+        payment_method_data = {
+            "id": pm_id,
+            "user_id": user_id,
+            "method_type": request.type,
+            "provider": request.details.bank_name or request.details.card_brand or "Unknown",
+            "account_number": request.details.paypal_email or request.details.crypto_address or "",
+            "last_four": request.details.account_last4 or request.details.card_last4 or "",
+            "is_default": is_first,  # First method is default
+            "is_verified": False,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
         
-        # If first method, set as default
-        if len(payment_methods) == 0:
-            payment_method.is_default = True
-        
-        payment_methods.append(payment_method.dict())
-        
-        supabase.table('wallets').update({
-            "payment_methods": json.dumps(payment_methods)
-        }).eq('user_id', user_id).execute()
+        result = supabase.table('payment_methods').insert(payment_method_data).execute()
         
         return {
             "success": True,
             "message": "Payment method added successfully",
-            "data": payment_method.dict()
+            "data": result.data[0] if result.data else payment_method_data
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -537,31 +487,55 @@ async def add_payment_method(request: AddPaymentMethodRequest, user_id: str = De
 async def get_transactions(page: int = 1, limit: int = 20, type: Optional[str] = None, user_id: str = Depends(get_current_user_id)):
     """Get transaction history"""
     try:
-        wallet = await wallet_service.get_or_create_wallet(user_id)
+        supabase = get_supabase_admin()
         
-        # Parse transactions
-        transactions = json.loads(wallet['transactions']) if isinstance(wallet['transactions'], str) else wallet['transactions']
+        # Get wallet
+        wallet_result = supabase.table('wallets').select('id').eq('user_id', user_id).execute()
+        
+        if not wallet_result.data or len(wallet_result.data) == 0:
+            return {
+                "success": True,
+                "data": {
+                    "transactions": [],
+                    "pagination": {
+                        "current": page,
+                        "total": 0,
+                        "total_transactions": 0
+                    }
+                }
+            }
+        
+        wallet_id = wallet_result.data[0]['id']
+        
+        # Build query
+        query = supabase.table('transactions').select('*', count='exact').eq('wallet_id', wallet_id)
         
         # Filter by type if provided
         if type:
-            transactions = [t for t in transactions if t.get('type') == type]
+            query = query.eq('transaction_type', type)
         
-        # Sort by date (newest first)
-        transactions.sort(key=lambda t: t.get('created_at', ''), reverse=True)
+        # Get count
+        count_result = query.execute()
+        total_count = count_result.count if hasattr(count_result, 'count') else 0
         
-        # Paginate
-        start_index = (page - 1) * limit
-        end_index = page * limit
-        paginated_transactions = transactions[start_index:end_index]
+        # Get paginated results
+        offset = (page - 1) * limit
+        query = supabase.table('transactions').select('*').eq('wallet_id', wallet_id)
+        if type:
+            query = query.eq('transaction_type', type)
+        
+        result = query.order('created_at', desc=True).range(offset, offset + limit - 1).execute()
+        
+        transactions = result.data if result.data else []
         
         return {
             "success": True,
             "data": {
-                "transactions": paginated_transactions,
+                "transactions": transactions,
                 "pagination": {
                     "current": page,
-                    "total": (len(transactions) + limit - 1) // limit,
-                    "total_transactions": len(transactions)
+                    "total": (total_count + limit - 1) // limit if total_count > 0 else 0,
+                    "total_transactions": total_count
                 }
             }
         }
