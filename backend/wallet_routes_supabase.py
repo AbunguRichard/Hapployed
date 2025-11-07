@@ -202,7 +202,8 @@ wallet_service = WalletService()
 
 def get_current_user_id():
     """Mock function - replace with actual JWT auth"""
-    return "demo-user-123"
+    # Using a valid UUID format for Supabase
+    return "550e8400-e29b-41d4-a716-446655440000"
 
 @router.get("/")
 async def get_wallet(user_id: str = Depends(get_current_user_id)):
