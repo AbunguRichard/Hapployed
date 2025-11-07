@@ -1088,6 +1088,496 @@ class BackendTester:
         except Exception as e:
             self.log_result("wallet", "GET /api/wallet/transactions", False, None, str(e))
 
+    def test_quickhire_supabase_migration(self):
+        """Test Quickhire System Supabase Migration - All 20 Geo-Location Endpoints"""
+        print("\n📍 Testing Quickhire System Supabase Migration...")
+        
+        # Test data with real coordinates
+        nyc_coords = {"lat": 40.7128, "lon": -74.0060}  # New York City
+        la_coords = {"lat": 34.0522, "lon": -118.2437}  # Los Angeles
+        chicago_coords = {"lat": 41.8781, "lon": -87.6298}  # Chicago
+        
+        test_client_id = str(uuid.uuid4())
+        test_worker_id = str(uuid.uuid4())
+        created_gig_id = None
+        
+        # Test 1: POST /api/quickhire/gigs - Create a new quickhire gig
+        try:
+            payload = {
+                "clientId": test_client_id,
+                "clientName": "John Smith",
+                "clientEmail": "john.smith@example.com",
+                "category": "Plumber",
+                "description": "Emergency plumbing repair needed - burst pipe in kitchen",
+                "location": {
+                    "type": "Point",
+                    "coordinates": [nyc_coords["lon"], nyc_coords["lat"]],
+                    "address": "123 Main St, New York, NY 10001"
+                },
+                "radius": 10,
+                "urgency": "ASAP",
+                "budget": 150.0,
+                "photos": [],
+                "voiceNote": None,
+                "gigType": "Single",
+                "workersNeeded": 1,
+                "payPerPerson": 150.0,
+                "groupMode": False
+            }
+            
+            response = requests.post(f"{BASE_URL}/quickhire/gigs", json=payload)
+            
+            if response.status_code == 201:
+                data = response.json()
+                if data.get("success") and "gigId" in data:
+                    created_gig_id = data["gigId"]
+                    self.log_result("quickhire", "POST /gigs - Create Gig", True, 
+                                  {"gigId": created_gig_id, "category": payload["category"]})
+                else:
+                    self.log_result("quickhire", "POST /gigs - Create Gig", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "POST /gigs - Create Gig", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /gigs - Create Gig", False, None, str(e))
+        
+        # Test 2: GET /api/quickhire/gigs/{gigId} - Get specific gig details
+        if created_gig_id:
+            try:
+                response = requests.get(f"{BASE_URL}/quickhire/gigs/{created_gig_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "gig" in data:
+                        gig = data["gig"]
+                        if gig.get("id") == created_gig_id and gig.get("category") == "Plumber":
+                            self.log_result("quickhire", "GET /gigs/{gigId} - Get Gig Details", True, 
+                                          {"gigId": created_gig_id, "status": gig.get("status")})
+                        else:
+                            self.log_result("quickhire", "GET /gigs/{gigId} - Get Gig Details", False, data, 
+                                          "Gig data mismatch")
+                    else:
+                        self.log_result("quickhire", "GET /gigs/{gigId} - Get Gig Details", False, data, 
+                                      "Invalid response format")
+                else:
+                    self.log_result("quickhire", "GET /gigs/{gigId} - Get Gig Details", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "GET /gigs/{gigId} - Get Gig Details", False, None, str(e))
+        
+        # Test 3: GET /api/quickhire/gigs/nearby - Get nearby gigs (query params)
+        try:
+            params = {
+                "lat": nyc_coords["lat"],
+                "lon": nyc_coords["lon"],
+                "radius": 25
+            }
+            response = requests.get(f"{BASE_URL}/quickhire/gigs/nearby", params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "gigs" in data:
+                    gigs = data["gigs"]
+                    # Verify distance calculation
+                    if len(gigs) > 0:
+                        for gig in gigs:
+                            if "distance" in gig and "eta" in gig:
+                                self.log_result("quickhire", "GET /gigs/nearby - Query Params", True, 
+                                              {"count": len(gigs), "sample_distance": gigs[0].get("distance")})
+                                break
+                        else:
+                            self.log_result("quickhire", "GET /gigs/nearby - Query Params", False, data, 
+                                          "Missing distance/eta fields")
+                    else:
+                        self.log_result("quickhire", "GET /gigs/nearby - Query Params", True, 
+                                      {"count": 0, "note": "No gigs in radius"})
+                else:
+                    self.log_result("quickhire", "GET /gigs/nearby - Query Params", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "GET /gigs/nearby - Query Params", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "GET /gigs/nearby - Query Params", False, None, str(e))
+        
+        # Test 4: POST /api/quickhire/gigs/nearby - Find gigs near worker location
+        try:
+            payload = {
+                "workerId": test_worker_id,
+                "location": {
+                    "type": "Point",
+                    "coordinates": [nyc_coords["lon"], nyc_coords["lat"]],
+                    "address": "Worker location in NYC"
+                }
+            }
+            response = requests.post(f"{BASE_URL}/quickhire/gigs/nearby", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "gigs" in data:
+                    self.log_result("quickhire", "POST /gigs/nearby - Worker Location", True, 
+                                  {"count": data.get("count", 0)})
+                else:
+                    self.log_result("quickhire", "POST /gigs/nearby - Worker Location", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "POST /gigs/nearby - Worker Location", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /gigs/nearby - Worker Location", False, None, str(e))
+        
+        # Test 5: POST /api/quickhire/gigs/{gigId}/accept - Worker accepts gig
+        if created_gig_id:
+            try:
+                response = requests.post(f"{BASE_URL}/quickhire/gigs/{created_gig_id}/accept?workerId={test_worker_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "assignmentId" in data:
+                        self.log_result("quickhire", "POST /gigs/{gigId}/accept - Accept Gig", True, 
+                                      {"assignmentId": data["assignmentId"]})
+                    else:
+                        self.log_result("quickhire", "POST /gigs/{gigId}/accept - Accept Gig", False, data, 
+                                      "Invalid response format")
+                else:
+                    self.log_result("quickhire", "POST /gigs/{gigId}/accept - Accept Gig", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "POST /gigs/{gigId}/accept - Accept Gig", False, None, str(e))
+        
+        # Test 6: GET /api/quickhire/gigs/{gigId}/hiring-status - Get hiring status
+        if created_gig_id:
+            try:
+                response = requests.get(f"{BASE_URL}/quickhire/gigs/{created_gig_id}/hiring-status")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "workersNeeded" in data and "workersAssigned" in data:
+                        self.log_result("quickhire", "GET /gigs/{gigId}/hiring-status - Hiring Status", True, 
+                                      {"workersNeeded": data["workersNeeded"], 
+                                       "workersAssigned": data["workersAssigned"]})
+                    else:
+                        self.log_result("quickhire", "GET /gigs/{gigId}/hiring-status - Hiring Status", False, data, 
+                                      "Invalid response format")
+                else:
+                    self.log_result("quickhire", "GET /gigs/{gigId}/hiring-status - Hiring Status", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "GET /gigs/{gigId}/hiring-status - Hiring Status", False, None, str(e))
+        
+        # Test 7: PATCH /api/quickhire/gigs/{gigId}/status - Update gig status
+        if created_gig_id:
+            try:
+                payload = {"status": "in_progress", "notes": "Work started"}
+                response = requests.patch(f"{BASE_URL}/quickhire/gigs/{created_gig_id}/status", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and data.get("gig", {}).get("status") == "in_progress":
+                        self.log_result("quickhire", "PATCH /gigs/{gigId}/status - Update Status", True, 
+                                      {"status": "in_progress"})
+                    else:
+                        self.log_result("quickhire", "PATCH /gigs/{gigId}/status - Update Status", False, data, 
+                                      "Status not updated")
+                else:
+                    self.log_result("quickhire", "PATCH /gigs/{gigId}/status - Update Status", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "PATCH /gigs/{gigId}/status - Update Status", False, None, str(e))
+        
+        # Test 8: POST /api/quickhire/gigs/{gigId}/complete - Complete gig
+        if created_gig_id:
+            try:
+                response = requests.post(f"{BASE_URL}/quickhire/gigs/{created_gig_id}/complete")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        self.log_result("quickhire", "POST /gigs/{gigId}/complete - Complete Gig", True, data)
+                    else:
+                        self.log_result("quickhire", "POST /gigs/{gigId}/complete - Complete Gig", False, data, 
+                                      "Gig not completed")
+                else:
+                    self.log_result("quickhire", "POST /gigs/{gigId}/complete - Complete Gig", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "POST /gigs/{gigId}/complete - Complete Gig", False, None, str(e))
+        
+        # Test 9: POST /api/quickhire/ratings - Submit rating
+        if created_gig_id:
+            try:
+                payload = {
+                    "gigId": created_gig_id,
+                    "raterId": test_client_id,
+                    "raterType": "client",
+                    "rating": 5,
+                    "tags": ["Professional", "On-time", "Quality work"],
+                    "comment": "Excellent service, fixed the issue quickly!"
+                }
+                response = requests.post(f"{BASE_URL}/quickhire/ratings", json=payload)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "rating" in data:
+                        self.log_result("quickhire", "POST /ratings - Submit Rating", True, 
+                                      {"rating": payload["rating"]})
+                    else:
+                        self.log_result("quickhire", "POST /ratings - Submit Rating", False, data, 
+                                      "Invalid response format")
+                else:
+                    self.log_result("quickhire", "POST /ratings - Submit Rating", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "POST /ratings - Submit Rating", False, None, str(e))
+        
+        # Test 10: GET /api/quickhire/gigs/client/{clientId} - Get client gigs
+        try:
+            response = requests.get(f"{BASE_URL}/quickhire/gigs/client/{test_client_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "gigs" in data:
+                    self.log_result("quickhire", "GET /gigs/client/{clientId} - Client Gigs", True, 
+                                  {"count": data.get("count", 0)})
+                else:
+                    self.log_result("quickhire", "GET /gigs/client/{clientId} - Client Gigs", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "GET /gigs/client/{clientId} - Client Gigs", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "GET /gigs/client/{clientId} - Client Gigs", False, None, str(e))
+        
+        # Test 11: GET /api/quickhire/gigs/worker/{workerId} - Get worker gigs
+        try:
+            response = requests.get(f"{BASE_URL}/quickhire/gigs/worker/{test_worker_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "assignments" in data:
+                    self.log_result("quickhire", "GET /gigs/worker/{workerId} - Worker Gigs", True, 
+                                  {"count": data.get("count", 0)})
+                else:
+                    self.log_result("quickhire", "GET /gigs/worker/{workerId} - Worker Gigs", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "GET /gigs/worker/{workerId} - Worker Gigs", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "GET /gigs/worker/{workerId} - Worker Gigs", False, None, str(e))
+        
+        # Test 12: POST /api/quickhire/worker/location - Update worker location
+        try:
+            payload = {
+                "workerId": test_worker_id,
+                "location": {
+                    "type": "Point",
+                    "coordinates": [chicago_coords["lon"], chicago_coords["lat"]],
+                    "address": "Chicago, IL"
+                }
+            }
+            response = requests.post(f"{BASE_URL}/quickhire/worker/location", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    self.log_result("quickhire", "POST /worker/location - Update Location", True, data)
+                else:
+                    self.log_result("quickhire", "POST /worker/location - Update Location", False, data, 
+                                  "Location not updated")
+            else:
+                self.log_result("quickhire", "POST /worker/location - Update Location", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /worker/location - Update Location", False, None, str(e))
+        
+        # Test 13: POST /api/quickhire/workers/nearby - Find nearby workers
+        try:
+            params = {
+                "lat": chicago_coords["lat"],
+                "lon": chicago_coords["lon"],
+                "radius": 10
+            }
+            response = requests.post(f"{BASE_URL}/quickhire/workers/nearby", params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "workers" in data:
+                    self.log_result("quickhire", "POST /workers/nearby - Find Workers", True, 
+                                  {"count": data.get("count", 0)})
+                else:
+                    self.log_result("quickhire", "POST /workers/nearby - Find Workers", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "POST /workers/nearby - Find Workers", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /workers/nearby - Find Workers", False, None, str(e))
+        
+        # Test 14: POST /api/quickhire/gigs/{gigId}/close-hiring - Close hiring
+        if created_gig_id:
+            try:
+                response = requests.post(f"{BASE_URL}/quickhire/gigs/{created_gig_id}/close-hiring")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        self.log_result("quickhire", "POST /gigs/{gigId}/close-hiring - Close Hiring", True, data)
+                    else:
+                        self.log_result("quickhire", "POST /gigs/{gigId}/close-hiring - Close Hiring", False, data, 
+                                      "Hiring not closed")
+                else:
+                    self.log_result("quickhire", "POST /gigs/{gigId}/close-hiring - Close Hiring", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "POST /gigs/{gigId}/close-hiring - Close Hiring", False, None, str(e))
+        
+        # Test 15: POST /api/quickhire/gigs/marketplace - Get marketplace gigs
+        try:
+            response = requests.post(f"{BASE_URL}/quickhire/gigs/marketplace", json={})
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "gigs" in data:
+                    self.log_result("quickhire", "POST /gigs/marketplace - Marketplace", True, 
+                                  {"count": len(data.get("gigs", []))})
+                else:
+                    self.log_result("quickhire", "POST /gigs/marketplace - Marketplace", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "POST /gigs/marketplace - Marketplace", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /gigs/marketplace - Marketplace", False, None, str(e))
+        
+        # Test 16: POST /api/quickhire/gigs/invite - Invite worker
+        if created_gig_id:
+            try:
+                params = {"gigId": created_gig_id, "workerId": test_worker_id}
+                response = requests.post(f"{BASE_URL}/quickhire/gigs/invite", params=params)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        self.log_result("quickhire", "POST /gigs/invite - Invite Worker", True, data)
+                    else:
+                        self.log_result("quickhire", "POST /gigs/invite - Invite Worker", False, data, 
+                                      "Invitation failed")
+                else:
+                    self.log_result("quickhire", "POST /gigs/invite - Invite Worker", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "POST /gigs/invite - Invite Worker", False, None, str(e))
+        
+        # Test 17: GET /api/quickhire/gigs/response/{gigId} - Get gig responses
+        if created_gig_id:
+            try:
+                response = requests.get(f"{BASE_URL}/quickhire/gigs/response/{created_gig_id}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "responses" in data:
+                        self.log_result("quickhire", "GET /gigs/response/{gigId} - Gig Responses", True, 
+                                      {"count": len(data.get("responses", []))})
+                    else:
+                        self.log_result("quickhire", "GET /gigs/response/{gigId} - Gig Responses", False, data, 
+                                      "Invalid response format")
+                else:
+                    self.log_result("quickhire", "GET /gigs/response/{gigId} - Gig Responses", False, None, 
+                                  f"HTTP {response.status_code}")
+                    
+            except Exception as e:
+                self.log_result("quickhire", "GET /gigs/response/{gigId} - Gig Responses", False, None, str(e))
+        
+        # Test 18: GET /api/quickhire/notifications/worker/{workerId} - Get worker notifications
+        try:
+            response = requests.get(f"{BASE_URL}/quickhire/notifications/worker/{test_worker_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "notifications" in data:
+                    self.log_result("quickhire", "GET /notifications/worker/{workerId} - Notifications", True, 
+                                  {"count": len(data.get("notifications", []))})
+                else:
+                    self.log_result("quickhire", "GET /notifications/worker/{workerId} - Notifications", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("quickhire", "GET /notifications/worker/{workerId} - Notifications", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "GET /notifications/worker/{workerId} - Notifications", False, None, str(e))
+        
+        # Test 19: POST /api/quickhire/notifications/log - Log notification
+        try:
+            payload = {"type": "gig_accepted", "workerId": test_worker_id, "gigId": created_gig_id}
+            response = requests.post(f"{BASE_URL}/quickhire/notifications/log", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    self.log_result("quickhire", "POST /notifications/log - Log Notification", True, data)
+                else:
+                    self.log_result("quickhire", "POST /notifications/log - Log Notification", False, data, 
+                                  "Notification not logged")
+            else:
+                self.log_result("quickhire", "POST /notifications/log - Log Notification", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /notifications/log - Log Notification", False, None, str(e))
+        
+        # Test 20: POST /api/quickhire/notifications/worker - Send notification to worker
+        try:
+            params = {"workerId": test_worker_id, "message": "New gig available in your area"}
+            response = requests.post(f"{BASE_URL}/quickhire/notifications/worker", params=params)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    self.log_result("quickhire", "POST /notifications/worker - Send Notification", True, data)
+                else:
+                    self.log_result("quickhire", "POST /notifications/worker - Send Notification", False, data, 
+                                  "Notification not sent")
+            else:
+                self.log_result("quickhire", "POST /notifications/worker - Send Notification", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "POST /notifications/worker - Send Notification", False, None, str(e))
+        
+        # Test 21: Invalid gig ID - 404 handling
+        try:
+            invalid_gig_id = str(uuid.uuid4())
+            response = requests.get(f"{BASE_URL}/quickhire/gigs/{invalid_gig_id}")
+            
+            if response.status_code == 404:
+                self.log_result("quickhire", "GET /gigs/{gigId} - Invalid ID (404)", True, 
+                              {"status_code": 404, "message": "Proper 404 handling"})
+            else:
+                self.log_result("quickhire", "GET /gigs/{gigId} - Invalid ID (404)", False, None, 
+                              f"Expected 404, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("quickhire", "GET /gigs/{gigId} - Invalid ID (404)", False, None, str(e))
+
     def test_dual_persona_switch(self):
         """Test Dual Persona Switch backend implementation"""
         print("\n🔄 Testing Dual Persona Switch System...")
