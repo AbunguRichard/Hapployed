@@ -780,7 +780,7 @@ class BackendTester:
         """Test Wallet System Supabase Migration - All 8 Endpoints"""
         print("\n💳 Testing Wallet System Supabase Migration...")
         
-        test_user_id = "demo-user-123"  # Default mocked user ID
+        test_user_id = "550e8400-e29b-41d4-a716-446655440000"  # Default mocked user ID (UUID format for Supabase)
         
         # Test 1: GET /api/wallet/ - Auto-create wallet and return complete structure
         try:
