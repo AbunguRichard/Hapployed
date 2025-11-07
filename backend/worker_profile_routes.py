@@ -72,8 +72,26 @@ async def create_worker_profile(profile: WorkerProfileCreate):
     try:
         supabase = get_supabase_admin()
         
+        # Validate and clean userId
+        user_id = profile.userId
+        
+        # If userId is not a valid UUID format, try to find user by email
+        try:
+            uuid.UUID(user_id)  # Test if it's a valid UUID
+        except ValueError:
+            # userId is not a UUID (might be email), look up user by email
+            user_response = supabase.table('users').select('id').eq('email', profile.email).execute()
+            
+            if user_response.data and len(user_response.data) > 0:
+                user_id = user_response.data[0]['id']
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"User not found with email: {profile.email}"
+                )
+        
         # Check if profile already exists for this user
-        existing = supabase.table('worker_profiles').select('id').eq('user_id', profile.userId).execute()
+        existing = supabase.table('worker_profiles').select('id').eq('user_id', user_id).execute()
         
         if existing.data and len(existing.data) > 0:
             # Profile exists, update it instead
@@ -111,7 +129,7 @@ async def create_worker_profile(profile: WorkerProfileCreate):
         
         new_profile = {
             "id": profile_id,
-            "user_id": profile.userId,
+            "user_id": user_id,  # Now guaranteed to be a valid UUID
             "name": profile.name or "",
             "email": profile.email,
             "phone": profile.phone,
