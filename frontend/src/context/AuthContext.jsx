@@ -161,6 +161,12 @@ export const AuthProvider = ({ children }) => {
 
       if (!response.ok) {
         const errorMessage = response.data?.detail || response.data?.message || 'Signup failed';
+        
+        // If email already registered, offer to cleanup
+        if (errorMessage.includes('already registered')) {
+          throw new Error(`${errorMessage}. If your previous registration was incomplete, contact support to reset your account.`);
+        }
+        
         throw new Error(errorMessage);
       }
 
