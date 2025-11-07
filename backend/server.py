@@ -31,7 +31,8 @@ from application_routes_supabase import router as application_router
 from quickhire_routes import router as quickhire_router
 # SUPABASE MIGRATION: Using Supabase version for auth_routes
 from auth_routes_supabase import router as auth_router
-from analytics_routes import router as analytics_router
+# SUPABASE MIGRATION: Using Supabase version for analytics_routes
+from analytics_routes_supabase import router as analytics_router
 from worker_dashboard_routes import router as worker_dashboard_router
 # SUPABASE MIGRATION: Using Supabase version for wallet_routes
 from wallet_routes_supabase import router as wallet_router
