@@ -140,7 +140,7 @@ wallet_service = WalletService()
 
 def get_current_user_id():
     """Mock function - replace with actual JWT auth"""
-    return "demo-user-123"
+    return "402f6136-32c1-46f5-a2a8-449472770f2d"  # Test user UUID
 
 @router.get("/")
 async def get_wallet(user_id: str = Depends(get_current_user_id)):
