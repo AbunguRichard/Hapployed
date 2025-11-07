@@ -29,6 +29,7 @@ class BackendTester:
             "verification": {},
             "sms_gateway": {},
             "dual_persona": {},
+            "quickhire": {},
             "summary": {"passed": 0, "failed": 0, "errors": []}
         }
         
