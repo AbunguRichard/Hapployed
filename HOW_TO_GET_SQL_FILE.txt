@@ -1,0 +1,59 @@
+===========================================
+HOW TO GET THE SQL FILE TO YOUR EMAIL
+===========================================
+
+Since I cannot send emails, here are 3 easy ways to get the file:
+
+METHOD 1: Use the QUICK START file (Recommended for now)
+---------------------------------------------------------
+The file "QUICK_START_ESSENTIAL.sql" in /app/supabase/ has all the core tables.
+It's smaller and easier to copy. This will get your app working!
+
+Location: /app/supabase/QUICK_START_ESSENTIAL.sql
+
+Copy and paste this into Supabase SQL Editor.
+
+
+METHOD 2: Download from this environment
+---------------------------------------------------------
+If you have access to download files from this development environment:
+
+Full File: /app/supabase/MASTER_SETUP_ALL_IN_ONE.sql (46KB)
+
+Or use the 3 parts:
+- /app/supabase/PART_1_OF_3.sql
+- /app/supabase/PART_2_OF_3.sql  
+- /app/supabase/PART_3_OF_3.sql
+
+
+METHOD 3: Copy in 3 Parts from Chat
+---------------------------------------------------------
+I can show you Part 1, Part 2, and Part 3 separately.
+You copy each part into Supabase and run them one by one.
+
+
+METHOD 4: Create Download Link
+---------------------------------------------------------
+If this app has a public URL, I can help you access the file through a web browser.
+
+
+RECOMMENDED: Start with QUICK_START_ESSENTIAL.sql
+===========================================
+This file has all the important tables:
+✅ Users & Worker Profiles
+✅ Jobs & Applications
+✅ Wallets & Transactions  
+✅ Messages
+✅ Security (RLS) policies
+
+This is enough to get your Hapployed app working!
+
+You can add more tables later if needed.
+
+
+FILE LOCATION SUMMARY:
+- Quick Start (Recommended): /app/supabase/QUICK_START_ESSENTIAL.sql
+- Full Setup: /app/supabase/MASTER_SETUP_ALL_IN_ONE.sql
+- Parts: /app/supabase/PART_1_OF_3.sql, PART_2_OF_3.sql, PART_3_OF_3.sql
+
+Which method would you like to use?
