@@ -46,9 +46,9 @@ export const xhrFetch = (url, options = {}) => {
         },
         text: () => Promise.resolve(xhr.responseText),
         json: () => Promise.resolve(data),
-        // Add clone() method to prevent errors if called
+        // Add clone() method for Emergent monitoring script compatibility
         clone: function() {
-          // Return a new response object with same data
+          // Return a NEW object with same properties (not recursive!)
           return {
             ok: this.ok,
             status: this.status,
@@ -57,12 +57,14 @@ export const xhrFetch = (url, options = {}) => {
             headers: this.headers,
             text: () => Promise.resolve(xhr.responseText),
             json: () => Promise.resolve(data),
-            clone: () => this.clone()
+            clone: () => this.clone(),
+            body: null,
+            bodyUsed: false
           };
         },
         // Also handle body property if checked
         body: null,
-        bodyUsed: true
+        bodyUsed: false
       };
       
       console.log('[xhrFetch] Resolved response:', response);
