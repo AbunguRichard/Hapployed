@@ -42,7 +42,12 @@ export const xhrFetch = (url, options = {}) => {
         statusText: xhr.statusText,
         data: data,
         text: () => Promise.resolve(xhr.responseText),
-        json: () => Promise.resolve(data)
+        json: () => Promise.resolve(data),
+        // Add clone() method to prevent errors if called
+        clone: function() {
+          console.warn('[xhrFetch] clone() called - returning same response (XHR does not support clone)');
+          return this;
+        }
       };
       
       console.log('[xhrFetch] Resolved response:', response);
