@@ -36,7 +36,8 @@ export const xhrFetch = (url, options = {}) => {
         data = xhr.responseText;
       }
       
-      const response = {
+      // Create the response object with proper clone support
+      const createResponseObject = (responseText) => ({
         ok: xhr.status >= 200 && xhr.status < 300,
         status: xhr.status,
         statusText: xhr.statusText,
@@ -44,28 +45,17 @@ export const xhrFetch = (url, options = {}) => {
         headers: {
           get: (name) => xhr.getResponseHeader(name)
         },
-        text: () => Promise.resolve(xhr.responseText),
+        text: () => Promise.resolve(responseText),
         json: () => Promise.resolve(data),
-        // Add clone() method for Emergent monitoring script compatibility
+        // Non-recursive clone for Emergent monitoring
         clone: function() {
-          // Return a NEW object with same properties (not recursive!)
-          return {
-            ok: this.ok,
-            status: this.status,
-            statusText: this.statusText,
-            data: this.data,
-            headers: this.headers,
-            text: () => Promise.resolve(xhr.responseText),
-            json: () => Promise.resolve(data),
-            clone: () => this.clone(),
-            body: null,
-            bodyUsed: false
-          };
+          return createResponseObject(responseText);
         },
-        // Also handle body property if checked
         body: null,
         bodyUsed: false
-      };
+      });
+      
+      const response = createResponseObject(xhr.responseText);
       
       console.log('[xhrFetch] Resolved response:', response);
       resolve(response);
