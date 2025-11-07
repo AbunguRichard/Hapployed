@@ -397,11 +397,17 @@ export default function CreateProfilePage() {
           );
 
           if (!response.ok) {
-            console.error('Failed to save worker profile to backend');
+            const errorData = await response.json().catch(() => ({}));
+            console.error('Failed to save worker profile to backend:', errorData);
+            throw new Error(errorData.detail || 'Failed to save profile');
           }
+          
+          const savedProfile = await response.json();
+          console.log('Worker profile saved successfully:', savedProfile);
         } catch (apiError) {
           console.error('Error saving to worker profile API:', apiError);
-          // Continue anyway - profile saved to AuthContext
+          // Throw the error so user knows what went wrong
+          throw apiError;
         }
       }
       
