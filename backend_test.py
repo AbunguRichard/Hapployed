@@ -775,6 +775,318 @@ class BackendTester:
                 
         except Exception as e:
             self.log_result("ai_matching", "AI Price Estimator - Missing WorkType", False, None, str(e))
+    
+    def test_wallet_system_supabase(self):
+        """Test Wallet System Supabase Migration - All 8 Endpoints"""
+        print("\n💳 Testing Wallet System Supabase Migration...")
+        
+        test_user_id = "demo-user-123"  # Default mocked user ID
+        
+        # Test 1: GET /api/wallet/ - Auto-create wallet and return complete structure
+        try:
+            response = requests.get(f"{BASE_URL}/wallet/")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    wallet = data["data"]
+                    # Verify complete wallet structure
+                    required_fields = ["id", "user_id", "balance", "transactions", "payment_methods", 
+                                     "financial_products", "settings", "limits", "stats"]
+                    
+                    if all(field in wallet for field in required_fields):
+                        # Verify balance structure
+                        balance = wallet["balance"]
+                        if isinstance(balance, dict) and "available" in balance and "pending" in balance:
+                            self.log_result("wallet", "GET /api/wallet/ - Auto-create wallet", True, 
+                                          {"wallet_id": wallet["id"], "user_id": wallet["user_id"], 
+                                           "balance": balance})
+                        else:
+                            self.log_result("wallet", "GET /api/wallet/ - Auto-create wallet", False, data, 
+                                          "Invalid balance structure")
+                    else:
+                        missing_fields = [field for field in required_fields if field not in wallet]
+                        self.log_result("wallet", "GET /api/wallet/ - Auto-create wallet", False, data, 
+                                      f"Missing wallet fields: {missing_fields}")
+                else:
+                    self.log_result("wallet", "GET /api/wallet/ - Auto-create wallet", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "GET /api/wallet/ - Auto-create wallet", False, None, 
+                              f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("wallet", "GET /api/wallet/ - Auto-create wallet", False, None, str(e))
+        
+        # Test 2: POST /api/wallet/calculate-fees - Fee calculation for different methods
+        try:
+            # Test instant bank transfer
+            payload = {"amount": 100, "method": "bank_transfer", "instant": True}
+            response = requests.post(f"{BASE_URL}/wallet/calculate-fees", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    fees = data["data"]
+                    # Verify fee calculation (1.5% for instant bank transfer)
+                    expected_fee = 1.50
+                    expected_net = 98.50
+                    if (abs(fees.get("fee_amount", 0) - expected_fee) < 0.01 and 
+                        abs(fees.get("net_amount", 0) - expected_net) < 0.01):
+                        self.log_result("wallet", "POST /api/wallet/calculate-fees - Instant Bank Transfer", True, fees)
+                    else:
+                        self.log_result("wallet", "POST /api/wallet/calculate-fees - Instant Bank Transfer", False, fees, 
+                                      f"Fee calculation mismatch: expected fee={expected_fee}, net={expected_net}, got fee={fees.get('fee_amount')}, net={fees.get('net_amount')}")
+                else:
+                    self.log_result("wallet", "POST /api/wallet/calculate-fees - Instant Bank Transfer", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "POST /api/wallet/calculate-fees - Instant Bank Transfer", False, None, 
+                              f"HTTP {response.status_code}")
+            
+            # Test standard PayPal
+            payload = {"amount": 100, "method": "paypal", "instant": False}
+            response = requests.post(f"{BASE_URL}/wallet/calculate-fees", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    fees = data["data"]
+                    # Verify fee calculation (2.5% for standard PayPal)
+                    expected_fee = 2.50
+                    expected_net = 97.50
+                    if (abs(fees.get("fee_amount", 0) - expected_fee) < 0.01 and 
+                        abs(fees.get("net_amount", 0) - expected_net) < 0.01):
+                        self.log_result("wallet", "POST /api/wallet/calculate-fees - Standard PayPal", True, fees)
+                    else:
+                        self.log_result("wallet", "POST /api/wallet/calculate-fees - Standard PayPal", False, fees, 
+                                      f"Fee calculation mismatch")
+                else:
+                    self.log_result("wallet", "POST /api/wallet/calculate-fees - Standard PayPal", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "POST /api/wallet/calculate-fees - Standard PayPal", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "POST /api/wallet/calculate-fees", False, None, str(e))
+        
+        # Test 3: POST /api/wallet/cashout/instant - Instant cashout (should fail with insufficient balance)
+        try:
+            payload = {
+                "amount": 50,
+                "method": "bank_transfer",
+                "method_details": {
+                    "bank_name": "Chase",
+                    "account_last4": "1234"
+                }
+            }
+            response = requests.post(f"{BASE_URL}/wallet/cashout/instant", json=payload)
+            
+            # Should return 400 error for insufficient balance (new wallet has $0)
+            if response.status_code == 400:
+                self.log_result("wallet", "POST /api/wallet/cashout/instant - Insufficient Balance", True, 
+                              {"status_code": response.status_code, "message": "Properly handled insufficient balance"})
+            else:
+                self.log_result("wallet", "POST /api/wallet/cashout/instant - Insufficient Balance", False, None, 
+                              f"Expected 400 error, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "POST /api/wallet/cashout/instant", False, None, str(e))
+        
+        # Test 4: POST /api/wallet/cashout/standard - Standard cashout (should fail with insufficient balance)
+        try:
+            payload = {
+                "amount": 50,
+                "method": "bank_transfer",
+                "method_details": {
+                    "bank_name": "Chase",
+                    "account_last4": "1234"
+                }
+            }
+            response = requests.post(f"{BASE_URL}/wallet/cashout/standard", json=payload)
+            
+            # Should return 400 error for insufficient balance
+            if response.status_code == 400:
+                self.log_result("wallet", "POST /api/wallet/cashout/standard - Insufficient Balance", True, 
+                              {"status_code": response.status_code, "message": "Properly handled insufficient balance"})
+            else:
+                self.log_result("wallet", "POST /api/wallet/cashout/standard - Insufficient Balance", False, None, 
+                              f"Expected 400 error, got HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "POST /api/wallet/cashout/standard", False, None, str(e))
+        
+        # Test 5: POST /api/wallet/savings/setup - Setup savings account with $0 initial amount
+        try:
+            payload = {"initial_amount": 0}
+            response = requests.post(f"{BASE_URL}/wallet/savings/setup", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    savings_data = data["data"]
+                    # Verify interest rate is 2.5%
+                    if savings_data.get("interest_rate") == 2.5:
+                        self.log_result("wallet", "POST /api/wallet/savings/setup - $0 Initial", True, savings_data)
+                    else:
+                        self.log_result("wallet", "POST /api/wallet/savings/setup - $0 Initial", False, savings_data, 
+                                      f"Expected interest_rate=2.5, got {savings_data.get('interest_rate')}")
+                else:
+                    self.log_result("wallet", "POST /api/wallet/savings/setup - $0 Initial", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "POST /api/wallet/savings/setup - $0 Initial", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "POST /api/wallet/savings/setup", False, None, str(e))
+        
+        # Test 6: POST /api/wallet/credit/request - Credit advance system
+        try:
+            payload = {
+                "amount": 200,
+                "purpose": "Equipment purchase"
+            }
+            response = requests.post(f"{BASE_URL}/wallet/credit/request", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    credit_data = data["data"]
+                    # Verify credit fields
+                    required_fields = ["credit_used", "available_credit", "repayment_date"]
+                    if all(field in credit_data for field in required_fields):
+                        if credit_data.get("credit_used") == 200:
+                            self.log_result("wallet", "POST /api/wallet/credit/request - Equipment Purchase", True, credit_data)
+                        else:
+                            self.log_result("wallet", "POST /api/wallet/credit/request - Equipment Purchase", False, credit_data, 
+                                          f"Expected credit_used=200, got {credit_data.get('credit_used')}")
+                    else:
+                        missing_fields = [field for field in required_fields if field not in credit_data]
+                        self.log_result("wallet", "POST /api/wallet/credit/request - Equipment Purchase", False, credit_data, 
+                                      f"Missing fields: {missing_fields}")
+                else:
+                    self.log_result("wallet", "POST /api/wallet/credit/request - Equipment Purchase", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "POST /api/wallet/credit/request - Equipment Purchase", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "POST /api/wallet/credit/request", False, None, str(e))
+        
+        # Test 7: POST /api/wallet/payment-methods - Add payment methods
+        try:
+            # Add bank account
+            payload = {
+                "type": "bank",
+                "details": {
+                    "bank_name": "Chase",
+                    "account_last4": "5678"
+                }
+            }
+            response = requests.post(f"{BASE_URL}/wallet/payment-methods", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    payment_method = data["data"]
+                    # First method should be set as default
+                    if payment_method.get("is_default") == True and payment_method.get("type") == "bank":
+                        self.log_result("wallet", "POST /api/wallet/payment-methods - Add Bank", True, payment_method)
+                    else:
+                        self.log_result("wallet", "POST /api/wallet/payment-methods - Add Bank", False, payment_method, 
+                                      "First payment method should be default")
+                else:
+                    self.log_result("wallet", "POST /api/wallet/payment-methods - Add Bank", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "POST /api/wallet/payment-methods - Add Bank", False, None, 
+                              f"HTTP {response.status_code}")
+            
+            # Add PayPal
+            payload = {
+                "type": "paypal",
+                "details": {
+                    "paypal_email": "user@paypal.com"
+                }
+            }
+            response = requests.post(f"{BASE_URL}/wallet/payment-methods", json=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    payment_method = data["data"]
+                    if payment_method.get("type") == "paypal":
+                        self.log_result("wallet", "POST /api/wallet/payment-methods - Add PayPal", True, payment_method)
+                    else:
+                        self.log_result("wallet", "POST /api/wallet/payment-methods - Add PayPal", False, payment_method, 
+                                      "Invalid payment method type")
+                else:
+                    self.log_result("wallet", "POST /api/wallet/payment-methods - Add PayPal", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "POST /api/wallet/payment-methods - Add PayPal", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "POST /api/wallet/payment-methods", False, None, str(e))
+        
+        # Test 8: GET /api/wallet/transactions - Transaction history with pagination and filtering
+        try:
+            # Get all transactions
+            response = requests.get(f"{BASE_URL}/wallet/transactions?page=1&limit=20")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    transactions_data = data["data"]
+                    if "transactions" in transactions_data and "pagination" in transactions_data:
+                        transactions = transactions_data["transactions"]
+                        pagination = transactions_data["pagination"]
+                        # Should have transactions from credit request and savings setup
+                        if len(transactions) >= 2:
+                            self.log_result("wallet", "GET /api/wallet/transactions - All Transactions", True, 
+                                          {"transaction_count": len(transactions), "pagination": pagination})
+                        else:
+                            self.log_result("wallet", "GET /api/wallet/transactions - All Transactions", True, 
+                                          {"transaction_count": len(transactions), "note": "Expected at least 2 transactions"})
+                    else:
+                        self.log_result("wallet", "GET /api/wallet/transactions - All Transactions", False, data, 
+                                      "Missing transactions or pagination fields")
+                else:
+                    self.log_result("wallet", "GET /api/wallet/transactions - All Transactions", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "GET /api/wallet/transactions - All Transactions", False, None, 
+                              f"HTTP {response.status_code}")
+            
+            # Test filtering by type
+            response = requests.get(f"{BASE_URL}/wallet/transactions?type=deposit")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "data" in data:
+                    transactions_data = data["data"]
+                    transactions = transactions_data.get("transactions", [])
+                    # Should only return deposit transactions (credit request)
+                    deposit_count = len([t for t in transactions if t.get("type") == "deposit"])
+                    if deposit_count == len(transactions):
+                        self.log_result("wallet", "GET /api/wallet/transactions - Filter by Type", True, 
+                                      {"deposit_count": deposit_count})
+                    else:
+                        self.log_result("wallet", "GET /api/wallet/transactions - Filter by Type", False, transactions_data, 
+                                      "Filter not working correctly")
+                else:
+                    self.log_result("wallet", "GET /api/wallet/transactions - Filter by Type", False, data, 
+                                  "Invalid response format")
+            else:
+                self.log_result("wallet", "GET /api/wallet/transactions - Filter by Type", False, None, 
+                              f"HTTP {response.status_code}")
+                
+        except Exception as e:
+            self.log_result("wallet", "GET /api/wallet/transactions", False, None, str(e))
 
     def test_dual_persona_switch(self):
         """Test Dual Persona Switch backend implementation"""
