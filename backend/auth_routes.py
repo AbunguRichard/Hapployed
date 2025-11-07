@@ -245,10 +245,14 @@ async def login(credentials: UserLogin):
                 detail="Account has been deactivated"
             )
         
-        # Update last login
-        supabase_admin.table('users').update({
-            "last_login": datetime.utcnow().isoformat()
-        }).eq('id', user["id"]).execute()
+        # Update last login (if column exists, otherwise skip)
+        try:
+            supabase_admin.table('users').update({
+                "last_login": datetime.utcnow().isoformat()
+            }).eq('id', user["id"]).execute()
+        except Exception as e:
+            # Column might not exist yet, skip silently
+            print(f"Note: Could not update last_login: {e}")
         
         # Generate tokens
         access_token = create_access_token(data={"sub": user["id"]})
