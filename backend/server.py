@@ -47,7 +47,8 @@ from ai_match_routes_supabase import router as ai_match_router
 from grow_routes import router as grow_router
 # SUPABASE MIGRATION: Using Supabase version for search_routes
 from search_routes_supabase import router as search_router
-from verification_routes import router as verification_router
+# SUPABASE MIGRATION: Using Supabase version for verification_routes
+from verification_routes_supabase import router as verification_router
 from sms_routes import router as sms_router
 
 
