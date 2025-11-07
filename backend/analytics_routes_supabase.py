@@ -89,8 +89,14 @@ async def track_event(event: AnalyticsEvent):
         )
 
 @router.post("/alias")
-async def alias_user(anonymous_id: str, user_id: str):
+async def alias_user(anonymous_id: str = None, user_id: str = None):
     """Alias anonymous guest ID to authenticated user ID for funnel tracking"""
+    
+    if not anonymous_id or not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Both anonymous_id and user_id are required"
+        )
     try:
         supabase = get_supabase_admin()
         
