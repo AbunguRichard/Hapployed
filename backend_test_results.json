@@ -4,115 +4,118 @@
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.378743"
+      "timestamp": "2025-11-07T21:23:16.029615"
     },
     "Available Now Toggle - Get Status": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.454693"
+      "timestamp": "2025-11-07T21:23:16.064432"
     },
     "Available Now Toggle - Get Available Workers": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.530844"
+      "timestamp": "2025-11-07T21:23:16.107050"
     },
     "Gamification - Check Achievements": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.564700"
+      "timestamp": "2025-11-07T21:23:16.142469"
     },
     "Gamification - Get Achievements": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.598957"
+      "timestamp": "2025-11-07T21:23:16.182511"
     },
     "Worker Preferences - Save": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.636652"
+      "timestamp": "2025-11-07T21:23:16.217542"
     },
     "Worker Preferences - Get": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.669918"
+      "timestamp": "2025-11-07T21:23:16.250673"
     },
     "Gig Chain - Complete Gig": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.704019"
+      "timestamp": "2025-11-07T21:23:16.287326"
     },
     "Gig Chain - Get Status": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.734670"
+      "timestamp": "2025-11-07T21:23:16.322342"
     },
     "Gig Squad - Create": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.770445"
+      "timestamp": "2025-11-07T21:23:16.382017"
     },
     "Gig Squad - Join": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.801870"
+      "timestamp": "2025-11-07T21:23:16.420365"
     },
     "Gig Squad - Get Available": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.840492"
+      "timestamp": "2025-11-07T21:23:16.452606"
     },
     "Corporate Pass - Create": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.878194"
+      "timestamp": "2025-11-07T21:23:16.485996"
     },
     "Corporate Pass - Use Credit": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.915338"
+      "timestamp": "2025-11-07T21:23:16.522059"
     },
     "Gig Insurance - Activate": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.950257"
+      "timestamp": "2025-11-07T21:23:16.556752"
     },
     "Gig Insurance - File Claim": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.987237"
+      "timestamp": "2025-11-07T21:23:16.591445"
     },
     "Profile Update - PUT /api/profile/update": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.414793"
+      "error": "HTTP 404: {\"detail\":\"User not found. Please register first.\"}",
+      "timestamp": "2025-11-07T21:23:17.201159"
     },
     "Profile Retrieval - GET /api/profile/{email}": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.452714"
+      "error": "HTTP 404: {\"detail\":\"Profile not found\"}",
+      "timestamp": "2025-11-07T21:23:17.327948"
     },
     "Profile Update - Missing Email Validation": {
-      "success": false,
-      "response": null,
-      "error": "Expected validation error (400/422), got HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.485635"
+      "success": true,
+      "response": {
+        "status_code": 422,
+        "message": "Properly validated missing email"
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:17.361302"
     },
     "Profile Retrieval - Non-existent Profile": {
       "success": true,
@@ -121,37 +124,37 @@
         "message": "Properly returned 404 for non-existent profile"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:31.518040"
+      "timestamp": "2025-11-07T21:23:17.506471"
     },
     "Job Posting - Create Project Job": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.553914"
+      "timestamp": "2025-11-07T21:23:17.543897"
     },
     "Job Posting - Create Gig Job": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.588752"
+      "timestamp": "2025-11-07T21:23:17.580137"
     },
     "Job Posting - Get All Jobs": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.623922"
+      "timestamp": "2025-11-07T21:23:17.614724"
     },
     "Job Posting - Get Jobs with Filters": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.675630"
+      "timestamp": "2025-11-07T21:23:17.652159"
     },
     "Job Posting - Get Jobs by User ID": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:31.708432"
+      "timestamp": "2025-11-07T21:23:17.689449"
     },
     "Job Posting - Get Invalid Job ID": {
       "success": true,
@@ -160,61 +163,61 @@
         "message": "Properly returned 404 for invalid job ID"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:31.741637"
+      "timestamp": "2025-11-07T21:23:17.726136"
     },
     "Worker Profile - Create Profile": {
       "success": false,
       "response": null,
       "error": "HTTP 500: {\"detail\":\"Failed to create profile: {'message': 'invalid input syntax for type uuid: \\\"worker-test-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
-      "timestamp": "2025-11-07T18:50:32.958746"
+      "timestamp": "2025-11-07T21:23:17.847989"
     },
     "Worker Profile - Duplicate Prevention": {
       "success": false,
       "response": null,
       "error": "Expected 400 for duplicate profile, got HTTP 500",
-      "timestamp": "2025-11-07T18:50:33.103746"
+      "timestamp": "2025-11-07T21:23:17.968676"
     },
     "Worker Profile - Search by Skills": {
       "success": false,
       "response": null,
       "error": "HTTP 405: {\"detail\":\"Method Not Allowed\"}",
-      "timestamp": "2025-11-07T18:50:33.139068"
+      "timestamp": "2025-11-07T21:23:18.043017"
     },
     "Worker Profile - Search by Location": {
       "success": false,
       "response": null,
       "error": "HTTP 405: {\"detail\":\"Method Not Allowed\"}",
-      "timestamp": "2025-11-07T18:50:33.177035"
+      "timestamp": "2025-11-07T21:23:18.079860"
     },
     "Worker Profile - Search by Rate Range": {
       "success": false,
       "response": null,
       "error": "HTTP 405: {\"detail\":\"Method Not Allowed\"}",
-      "timestamp": "2025-11-07T18:50:33.211120"
+      "timestamp": "2025-11-07T21:23:18.158528"
     },
     "Worker Profile - Search by Badges": {
       "success": false,
       "response": null,
       "error": "HTTP 405: {\"detail\":\"Method Not Allowed\"}",
-      "timestamp": "2025-11-07T18:50:33.254950"
+      "timestamp": "2025-11-07T21:23:18.190888"
     },
     "Worker Profile - Get by User ID": {
       "success": false,
       "response": null,
       "error": "HTTP 500: {\"detail\":\"Failed to get profile: {'message': 'invalid input syntax for type uuid: \\\"worker-test-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
-      "timestamp": "2025-11-07T18:50:33.402981"
+      "timestamp": "2025-11-07T21:23:18.327173"
     },
     "Worker Profile - Get Non-existent User": {
       "success": false,
       "response": null,
       "error": "Expected 404 for non-existent user, got HTTP 500",
-      "timestamp": "2025-11-07T18:50:33.523336"
+      "timestamp": "2025-11-07T21:23:18.507339"
     },
     "Worker Profile - Update by User ID": {
       "success": false,
       "response": null,
       "error": "HTTP 405: {\"detail\":\"Method Not Allowed\"}",
-      "timestamp": "2025-11-07T18:50:33.556280"
+      "timestamp": "2025-11-07T21:23:18.544360"
     }
   },
   "ai_matching": {
@@ -222,67 +225,67 @@
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.027423"
+      "timestamp": "2025-11-07T21:23:16.629061"
     },
     "AI Suggest Gigs": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.062906"
+      "timestamp": "2025-11-07T21:23:16.710742"
     },
     "AI Forecast Demand": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.096920"
+      "timestamp": "2025-11-07T21:23:16.746030"
     },
     "AI Voice Parsing - Professional Project": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.136915"
+      "timestamp": "2025-11-07T21:23:16.780856"
     },
     "AI Voice Parsing - Local Gig": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.173523"
+      "timestamp": "2025-11-07T21:23:16.857248"
     },
     "AI Voice Parsing - Empty Transcript": {
       "success": false,
       "response": null,
       "error": "Unexpected HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.213433"
+      "timestamp": "2025-11-07T21:23:16.893017"
     },
     "AI Voice Parsing - Missing WorkType": {
       "success": false,
       "response": null,
       "error": "Expected validation error (400/422), got HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.245759"
+      "timestamp": "2025-11-07T21:23:16.929512"
     },
     "AI Price Estimator - Web Development Project": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.278686"
+      "timestamp": "2025-11-07T21:23:16.964577"
     },
     "AI Price Estimator - Urgent Local Gig": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.314679"
+      "timestamp": "2025-11-07T21:23:16.999900"
     },
     "AI Price Estimator - Other Category": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.346438"
+      "timestamp": "2025-11-07T21:23:17.034987"
     },
     "AI Price Estimator - Missing WorkType": {
       "success": false,
       "response": null,
       "error": "Expected validation error (400/422), got HTTP 404",
-      "timestamp": "2025-11-07T18:50:31.380853"
+      "timestamp": "2025-11-07T21:23:17.083596"
     }
   },
   "job_posting": {
@@ -290,161 +293,273 @@
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.200948"
+      "timestamp": "2025-11-07T21:23:15.884799"
     },
     "Single Hire Project Creation": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.276591"
+      "timestamp": "2025-11-07T21:23:15.924050"
     },
     "Retrieve Jobs with Role Fields": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.308948"
+      "timestamp": "2025-11-07T21:23:15.957966"
     },
     "Backward Compatibility Test": {
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.344136"
+      "timestamp": "2025-11-07T21:23:15.992435"
     },
     "Application Test - Create Worker Profile": {
       "success": false,
       "response": null,
       "error": "Failed to create worker profile: HTTP 500",
-      "timestamp": "2025-11-07T18:50:33.700692"
+      "timestamp": "2025-11-07T21:23:18.784500"
     }
   },
   "worker_dashboard": {
     "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:29.807235"
+      "error": "HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "timestamp": "2025-11-07T21:23:15.005825"
     },
     "Schedule - GET /api/worker-dashboard/schedule/{user_id}": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:29.846731"
+      "response": [
+        {
+          "id": "1",
+          "title": "Web Development Project",
+          "start_time": "2025-11-08T21:23:15.038688+00:00",
+          "end_time": "2025-11-09T01:23:15.038703+00:00",
+          "location": "Remote",
+          "status": "confirmed"
+        }
+      ],
+      "error": "Schedule item missing fields: ['time', 'duration']",
+      "timestamp": "2025-11-07T21:23:15.041673"
     },
     "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:29.887664"
+      "error": "HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "timestamp": "2025-11-07T21:23:15.184539"
     },
     "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:29.930596"
+      "error": "HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "timestamp": "2025-11-07T21:23:15.330909"
     },
     "Earnings - GET /api/worker-dashboard/earnings/{user_id}": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:29.966819"
+      "error": "HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "timestamp": "2025-11-07T21:23:15.482930"
     },
     "Reputation - GET /api/worker-dashboard/reputation/{user_id}": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.010501"
+      "error": "HTTP 500: {\"detail\":\"{'message': 'column worker_profiles.average_rating does not exist', 'code': '42703', 'hint': None, 'details': None}\"}",
+      "timestamp": "2025-11-07T21:23:15.600976"
     },
     "Achievements - GET /api/worker-dashboard/achievements/{user_id}": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.049923"
+      "response": [
+        {
+          "id": "1",
+          "title": "First Gig Completed",
+          "description": "Successfully completed your first gig",
+          "icon": "\ud83c\udf89",
+          "earned_date": "2025-11-07T21:23:15.636116+00:00"
+        },
+        {
+          "id": "2",
+          "title": "5-Star Rating",
+          "description": "Received your first 5-star rating",
+          "icon": "\u2b50",
+          "earned_date": "2025-11-07T21:23:15.636127+00:00"
+        }
+      ],
+      "error": "Achievement missing fields: ['name']",
+      "timestamp": "2025-11-07T21:23:15.638940"
     },
     "Job Search - POST /api/worker-dashboard/jobs/search (basic)": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.090909"
+      "error": "HTTP 422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"user_id\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.12/v/missing\"}]}",
+      "timestamp": "2025-11-07T21:23:15.673761"
     },
     "Job Search - POST /api/worker-dashboard/jobs/search (filtered)": {
       "success": false,
       "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:30.126050"
+      "error": "HTTP 422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"user_id\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.12/v/missing\"}]}",
+      "timestamp": "2025-11-07T21:23:15.719468"
     },
     "Error Handling - Invalid User ID": {
       "success": false,
       "response": null,
-      "error": "Unexpected response for invalid user ID: HTTP 404",
-      "timestamp": "2025-11-07T18:50:30.164353"
+      "error": "Unexpected response for invalid user ID: HTTP 500",
+      "timestamp": "2025-11-07T21:23:15.848122"
     }
   },
   "wallet": {
     "GET /api/wallet/ - Auto-create wallet": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:33.738441"
+      "success": true,
+      "response": {
+        "wallet_id": "0dd3933d-04fb-4ecf-b7b9-154fd378510a",
+        "user_id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+        "balance": {
+          "available": 235.0,
+          "pending": 5.0,
+          "reserved": 0.0
+        }
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:19.070570"
     },
     "POST /api/wallet/calculate-fees - Instant Bank Transfer": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:33.771664"
+      "success": true,
+      "response": {
+        "fee_amount": 1.5,
+        "net_amount": 98.5,
+        "rate": 1.5,
+        "type": "instant"
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:19.105065"
     },
     "POST /api/wallet/calculate-fees - Standard PayPal": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:33.806506"
+      "success": true,
+      "response": {
+        "fee_amount": 2.5,
+        "net_amount": 97.5,
+        "rate": 2.5,
+        "type": "standard"
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:19.146947"
     },
     "POST /api/wallet/cashout/instant - Insufficient Balance": {
       "success": false,
       "response": null,
-      "error": "Expected 400 error, got HTTP 404",
-      "timestamp": "2025-11-07T18:50:33.844243"
+      "error": "Expected 400 error, got HTTP 200",
+      "timestamp": "2025-11-07T21:23:19.596426"
     },
     "POST /api/wallet/cashout/standard - Insufficient Balance": {
       "success": false,
       "response": null,
-      "error": "Expected 400 error, got HTTP 404",
-      "timestamp": "2025-11-07T18:50:33.876528"
+      "error": "Expected 400 error, got HTTP 200",
+      "timestamp": "2025-11-07T21:23:19.993654"
     },
     "POST /api/wallet/savings/setup - $0 Initial": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:33.912977"
+      "success": true,
+      "response": {
+        "savings_balance": 100.0,
+        "interest_rate": 2.5
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:20.289323"
     },
     "POST /api/wallet/credit/request - Equipment Purchase": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:33.946142"
+      "response": {
+        "credit_used": 600.0,
+        "available_credit": 64400.0,
+        "repayment_date": "2025-12-07T21:23:20.761979+00:00"
+      },
+      "error": "Expected credit_used=200, got 600.0",
+      "timestamp": "2025-11-07T21:23:20.806499"
     },
     "POST /api/wallet/payment-methods - Add Bank": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.021073"
+      "response": {
+        "id": "aacb9246-ff01-4b82-a02a-33ea8fbf848a",
+        "user_id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+        "method_type": "bank",
+        "provider": "Chase",
+        "account_number": "",
+        "last_four": "5678",
+        "expiry_date": null,
+        "is_default": false,
+        "is_verified": false,
+        "created_at": "2025-11-07T21:23:20.905855+00:00",
+        "updated_at": "2025-11-07T21:23:21.080144+00:00"
+      },
+      "error": "First payment method should be default",
+      "timestamp": "2025-11-07T21:23:21.106208"
     },
     "POST /api/wallet/payment-methods - Add PayPal": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.055383"
+      "response": {
+        "id": "e0b94012-3adf-409e-9f3a-e5f0a4d03ea9",
+        "user_id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+        "method_type": "paypal",
+        "provider": "Unknown",
+        "account_number": "user@paypal.com",
+        "last_four": "",
+        "expiry_date": null,
+        "is_default": false,
+        "is_verified": false,
+        "created_at": "2025-11-07T21:23:21.206796+00:00",
+        "updated_at": "2025-11-07T21:23:21.28153+00:00"
+      },
+      "error": "Invalid payment method type",
+      "timestamp": "2025-11-07T21:23:21.310177"
     },
     "GET /api/wallet/transactions - All Transactions": {
-      "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.090819"
+      "success": true,
+      "response": {
+        "transaction_count": 8,
+        "pagination": {
+          "current": 1,
+          "total": 1,
+          "total_transactions": 8
+        }
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:21.547313"
     },
     "GET /api/wallet/transactions - Filter by Type": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.127290"
+      "response": {
+        "transactions": [
+          {
+            "id": "074b847e-b1f6-42f0-98e3-554cea65496e",
+            "wallet_id": "0dd3933d-04fb-4ecf-b7b9-154fd378510a",
+            "transaction_type": "deposit",
+            "amount": 200.0,
+            "description": "Credit advance for: Equipment purchase",
+            "status": "completed",
+            "created_at": "2025-11-07T21:23:20.654303+00:00",
+            "payment_method": "credit",
+            "reference_id": null,
+            "updated_at": "2025-11-07T21:23:20.712824+00:00"
+          },
+          {
+            "id": "b3a5850e-d3da-439c-bb4b-a7564ad12c78",
+            "wallet_id": "0dd3933d-04fb-4ecf-b7b9-154fd378510a",
+            "transaction_type": "deposit",
+            "amount": 200.0,
+            "description": "Credit advance for: Equipment purchase",
+            "status": "completed",
+            "created_at": "2025-11-07T19:27:53.16968+00:00",
+            "payment_method": "credit",
+            "reference_id": null,
+            "updated_at": "2025-11-07T19:27:53.201784+00:00"
+          }
+        ],
+        "pagination": {
+          "current": 1,
+          "total": 1,
+          "total_transactions": 2
+        }
+      },
+      "error": "Filter not working correctly",
+      "timestamp": "2025-11-07T21:23:21.807041"
     }
   },
   "grow": {
@@ -452,13 +567,13 @@
       "success": false,
       "response": null,
       "error": "HTTP 404: {\"detail\":\"Not Found\"}",
-      "timestamp": "2025-11-07T18:50:34.164228"
+      "timestamp": "2025-11-07T21:23:21.841972"
     },
     "Get Courses with Filters": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.201734"
+      "timestamp": "2025-11-07T21:23:21.878763"
     },
     "Course Enrollment - Course Not Found": {
       "success": true,
@@ -467,7 +582,7 @@
         "message": "Properly handled non-existent course"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:34.238412"
+      "timestamp": "2025-11-07T21:23:21.913793"
     },
     "Complete Lesson - Not Enrolled": {
       "success": true,
@@ -476,123 +591,592 @@
         "message": "Properly handled not enrolled"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:34.271365"
+      "timestamp": "2025-11-07T21:23:21.949808"
     },
     "Start Assessment": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.345267"
+      "timestamp": "2025-11-07T21:23:21.986870"
     },
     "Submit Assessment": {
       "success": false,
       "response": null,
       "error": "No assessment ID available",
-      "timestamp": "2025-11-07T18:50:34.345297"
+      "timestamp": "2025-11-07T21:23:21.986905"
     },
     "Get Community Posts": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.380291"
+      "timestamp": "2025-11-07T21:23:22.025402"
     },
     "Create Community Post": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.418876"
+      "timestamp": "2025-11-07T21:23:22.100704"
     },
     "Upvote Post": {
       "success": false,
       "response": null,
       "error": "No post ID available",
-      "timestamp": "2025-11-07T18:50:34.418903"
+      "timestamp": "2025-11-07T21:23:22.100743"
     },
     "Add Comment": {
       "success": false,
       "response": null,
       "error": "No post ID available",
-      "timestamp": "2025-11-07T18:50:34.418926"
+      "timestamp": "2025-11-07T21:23:22.100748"
     },
     "Get User Analytics": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.455858"
+      "timestamp": "2025-11-07T21:23:22.135595"
     },
     "Get Course Recommendations": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.533522"
+      "timestamp": "2025-11-07T21:23:22.170921"
     },
     "Get Career Paths - All": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.568040"
+      "timestamp": "2025-11-07T21:23:22.251805"
     },
     "Get Career Paths - Frontend Goal": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.601548"
+      "timestamp": "2025-11-07T21:23:22.286504"
     }
   },
   "search": {
     "Search Gigs - Basic": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.674577"
+      "response": {
+        "success": true,
+        "jobs": [
+          {
+            "id": "b1a82159-cd61-460f-bef8-35959e3fe1f5",
+            "user_id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+            "title": "Startup Team Hiring - Multiple Roles",
+            "description": "Hiring multiple positions for new startup",
+            "job_type": "project",
+            "status": "published",
+            "hiring_type": "Multi-Role",
+            "category": "Multiple",
+            "budget": 150000.0,
+            "location": "{\"address\": \"New York, NY\", \"type\": \"hybrid\"}",
+            "skills_required": [
+              "Leadership",
+              "Technical"
+            ],
+            "experience_level": null,
+            "views": 2,
+            "application_count": 0,
+            "created_at": "2025-11-07T19:44:52.918259+00:00",
+            "updated_at": "2025-11-07T19:44:54.341763+00:00",
+            "duration": "6 months",
+            "specific_location": null,
+            "work_type": "remote",
+            "urgency": "normal",
+            "published_at": "2025-11-07T19:44:53.429649+00:00",
+            "expires_at": null
+          },
+          {
+            "id": "be863371-cf0e-4e35-b626-4e365ab9b493",
+            "user_id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+            "title": "Full Stack Developer Needed",
+            "description": "Looking for experienced developer for web app project",
+            "job_type": "project",
+            "status": "published",
+            "hiring_type": "Single",
+            "category": "Web Development",
+            "budget": 6000.0,
+            "location": "{\"address\": \"San Francisco, CA\", \"type\": \"remote\"}",
+            "skills_required": [
+              "React",
+              "Node.js",
+              "PostgreSQL"
+            ],
+            "experience_level": "Intermediate",
+            "views": 1,
+            "application_count": 0,
+            "created_at": "2025-11-07T19:37:41.40226+00:00",
+            "updated_at": "2025-11-07T19:42:53.417875+00:00",
+            "duration": "3 months",
+            "specific_location": "San Francisco",
+            "work_type": "remote",
+            "urgency": "normal",
+            "published_at": "2025-11-07T19:40:04.349912+00:00",
+            "expires_at": null
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 20,
+          "total": 2
+        }
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:22.391264"
     },
     "Search Gigs - With Filters": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.708968"
+      "response": {
+        "success": true,
+        "jobs": [],
+        "pagination": {
+          "page": 1,
+          "limit": 10,
+          "total": 0
+        }
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:22.506833"
     },
     "Search Talents - Basic": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.740444"
+      "response": {
+        "success": true,
+        "talents": [
+          {
+            "id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+            "email": "wallet.test@demo.com",
+            "name": "Wallet Test - Professional Profile",
+            "password_hash": "$2b$12$2ym4fZYCNhXl.z8PpKSmfOmgXEZJ4SY8om8e.wnDWN0xgHJ9azjH6",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": "+1-555-9999",
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T19:06:20.035034+00:00",
+            "updated_at": "2025-11-07T20:04:18.936987+00:00",
+            "bio": "Expert developer specializing in full-stack web applications",
+            "profile": {
+              "id": "2c4d44a6-8201-4431-a5ae-5330ff5490c6",
+              "user_id": "402f6136-32c1-46f5-a2a8-449472770f2d",
+              "name": "Wallet Test User",
+              "email": "wallet.test@demo.com",
+              "bio": null,
+              "skills": [],
+              "hourly_rate": 0.0,
+              "experience_level": "Entry",
+              "location": null,
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T19:06:20.227866+00:00",
+              "updated_at": "2025-11-07T19:06:20.227875+00:00"
+            }
+          },
+          {
+            "id": "332db61c-adb1-48b2-bb7c-a63dc5a44923",
+            "email": "richardotieno66@yahoo.com",
+            "name": "Abungu",
+            "password_hash": "$2b$12$CdyjuvXLNBVsxpSZBDSAp.5UUshaO3ki.7mJ8PHfSNJTbAJStvzXq",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": null,
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T15:51:58.427991+00:00",
+            "updated_at": "2025-11-07T15:51:58.428+00:00",
+            "bio": null,
+            "profile": {
+              "id": "283522ea-c9bf-4fa2-ad36-53a9dcbee94f",
+              "user_id": "332db61c-adb1-48b2-bb7c-a63dc5a44923",
+              "name": "Abungu",
+              "email": "richardotieno66@yahoo.com",
+              "bio": null,
+              "skills": [],
+              "hourly_rate": 0.0,
+              "experience_level": "Entry",
+              "location": null,
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T15:51:58.527138+00:00",
+              "updated_at": "2025-11-07T15:51:58.527144+00:00"
+            }
+          },
+          {
+            "id": "d3ead605-c1e8-4368-9bd1-c4d7504b45a4",
+            "email": "test1762529124@hapployed.com",
+            "name": "Test User 1762529124",
+            "password_hash": "$2b$12$eo1tAJ09gYCvwNSvEgbDpOwSCdIm4dObPTZjE3nDJ8vRd9ym5HPIG",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": null,
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T15:25:25.36671+00:00",
+            "updated_at": "2025-11-07T15:25:25.366718+00:00",
+            "bio": null,
+            "profile": {
+              "id": "978afec3-bee6-46cf-a066-1d0cd637403e",
+              "user_id": "d3ead605-c1e8-4368-9bd1-c4d7504b45a4",
+              "name": "Test User 1762529124",
+              "email": "test1762529124@hapployed.com",
+              "bio": null,
+              "skills": [],
+              "hourly_rate": 0.0,
+              "experience_level": "Entry",
+              "location": null,
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T15:25:25.502118+00:00",
+              "updated_at": "2025-11-07T15:25:25.502123+00:00"
+            }
+          },
+          {
+            "id": "86c59fe8-8847-4494-9726-46334192e00c",
+            "email": "test1762527747@hapployed.com",
+            "name": "Test User 1762527747",
+            "password_hash": "$2b$12$5zsxkY4d7By39vXlQDDuDeymCL4TSxbq6MM/Q3Mla3.le6Wdd6Azm",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": null,
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T15:02:28.455781+00:00",
+            "updated_at": "2025-11-07T15:02:28.455789+00:00",
+            "bio": null,
+            "profile": {
+              "id": "146100a0-0db6-45b2-82e2-47f9ef3e01f6",
+              "user_id": "86c59fe8-8847-4494-9726-46334192e00c",
+              "name": "Test User 1762527747",
+              "email": "test1762527747@hapployed.com",
+              "bio": null,
+              "skills": [],
+              "hourly_rate": 0.0,
+              "experience_level": "Entry",
+              "location": null,
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T15:02:28.538728+00:00",
+              "updated_at": "2025-11-07T15:02:28.538735+00:00"
+            }
+          },
+          {
+            "id": "72dcc8c2-2669-45fe-afff-a57798a78039",
+            "email": "profile_test@hapployed.com",
+            "name": "Profile Test User",
+            "password_hash": "$2b$12$NTWa3vPRY2Krsrc9xqAo/eNahclJ0RMuW.tg3S0LDEKvBYTo2RPDy",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": null,
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T15:02:20.310196+00:00",
+            "updated_at": "2025-11-07T15:02:20.310204+00:00",
+            "bio": null,
+            "profile": {
+              "id": "ed7cc029-b721-467e-a24d-29b25fc6f23e",
+              "user_id": "72dcc8c2-2669-45fe-afff-a57798a78039",
+              "name": "Profile Test User",
+              "email": "profile_test@hapployed.com",
+              "bio": "I am a skilled developer",
+              "skills": [
+                "React",
+                "Python",
+                "Node.js"
+              ],
+              "hourly_rate": 50.0,
+              "experience_level": "Intermediate",
+              "location": {
+                "city": "Nairobi",
+                "country": "Kenya"
+              },
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T15:02:20.385921+00:00",
+              "updated_at": "2025-11-07T15:02:20.663156+00:00"
+            }
+          },
+          {
+            "id": "d5d9192c-5fdc-4935-b2e9-31b6eb30a958",
+            "email": "test1762527382@hapployed.com",
+            "name": "Test User 1762527382",
+            "password_hash": "$2b$12$y.WdyI/t2vo6vkkmemOmZeSkmA7rRVucuxwjFAlnO0aDGbyjETQkK",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": null,
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T14:56:22.728405+00:00",
+            "updated_at": "2025-11-07T14:56:22.728412+00:00",
+            "bio": null,
+            "profile": {
+              "id": "fcf1ed48-46e0-40a4-a813-630064db13b4",
+              "user_id": "d5d9192c-5fdc-4935-b2e9-31b6eb30a958",
+              "name": "Test User 1762527382",
+              "email": "test1762527382@hapployed.com",
+              "bio": null,
+              "skills": [],
+              "hourly_rate": 0.0,
+              "experience_level": "Entry",
+              "location": null,
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T14:56:22.892427+00:00",
+              "updated_at": "2025-11-07T14:56:22.892434+00:00"
+            }
+          },
+          {
+            "id": "8be5ee3a-8970-4d53-88bc-e838858b5966",
+            "email": "test1762527314@hapployed.com",
+            "name": "Test User 1762527314",
+            "password_hash": "$2b$12$0871Z4HKC7vMhbeMKV//huPzvxq/j/0.rdwJ.c9Sh7Z1TzQwbS8I.",
+            "roles": [
+              "worker"
+            ],
+            "current_mode": "worker",
+            "phone": null,
+            "avatar_url": null,
+            "is_verified": false,
+            "is_active": true,
+            "created_at": "2025-11-07T14:55:15.740834+00:00",
+            "updated_at": "2025-11-07T14:55:15.740843+00:00",
+            "bio": null,
+            "profile": {
+              "id": "6bcd0ffa-a807-4588-bf52-2ff1a93362f8",
+              "user_id": "8be5ee3a-8970-4d53-88bc-e838858b5966",
+              "name": "Test User 1762527314",
+              "email": "test1762527314@hapployed.com",
+              "bio": null,
+              "skills": [],
+              "hourly_rate": 0.0,
+              "experience_level": "Entry",
+              "location": null,
+              "rating": 0.0,
+              "completed_jobs": 0,
+              "is_available": true,
+              "created_at": "2025-11-07T14:55:15.845411+00:00",
+              "updated_at": "2025-11-07T14:55:15.845419+00:00"
+            }
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 20,
+          "total": 7
+        }
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:23.122510"
     },
     "Search Talents - With Filters": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.796245"
+      "response": {
+        "success": true,
+        "talents": [],
+        "pagination": {
+          "page": 1,
+          "limit": 20,
+          "total": 0
+        }
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:23.223216"
     },
     "Get Search Suggestions - Gigs": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.829136"
+      "response": {
+        "success": true,
+        "suggestions": []
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:23.324546"
     },
     "Get Search Suggestions - Talents": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.862205"
+      "response": {
+        "success": true,
+        "suggestions": []
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:23.442247"
     },
     "Get Search Filters - Gigs": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.896999"
+      "response": {
+        "success": true,
+        "filters": {
+          "categories": [
+            "Multiple",
+            "Web Development"
+          ],
+          "locations": [
+            {
+              "name": "Remote",
+              "type": "remote",
+              "count": 1500
+            },
+            {
+              "name": "New York, NY",
+              "type": "onsite",
+              "count": 450
+            },
+            {
+              "name": "San Francisco, CA",
+              "type": "onsite",
+              "count": 380
+            },
+            {
+              "name": "London, UK",
+              "type": "onsite",
+              "count": 320
+            },
+            {
+              "name": "Berlin, Germany",
+              "type": "onsite",
+              "count": 280
+            }
+          ],
+          "budget_ranges": [
+            {
+              "label": "Under $500",
+              "min": 0,
+              "max": 500
+            },
+            {
+              "label": "$500 - $1,000",
+              "min": 500,
+              "max": 1000
+            },
+            {
+              "label": "$1,000 - $5,000",
+              "min": 1000,
+              "max": 5000
+            },
+            {
+              "label": "$5,000 - $10,000",
+              "min": 5000,
+              "max": 10000
+            },
+            {
+              "label": "$10,000+",
+              "min": 10000,
+              "max": null
+            }
+          ],
+          "job_types": [
+            "project",
+            "gig",
+            "contract",
+            "full-time"
+          ]
+        }
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:23.544770"
     },
     "Get Search Filters - Talents": {
       "success": false,
-      "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.931612"
+      "response": {
+        "success": true,
+        "filters": {
+          "categories": [
+            "Multiple",
+            "Web Development"
+          ],
+          "locations": [
+            {
+              "name": "Remote",
+              "type": "remote",
+              "count": 1500
+            },
+            {
+              "name": "New York, NY",
+              "type": "onsite",
+              "count": 450
+            },
+            {
+              "name": "San Francisco, CA",
+              "type": "onsite",
+              "count": 380
+            },
+            {
+              "name": "London, UK",
+              "type": "onsite",
+              "count": 320
+            },
+            {
+              "name": "Berlin, Germany",
+              "type": "onsite",
+              "count": 280
+            }
+          ],
+          "budget_ranges": [
+            {
+              "label": "Under $500",
+              "min": 0,
+              "max": 500
+            },
+            {
+              "label": "$500 - $1,000",
+              "min": 500,
+              "max": 1000
+            },
+            {
+              "label": "$1,000 - $5,000",
+              "min": 1000,
+              "max": 5000
+            },
+            {
+              "label": "$5,000 - $10,000",
+              "min": 5000,
+              "max": 10000
+            },
+            {
+              "label": "$10,000+",
+              "min": 10000,
+              "max": null
+            }
+          ],
+          "job_types": [
+            "project",
+            "gig",
+            "contract",
+            "full-time"
+          ]
+        }
+      },
+      "error": "Invalid response format",
+      "timestamp": "2025-11-07T21:23:23.657053"
     },
     "Advanced AI Search": {
       "success": false,
       "response": null,
-      "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.963174"
+      "error": "HTTP 500",
+      "timestamp": "2025-11-07T21:23:23.760430"
     }
   },
   "verification": {
@@ -600,7 +1184,7 @@
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:34.999570"
+      "timestamp": "2025-11-07T21:23:23.805005"
     },
     "Upload Document": {
       "success": true,
@@ -609,13 +1193,13 @@
         "message": "No verification process started"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:35.037408"
+      "timestamp": "2025-11-07T21:23:23.838720"
     },
     "Verify Identity": {
       "success": false,
       "response": null,
       "error": "No document ID available",
-      "timestamp": "2025-11-07T18:50:35.037439"
+      "timestamp": "2025-11-07T21:23:23.838755"
     },
     "Verify Skill - Assessment": {
       "success": true,
@@ -624,7 +1208,7 @@
         "message": "No verification process or assessment found"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:35.073350"
+      "timestamp": "2025-11-07T21:23:23.876282"
     },
     "Verify Skill - Portfolio": {
       "success": true,
@@ -633,7 +1217,7 @@
         "message": "No verification process found"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:35.109730"
+      "timestamp": "2025-11-07T21:23:23.911845"
     },
     "Complete Verification": {
       "success": true,
@@ -642,25 +1226,25 @@
         "message": "No verification process found"
       },
       "error": null,
-      "timestamp": "2025-11-07T18:50:35.142061"
+      "timestamp": "2025-11-07T21:23:23.946738"
     },
     "Get Verification Status": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.175771"
+      "timestamp": "2025-11-07T21:23:23.982129"
     },
     "Get Admin Stats": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.208750"
+      "timestamp": "2025-11-07T21:23:24.058551"
     },
     "Admin Review Verification": {
       "success": false,
       "response": null,
       "error": "No verification ID available",
-      "timestamp": "2025-11-07T18:50:35.208792"
+      "timestamp": "2025-11-07T21:23:24.058585"
     }
   },
   "sms_gateway": {
@@ -668,163 +1252,275 @@
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.281529"
+      "timestamp": "2025-11-07T21:23:24.095154"
     },
     "SMS Webhook - Update Gig": {
       "success": false,
       "response": null,
       "error": "No gig ID available for update test",
-      "timestamp": "2025-11-07T18:50:35.281558"
+      "timestamp": "2025-11-07T21:23:24.095183"
     },
     "SMS Webhook - Delete Gig": {
       "success": false,
       "response": null,
       "error": "No gig ID available for delete test",
-      "timestamp": "2025-11-07T18:50:35.281562"
+      "timestamp": "2025-11-07T21:23:24.095197"
     },
     "SMS Webhook - Status Check": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.319053"
+      "timestamp": "2025-11-07T21:23:24.133021"
     },
     "SMS Webhook - Help Command": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.351281"
+      "timestamp": "2025-11-07T21:23:24.165120"
     },
     "Manual SMS Send": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.386261"
+      "timestamp": "2025-11-07T21:23:24.202874"
     },
     "SMS Analytics - 7d Default": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.424958"
+      "timestamp": "2025-11-07T21:23:24.239051"
     },
     "SMS Analytics - 24h": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.461175"
+      "timestamp": "2025-11-07T21:23:24.279715"
     },
     "SMS Analytics - 30d": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.495005"
+      "timestamp": "2025-11-07T21:23:24.315585"
     },
     "Get Offline Gigs - All": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.528493"
+      "timestamp": "2025-11-07T21:23:24.353393"
     },
     "Get Offline Gigs - pending_sync": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.562983"
+      "timestamp": "2025-11-07T21:23:24.390373"
     },
     "Get Offline Gigs - published": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.639773"
+      "timestamp": "2025-11-07T21:23:24.423864"
     },
     "Manual Gig Sync": {
       "success": false,
       "response": null,
       "error": "Failed to create gig for sync test",
-      "timestamp": "2025-11-07T18:50:35.671948"
+      "timestamp": "2025-11-07T21:23:24.458516"
     },
     "Manual Gig Sync - Invalid ID": {
       "success": false,
       "response": null,
       "error": "Expected 500 error, got HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.708907"
+      "timestamp": "2025-11-07T21:23:24.532719"
     },
     "User SMS History": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.743286"
+      "timestamp": "2025-11-07T21:23:24.612297"
     },
     "Get SMS Templates": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.774918"
+      "timestamp": "2025-11-07T21:23:24.666115"
     },
     "System Health Check": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.810174"
+      "timestamp": "2025-11-07T21:23:24.704152"
     },
     "SMS Parsing - Price Extraction": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.842252"
+      "timestamp": "2025-11-07T21:23:24.737598"
     },
     "SMS Parsing - Duration Extraction": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.878225"
+      "timestamp": "2025-11-07T21:23:24.770376"
     },
     "SMS Parsing - Category Detection": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.909853"
+      "timestamp": "2025-11-07T21:23:24.806559"
     },
     "Error Handling - Invalid SMS Format": {
       "success": false,
       "response": null,
       "error": "HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.944180"
+      "timestamp": "2025-11-07T21:23:24.841307"
     },
     "Error Handling - Missing From Field": {
       "success": false,
       "response": null,
       "error": "Expected validation error (400/422), got HTTP 404",
-      "timestamp": "2025-11-07T18:50:35.979287"
+      "timestamp": "2025-11-07T21:23:24.878180"
     }
   },
   "dual_persona": {
     "Register Worker User": {
+      "success": true,
+      "response": {
+        "user_id": "d1bb0c4c-d008-4ab5-b9ad-50e88f2c4e00",
+        "roles": [
+          "worker"
+        ]
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:25.474831"
+    },
+    "Get User Info - Verify CurrentMode": {
       "success": false,
       "response": null,
-      "error": "HTTP 500: {\"detail\":\"Registration failed: {'message': 'new row violates row-level security policy for table \\\"users\\\"', 'code': '42501', 'hint': None, 'details': None}\"}",
-      "timestamp": "2025-11-07T18:50:36.643004"
+      "error": "HTTP 500: Internal Server Error",
+      "timestamp": "2025-11-07T21:23:25.645990"
+    },
+    "Add Secondary Role - Employer": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
+      "timestamp": "2025-11-07T21:23:25.686773"
+    },
+    "Switch Mode - Worker to Employer": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
+      "timestamp": "2025-11-07T21:23:25.723772"
+    },
+    "Verify Mode Switch - Employer": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 500: Internal Server Error",
+      "timestamp": "2025-11-07T21:23:25.841637"
+    },
+    "Switch Mode - Employer to Worker": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
+      "timestamp": "2025-11-07T21:23:25.879553"
     },
     "Switch to Unauthorized Role - 403 Error": {
       "success": false,
       "response": null,
-      "error": "Failed to create single role user: HTTP 500",
-      "timestamp": "2025-11-07T18:50:37.057636"
+      "error": "Expected 403 Forbidden, got HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.410844"
+    }
+  },
+  "quickhire": {
+    "POST /gigs - Create Gig": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404: {\"detail\":\"Not Found\"}",
+      "timestamp": "2025-11-07T21:23:26.451025"
+    },
+    "GET /gigs/nearby - Query Params": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.489283"
+    },
+    "POST /gigs/nearby - Worker Location": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.567214"
+    },
+    "GET /gigs/client/{clientId} - Client Gigs": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.600435"
+    },
+    "GET /gigs/worker/{workerId} - Worker Gigs": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.638015"
+    },
+    "POST /worker/location - Update Location": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.672751"
+    },
+    "POST /workers/nearby - Find Workers": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.706948"
+    },
+    "POST /gigs/marketplace - Marketplace": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.745477"
+    },
+    "GET /notifications/worker/{workerId} - Notifications": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.782718"
+    },
+    "POST /notifications/log - Log Notification": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.815834"
+    },
+    "POST /notifications/worker - Send Notification": {
+      "success": false,
+      "response": null,
+      "error": "HTTP 404",
+      "timestamp": "2025-11-07T21:23:26.849446"
+    },
+    "GET /gigs/{gigId} - Invalid ID (404)": {
+      "success": true,
+      "response": {
+        "status_code": 404,
+        "message": "Proper 404 handling"
+      },
+      "error": null,
+      "timestamp": "2025-11-07T21:23:26.884863"
     }
   },
   "summary": {
-    "passed": 8,
-    "failed": 120,
+    "passed": 16,
+    "failed": 129,
     "errors": [
-      "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Schedule - GET /api/worker-dashboard/schedule/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Earnings - GET /api/worker-dashboard/earnings/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Reputation - GET /api/worker-dashboard/reputation/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Achievements - GET /api/worker-dashboard/achievements/{user_id}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Job Search - POST /api/worker-dashboard/jobs/search (basic): HTTP 404: {\"detail\":\"Not Found\"}",
-      "Job Search - POST /api/worker-dashboard/jobs/search (filtered): HTTP 404: {\"detail\":\"Not Found\"}",
-      "Error Handling - Invalid User ID: Unexpected response for invalid user ID: HTTP 404",
+      "Dashboard Stats - GET /api/worker-dashboard/stats/{user_id}: HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "Schedule - GET /api/worker-dashboard/schedule/{user_id}: Schedule item missing fields: ['time', 'duration']",
+      "Recommended Jobs - GET /api/worker-dashboard/recommended-jobs/{user_id}: HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "Active Gigs - GET /api/worker-dashboard/active-gigs/{user_id}: HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "Earnings - GET /api/worker-dashboard/earnings/{user_id}: HTTP 500: {\"detail\":\"{'message': 'invalid input syntax for type uuid: \\\"test-user-123\\\"', 'code': '22P02', 'hint': None, 'details': None}\"}",
+      "Reputation - GET /api/worker-dashboard/reputation/{user_id}: HTTP 500: {\"detail\":\"{'message': 'column worker_profiles.average_rating does not exist', 'code': '42703', 'hint': None, 'details': None}\"}",
+      "Achievements - GET /api/worker-dashboard/achievements/{user_id}: Achievement missing fields: ['name']",
+      "Job Search - POST /api/worker-dashboard/jobs/search (basic): HTTP 422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"user_id\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.12/v/missing\"}]}",
+      "Job Search - POST /api/worker-dashboard/jobs/search (filtered): HTTP 422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"user_id\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.12/v/missing\"}]}",
+      "Error Handling - Invalid User ID: Unexpected response for invalid user ID: HTTP 500",
       "Multi-Role Project Creation: HTTP 404: {\"detail\":\"Not Found\"}",
       "Single Hire Project Creation: HTTP 404: {\"detail\":\"Not Found\"}",
       "Retrieve Jobs with Role Fields: HTTP 404: {\"detail\":\"Not Found\"}",
@@ -856,9 +1552,8 @@
       "AI Price Estimator - Urgent Local Gig: HTTP 404",
       "AI Price Estimator - Other Category: HTTP 404",
       "AI Price Estimator - Missing WorkType: Expected validation error (400/422), got HTTP 404",
-      "Profile Update - PUT /api/profile/update: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Profile Retrieval - GET /api/profile/{email}: HTTP 404: {\"detail\":\"Not Found\"}",
-      "Profile Update - Missing Email Validation: Expected validation error (400/422), got HTTP 404",
+      "Profile Update - PUT /api/profile/update: HTTP 404: {\"detail\":\"User not found. Please register first.\"}",
+      "Profile Retrieval - GET /api/profile/{email}: HTTP 404: {\"detail\":\"Profile not found\"}",
       "Job Posting - Create Project Job: HTTP 404: {\"detail\":\"Not Found\"}",
       "Job Posting - Create Gig Job: HTTP 404: {\"detail\":\"Not Found\"}",
       "Job Posting - Get All Jobs: HTTP 404: {\"detail\":\"Not Found\"}",
@@ -874,17 +1569,12 @@
       "Worker Profile - Get Non-existent User: Expected 404 for non-existent user, got HTTP 500",
       "Worker Profile - Update by User ID: HTTP 405: {\"detail\":\"Method Not Allowed\"}",
       "Application Test - Create Worker Profile: Failed to create worker profile: HTTP 500",
-      "GET /api/wallet/ - Auto-create wallet: HTTP 404: {\"detail\":\"Not Found\"}",
-      "POST /api/wallet/calculate-fees - Instant Bank Transfer: HTTP 404",
-      "POST /api/wallet/calculate-fees - Standard PayPal: HTTP 404",
-      "POST /api/wallet/cashout/instant - Insufficient Balance: Expected 400 error, got HTTP 404",
-      "POST /api/wallet/cashout/standard - Insufficient Balance: Expected 400 error, got HTTP 404",
-      "POST /api/wallet/savings/setup - $0 Initial: HTTP 404",
-      "POST /api/wallet/credit/request - Equipment Purchase: HTTP 404",
-      "POST /api/wallet/payment-methods - Add Bank: HTTP 404",
-      "POST /api/wallet/payment-methods - Add PayPal: HTTP 404",
-      "GET /api/wallet/transactions - All Transactions: HTTP 404",
-      "GET /api/wallet/transactions - Filter by Type: HTTP 404",
+      "POST /api/wallet/cashout/instant - Insufficient Balance: Expected 400 error, got HTTP 200",
+      "POST /api/wallet/cashout/standard - Insufficient Balance: Expected 400 error, got HTTP 200",
+      "POST /api/wallet/credit/request - Equipment Purchase: Expected credit_used=200, got 600.0",
+      "POST /api/wallet/payment-methods - Add Bank: First payment method should be default",
+      "POST /api/wallet/payment-methods - Add PayPal: Invalid payment method type",
+      "GET /api/wallet/transactions - Filter by Type: Filter not working correctly",
       "Get Courses - GET /api/grow/courses: HTTP 404: {\"detail\":\"Not Found\"}",
       "Get Courses with Filters: HTTP 404",
       "Start Assessment: HTTP 404",
@@ -897,15 +1587,15 @@
       "Get Course Recommendations: HTTP 404",
       "Get Career Paths - All: HTTP 404",
       "Get Career Paths - Frontend Goal: HTTP 404",
-      "Search Gigs - Basic: HTTP 404",
-      "Search Gigs - With Filters: HTTP 404",
-      "Search Talents - Basic: HTTP 404",
-      "Search Talents - With Filters: HTTP 404",
-      "Get Search Suggestions - Gigs: HTTP 404",
-      "Get Search Suggestions - Talents: HTTP 404",
-      "Get Search Filters - Gigs: HTTP 404",
-      "Get Search Filters - Talents: HTTP 404",
-      "Advanced AI Search: HTTP 404",
+      "Search Gigs - Basic: Invalid response format",
+      "Search Gigs - With Filters: Invalid response format",
+      "Search Talents - Basic: Invalid response format",
+      "Search Talents - With Filters: Invalid response format",
+      "Get Search Suggestions - Gigs: Invalid response format",
+      "Get Search Suggestions - Talents: Invalid response format",
+      "Get Search Filters - Gigs: Invalid response format",
+      "Get Search Filters - Talents: Invalid response format",
+      "Advanced AI Search: HTTP 500",
       "Start Verification: HTTP 404",
       "Verify Identity: No document ID available",
       "Get Verification Status: HTTP 404",
@@ -933,8 +1623,23 @@
       "SMS Parsing - Category Detection: HTTP 404",
       "Error Handling - Invalid SMS Format: HTTP 404",
       "Error Handling - Missing From Field: Expected validation error (400/422), got HTTP 404",
-      "Register Worker User: HTTP 500: {\"detail\":\"Registration failed: {'message': 'new row violates row-level security policy for table \\\"users\\\"', 'code': '42501', 'hint': None, 'details': None}\"}",
-      "Switch to Unauthorized Role - 403 Error: Failed to create single role user: HTTP 500"
+      "Get User Info - Verify CurrentMode: HTTP 500: Internal Server Error",
+      "Add Secondary Role - Employer: HTTP 404: {\"detail\":\"Not Found\"}",
+      "Switch Mode - Worker to Employer: HTTP 404: {\"detail\":\"Not Found\"}",
+      "Verify Mode Switch - Employer: HTTP 500: Internal Server Error",
+      "Switch Mode - Employer to Worker: HTTP 404: {\"detail\":\"Not Found\"}",
+      "Switch to Unauthorized Role - 403 Error: Expected 403 Forbidden, got HTTP 404",
+      "POST /gigs - Create Gig: HTTP 404: {\"detail\":\"Not Found\"}",
+      "GET /gigs/nearby - Query Params: HTTP 404",
+      "POST /gigs/nearby - Worker Location: HTTP 404",
+      "GET /gigs/client/{clientId} - Client Gigs: HTTP 404",
+      "GET /gigs/worker/{workerId} - Worker Gigs: HTTP 404",
+      "POST /worker/location - Update Location: HTTP 404",
+      "POST /workers/nearby - Find Workers: HTTP 404",
+      "POST /gigs/marketplace - Marketplace: HTTP 404",
+      "GET /notifications/worker/{workerId} - Notifications: HTTP 404",
+      "POST /notifications/log - Log Notification: HTTP 404",
+      "POST /notifications/worker - Send Notification: HTTP 404"
     ]
   }
 }
