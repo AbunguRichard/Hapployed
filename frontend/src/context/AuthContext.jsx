@@ -220,11 +220,8 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ role })
       });
 
-      // Clone FIRST before any consumption (for Emergent monitoring compatibility)
-      const responseClone = response.clone();
-      
-      // Read from the clone to allow monitoring scripts to access original
-      const responseText = await responseClone.text();
+      // Read response text directly without cloning
+      const responseText = await response.text();
       
       let data;
       try {
@@ -241,6 +238,7 @@ export const AuthProvider = ({ children }) => {
       await checkAuthStatus();
       return data;
     } catch (error) {
+      console.error('Add role error:', error);
       throw error;
     }
   };
