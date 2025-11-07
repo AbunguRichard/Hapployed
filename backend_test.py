@@ -5232,6 +5232,9 @@ class BackendTester:
         # Dual Persona Switch Tests
         self.test_dual_persona_switch()
         
+        # Quickhire Supabase Migration Tests
+        self.test_quickhire_supabase_migration()
+        
         # Print summary
         print("\n" + "=" * 60)
         print("📊 TEST SUMMARY")
