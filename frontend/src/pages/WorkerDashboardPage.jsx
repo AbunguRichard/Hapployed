@@ -18,12 +18,18 @@ export default function WorkerDashboardPage() {
   });
 
   const handleSwitchMode = async () => {
-    if (!user?.roles?.includes('employer')) {
-      alert('You need to add the Recruiter role first to switch to Recruiter mode.');
-      return;
-    }
     try {
       setSwitching(true);
+      
+      // If user doesn't have employer role, add it first
+      if (!user?.roles?.includes('employer')) {
+        console.log('Adding employer role...');
+        await addSecondaryRole('employer');
+        // Small delay to ensure role is updated
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      
+      // Now switch to employer mode
       await switchMode('employer');
       navigate('/recruiter-dashboard');
     } catch (error) {
