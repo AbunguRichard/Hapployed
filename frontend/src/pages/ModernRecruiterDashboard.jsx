@@ -34,20 +34,23 @@ ChartJS.register(
 );
 
 export default function ModernRecruiterDashboard() {
-  const { user, switchMode } = useAuth();
+  const { user, switchMode, addSecondaryRole } = useAuth();
   const navigate = useNavigate();
   const [switching, setSwitching] = useState(false);
 
   const handleSwitchMode = async () => {
-    if (!user?.roles?.includes('worker')) {
-      alert('You need to add the Worker role first to switch to Talent mode.');
-      return;
-    }
-    
     try {
       setSwitching(true);
+      
+      // If user doesn't have worker role, add it first
+      if (!user?.roles?.includes('worker')) {
+        console.log('Adding worker role...');
+        await addSecondaryRole('worker');
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      
       await switchMode('worker');
-      navigate('/home');
+      navigate('/epic-worker-dashboard');
     } catch (error) {
       console.error('Failed to switch mode:', error);
       alert('Failed to switch mode. Please try again.');
