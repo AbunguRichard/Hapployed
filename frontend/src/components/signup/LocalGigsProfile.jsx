@@ -82,13 +82,18 @@ const LocalGigsProfile = ({ onComplete, userData }) => {
         throw new Error(errorData.detail || 'Failed to create profile');
       }
 
+      // Update user data in localStorage to mark profile as complete
+      const storedUserData = JSON.parse(localStorage.getItem('user_data') || '{}');
+      storedUserData.worker_profile = { profileComplete: true };
+      localStorage.setItem('user_data', JSON.stringify(storedUserData));
+
       toast.success('Profile created successfully!');
       onComplete(formData);
       
       // Navigate to gigs page
       setTimeout(() => {
         navigate('/gigs-near-me');
-      }, 1000);
+      }, 500);
 
     } catch (error) {
       console.error('Profile creation error:', error);
