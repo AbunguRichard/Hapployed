@@ -376,7 +376,7 @@ export default function CreateProfilePage() {
           phone: formData.phone,
           bio: formData.bio,
           skills: allSkills,
-          experience: userType === 'professional' ? formData.experience : 'Entry',
+          experience: userType === 'professional' ? mapExperienceToEnum(formData.experience) : 'Entry',
           availability: formData.workPreference?.join(',') || 'flexible',
           hourlyRate: null, // Can be set later in profile settings
           location: {
