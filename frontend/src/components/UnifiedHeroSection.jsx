@@ -50,7 +50,7 @@ export default function UnifiedHeroSection() {
       setAuthIntent('find_work');
       setShowAuthModal(true);
     } else if (hasRole('worker')) {
-      navigate('/dashboard-worker');
+      navigate('/epic-worker-dashboard');
     } else {
       // User is employer, needs to add worker role
       navigate('/work/start');
