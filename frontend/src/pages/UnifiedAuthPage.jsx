@@ -151,13 +151,13 @@ export default function UnifiedAuthPage() {
           localStorage.removeItem('redirect_after_auth');
           navigate(redirectPath);
         } else if (intent === 'find_work') {
-          navigate('/dashboard-worker');
+          navigate('/epic-worker-dashboard');
         } else if (intent === 'hire_talent' || intent === 'post_project') {
           navigate('/dashboard-employer');
         } else if (result.user.roles?.includes('employer')) {
           navigate('/dashboard-employer');
         } else if (result.user.roles?.includes('worker')) {
-          navigate('/dashboard-worker');
+          navigate('/epic-worker-dashboard');
         } else {
           navigate('/hire-method-choice');
         }
