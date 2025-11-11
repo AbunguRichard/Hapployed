@@ -428,21 +428,24 @@ export default function CreateProfilePage() {
         duration: 3000,
       });
       
-      // Navigate based on user role and intent
+      // Navigate based on user type and intent
       setTimeout(() => {
-        const intent = localStorage.getItem('user_intent');
         const redirectPath = searchParams.get('next');
         
-        // Smart navigation
+        // Smart navigation based on profile type
         if (redirectPath && redirectPath !== '/dashboard') {
           navigate(redirectPath);
+        } else if (userType === 'professional') {
+          // Professional workers go to epic dashboard
+          navigate('/epic-worker-dashboard');
+        } else if (userType === 'general') {
+          // General workers go to gigs page  
+          navigate('/gigs-near-me');
         } else if (user?.roles?.includes('employer')) {
           navigate('/dashboard-employer');
-        } else if (user?.roles?.includes('worker')) {
-          navigate('/dashboard-worker');
         } else {
-          // Default to worker dashboard for new signups
-          navigate('/dashboard-worker');
+          // Default fallback
+          navigate('/epic-worker-dashboard');
         }
       }, 500);
     } catch (err) {
