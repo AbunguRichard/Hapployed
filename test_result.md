@@ -846,6 +846,9 @@ agent_communication:
     message: "🔧 CRITICAL FIX APPLIED - Fixed JWT authentication error in auth_routes_supabase.py. Issue: AttributeError 'module jwt has no attribute JWTError'. Root cause: PyJWT library exceptions are accessed via jwt.exceptions module, not directly from jwt. Solution: (1) Added import: from jwt.exceptions import ExpiredSignatureError, InvalidTokenError. (2) Replaced all jwt.ExpiredSignatureError with ExpiredSignatureError. (3) Replaced all jwt.JWTError with InvalidTokenError. Backend restarted successfully. Signup/Login now working correctly. Tested with multiple user registrations - all successful."
   - agent: "main"
     message: "🔧 PROFILE COMPLETION FIX APPLIED - Fixed 'Complete Profile' functionality. Issue: User reported 'Not Found' error when clicking Complete Profile button. Root cause: worker_profiles table missing required columns (phone, portfolio, categories, profile_image). Frontend was also sending incorrect data types (portfolio as array instead of string, unnecessary badges field). Solution: (1) Fixed frontend CreateProfilePage.jsx: Changed portfolio from array to string, removed badges field. (2) Created SQL migration ADD_WORKER_PROFILES_COLUMNS.sql to add missing columns to worker_profiles table. User executed SQL migration successfully. Profile completion now working correctly."
+  - agent: "main"
+    message: "🔧 EXPERIENCE MAPPING FIX - Fixed profile creation error for professional users. Issue: Frontend sending experience values ('0-1', '1-3', '3-5', '5+') that don't match backend ENUM ('Entry', 'Intermediate', 'Expert'). Error: 'invalid input value for enum experience_level: \"5+\"'. Solution: Added mapExperienceToEnum() helper function in CreateProfilePage.jsx to convert frontend values to backend enum values. Mapping: 0-1→Entry, 1-3→Intermediate, 3-5→Expert, 5+→Expert. Profile creation now working for all experience levels."
+
 
 
 
