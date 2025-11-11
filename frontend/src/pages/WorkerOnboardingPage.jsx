@@ -196,7 +196,7 @@ export default function WorkerOnboardingPage() {
       
       // Redirect to worker dashboard
       setTimeout(() => {
-        navigate('/dashboard-worker');
+        navigate('/epic-worker-dashboard');
       }, 1500);
 
     } catch (error) {
@@ -607,7 +607,7 @@ export default function WorkerOnboardingPage() {
         {/* Skip Button */}
         <div className="text-center mt-6">
           <button
-            onClick={() => navigate('/dashboard-worker')}
+            onClick={() => navigate('/epic-worker-dashboard')}
             className="text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors"
           >
             Skip for now →
