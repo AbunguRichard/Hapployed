@@ -354,9 +354,12 @@ async def get_current_user_info(current_user: dict = Depends(get_current_user)):
     }
 
 
+class AddRoleRequest(BaseModel):
+    role: str
+
 @router.post("/add-role")
 async def add_secondary_role(
-    role: str = Body(..., embed=True),
+    request: AddRoleRequest,
     current_user: dict = Depends(get_current_user)
 ):
     """
