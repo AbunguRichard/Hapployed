@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import UnifiedAuthPage from './pages/UnifiedAuthPage';
 import CreateProfilePage from './pages/CreateProfilePage';
+import SignupFlow from './components/signup/SignupFlow';
 import DashboardPage from './pages/DashboardPage';
 import DualDashboard from './pages/DualDashboard';
 import SmartDashboard from './pages/SmartDashboard';
