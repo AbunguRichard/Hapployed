@@ -140,13 +140,10 @@ function App() {
             />
             
             {/* Dashboard Routes */}
+            {/* Redirect old dashboard to new one */}
             <Route 
               path="/dashboard-worker" 
-              element={
-                <ProtectedRoute>
-                  <WorkerDashboard />
-                </ProtectedRoute>
-              } 
+              element={<Navigate to="/epic-worker-dashboard" replace />}
             />
             <Route 
               path="/dashboard-employer" 
