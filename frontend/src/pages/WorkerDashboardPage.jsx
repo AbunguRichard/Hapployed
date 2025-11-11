@@ -6,7 +6,7 @@ import DashboardHeader from '../components/DashboardHeader';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 export default function WorkerDashboardPage() {
-  const { user, switchMode } = useAuth();
+  const { user, switchMode, addSecondaryRole } = useAuth();
   const navigate = useNavigate();
   const [switching, setSwitching] = useState(false);
   const [activeNav, setActiveNav] = useState('dashboard');
