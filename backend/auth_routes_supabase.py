@@ -366,6 +366,8 @@ async def add_secondary_role(
     Add secondary role to user (worker can become employer, vice versa)
     """
     try:
+        role = request.role
+        
         # Validate role
         if role not in ['worker', 'employer']:
             raise HTTPException(
