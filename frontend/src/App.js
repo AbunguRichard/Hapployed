@@ -95,7 +95,7 @@ function App() {
             <Route path="/what-we-offer" element={<WhatWeOfferPage />} />
             <Route path="/auth" element={<UnifiedAuthPage />} />
             <Route path="/auth/login" element={<UnifiedAuthPage />} />
-            <Route path="/auth/signup" element={<UnifiedAuthPage />} />
+            <Route path="/auth/signup" element={<SignupFlow />} />
             
             {/* Informational Pages - Public */}
             <Route path="/discover-opportunities-info" element={<DiscoverOpportunitiesInfoPage />} />
