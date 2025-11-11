@@ -49,6 +49,17 @@ export default function CreateProfilePage() {
   const { updateProfile, user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  
+  // Helper function to map frontend experience values to backend enum
+  const mapExperienceToEnum = (experienceValue) => {
+    const mapping = {
+      '0-1': 'Entry',
+      '1-3': 'Intermediate',
+      '3-5': 'Expert',
+      '5+': 'Expert'
+    };
+    return mapping[experienceValue] || 'Entry';
+  };
   const next = searchParams.get('next') || '/dashboard';
 
   // Skill categories
