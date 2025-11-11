@@ -353,6 +353,62 @@ async def get_current_user_info(current_user: dict = Depends(get_current_user)):
         "avatarUrl": current_user.get("avatar_url")
     }
 
+
+@router.post("/add-role")
+async def add_secondary_role(
+    role: str = Body(..., embed=True),
+    current_user: dict = Depends(get_current_user)
+):
+    """
+    Add secondary role to user (worker can become employer, vice versa)
+    """
+    try:
+        # Validate role
+        if role not in ['worker', 'employer']:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Role must be either 'worker' or 'employer'"
+            )
+        
+        supabase_client = get_supabase_admin()
+        user_id = current_user["id"]
+        current_roles = current_user.get("roles", [])
+        
+        # Check if user already has this role
+        if role in current_roles:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"User already has {role} role"
+            )
+        
+        # Add new role
+        new_roles = current_roles + [role]
+        
+        # Update user with new role
+        update_data = {
+            "roles": new_roles,
+            "updated_at": datetime.utcnow().isoformat()
+        }
+        
+        # Set current_mode to the new role if they only had one role before
+        if len(current_roles) == 1:
+            update_data["current_mode"] = role
+        
+        supabase_client.table('users').update(update_data).eq('id', user_id).execute()
+        
+        return {
+            "message": f"Successfully added {role} role",
+            "roles": new_roles
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to add role: {str(e)}"
+        )
+
 @router.post("/logout")
 async def logout():
     """
