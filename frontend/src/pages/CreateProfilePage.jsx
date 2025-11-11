@@ -1154,6 +1154,8 @@ export default function CreateProfilePage() {
                   <p><strong>Quick tip:</strong> Turn on location to see nearby gigs instantly!</p>
                 </div>
               </div>
+                </>
+              )}
             </div>
           )}
 
