@@ -932,6 +932,63 @@ export default function CreateProfilePage() {
           {/* Step 3: Combined Profile Details */}
           {currentStep === 3 && (
             <div className="space-y-6">
+              {/* Bio - shown for both types */}
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Bio / About You
+                </label>
+                <textarea
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleChange}
+                  rows="4"
+                  className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder={userType === 'professional' 
+                    ? "Tell clients about your experience, expertise, and what makes you unique..."
+                    : "Tell clients about yourself and what you can do..."}
+                />
+              </div>
+
+              {/* Professional-specific fields */}
+              {userType === 'professional' && (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Portfolio / Website (Optional)
+                    </label>
+                    <input
+                      type="url"
+                      name="portfolio"
+                      value={formData.portfolio}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="https://yourportfolio.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Years of Experience
+                    </label>
+                    <select
+                      name="experience"
+                      value={formData.experience}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="">Select experience</option>
+                      <option value="0-1">Less than 1 year</option>
+                      <option value="1-3">1-3 years</option>
+                      <option value="3-5">3-5 years</option>
+                      <option value="5+">5+ years</option>
+                    </select>
+                  </div>
+                </>
+              )}
+
+              {/* General worker-specific fields */}
+              {userType === 'general' && (
+                <>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-3">
                   What can you do?
