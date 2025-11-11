@@ -33,8 +33,8 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      await signup(email, password);
-      navigate(`/profile/create?next=${encodeURIComponent(next)}`);
+      // Redirect to new SignupFlow instead
+      navigate('/auth/signup');
     } catch (err) {
       setError('Failed to create account. Please try again.');
     } finally {
