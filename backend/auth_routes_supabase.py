@@ -249,6 +249,12 @@ async def login(credentials: UserLogin):
             "last_login": datetime.utcnow().isoformat()
         }).eq('id', user["id"]).execute()
         
+        # Check if worker profile exists
+        worker_profile_complete = False
+        if 'worker' in user.get("roles", []):
+            profile_response = supabase_client.table('worker_profiles').select('id').eq('user_id', user["id"]).execute()
+            worker_profile_complete = len(profile_response.data) > 0
+        
         # Generate tokens
         access_token = create_access_token(data={"sub": user["id"]})
         refresh_token = create_refresh_token(data={"sub": user["id"]})
@@ -262,7 +268,8 @@ async def login(credentials: UserLogin):
             "currentMode": user["current_mode"],
             "isVerified": user.get("is_verified", False),
             "phone": user.get("phone"),
-            "avatarUrl": user.get("avatar_url")
+            "avatarUrl": user.get("avatar_url"),
+            "worker_profile": {"profileComplete": worker_profile_complete} if worker_profile_complete else None
         }
         
         return TokenResponse(
