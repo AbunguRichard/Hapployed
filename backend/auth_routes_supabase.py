@@ -97,8 +97,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         if user_id is None:
             raise HTTPException(status_code=401, detail="Invalid token payload")
         
-        # Get user from Supabase
-        supabase_client = get_supabase_client()
+        # Get user from Supabase (use admin client to bypass RLS)
+        supabase_client = get_supabase_admin()
         response = supabase_client.table('users').select('*').eq('id', user_id).execute()
         
         if not response.data or len(response.data) == 0:
