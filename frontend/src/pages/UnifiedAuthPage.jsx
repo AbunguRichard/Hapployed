@@ -162,9 +162,8 @@ export default function UnifiedAuthPage() {
           navigate('/hire-method-choice');
         }
       } else {
-        // Sign up flow - create account then redirect to profile creation
-        await signup(email, password, name || email.split('@')[0], 'worker'); // default to worker role
-        navigate('/profile/create?next=/dashboard-worker');
+        // Sign up flow - redirect to new SignupFlow component
+        navigate('/auth/signup');
       }
     } catch (err) {
       setError(err.message || (mode === 'login' ? 'Invalid email or password' : 'Sign up failed'));
